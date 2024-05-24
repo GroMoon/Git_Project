@@ -1,0 +1,16 @@
+config_version=5
+
+[application]
+
+config/name="Godot_Map"
+run/main_scene="res://tile_map.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.svg"
+
+[layer_names]
+
+2d_physics/layer_1="bush, tent ...(collision)"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemies"
+2d_physics/layer_4="Skills"
+2d_physics/layer_5="Items"
