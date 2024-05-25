@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bhkutx2hei60b"]
+[gd_scene load_steps=15 format=3 uid="uid://bhkutx2hei60b"]
 
 [ext_resource type="Script" path="res://Slime.gd" id="1_v0mq6"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://slime/slime_jump_1.png" id="2_4k3av"]
@@ -62,11 +62,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ix0sy"]
+
 [node name="Slime" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_v0mq6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(3.393, 4)
+scale = Vector2(3.02, 4)
 sprite_frames = SubResource("SpriteFrames_vinfm")
 animation = &"move"
 frame = 1
@@ -74,3 +77,5 @@ frame_progress = 0.14092
 speed_scale = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_ix0sy")
