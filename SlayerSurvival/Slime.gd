@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const MOVE_SPEED    = 200
 const IDLE_TIME     = 2.0  # 정지 대기 시간 2초
-const MOVE_DURATION = 1.0  # 랜덤 방향으로 이동하는 시간 1초
+const MOVE_DURATION = 3.0  # 랜덤 방향으로 이동하는 시간 1초
 
 var idle_timer     = 0.0
 var move_timer     = 0.0
