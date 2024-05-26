@@ -73,7 +73,7 @@ scale = Vector2(3.02, 4)
 sprite_frames = SubResource("SpriteFrames_vinfm")
 animation = &"move"
 frame = 1
-frame_progress = 0.14092
+frame_progress = 0.898628
 speed_scale = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
