@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://x8kdkwfnwtg4"]
 
 [ext_resource type="PackedScene" uid="uid://bhkutx2hei60b" path="res://slime.tscn" id="1_2nq6c"]
-[ext_resource type="PackedScene" uid="uid://nkffuwgdphcg" path="res://tiles.tscn" id="3_cwtwl"]
+[ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://tile_map.tscn" id="2_ci5kd"]
 
 [node name="test" type="Node2D"]
 
-[node name="Tiles" parent="." instance=ExtResource("3_cwtwl")]
+[node name="TileMap" parent="." instance=ExtResource("2_ci5kd")]
 
 [node name="Slime" parent="." instance=ExtResource("1_2nq6c")]
