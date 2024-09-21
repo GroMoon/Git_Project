@@ -8,7 +8,7 @@ var map_height = 650
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	if player.position.x < 0:
 		player.position.x = map_width
 	elif player.position.x > map_width :

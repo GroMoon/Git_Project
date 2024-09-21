@@ -80,4 +80,4 @@ func set_random_direction():
 	move_direction = Vector2(cos(angle), sin(angle)).normalized()
 
 	#? for debug
-	print("New move direction: ", move_direction)
+	#print("New move direction: ", move_direction)
