@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://c13n4n14mdj5q"]
+
+[ext_resource type="Texture2D" uid="uid://b47pidvlmav8b" path="res://enemy/enemy_type_A/Enemy sprites/ghost.png" id="1_vdv45"]
+[ext_resource type="Texture2D" uid="uid://cdy8vqci8q10o" path="res://enemy/enemy_type_A/Enemy sprites/ghost_normal.png" id="2_m80ss"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m2asl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vdv45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m80ss")
+}],
+"loop": true,
+"name": &"enemy_type_A",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7cvvj"]
+size = Vector2(49, 40.25)
+
+[node name="enemy_type_A" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1, 0.894)
+sprite_frames = SubResource("SpriteFrames_m2asl")
+animation = &"enemy_type_A"
+frame_progress = 0.956403
+speed_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7cvvj")

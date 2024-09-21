@@ -77,7 +77,8 @@ frame_progress = 0.898628
 speed_scale = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(4, 4)
+position = Vector2(1, 0)
+scale = Vector2(3.3, 3.3)
 shape = SubResource("RectangleShape2D_ix0sy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
