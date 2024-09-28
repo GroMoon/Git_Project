@@ -66,6 +66,7 @@ animations = [{
 
 [node name="Slime" type="CharacterBody2D"]
 collision_layer = 2
+collision_mask = 33
 script = ExtResource("1_v0mq6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

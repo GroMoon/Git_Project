@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1200
 window/size/viewport_height=650
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 up={
@@ -51,3 +55,5 @@ left={
 
 2d_physics/layer_1="map"
 2d_physics/layer_2="player"
+2d_physics/layer_3="enemy"
+2d_physics/layer_6="collision"
