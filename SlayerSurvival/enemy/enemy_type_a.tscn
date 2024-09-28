@@ -28,7 +28,7 @@ script = ExtResource("1_crodv")
 scale = Vector2(1, 0.894)
 sprite_frames = SubResource("SpriteFrames_m2asl")
 animation = &"enemy_type_A"
-frame_progress = 0.956403
+frame_progress = 0.612064
 speed_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
