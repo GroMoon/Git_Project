@@ -21,3 +21,9 @@ func _physics_process(_delta):
 		# 이동 적용
 		move_and_slide()
 
+	# 애니메이션 처리
+    if velocity.length() > 0:
+        $AnimatedSprite2D.play("enemy_type_A")
+        $AnimatedSprite2D.flip_h = velocity.x > 0
+    else:
+        $AnimatedSprite2D.play("enemy_type_A")
