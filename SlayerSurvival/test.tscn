@@ -9,5 +9,7 @@
 [node name="TileMap" parent="." instance=ExtResource("2_ci5kd")]
 
 [node name="Slime" parent="." instance=ExtResource("1_2nq6c")]
+scale = Vector2(0.3, 0.3)
 
 [node name="enemy_type_A" parent="." instance=ExtResource("3_nntmk")]
+scale = Vector2(0.3, 0.3)
