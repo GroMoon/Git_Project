@@ -23,14 +23,16 @@ size = Vector2(49, 40.25)
 
 [node name="enemy_type_A" type="CharacterBody2D"]
 collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_crodv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1, 0.894)
+scale = Vector2(0.3, 0.268)
 sprite_frames = SubResource("SpriteFrames_m2asl")
 animation = &"enemy_type_A"
 frame_progress = 0.612064
 speed_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.3, 0.3)
 shape = SubResource("RectangleShape2D_7cvvj")
