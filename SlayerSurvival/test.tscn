@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bhkutx2hei60b" path="res://slime.tscn" id="1_2nq6c"]
 [ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://tile_map.tscn" id="2_ci5kd"]
-[ext_resource type="PackedScene" uid="uid://c13n4n14mdj5q" path="res://enemy/enemy_type_a.tscn" id="3_nntmk"]
+[ext_resource type="PackedScene" uid="uid://ukxay34h51af" path="res://enemy/enemy_spawner/enemy_spawner.tscn" id="4_tyshb"]
 
 [node name="test" type="Node2D"]
 
@@ -11,5 +11,6 @@
 [node name="Slime" parent="." instance=ExtResource("1_2nq6c")]
 scale = Vector2(0.3, 0.3)
 
-[node name="enemy_type_A" parent="." instance=ExtResource("3_nntmk")]
-scale = Vector2(0.3, 0.3)
+[node name="enemy_spawner" type="Node2D" parent="."]
+
+[node name="enemty_spawner_1" parent="enemy_spawner" instance=ExtResource("4_tyshb")]
