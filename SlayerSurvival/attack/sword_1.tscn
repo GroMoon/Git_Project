@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cmvmjf5wijgy0"]
+[gd_scene load_steps=12 format=3 uid="uid://cmvmjf5wijgy0"]
 
 [ext_resource type="Texture2D" uid="uid://bcg6qk1tvmsrh" path="res://attack/sword_1/1.png" id="1_gfxo3"]
+[ext_resource type="Script" path="res://attack/sword_1.gd" id="1_x74ij"]
 [ext_resource type="Texture2D" uid="uid://bjk077cv8yviq" path="res://attack/sword_1/2.png" id="2_8lce7"]
 [ext_resource type="Texture2D" uid="uid://cru71h0bgn733" path="res://attack/sword_1/3.png" id="3_2hry4"]
 [ext_resource type="Texture2D" uid="uid://c5h11v8dc143x" path="res://attack/sword_1/4.png" id="4_4uj5d"]
@@ -45,13 +46,18 @@ animations = [{
 size = Vector2(289, 319)
 
 [node name="Sword1" type="Area2D"]
+script = ExtResource("1_x74ij")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(145, -184)
+position = Vector2(144, -164)
 sprite_frames = SubResource("SpriteFrames_co184")
-frame = 2
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(148.5, -159.5)
 shape = SubResource("RectangleShape2D_hmrvj")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
