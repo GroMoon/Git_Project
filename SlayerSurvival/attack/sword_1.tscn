@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmvmjf5wijgy0"]
+[gd_scene load_steps=11 format=3 uid="uid://cmvmjf5wijgy0"]
 
 [ext_resource type="Texture2D" uid="uid://bcg6qk1tvmsrh" path="res://attack/sword_1/1.png" id="1_gfxo3"]
 [ext_resource type="Texture2D" uid="uid://bjk077cv8yviq" path="res://attack/sword_1/2.png" id="2_8lce7"]
@@ -41,10 +41,17 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Sword1" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmrvj"]
+size = Vector2(289, 319)
+
+[node name="Sword1" type="Area2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(145, -184)
 sprite_frames = SubResource("SpriteFrames_co184")
-frame = 5
-frame_progress = 0.554464
+frame = 2
 speed_scale = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(148.5, -159.5)
+shape = SubResource("RectangleShape2D_hmrvj")
