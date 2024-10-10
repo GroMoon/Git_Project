@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://bx8xatwwg81lh"]
 
-[ext_resource type="Texture2D" uid="uid://scynp0va5l21" path="res://resource/textyre/menu_background.png" id="1_6n2bm"]
+[ext_resource type="Texture2D" uid="uid://scynp0va5l21" path="res://resource/texture/menu_background.png" id="1_6n2bm"]
 [ext_resource type="Script" path="res://Start.gd" id="2_ec80q"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://slime/slime_jump_1.png" id="2_v6ktv"]
 [ext_resource type="Texture2D" uid="uid://c1brdtdj8gjiq" path="res://slime/slime_jump_2.png" id="3_4kx3r"]
@@ -83,6 +83,7 @@ theme_override_font_sizes/font_size = 35
 text = "상 점"
 
 [node name="Setting" type="Button" parent="ColorRect"]
+layout_mode = 0
 offset_left = 900.0
 offset_top = 220.0
 offset_right = 1100.0
@@ -91,6 +92,7 @@ theme_override_font_sizes/font_size = 35
 text = "설 정"
 
 [node name="Start" type="Button" parent="ColorRect"]
+layout_mode = 0
 offset_left = 500.0
 offset_top = 220.0
 offset_right = 700.0
