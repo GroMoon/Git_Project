@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bhkutx2hei60b"]
+[gd_scene load_steps=19 format=3 uid="uid://bhkutx2hei60b"]
 
 [ext_resource type="Script" path="res://Slime.gd" id="1_v0mq6"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://slime/slime_jump_1.png" id="2_4k3av"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://c3jkq4ym28lro" path="res://slime/slime_jump_9.png" id="10_qxa6m"]
 [ext_resource type="Texture2D" uid="uid://uhum03wfpdq7" path="res://slime/slime_jump_10.png" id="11_xk36c"]
 [ext_resource type="Texture2D" uid="uid://caajsnyl8bitk" path="res://slime/slime_jump_11.png" id="12_ktqxp"]
+[ext_resource type="Script" path="res://test.gd" id="13_a06vp"]
+[ext_resource type="PackedScene" uid="uid://dxtu82qvk26e2" path="res://attack/attack.tscn" id="14_m7ikp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vinfm"]
 animations = [{
@@ -129,3 +131,8 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_641nf")
 step = 1.0
 value = 50.0
 show_percentage = false
+
+[node name="test" type="Node2D" parent="."]
+script = ExtResource("13_a06vp")
+
+[node name="attack" parent="." instance=ExtResource("14_m7ikp")]

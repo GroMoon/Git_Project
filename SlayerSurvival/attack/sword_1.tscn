@@ -38,7 +38,7 @@ animations = [{
 "texture": ExtResource("8_j2ss5")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -49,15 +49,17 @@ size = Vector2(289, 319)
 script = ExtResource("1_x74ij")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(144, -164)
+scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_co184")
-speed_scale = 1.5
+animation = &"idle"
+speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(148.5, -159.5)
+scale = Vector2(0.3, 0.3)
 shape = SubResource("RectangleShape2D_hmrvj")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.4
+wait_time = 0.6
+autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

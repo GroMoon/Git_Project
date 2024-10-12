@@ -8,6 +8,9 @@ var idle_timer     = 0.0
 var move_timer     = 0.0
 var move_direction = Vector2.ZERO
 
+# weapon level
+var sword_1_level = 1
+
 # GUI
 @onready var hp_bar = get_node("%Hp_Bar")
 # hp 설정 
