@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhkutx2hei60b"]
+[gd_scene load_steps=19 format=3 uid="uid://bhkutx2hei60b"]
 
 [ext_resource type="Script" path="res://Slime.gd" id="1_v0mq6"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://slime/slime_jump_1.png" id="2_4k3av"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://c3jkq4ym28lro" path="res://slime/slime_jump_9.png" id="10_qxa6m"]
 [ext_resource type="Texture2D" uid="uid://uhum03wfpdq7" path="res://slime/slime_jump_10.png" id="11_xk36c"]
 [ext_resource type="Texture2D" uid="uid://caajsnyl8bitk" path="res://slime/slime_jump_11.png" id="12_ktqxp"]
+[ext_resource type="Script" path="res://test.gd" id="13_a06vp"]
+[ext_resource type="PackedScene" uid="uid://dxtu82qvk26e2" path="res://attack/attack.tscn" id="14_m7ikp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vinfm"]
 animations = [{
@@ -64,9 +66,28 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ix0sy"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vy0tr"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_641nf"]
+bg_color = Color(0.952941, 0.12549, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
 [node name="Slime" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 33
+collision_mask = 37
 script = ExtResource("1_v0mq6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -84,10 +105,34 @@ shape = SubResource("RectangleShape2D_ix0sy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
 drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
+
+[node name="GUILayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="GUILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -1.0
+offset_right = 300.0
+offset_bottom = 161.0
+
+[node name="Hp_Bar" type="ProgressBar" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 647.0
+offset_top = 390.0
+offset_right = 697.0
+offset_bottom = 398.0
+theme_override_styles/background = SubResource("StyleBoxFlat_vy0tr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_641nf")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="test" type="Node2D" parent="."]
+script = ExtResource("13_a06vp")
+
+[node name="attack" parent="." instance=ExtResource("14_m7ikp")]

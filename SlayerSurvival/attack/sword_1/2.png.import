@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://scynp0va5l21"
-path="res://.godot/imported/menu_background.png-6859a1eab009388e9be9780828c6f9eb.ctex"
+uid="uid://bjk077cv8yviq"
+path="res://.godot/imported/2.png-33d69621e40d3fac2e3f9e8e255e829b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resource/textyre/menu_background.png"
-dest_files=["res://.godot/imported/menu_background.png-6859a1eab009388e9be9780828c6f9eb.ctex"]
+source_file="res://attack/sword_1/2.png"
+dest_files=["res://.godot/imported/2.png-33d69621e40d3fac2e3f9e8e255e829b.ctex"]
 
 [params]
 

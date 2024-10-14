@@ -8,10 +8,29 @@ var idle_timer     = 0.0
 var move_timer     = 0.0
 var move_direction = Vector2.ZERO
 
+# weapon level
+var sword_1_level = 1
+
+# GUI
+@onready var hp_bar = get_node("%Hp_Bar")
+# hp 설정 
+var max_hp = 50.0
+var hp = max_hp:
+	set(value):
+		hp = value
+		hp_bar.max_value = max_hp
+		hp_bar.value = hp
+		
+		if hp > max_hp:
+			hp = max_hp
+		if hp <= 0:
+			get_tree().change_scene_to_file("res://menu.tscn")
+
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
+	hp_bar.global_position = global_position + Vector2(-25, 30)
 
 	# 초기 이동 방향 설정
 	set_random_direction()
