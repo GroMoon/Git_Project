@@ -26,3 +26,6 @@ func _on_sword_1_timer_timeout():
 	# new_sword_1.direction = 1
 	new_sword_1.level = sword_1_level
 	add_child(new_sword_1)
+	
+	# 휘두를 때 사운드
+	$knife_sound.play()

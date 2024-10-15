@@ -24,6 +24,8 @@ var hp = max_hp:
 		if hp > max_hp:
 			hp = max_hp
 		if hp <= 0:
+			# gameover sound
+			$gameover.play()
 			get_tree().change_scene_to_file("res://menu.tscn")
 
 func _ready():
@@ -36,6 +38,7 @@ func _ready():
 	set_random_direction()
 
 func _process(delta):
+	#hp -=1		#gameover 디버깅
 	# 키보드 입력 확인
 	if Input.is_action_pressed("right") or Input.is_action_pressed("left") or Input.is_action_pressed("up") or Input.is_action_pressed("down"):
 		idle_timer = 0.0
