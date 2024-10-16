@@ -120,6 +120,7 @@ anchors_preset = 0
 offset_top = -1.0
 offset_right = 300.0
 offset_bottom = 161.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Hp_Bar" type="ProgressBar" parent="GUILayer/GUI"]
 unique_name_in_owner = true
@@ -133,6 +134,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_641nf")
 step = 1.0
 value = 50.0
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="test" type="Node2D" parent="."]
 script = ExtResource("13_a06vp")
