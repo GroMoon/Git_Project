@@ -20,13 +20,8 @@ var hp = max_hp:
 		hp = value
 		hp_bar.max_value = max_hp
 		hp_bar.value = hp
-		
 		if hp > max_hp:
 			hp = max_hp
-		if hp <= 0:
-			# gameover sound
-			$gameover.play()
-			get_tree().change_scene_to_file("res://menu.tscn")
 
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
@@ -38,7 +33,6 @@ func _ready():
 	set_random_direction()
 
 func _process(delta):
-	#hp -=1		#gameover 디버깅
 	# 키보드 입력 확인
 	if Input.is_action_pressed("right") or Input.is_action_pressed("left") or Input.is_action_pressed("up") or Input.is_action_pressed("down"):
 		idle_timer = 0.0
@@ -103,3 +97,20 @@ func set_random_direction():
 
 	#? for debug
 	#print("New move direction: ", move_direction)
+
+# Enemy 충돌 시
+func Enemy_Collision(damage):
+	hp -= damage
+	print("현재 체력 : ", hp)
+	#knockback()
+	# die (hp <= 0)
+	if hp <= 0:
+		# gameover sound
+		$gameover.play()
+		get_tree().change_scene_to_file("res://menu.tscn")
+		
+#func knockback():
+	#print(1)
+	#var knockback_strength = 1000 	# 넉백 >> move_and_slide(), 방향 설정, strength * 속도
+	#var knockback_direction = 
+	#move_and_slide()

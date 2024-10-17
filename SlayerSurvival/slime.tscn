@@ -67,6 +67,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ix0sy"]
+size = Vector2(16.0606, 9.24242)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vy0tr"]
 bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
@@ -101,7 +102,7 @@ frame_progress = 0.898628
 speed_scale = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 0)
+position = Vector2(0.500027, 18.25)
 scale = Vector2(3.3, 3.3)
 shape = SubResource("RectangleShape2D_ix0sy")
 
@@ -132,7 +133,7 @@ offset_bottom = 398.0
 theme_override_styles/background = SubResource("StyleBoxFlat_vy0tr")
 theme_override_styles/fill = SubResource("StyleBoxFlat_641nf")
 step = 1.0
-value = 50.0
+value = 100.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 

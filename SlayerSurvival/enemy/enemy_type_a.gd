@@ -4,6 +4,8 @@ extends CharacterBody2D
 var move_speed = 100
 # slime (플레이어) 노드에 대한 참조
 var player
+# 적 데미지
+var damage = 5
 
 func _ready():
 	# slime 노드 찾기 (예: 플레이어 노드가 "Slime"이라고 가정)
@@ -27,3 +29,8 @@ func _physics_process(_delta):
 		$AnimatedSprite2D.flip_h = velocity.x > 0
 	else:
 		$AnimatedSprite2D.play("enemy_type_A")
+
+
+# Player 가 구역 안에 닿을 때 실행
+func _on_collision_sensor_body_entered(body):
+	body.Enemy_Collision(damage)
