@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://x8kdkwfnwtg4"]
 
-[ext_resource type="PackedScene" uid="uid://bhkutx2hei60b" path="res://slime.tscn" id="1_2nq6c"]
-[ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://tile_map.tscn" id="2_ci5kd"]
-[ext_resource type="PackedScene" uid="uid://ukxay34h51af" path="res://enemy/enemy_spawner/enemy_spawner.tscn" id="4_tyshb"]
+[ext_resource type="PackedScene" uid="uid://bhkutx2hei60b" path="res://dynamic/slime.tscn" id="1_2nq6c"]
+[ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://dynamic/4_world/map1/tile_map.tscn" id="2_ci5kd"]
+[ext_resource type="PackedScene" uid="uid://ukxay34h51af" path="res://dynamic/2_enemy/enemy_1/enemy_1_spawner/enemy_spawner.tscn" id="4_tyshb"]
 
 [node name="test" type="Node2D"]
 
