@@ -11,9 +11,12 @@ var move_direction = Vector2.ZERO
 # weapon level
 var sword_1_level = 1
 
+# Damage
+@onready var damagetimer = get_node("DamageTimer")
+var invincibility_flag
 # GUI
-@onready var hp_bar = get_node("%Hp_Bar")
-# hp 설정 
+@onready var hp_bar = get_node("Healthbar/HpBar")
+# hp 설정 (체력 value 관리)
 var max_hp = 50.0
 var hp = max_hp:
 	set(value):
@@ -27,7 +30,9 @@ func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
-	hp_bar.global_position = global_position + Vector2(-25, 30)
+	
+	# 체력 바 위치 관리 (global_position 이용)
+	hp_bar.global_position = global_position + Vector2(-8, 15)
 
 	# 초기 이동 방향 설정
 	set_random_direction()
@@ -94,23 +99,26 @@ func set_random_direction():
 	# 무작위 방향 설정
 	var angle = randf() * 2 * PI  # 0에서 2*PI 사이의 각도
 	move_direction = Vector2(cos(angle), sin(angle)).normalized()
-
 	#? for debug
-	#print("New move direction: ", move_direction)
+	#print("New mov direction: ", move_direction)
 
 # Enemy 충돌 시
 func Enemy_Collision(damage):
-	hp -= damage
-	print("현재 체력 : ", hp)
-	#knockback()
+	if invincibility_flag == true:
+		hp -= damage
+		print("현재 체력 : ", hp)		# 체력 디버깅
+		# 피해 입으면 컬러 변경(빨간색)
+		$AnimatedSprite2D.modulate = Color(1, 0, 0)
+		invincibility_flag = false
+		damagetimer.start()
+	
 	# die (hp <= 0)
 	if hp <= 0:
 		# gameover sound
 		$gameover.play()
-		get_tree().change_scene_to_file("res://menu.tscn")
-		
-#func knockback():
-	#print(1)
-	#var knockback_strength = 1000 	# 넉백 >> move_and_slide(), 방향 설정, strength * 속도
-	#var knockback_direction = 
-	#move_and_slide()
+		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+
+# 피해 입은 후 timer 지나면 원래 컬러로
+func _on_damage_timer_timeout():
+	invincibility_flag = true
+	$AnimatedSprite2D.modulate = Color(1, 1, 1)

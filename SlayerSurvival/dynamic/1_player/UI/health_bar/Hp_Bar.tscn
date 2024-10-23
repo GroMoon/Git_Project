@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://fwq7tlftneu8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xhsjg"]
+bg_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_akqyr"]
+bg_color = Color(0.952941, 0.12549, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing = false
+
+[node name="Hp_Bar" type="ProgressBar"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_right = 0.0133333
+anchor_bottom = 0.00923077
+offset_left = 647.0
+offset_top = 390.0
+offset_right = 697.0
+offset_bottom = 398.0
+theme_override_styles/background = SubResource("StyleBoxFlat_xhsjg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_akqyr")
+step = 1.0
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
