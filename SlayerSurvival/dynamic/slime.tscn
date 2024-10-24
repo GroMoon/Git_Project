@@ -106,6 +106,12 @@ anchor_top = -0.0246154
 offset_right = 39.0
 offset_bottom = 9.5
 
+[node name="PausePanel" parent="Healthbar" index="1"]
+offset_left = -265.0
+offset_top = -236.0
+offset_right = -265.0
+offset_bottom = -236.0
+
 [node name="test" type="Node2D" parent="."]
 script = ExtResource("13_ng0pk")
 
@@ -121,3 +127,4 @@ stream = ExtResource("16_jb6ls")
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
 [editable path="Healthbar"]
+[editable path="Healthbar/PausePanel"]
