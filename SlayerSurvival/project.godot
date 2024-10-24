@@ -11,14 +11,16 @@ config_version=5
 [application]
 
 config/name="Slayer Survival"
-run/main_scene="res://menu.tscn"
+run/main_scene="res://dynamic/5_title_screen/menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
 
 [display]
 
 window/size/viewport_width=1200
 window/size/viewport_height=650
+window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 
 [filesystem]
 
@@ -56,4 +58,5 @@ left={
 2d_physics/layer_1="map"
 2d_physics/layer_2="player"
 2d_physics/layer_3="enemy"
+2d_physics/layer_4="attack"
 2d_physics/layer_6="collision"
