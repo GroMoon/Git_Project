@@ -16,3 +16,7 @@ func _process(_delta):
 func _on_resume_pressed():
 	get_tree().paused = false
 	pause_panel.visible = false
+
+# menu(메인메뉴) 버튼 누를 때
+func _on_menu_pressed():
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")

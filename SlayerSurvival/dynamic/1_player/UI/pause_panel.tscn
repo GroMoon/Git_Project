@@ -33,6 +33,7 @@ offset_bottom = 303.0
 text = "메인화면"
 
 [node name="menu" type="Button" parent="."]
+layout_mode = 0
 offset_left = 192.0
 offset_top = 144.0
 offset_right = 354.0
