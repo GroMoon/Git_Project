@@ -34,8 +34,7 @@ func _ready():
 	$CollisionShape2D.scale.y = character.scale.y
 	
 	if character.velocity.x < 0:
-		global_position = character.global_position + Vector2(-30, -10)
-		$AnimatedSprite2D.flip_h = true
+		global_position = character.global_position + Vector2(-30, -10) #TODO offset으로 말고 캐릭터의 파라미터로 수정필요
 	else:
 		global_position = character.global_position + Vector2(30, -10)
 	

@@ -99,18 +99,22 @@ drag_bottom_margin = 0.1
 wait_time = 1.5
 autostart = true
 
-[node name="Healthbar" parent="." instance=ExtResource("13_wpqx2")]
+[node name="BaseUI" parent="." instance=ExtResource("13_wpqx2")]
 
-[node name="HpBar" parent="Healthbar" index="0"]
+[node name="HpBar" parent="BaseUI" index="0"]
 anchor_top = -0.0246154
 offset_right = 39.0
 offset_bottom = 9.5
 
-[node name="PausePanel" parent="Healthbar" index="1"]
+[node name="PausePanel" parent="BaseUI" index="1"]
 offset_left = -265.0
 offset_top = -236.0
 offset_right = -265.0
 offset_bottom = -236.0
+
+[node name="menu" parent="BaseUI/PausePanel" index="2"]
+offset_left = 0.0
+offset_right = 162.0
 
 [node name="test" type="Node2D" parent="."]
 script = ExtResource("13_ng0pk")
@@ -126,5 +130,5 @@ stream = ExtResource("16_jb6ls")
 
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
-[editable path="Healthbar"]
-[editable path="Healthbar/PausePanel"]
+[editable path="BaseUI"]
+[editable path="BaseUI/PausePanel"]

@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+# TODO 주석들 다 옆에 있는게 맞는거 같고
 # 적 이동 속도
 var move_speed = 100
 # slime (플레이어) 노드에 대한 참조
@@ -12,6 +12,7 @@ func _ready():
 	player = get_parent().get_parent().get_parent().get_node("Slime")  # 경로는 상황에 맞게 변경
 
 func _physics_process(_delta):
+	# TODO 주석 정리 필요
 	# 플레이어가 존재하면 그 위치로 움직임
 	if player:
 		# 플레이어와 적 사이의 방향 계산

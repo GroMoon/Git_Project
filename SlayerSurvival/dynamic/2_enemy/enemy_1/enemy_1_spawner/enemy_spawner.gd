@@ -1,10 +1,11 @@
 extends Node2D
-
+#TODO 안쓰는 코드 삭제
+#TODO @export, @onready가 무엇이고 tscn을 불러오기 가장 좋은 방법을 통일
 @export var enemy_path: String = "res://dynamic/2_enemy/enemy_1/enemy_type_a.tscn"
 @export var spawn_radius: float = 300  # 캐릭터 주위에서 적이 생성될 반경
 # @onready var nodes_in_group = get_tree().get_nodes_in_group("enemy_spawner")
 @onready var character = get_parent().get_parent().get_node('Slime')
-
+#TODO _ready함수 안쓰더라도 pass로 다 넣기
 func _physics_process(_delta):
 	#print(character.global_position)
 	pass

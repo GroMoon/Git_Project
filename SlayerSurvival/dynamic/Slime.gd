@@ -15,10 +15,10 @@ var sword_1_level = 1
 @onready var damagetimer = get_node("DamageTimer")
 var invincibility_flag
 # GUI
-@onready var hp_bar = get_node("Healthbar/HpBar")
+@onready var hp_bar = get_node("BaseUI/HpBar")
 # hp 설정 (체력 value 관리)
 var max_hp = 50.0
-var hp = max_hp:
+var hp = max_hp:	#TODO 왜 변수가 함수처럼 쓰이는지 어떤 경우 그렇게 쓰이는지 확인 필요
 	set(value):
 		hp = value
 		hp_bar.max_value = max_hp
@@ -32,12 +32,12 @@ func _ready():
 	global_position = viewport_size / 2
 	
 	# 체력 바 위치 관리 (global_position 이용)
-	hp_bar.global_position = global_position + Vector2(-8, 15)
+	hp_bar.global_position = global_position + Vector2(-8, 15) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
 
 	# 초기 이동 방향 설정
 	set_random_direction()
 
-func _process(delta):
+func _process(delta):	#TODO automove 알고리즘 삭제 
 	# 키보드 입력 확인
 	if Input.is_action_pressed("right") or Input.is_action_pressed("left") or Input.is_action_pressed("up") or Input.is_action_pressed("down"):
 		idle_timer = 0.0
@@ -103,11 +103,11 @@ func set_random_direction():
 	#print("New mov direction: ", move_direction)
 
 # Enemy 충돌 시
-func Enemy_Collision(damage):
+func Enemy_Collision(damage):	#TODO 함수 이름은 동사로 시작, 다 소문자
 	if invincibility_flag == true:
 		hp -= damage
 		print("현재 체력 : ", hp)		# 체력 디버깅
-		# 피해 입으면 컬러 변경(빨간색)
+		# 피해 입으면 컬러 변경(빨간색) #TODO 주석 처리 해당하는 줄 옆에
 		$AnimatedSprite2D.modulate = Color(1, 0, 0)
 		invincibility_flag = false
 		damagetimer.start()
