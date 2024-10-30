@@ -14,8 +14,10 @@ var sword_1_level = 1
 # Damage
 @onready var damagetimer = get_node("DamageTimer")
 var invincibility_flag
+
 # GUI
 @onready var hp_bar = get_node("BaseUI/HpBar")
+
 # hp 설정 (체력 value 관리)
 var max_hp = 50.0
 var hp = max_hp:	#TODO 왜 변수가 함수처럼 쓰이는지 어떤 경우 그렇게 쓰이는지 확인 필요
@@ -62,6 +64,7 @@ func _physics_process(delta):
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
 		$AnimatedSprite2D.play("idle")
+		
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
@@ -102,23 +105,21 @@ func set_random_direction():
 	#? for debug
 	#print("New mov direction: ", move_direction)
 
-# Enemy 충돌 시
-func Enemy_Collision(damage):	#TODO 함수 이름은 동사로 시작, 다 소문자
+# Enemy 충돌 처리
+func process_collision_enemy(damage):
 	if invincibility_flag == true:
 		hp -= damage
-		print("현재 체력 : ", hp)		# 체력 디버깅
-		# 피해 입으면 컬러 변경(빨간색) #TODO 주석 처리 해당하는 줄 옆에
-		$AnimatedSprite2D.modulate = Color(1, 0, 0)
+		#print("현재 체력 : ", hp)		# 체력 디버깅
+		$AnimatedSprite2D.modulate = Color(1, 0, 0)		# 피해 입으면 컬러 변경(빨간색)
 		invincibility_flag = false
 		damagetimer.start()
 	
 	# die (hp <= 0)
 	if hp <= 0:
-		# gameover sound
 		$gameover.play()
 		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
-# 피해 입은 후 timer 지나면 원래 컬러로
+# 피해 입은 후(damage  timer timeout)
 func _on_damage_timer_timeout():
 	invincibility_flag = true
-	$AnimatedSprite2D.modulate = Color(1, 1, 1)
+	$AnimatedSprite2D.modulate = Color(1, 1, 1)		# 원래 컬러로

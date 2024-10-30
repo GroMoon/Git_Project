@@ -100,6 +100,7 @@ wait_time = 1.5
 autostart = true
 
 [node name="BaseUI" parent="." instance=ExtResource("13_wpqx2")]
+metadata/_edit_use_anchors_ = true
 
 [node name="HpBar" parent="BaseUI" index="0"]
 anchor_top = -0.0246154
@@ -107,14 +108,23 @@ offset_right = 39.0
 offset_bottom = 9.5
 
 [node name="PausePanel" parent="BaseUI" index="1"]
-offset_left = -265.0
-offset_top = -236.0
-offset_right = -265.0
-offset_bottom = -236.0
+offset_left = -272.0
+offset_top = -288.0
+offset_right = 272.0
+offset_bottom = 288.0
+
+[node name="Pause" parent="BaseUI/PausePanel" index="0"]
+metadata/_edit_use_anchors_ = true
+
+[node name="Resume" parent="BaseUI/PausePanel" index="1"]
+metadata/_edit_use_anchors_ = true
 
 [node name="menu" parent="BaseUI/PausePanel" index="2"]
-offset_left = 0.0
-offset_right = 162.0
+offset_left = 193.0
+offset_top = 220.0
+offset_right = 355.0
+offset_bottom = 283.0
+metadata/_edit_use_anchors_ = true
 
 [node name="test" type="Node2D" parent="."]
 script = ExtResource("13_ng0pk")
