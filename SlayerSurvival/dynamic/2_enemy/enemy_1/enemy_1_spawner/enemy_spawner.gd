@@ -1,13 +1,11 @@
 extends Node2D
-#TODO 안쓰는 코드 삭제
+
 #TODO @export, @onready가 무엇이고 tscn을 불러오기 가장 좋은 방법을 통일
-@export var enemy_path: String = "res://dynamic/2_enemy/enemy_1/enemy_type_a.tscn"
-@export var spawn_radius: float = 300  # 캐릭터 주위에서 적이 생성될 반경
-# @onready var nodes_in_group = get_tree().get_nodes_in_group("enemy_spawner")
-@onready var character = get_parent().get_parent().get_node('Slime')
-#TODO _ready함수 안쓰더라도 pass로 다 넣기
+@export var enemy_path: String  = "res://dynamic/2_enemy/enemy_1/enemy_type_a.tscn"
+@export var spawn_radius: float = 300  	# 캐릭터 주위에서 적이 생성될 반경
+@onready var character          = get_parent().get_parent().get_node('Slime')
+
 func _physics_process(_delta):
-	#print(character.global_position)
 	pass
 
 # 적을 스폰하는 함수
@@ -21,12 +19,8 @@ func spawn_enemy():
 		
 		# 캐릭터 주변 반경에서 랜덤 위치 생성
 		var angle = randf() * PI * 2  # 0부터 360도 사이의 랜덤 각도
-		# var distance = randf_range(0, spawn_radius)
 		var distance = spawn_radius
 		var offset = Vector2(cos(angle), sin(angle)) * distance
-		
-		#print("character")
-		#print(character.global_position)
 		
 		# 적의 위치를 캐릭터 위치 + 랜덤 오프셋으로 설정
 		enemy_instance.global_position = character.global_position + offset
