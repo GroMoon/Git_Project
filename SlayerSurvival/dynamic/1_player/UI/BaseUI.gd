@@ -30,4 +30,5 @@ func _on_resume_pressed():
 # menu(메인메뉴) 버튼 누를 때
 func _on_menu_pressed():
 	pause_flag = !pause_flag
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
