@@ -99,6 +99,15 @@ drag_bottom_margin = 0.1
 wait_time = 1.5
 autostart = true
 
+[node name="test" type="Node2D" parent="."]
+script = ExtResource("13_ng0pk")
+
+[node name="attack" parent="." instance=ExtResource("14_m7ikp")]
+
+[node name="knife_sound" type="AudioStreamPlayer2D" parent="attack"]
+stream = ExtResource("15_ukrxv")
+volume_db = -5.0
+
 [node name="BaseUI" parent="." instance=ExtResource("13_wpqx2")]
 process_mode = 3
 metadata/_edit_use_anchors_ = true
@@ -127,15 +136,6 @@ offset_top = 220.0
 offset_right = 355.0
 offset_bottom = 283.0
 metadata/_edit_use_anchors_ = true
-
-[node name="test" type="Node2D" parent="."]
-script = ExtResource("13_ng0pk")
-
-[node name="attack" parent="." instance=ExtResource("14_m7ikp")]
-
-[node name="knife_sound" type="AudioStreamPlayer2D" parent="attack"]
-stream = ExtResource("15_ukrxv")
-volume_db = -5.0
 
 [node name="gameover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_jb6ls")
