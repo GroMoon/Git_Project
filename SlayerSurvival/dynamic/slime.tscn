@@ -100,6 +100,7 @@ wait_time = 1.5
 autostart = true
 
 [node name="BaseUI" parent="." instance=ExtResource("13_wpqx2")]
+process_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="HpBar" parent="BaseUI" index="0"]
@@ -108,6 +109,7 @@ offset_right = 39.0
 offset_bottom = 9.5
 
 [node name="PausePanel" parent="BaseUI" index="1"]
+process_mode = 0
 offset_left = -272.0
 offset_top = -288.0
 offset_right = 272.0
