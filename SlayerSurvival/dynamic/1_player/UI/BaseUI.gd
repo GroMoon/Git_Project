@@ -9,9 +9,6 @@ func _ready():
 
 func _process(_delta):
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
-	# if Input.is_action_just_pressed("pause"):
-	# 	pause_panel.visible = true
-	# 	get_tree().paused = true
 	check_pause_pressed()
 	if pause_flag:
 		pause_panel.visible = true
@@ -23,7 +20,6 @@ func _process(_delta):
 func check_pause_pressed():
 	if Input.is_action_just_pressed("pause"):
 		pause_flag = !pause_flag
-		print("pause flag : ", pause_flag)
 
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():
