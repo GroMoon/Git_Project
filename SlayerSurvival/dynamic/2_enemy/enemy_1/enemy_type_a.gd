@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+var health = 10				# 적 체력
 var move_speed = 100		# 적 이동 속도
 var player					# slime (플레이어) 노드에 대한 참조
 var damage = 5				# 적 데미지
@@ -25,7 +26,14 @@ func _physics_process(_delta):
 	else:
 		$AnimatedSprite2D.play("enemy_type_A")
 
-
-# Player가 구역 안에 닿을 때 실행
+# Player가 구역 안에 닿을 때 실행 / body : tilemap, PhysicsBody2D와 상호작용
 func _on_collision_sensor_body_entered(body):
 	body.process_collision_enemy(damage)
+
+# area 구역에 들어왔을 때 실행
+func _on_collision_sensor_area_entered(area):
+	if area.is_in_group("attack"):
+		health -= area.damage			# TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
+		if health <= 0:
+			queue_free()
+		print("enemyHP : ", health)		# Enemy 체력 디버깅
