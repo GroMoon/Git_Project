@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=4 format=3 uid="uid://sxradkvyaick"]
 
+[ext_resource type="Script" path="res://dynamic/1_player/UI/BaseUI.gd" id="1_j5gas"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI/health_bar/Hp_Bar.tscn" id="1_wcd45"]
+[ext_resource type="PackedScene" uid="uid://dtljeado5ue3p" path="res://dynamic/1_player/UI/pause_panel.tscn" id="2_w0nwt"]
 
-[node name="UI" type="Control"]
+[node name="BaseUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_j5gas")
 
 [node name="HpBar" parent="." instance=ExtResource("1_wcd45")]
 unique_name_in_owner = false
@@ -23,3 +26,27 @@ offset_right = -35.0
 offset_bottom = -14.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="PausePanel" parent="." instance=ExtResource("2_w0nwt")]
+process_mode = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+offset_top = 80.0
+offset_right = -264.0
+offset_bottom = -570.0
+
+[node name="Resume" parent="PausePanel" index="1"]
+offset_top = 120.0
+offset_bottom = 183.0
+text = "돌아가기"
+
+[node name="menu" parent="PausePanel" index="2"]
+offset_top = 224.0
+offset_bottom = 287.0
+text = "메인메뉴"
+
+[connection signal="pressed" from="PausePanel/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PausePanel/menu" to="." method="_on_menu_pressed"]
+
+[editable path="PausePanel"]

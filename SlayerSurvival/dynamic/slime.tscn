@@ -99,13 +99,6 @@ drag_bottom_margin = 0.1
 wait_time = 1.5
 autostart = true
 
-[node name="Healthbar" parent="." instance=ExtResource("13_wpqx2")]
-
-[node name="HpBar" parent="Healthbar" index="0"]
-anchor_top = -0.0246154
-offset_right = 39.0
-offset_bottom = 9.5
-
 [node name="test" type="Node2D" parent="."]
 script = ExtResource("13_ng0pk")
 
@@ -115,9 +108,39 @@ script = ExtResource("13_ng0pk")
 stream = ExtResource("15_ukrxv")
 volume_db = -5.0
 
+[node name="BaseUI" parent="." instance=ExtResource("13_wpqx2")]
+process_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="HpBar" parent="BaseUI" index="0"]
+anchor_top = -0.0246154
+offset_right = 39.0
+offset_bottom = 9.5
+
+[node name="PausePanel" parent="BaseUI" index="1"]
+process_mode = 0
+offset_left = -272.0
+offset_top = -288.0
+offset_right = 272.0
+offset_bottom = 288.0
+
+[node name="Pause" parent="BaseUI/PausePanel" index="0"]
+metadata/_edit_use_anchors_ = true
+
+[node name="Resume" parent="BaseUI/PausePanel" index="1"]
+metadata/_edit_use_anchors_ = true
+
+[node name="menu" parent="BaseUI/PausePanel" index="2"]
+offset_left = 193.0
+offset_top = 220.0
+offset_right = 355.0
+offset_bottom = 283.0
+metadata/_edit_use_anchors_ = true
+
 [node name="gameover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_jb6ls")
 
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
-[editable path="Healthbar"]
+[editable path="BaseUI"]
+[editable path="BaseUI/PausePanel"]

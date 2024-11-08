@@ -1,11 +1,8 @@
 extends CharacterBody2D
 
-# 적 이동 속도
-var move_speed = 100
-# slime (플레이어) 노드에 대한 참조
-var player
-# 적 데미지
-var damage = 5
+var move_speed = 100		# 적 이동 속도
+var player					# slime (플레이어) 노드에 대한 참조
+var damage = 5				# 적 데미지
 
 func _ready():
 	# slime 노드 찾기 (예: 플레이어 노드가 "Slime"이라고 가정)
@@ -15,11 +12,9 @@ func _physics_process(_delta):
 	# 플레이어가 존재하면 그 위치로 움직임
 	if player:
 		# 플레이어와 적 사이의 방향 계산
-		var direction = (player.position - position).normalized()
-		
+		var direction = (player.position - position).normalized()		
 		# 그 방향으로 이동
-		velocity = direction * move_speed
-		
+		velocity = direction * move_speed		
 		# 이동 적용
 		move_and_slide()
 
@@ -31,6 +26,6 @@ func _physics_process(_delta):
 		$AnimatedSprite2D.play("enemy_type_A")
 
 
-# Player 가 구역 안에 닿을 때 실행
+# Player가 구역 안에 닿을 때 실행
 func _on_collision_sensor_body_entered(body):
-	body.Enemy_Collision(damage)
+	body.process_collision_enemy(damage)
