@@ -45,7 +45,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmrvj"]
 size = Vector2(289, 319)
 
-[node name="Sword1" type="Area2D"]
+[node name="Sword1" type="Area2D" groups=["attack"]]
+collision_layer = 8
+collision_mask = 4
 script = ExtResource("1_d77cr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
