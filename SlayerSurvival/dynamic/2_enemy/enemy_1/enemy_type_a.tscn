@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://c13n4n14mdj5q"]
+
+[ext_resource type="Script" path="res://dynamic/2_enemy/enemy_1/enemy_type_a.gd" id="1_crodv"]
+[ext_resource type="Texture2D" uid="uid://b0hf0c72hr1b3" path="res://dynamic/2_enemy/enemy_1/image/ghost.png" id="1_vdv45"]
+[ext_resource type="Texture2D" uid="uid://dyu34mtwki7ua" path="res://dynamic/2_enemy/enemy_1/image/ghost_normal.png" id="2_m80ss"]
+[ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="4_u1rsp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m2asl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_vdv45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m80ss")
+}],
+"loop": true,
+"name": &"enemy_type_A",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7cvvj"]
+size = Vector2(33.3333, 33.3333)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d0kji"]
+radius = 7.0
+height = 16.0
+
+[node name="enemy_type_A" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
+motion_mode = 1
+script = ExtResource("1_crodv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.3, 0.268)
+sprite_frames = SubResource("SpriteFrames_m2asl")
+animation = &"enemy_type_A"
+frame_progress = 0.612064
+speed_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.78814e-07, -1.19209e-07)
+scale = Vector2(0.3, 0.3)
+shape = SubResource("RectangleShape2D_7cvvj")
+
+[node name="collision_sensor" parent="." instance=ExtResource("4_u1rsp")]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="collision_sensor" index="0"]
+shape = SubResource("CapsuleShape2D_d0kji")
+
+[connection signal="body_entered" from="collision_sensor" to="." method="_on_collision_sensor_body_entered"]
+
+[editable path="collision_sensor"]

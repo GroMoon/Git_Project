@@ -1,0 +1,13 @@
+diff a/SlayerSurvival/menu.tscn b/SlayerSurvival/menu.tscn	(rejected hunks)
+@@ -81,6 +81,11 @@
+ offset_bottom = 300.0
+ theme_override_font_sizes/font_size = 35
+ text = "상 점"
++script = ExtResource("2_b8xor")
++
++[node name="Button_sound" type="AudioStreamPlayer2D" parent="ColorRect/Store"]
++stream = ExtResource("3_2eahy")
++volume_db = 5.0
+ 
+ [node name="Setting" type="Button" parent="ColorRect"]
+ layout_mode = 0
