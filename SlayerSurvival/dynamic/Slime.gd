@@ -19,7 +19,7 @@ var invincibility_flag
 @onready var hp_bar = get_node("BaseUI/HpBar")
 
 # hp 설정 (체력 value 관리)
-var max_hp = 50.0
+var max_hp = 10.0
 var hp = max_hp:	#TODO 왜 변수가 함수처럼 쓰이는지 어떤 경우 그렇게 쓰이는지 확인 필요
 	set(value):
 		hp = value
@@ -85,6 +85,7 @@ func process_collision_enemy(damage):
 	# die (hp <= 0)
 	if hp <= 0:
 		$gameover.play()
+		await get_tree().create_timer($gameover.stream.get_length()).timeout
 		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 피해 입은 후(damage  timer timeout)
