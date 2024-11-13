@@ -85,6 +85,7 @@ func process_collision_enemy(damage):
 	# die (hp <= 0)
 	if hp <= 0:
 		$gameover.play()
+		await get_tree().create_timer($gameover.stream.get_length()).timeout
 		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 피해 입은 후(damage  timer timeout)
