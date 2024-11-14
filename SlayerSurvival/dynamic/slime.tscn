@@ -108,39 +108,20 @@ script = ExtResource("13_ng0pk")
 stream = ExtResource("15_ukrxv")
 volume_db = -5.0
 
-[node name="BaseUI" parent="." instance=ExtResource("13_wpqx2")]
-process_mode = 3
-metadata/_edit_use_anchors_ = true
-
-[node name="HpBar" parent="BaseUI" index="0"]
-anchor_top = -0.0246154
-offset_right = 39.0
-offset_bottom = 9.5
-
-[node name="PausePanel" parent="BaseUI" index="1"]
-process_mode = 0
-offset_left = -272.0
-offset_top = -288.0
-offset_right = 272.0
-offset_bottom = 288.0
-
-[node name="Pause" parent="BaseUI/PausePanel" index="0"]
-metadata/_edit_use_anchors_ = true
-
-[node name="Resume" parent="BaseUI/PausePanel" index="1"]
-metadata/_edit_use_anchors_ = true
-
-[node name="menu" parent="BaseUI/PausePanel" index="2"]
-offset_left = 193.0
-offset_top = 220.0
-offset_right = 355.0
-offset_bottom = 283.0
-metadata/_edit_use_anchors_ = true
-
 [node name="gameover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_jb6ls")
 
+[node name="UI_Layer" type="CanvasLayer" parent="."]
+
+[node name="BaseUI" parent="UI_Layer" instance=ExtResource("13_wpqx2")]
+
+[node name="Exp_Bar" parent="UI_Layer/BaseUI" index="1"]
+offset_left = 1.0
+offset_top = 1.79385
+offset_right = 1198.0
+offset_bottom = 13.7938
+
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
-[editable path="BaseUI"]
-[editable path="BaseUI/PausePanel"]
+[editable path="UI_Layer/BaseUI"]
+[editable path="UI_Layer/BaseUI/PausePanel"]

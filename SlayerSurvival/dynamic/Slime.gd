@@ -16,7 +16,7 @@ var sword_1_level = 1
 var invincibility_flag
 
 # GUI
-@onready var hp_bar = get_node("BaseUI/HpBar")
+@onready var hp_bar = get_node("UI_Layer/BaseUI/HpBar")
 
 # hp 설정 (체력 value 관리)
 var max_hp = 50.0
@@ -34,7 +34,7 @@ func _ready():
 	global_position = viewport_size / 2
 	
 	# 체력 바 위치 관리 (global_position 이용)
-	hp_bar.global_position = global_position + Vector2(-8, 15) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
+	hp_bar.global_position = global_position + Vector2(-23, 30) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
 
 func _physics_process(_delta):
 	# 키보드 입력
