@@ -12,11 +12,11 @@ var move_direction = Vector2.ZERO
 var sword_1_level = 1
 
 # Damage
-@onready var damagetimer = get_node("DamageTimer")
+@onready var damagetimer = get_node("PlayerSet/DamageTimer")
 var invincibility_flag
 
 # GUI
-@onready var hp_bar = get_node("UI_Layer/BaseUI/HpBar")
+@onready var hp_bar = get_node("PlayerSet/UI_Layer/BaseUI/HpBar")
 
 # hp 설정 (체력 value 관리)
 var max_hp = 50.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bhkutx2hei60b"]
+[gd_scene load_steps=16 format=3 uid="uid://bhkutx2hei60b"]
 
 [ext_resource type="Script" path="res://dynamic/Slime.gd" id="1_v0mq6"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://dynamic/slime/slime_jump_1.png" id="2_4k3av"]
@@ -12,11 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://c3jkq4ym28lro" path="res://dynamic/slime/slime_jump_9.png" id="10_qxa6m"]
 [ext_resource type="Texture2D" uid="uid://uhum03wfpdq7" path="res://dynamic/slime/slime_jump_10.png" id="11_xk36c"]
 [ext_resource type="Texture2D" uid="uid://caajsnyl8bitk" path="res://dynamic/slime/slime_jump_11.png" id="12_ktqxp"]
-[ext_resource type="Script" path="res://dynamic/test.gd" id="13_ng0pk"]
-[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="13_wpqx2"]
-[ext_resource type="PackedScene" uid="uid://dxtu82qvk26e2" path="res://dynamic/3_attack/attack.tscn" id="14_m7ikp"]
-[ext_resource type="AudioStream" uid="uid://dhh80i0r7funi" path="res://static/audio/weapon/sword1/sword_sound_2.wav" id="15_ukrxv"]
-[ext_resource type="AudioStream" uid="uid://s2xmsk3eh8gv" path="res://static/audio/player/game_over/gameover_2.wav" id="16_jb6ls"]
+[ext_resource type="PackedScene" uid="uid://d2ejkdip0rc3q" path="res://dynamic/1_player/playerSet.tscn" id="13_o6uvo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vinfm"]
 animations = [{
@@ -88,40 +84,4 @@ position = Vector2(0.500027, 18.25)
 scale = Vector2(3.3, 3.3)
 shape = SubResource("RectangleShape2D_ix0sy")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
-
-[node name="DamageTimer" type="Timer" parent="."]
-wait_time = 1.5
-autostart = true
-
-[node name="test" type="Node2D" parent="."]
-script = ExtResource("13_ng0pk")
-
-[node name="attack" parent="." instance=ExtResource("14_m7ikp")]
-
-[node name="knife_sound" type="AudioStreamPlayer2D" parent="attack"]
-stream = ExtResource("15_ukrxv")
-volume_db = -5.0
-
-[node name="gameover" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("16_jb6ls")
-
-[node name="UI_Layer" type="CanvasLayer" parent="."]
-
-[node name="BaseUI" parent="UI_Layer" instance=ExtResource("13_wpqx2")]
-
-[node name="Exp_Bar" parent="UI_Layer/BaseUI" index="1"]
-offset_left = 1.0
-offset_top = 1.79385
-offset_right = 1198.0
-offset_bottom = 13.7938
-
-[connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
-
-[editable path="UI_Layer/BaseUI"]
-[editable path="UI_Layer/BaseUI/PausePanel"]
+[node name="PlayerSet" parent="." instance=ExtResource("13_o6uvo")]

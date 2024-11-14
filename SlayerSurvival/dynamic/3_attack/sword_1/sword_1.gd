@@ -1,7 +1,7 @@
 extends Area2D
 
-@onready var character = get_parent().get_parent()
-@onready var animated_sprite = get_parent().get_parent().get_node("AnimatedSprite2D")
+@onready var character = get_parent().get_parent().get_parent()
+@onready var animated_sprite = get_parent().get_parent().get_parent().get_node("AnimatedSprite2D")
 
 var level       = 1
 var damage      = 1
