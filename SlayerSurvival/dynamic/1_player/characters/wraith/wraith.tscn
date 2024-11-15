@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://gtxfwps0nk07"]
+[gd_scene load_steps=28 format=3 uid="uid://gtxfwps0nk07"]
 
 [ext_resource type="Texture2D" uid="uid://c1pd8bnh673ra" path="res://dynamic/1_player/characters/wraith/PNG/Wraith_03/PNG Sequences/Idle Blink/Wraith_03_Idle Blinking_000.png" id="1_gysdx"]
+[ext_resource type="Script" path="res://dynamic/1_player/characters/wraith/wraith.gd" id="1_io5uj"]
 [ext_resource type="Texture2D" uid="uid://nep588rke1dn" path="res://dynamic/1_player/characters/wraith/PNG/Wraith_03/PNG Sequences/Idle Blink/Wraith_03_Idle Blinking_001.png" id="2_s34i7"]
 [ext_resource type="Texture2D" uid="uid://dlwooyo8t7mqe" path="res://dynamic/1_player/characters/wraith/PNG/Wraith_03/PNG Sequences/Idle Blink/Wraith_03_Idle Blinking_002.png" id="3_hfyva"]
 [ext_resource type="Texture2D" uid="uid://dbl1cckr10fuj" path="res://dynamic/1_player/characters/wraith/PNG/Wraith_03/PNG Sequences/Idle Blink/Wraith_03_Idle Blinking_003.png" id="4_alotc"]
@@ -115,6 +116,7 @@ radius = 84.0
 height = 248.0
 
 [node name="Wraith" type="CharacterBody2D"]
+script = ExtResource("1_io5uj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_h3lf2")
