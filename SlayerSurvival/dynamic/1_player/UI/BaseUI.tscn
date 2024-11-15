@@ -13,7 +13,7 @@ offset_right = 1200.0
 offset_bottom = 650.0
 script = ExtResource("1_j5gas")
 
-[node name="HpBar" parent="." instance=ExtResource("1_wcd45")]
+[node name="Hp_Bar" parent="." instance=ExtResource("1_wcd45")]
 unique_name_in_owner = false
 layout_mode = 0
 offset_left = 584.0

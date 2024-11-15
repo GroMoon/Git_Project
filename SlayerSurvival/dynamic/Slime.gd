@@ -16,7 +16,7 @@ var sword_1_level = 1
 var invincibility_flag
 
 # GUI
-@onready var hp_bar = get_node("PlayerSet/UI_Layer/BaseUI/HpBar")
+@onready var hp_bar = get_node("PlayerSet/UI_Layer/BaseUI/Hp_Bar")
 
 # hp 설정 (체력 value 관리)
 var max_hp = 50.0
