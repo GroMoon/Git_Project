@@ -15,8 +15,8 @@ var move_direction = Vector2.ZERO
 var sword_1_level = 1
 
 # Damage
-# @onready var damagetimer
-var invincibility_flag = true
+@onready var damagetimer
+var invincibility_flag = false
 
 # GUI
 @onready var hp_bar
@@ -36,7 +36,8 @@ func _ready():
 	playerset_instance = playerset.instantiate()
 	add_child(playerset_instance)
 	hp_bar = $PlayerSet/UI_Layer/BaseUI/Hp_Bar
-
+	damagetimer = $PlayerSet/DamageTimer
+	damagetimer.timeout.connect(_on_damage_timer_timeout)
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
@@ -83,12 +84,12 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
-	if invincibility_flag == true:
+	if invincibility_flag == false:
 		hp -= damage
 		print("현재 체력 : ", hp)		# 체력 디버깅
 		$AnimatedSprite2D.modulate = Color(1, 0, 0)		# 피해 입으면 컬러 변경(빨간색)
-		# invincibility_flag = false
-		# damagetimer.start()
+		invincibility_flag = true
+		damagetimer.start()
 	
 	# die (hp <= 0)
 	if hp <= 0:
@@ -96,7 +97,7 @@ func process_collision_enemy(damage):
 		await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
 		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
-# # 피해 입은 후(damage  timer timeout)
-# func _on_damage_timer_timeout():
-# 	invincibility_flag = true
-# 	$AnimatedSprite2D.modulate = Color(1, 1, 1)		# 원래 컬러로
+# 피해 입은 후(damage  timer timeout)
+func _on_damage_timer_timeout():
+	invincibility_flag = false
+	$AnimatedSprite2D.modulate = Color(1, 1, 1)		# 원래 컬러로
