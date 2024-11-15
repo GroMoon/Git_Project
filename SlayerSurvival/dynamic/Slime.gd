@@ -1,5 +1,14 @@
 extends CharacterBody2D
 
+# playerSet 인스턴스화
+@export var playerSet: String = "res://dynamic/1_player/playerSet.tscn"
+var scene_instance: Node
+func _init():
+	var packed_scene = load(playerSet)
+	if packed_scene:
+		scene_instance = packed_scene.instantiate()
+		add_child(scene_instance)
+
 const MOVE_SPEED    = 200
 const IDLE_TIME     = 2.0  # 정지 대기 시간 2초
 const MOVE_DURATION = 3.0  # 랜덤 방향으로 이동하는 시간 1초
@@ -13,7 +22,7 @@ var sword_1_level = 1
 
 # Damage
 @onready var damagetimer = get_node("PlayerSet/DamageTimer")
-var invincibility_flag
+var invincibility_flag = true
 
 # GUI
 @onready var hp_bar = get_node("PlayerSet/UI_Layer/BaseUI/Hp_Bar")
@@ -77,18 +86,18 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 func process_collision_enemy(damage):
 	if invincibility_flag == true:
 		hp -= damage
-		#print("현재 체력 : ", hp)		# 체력 디버깅
+		print("현재 체력 : ", hp)		# 체력 디버깅
 		$AnimatedSprite2D.modulate = Color(1, 0, 0)		# 피해 입으면 컬러 변경(빨간색)
-		invincibility_flag = false
+		# invincibility_flag = false
 		damagetimer.start()
 	
 	# die (hp <= 0)
 	if hp <= 0:
-		$gameover.play()
-		await get_tree().create_timer($gameover.stream.get_length()).timeout
+		$PlayerSet/gameover.play()
+		await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
 		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
-# 피해 입은 후(damage  timer timeout)
-func _on_damage_timer_timeout():
-	invincibility_flag = true
-	$AnimatedSprite2D.modulate = Color(1, 1, 1)		# 원래 컬러로
+# # 피해 입은 후(damage  timer timeout)
+# func _on_damage_timer_timeout():
+# 	invincibility_flag = true
+# 	$AnimatedSprite2D.modulate = Color(1, 1, 1)		# 원래 컬러로
