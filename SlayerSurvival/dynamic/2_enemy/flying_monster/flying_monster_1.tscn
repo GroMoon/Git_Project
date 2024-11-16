@@ -90,6 +90,8 @@ radius = 110.164
 radius = 129.004
 
 [node name="FlyingMonster1" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_8pgmr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -101,6 +103,8 @@ position = Vector2(54, 19)
 shape = SubResource("CircleShape2D_036gx")
 
 [node name="interaction_sensor" parent="." instance=ExtResource("19_52md7")]
+collision_layer = 5
+collision_mask = 10
 
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(55, 19)

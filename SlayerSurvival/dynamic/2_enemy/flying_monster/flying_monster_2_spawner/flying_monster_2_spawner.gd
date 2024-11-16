@@ -1,7 +1,7 @@
 extends Node2D
 
 #TODO @export, @onready가 무엇이고 tscn을 불러오기 가장 좋은 방법을 통일
-@export var enemy_path: String  = "res://dynamic/2_enemy/flying_monster/flying_monster_1.tscn"
+@export var enemy_path: String  = "res://dynamic/2_enemy/flying_monster/flying_monster_2.tscn"
 @export var spawn_radius: float = 300  	# 캐릭터 주위에서 적이 생성될 반경
 @onready var character          = get_parent().get_parent().get_node('Slime')
 
