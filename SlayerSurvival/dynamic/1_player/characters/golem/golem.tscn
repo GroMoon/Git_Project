@@ -140,6 +140,7 @@ radius = 108.0
 height = 330.0
 
 [node name="Golem" type="CharacterBody2D"]
+scale = Vector2(0.281984, 0.292227)
 collision_layer = 2
 collision_mask = 37
 motion_mode = 1

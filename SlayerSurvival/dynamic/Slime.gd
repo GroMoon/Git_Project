@@ -51,14 +51,12 @@ func _physics_process(_delta):
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
 
-
 	# 애니메이션 처리
 	if velocity.length() > 0:
 		$AnimatedSprite2D.play("move")
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
 		$AnimatedSprite2D.play("idle")
-		
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
@@ -90,12 +88,15 @@ func process_collision_enemy(damage):
 		$AnimatedSprite2D.modulate = Color(1, 0, 0)		# 피해 입으면 컬러 변경(빨간색)
 		invincibility_flag = true
 		damagetimer.start()
-	
+
 	# die (hp <= 0)
 	if hp <= 0:
-		$PlayerSet/gameover.play()
-		await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
-		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+		die_character()
+
+func die_character():
+	$PlayerSet/gameover.play()
+	await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 피해 입은 후(damage  timer timeout)
 func _on_damage_timer_timeout():

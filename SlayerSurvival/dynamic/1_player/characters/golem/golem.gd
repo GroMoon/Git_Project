@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+var playerset = preload("res://dynamic/1_player/playerSet.tscn")
+var playerset_instance
+
 const MOVE_SPEED    = 200
 const IDLE_TIME     = 2.0  # 정지 대기 시간 2초
 const MOVE_DURATION = 3.0  # 랜덤 방향으로 이동하는 시간 1초
@@ -11,48 +14,42 @@ var move_direction = Vector2.ZERO
 # weapon level
 var sword_1_level = 1
 
+# Damage
+@onready var damagetimer
+var invincibility_flag = false
+
 # GUI
-@onready var hp_bar = get_node("%Hp_Bar")
-# hp 설정 
+@onready var hp_bar
+
+# hp 설정 (체력 value 관리)
 var max_hp = 50.0
-var hp = max_hp:
+var hp = max_hp:	#TODO 왜 변수가 함수처럼 쓰이는지 어떤 경우 그렇게 쓰이는지 확인 필요
 	set(value):
 		hp = value
 		hp_bar.max_value = max_hp
 		hp_bar.value = hp
-		
 		if hp > max_hp:
 			hp = max_hp
-		if hp <= 0:
-			get_tree().change_scene_to_file("res://menu.tscn")
 
 func _ready():
+	# playerset 인스턴스화
+	playerset_instance = playerset.instantiate()
+	add_child(playerset_instance)
+	hp_bar = $PlayerSet/UI_Layer/BaseUI/Hp_Bar
+	damagetimer = $PlayerSet/DamageTimer
+	damagetimer.timeout.connect(_on_damage_timer_timeout)
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
-	hp_bar.global_position = global_position + Vector2(-25, 30)
+	
+	# 체력 바 위치 관리 (global_position 이용)
+	hp_bar.global_position = global_position + Vector2(-23, 30) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
 
-	# 초기 이동 방향 설정
-	set_random_direction()
-
-func _process(delta):
-	# 키보드 입력 확인
-	if Input.is_action_pressed("right") or Input.is_action_pressed("left") or Input.is_action_pressed("up") or Input.is_action_pressed("down"):
-		idle_timer = 0.0
-	else:
-		idle_timer += delta
-
-func _physics_process(delta):
-	if process_keyboard_input():
-		move_timer = 0.0  # 이동 타이머 초기화
-	else:
-		if idle_timer >= IDLE_TIME:
-			process_auto_movement(delta)
-
+func _physics_process(_delta):
+	# 키보드 입력
+	process_keyboard_input()
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
-	if is_on_wall() or is_on_floor():
-		set_random_direction()
 
 	# 애니메이션 처리
 	if velocity.length() > 0:
@@ -83,20 +80,25 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 		velocity = Vector2.ZERO
 		return false
 
-func process_auto_movement(delta):
-	move_timer += delta
-	if move_timer >= MOVE_DURATION:
-		set_random_direction()
-		move_timer = 0.0
+# Enemy 충돌 처리
+func process_collision_enemy(damage):
+	if invincibility_flag == false:
+		hp -= damage
+		print("현재 체력 : ", hp)		# 체력 디버깅
+		$AnimatedSprite2D.modulate = Color(1, 0, 0)		# 피해 입으면 컬러 변경(빨간색)
+		invincibility_flag = true
+		damagetimer.start()
 
-	# 랜덤 방향으로 이동
-	if move_direction != Vector2.ZERO:
-		velocity = move_direction * MOVE_SPEED
+	# die (hp <= 0)
+	if hp <= 0:
+		die_character()
 
-func set_random_direction():
-	# 무작위 방향 설정
-	var angle = randf() * 2 * PI  # 0에서 2*PI 사이의 각도
-	move_direction = Vector2(cos(angle), sin(angle)).normalized()
+func die_character():
+	$PlayerSet/gameover.play()
+	await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
-	#? for debug
-	#print("New move direction: ", move_direction)
+# 피해 입은 후(damage  timer timeout)
+func _on_damage_timer_timeout():
+	invincibility_flag = false
+	$AnimatedSprite2D.modulate = Color(1, 1, 1)		# 원래 컬러로
