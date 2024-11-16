@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+var playerset = preload("res://dynamic/1_player/playerSet.tscn")
+var playerset_instance
+
 const MOVE_SPEED    = 200
 const IDLE_TIME     = 2.0  # 정지 대기 시간 2초
 const MOVE_DURATION = 3.0  # 랜덤 방향으로 이동하는 시간 1초
@@ -12,11 +15,11 @@ var move_direction = Vector2.ZERO
 var sword_1_level = 1
 
 # Damage
-@onready var damagetimer = get_node("DamageTimer")
-var invincibility_flag
+@onready var damagetimer
+var invincibility_flag = false
 
 # GUI
-@onready var hp_bar = get_node("BaseUI/HpBar")
+@onready var hp_bar
 
 # hp 설정 (체력 value 관리)
 var max_hp = 50.0
@@ -29,12 +32,18 @@ var hp = max_hp:	#TODO 왜 변수가 함수처럼 쓰이는지 어떤 경우 그
 			hp = max_hp
 
 func _ready():
+	# playerset 인스턴스화
+	playerset_instance = playerset.instantiate()
+	add_child(playerset_instance)
+	hp_bar = $PlayerSet/UI_Layer/BaseUI/Hp_Bar
+	damagetimer = $PlayerSet/DamageTimer
+	damagetimer.timeout.connect(_on_damage_timer_timeout)
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
 	
 	# 체력 바 위치 관리 (global_position 이용)
-	hp_bar.global_position = global_position + Vector2(-8, 15) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
+	hp_bar.global_position = global_position + Vector2(-23, 30) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
 
 func _physics_process(_delta):
 	# 키보드 입력
@@ -75,19 +84,20 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
-	if invincibility_flag == true:
+	if invincibility_flag == false:
 		hp -= damage
-		#print("현재 체력 : ", hp)		# 체력 디버깅
+		print("현재 체력 : ", hp)		# 체력 디버깅
 		$AnimatedSprite2D.modulate = Color(1, 0, 0)		# 피해 입으면 컬러 변경(빨간색)
-		invincibility_flag = false
+		invincibility_flag = true
 		damagetimer.start()
 	
 	# die (hp <= 0)
 	if hp <= 0:
-		$gameover.play()
+		$PlayerSet/gameover.play()
+		await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
 		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 피해 입은 후(damage  timer timeout)
 func _on_damage_timer_timeout():
-	invincibility_flag = true
+	invincibility_flag = false
 	$AnimatedSprite2D.modulate = Color(1, 1, 1)		# 원래 컬러로

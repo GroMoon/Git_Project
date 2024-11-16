@@ -1,40 +1,52 @@
-[gd_scene load_steps=4 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=6 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI/BaseUI.gd" id="1_j5gas"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI/health_bar/Hp_Bar.tscn" id="1_wcd45"]
 [ext_resource type="PackedScene" uid="uid://dtljeado5ue3p" path="res://dynamic/1_player/UI/pause_panel.tscn" id="2_w0nwt"]
+[ext_resource type="PackedScene" uid="uid://cswgkwsq8gfan" path="res://dynamic/1_player/UI/exp_bar/Exp_Bar.tscn" id="3_bf304"]
+[ext_resource type="PackedScene" uid="uid://7hdonowfh837" path="res://dynamic/1_player/UI/gold/goldcount.tscn" id="4_h6h5n"]
 
 [node name="BaseUI" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1200.0
+offset_bottom = 650.0
 script = ExtResource("1_j5gas")
 
-[node name="HpBar" parent="." instance=ExtResource("1_wcd45")]
+[node name="Hp_Bar" parent="." instance=ExtResource("1_wcd45")]
 unique_name_in_owner = false
+layout_mode = 0
+offset_left = 584.0
+offset_top = 408.0
+offset_right = 639.0
+offset_bottom = 414.0
+
+[node name="Exp_Bar" parent="." instance=ExtResource("3_bf304")]
 layout_mode = 1
-anchor_left = 0.5
-anchor_top = 0.602308
-anchor_right = 0.561667
-anchor_bottom = 0.639231
-offset_left = -27.0
-offset_top = -4.5
-offset_right = -35.0
-offset_bottom = -14.5
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 0.0
+offset_top = -0.206154
+offset_bottom = 0.039999
+auto_translate = false
+
+[node name="GoldCount" parent="." instance=ExtResource("4_h6h5n")]
+layout_mode = 0
+offset_left = 1144.0
+offset_top = 14.0
+offset_right = 1200.0
+offset_bottom = 42.0
 
 [node name="PausePanel" parent="." instance=ExtResource("2_w0nwt")]
 process_mode = 3
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.5
-offset_top = 80.0
-offset_right = -264.0
-offset_bottom = -570.0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 344.0
+offset_top = 64.0
+offset_right = 872.0
+offset_bottom = 608.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Resume" parent="PausePanel" index="1"]
 offset_top = 120.0
