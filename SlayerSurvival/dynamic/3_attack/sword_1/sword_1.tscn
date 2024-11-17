@@ -51,13 +51,11 @@ collision_mask = 4
 script = ExtResource("1_d77cr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_co184")
 animation = &"idle"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(0.3, 0.3)
 shape = SubResource("RectangleShape2D_hmrvj")
 
 [node name="Timer" type="Timer" parent="."]

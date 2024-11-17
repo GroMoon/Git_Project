@@ -11,8 +11,8 @@ var direction   = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
-	print("sword_1.gd ready")
-	print(character.scale.x)
+	# print("sword_1.gd ready")
+	# print(character.scale.x)
 
 	match level:
 		1:
@@ -28,15 +28,19 @@ func _ready():
 			damage = 10
 			attack_size = 2.2
 
-	$AnimatedSprite2D.scale.x = character.scale.x
-	$AnimatedSprite2D.scale.y = character.scale.y
-	$CollisionShape2D.scale.x = character.scale.x
-	$CollisionShape2D.scale.y = character.scale.y
+	$AnimatedSprite2D.scale.x = 2
+	$AnimatedSprite2D.scale.y = 2
+	$CollisionShape2D.scale.x = 2
+	$CollisionShape2D.scale.y = 2
 	
+	# var character_width = animated_sprite.texture.get_size().x
+
 	if character.velocity.x < 0:
-		global_position = character.global_position + Vector2(-30, -10) #TODO offset으로 말고 캐릭터의 파라미터로 수정필요
+		# global_position = character.global_position + Vector2(-character_width/2, -10) #TODO offset으로 말고 캐릭터의 파라미터로 수정필요
+		global_position = character.global_position + Vector2(-30, -10)
 		$AnimatedSprite2D.flip_h = true
 	else:
+		# global_position = character.global_position + Vector2(character_width/2, -10)
 		global_position = character.global_position + Vector2(30, -10)
 	
 	$AnimatedSprite2D.play("idle")

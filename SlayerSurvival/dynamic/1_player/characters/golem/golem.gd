@@ -45,6 +45,11 @@ func _ready():
 	# 체력 바 위치 관리 (global_position 이용)
 	hp_bar.global_position = global_position + Vector2(-23, 30) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
 
+	# test
+	var collision_shape = $CollisionShape2D
+	var character_size = collision_shape.shape.radius
+	print(character_size)
+
 func _physics_process(_delta):
 	# 키보드 입력
 	process_keyboard_input()
