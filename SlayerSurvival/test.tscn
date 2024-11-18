@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://x8kdkwfnwtg4"]
+[gd_scene load_steps=6 format=3 uid="uid://x8kdkwfnwtg4"]
 
-[ext_resource type="PackedScene" uid="uid://bhkutx2hei60b" path="res://dynamic/slime.tscn" id="1_2nq6c"]
+[ext_resource type="Script" path="res://test.gd" id="1_vhu8y"]
 [ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://dynamic/4_world/map1/tile_map.tscn" id="2_ci5kd"]
 [ext_resource type="PackedScene" uid="uid://brl7x6dv6h7or" path="res://dynamic/2_enemy/flying_monster/flying_monster_1_spawner/flying_monster_1_spawner.tscn" id="3_8flww"]
 [ext_resource type="PackedScene" uid="uid://dse70xtlwr8du" path="res://dynamic/2_enemy/flying_monster/flying_monster_2_spawner/flying_monster_2_spawner.tscn" id="4_ad5oa"]
+[ext_resource type="PackedScene" uid="uid://xya4xva0d7vj" path="res://dynamic/5_title_screen/selcet_character/Select_Character.tscn" id="5_5yiak"]
 
 [node name="test" type="Node2D"]
+script = ExtResource("1_vhu8y")
 
 [node name="TileMap" parent="." instance=ExtResource("2_ci5kd")]
 
@@ -15,5 +17,13 @@
 
 [node name="flying_monster_2_spawner" parent="enemy_spawner" instance=ExtResource("4_ad5oa")]
 
-[node name="Slime" parent="." instance=ExtResource("1_2nq6c")]
-scale = Vector2(0.3, 0.3)
+[node name="Select_Character_Panel" parent="." instance=ExtResource("5_5yiak")]
+process_mode = 3
+
+[node name="Slayer_Survival" parent="Select_Character_Panel" index="1"]
+text = "Slayer_Survival"
+
+[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_pressed"]
+[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Golem" to="." method="_on_select_golem_pressed"]
+
+[editable path="Select_Character_Panel"]

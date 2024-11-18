@@ -7,7 +7,7 @@ var damage = 5				# 적 데미지
 
 func _ready():
 	# slime 노드 찾기 (예: 플레이어 노드가 "Slime"이라고 가정)
-	player = get_parent().get_parent().get_parent().get_node("Slime")  # 경로는 상황에 맞게 변경
+	player = get_parent().get_parent().get_parent().get_node("player")  # 경로는 상황에 맞게 변경
 
 func _physics_process(_delta):
 	# 플레이어가 존재하면 그 위치로 움직임

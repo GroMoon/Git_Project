@@ -45,12 +45,16 @@ func _ready():
 	# 체력 바 위치 관리 (global_position 이용)
 	hp_bar.global_position = global_position + Vector2(-23, 30) #TODO offset 방식 말고 뭔가 캐릭터의 파라미터 받아와서 하는 방식으로 
 
+	# test
+	var collision_shape = $CollisionShape2D
+	var character_size = collision_shape.shape.extents
+	print(character_size)
+
 func _physics_process(_delta):
 	# 키보드 입력
 	process_keyboard_input()
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
-
 
 	# 애니메이션 처리
 	if velocity.length() > 0:
@@ -58,7 +62,6 @@ func _physics_process(_delta):
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
 		$AnimatedSprite2D.play("idle")
-		
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
@@ -90,12 +93,15 @@ func process_collision_enemy(damage):
 		$AnimatedSprite2D.modulate = Color(1, 0, 0)		# 피해 입으면 컬러 변경(빨간색)
 		invincibility_flag = true
 		damagetimer.start()
-	
+
 	# die (hp <= 0)
 	if hp <= 0:
-		$PlayerSet/gameover.play()
-		await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
-		get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+		die_character()
+
+func die_character():
+	$PlayerSet/gameover.play()
+	await get_tree().create_timer($PlayerSet/gameover.stream.get_length()).timeout
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 피해 입은 후(damage  timer timeout)
 func _on_damage_timer_timeout():
