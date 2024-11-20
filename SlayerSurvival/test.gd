@@ -13,6 +13,7 @@ func _ready():
 func _process(_delta):
 	pass
 
+# 슬라임 버튼 누르면
 func _on_select_slime_pressed():
 	character_load = preload("res://dynamic/slime.tscn")
 	instance_character = character_load.instantiate()
@@ -21,6 +22,7 @@ func _on_select_slime_pressed():
 	get_tree().paused = false
 	select_panel.queue_free()
 
+# 골렘 버튼 누르면
 func _on_select_golem_pressed():
 	character_load = preload("res://dynamic/1_player/characters/golem/golem.tscn")
 	instance_character = character_load.instantiate()
@@ -28,3 +30,11 @@ func _on_select_golem_pressed():
 	add_child(instance_character)
 	get_tree().paused = false
 	select_panel.queue_free()
+
+# Slime 마우스 올리면
+func _on_select_slime_mouse_entered():
+	$Button_sound.play()
+
+# Golem 마우스 올리면
+func _on_select_golem_mouse_entered():
+	$Button_sound.play()

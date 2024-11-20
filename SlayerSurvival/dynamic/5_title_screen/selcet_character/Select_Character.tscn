@@ -1,17 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://xya4xva0d7vj"]
+[gd_scene load_steps=6 format=3 uid="uid://xya4xva0d7vj"]
 
-[ext_resource type="Texture2D" uid="uid://byxe6b8t35f05" path="res://dynamic/1_player/characters/golem/PNG/Golem_01/PNG Sequences/Idle/Golem_01_Idle_000.png" id="1_si78r"]
-[ext_resource type="StyleBox" uid="uid://4rtgaf6sc3gm" path="res://dynamic/5_title_screen/selcet_character/Select_Character_title.tres" id="1_yxm3o"]
+[ext_resource type="StyleBox" uid="uid://clv8l34xvofwk" path="res://dynamic/5_title_screen/selcet_character/Select_Character_Nornmal.tres" id="1_2r08d"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://dynamic/slime/slime_jump_1.png" id="2_2fag4"]
-[ext_resource type="FontFile" uid="uid://dxp5py6fm4n58" path="res://static/ui_image/Dimbo Italic.ttf" id="2_g5uo5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ae14"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ao3lg"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jb1sf"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5swti"]
+[ext_resource type="StyleBox" uid="uid://crljylwyjpvbx" path="res://dynamic/5_title_screen/selcet_character/Select_Character_Hover.tres" id="2_d7e3u"]
+[ext_resource type="Texture2D" uid="uid://cbnbm8x5aevkt" path="res://dynamic/1_player/characters/golem/PNG/Golem_01/PNG Sequences/Golem_01_custom.png" id="2_qmevs"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
 font_size = 83
@@ -20,48 +12,47 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Select_Character" type="Panel"]
 offset_right = 1200.0
-offset_bottom = 648.0
+offset_bottom = 651.0
+rotation = -0.000645014
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
-offset_right = 1207.0
-offset_bottom = 649.0
-color = Color(0.54902, 0.756863, 0.262745, 0.227451)
+offset_top = -1.0
+offset_right = 1198.0
+offset_bottom = 654.0
+color = Color(0.117647, 0.145098, 0.14902, 1)
 
 [node name="Select_Golem" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 249.0
-offset_top = 226.0
-offset_right = 989.0
-offset_bottom = 726.0
-scale = Vector2(0.125364, 0.184776)
-theme_override_font_sizes/font_size = 35
-theme_override_styles/normal = ExtResource("1_yxm3o")
-icon = ExtResource("1_si78r")
+offset_left = 256.0
+offset_top = 225.0
+offset_right = 337.0
+offset_bottom = 306.0
+scale = Vector2(1.15, 1.15)
+theme_override_styles/normal = ExtResource("1_2r08d")
+theme_override_styles/hover = ExtResource("2_d7e3u")
+icon = ExtResource("2_qmevs")
 icon_alignment = 1
+expand_icon = true
 
 [node name="Select_Slime" type="Button" parent="ColorRect"]
 layout_mode = 1
-offset_left = 109.0
+offset_left = 128.0
 offset_top = 225.0
-offset_right = 190.0
-offset_bottom = 305.0
-scale = Vector2(1.15018, 1.1626)
-theme_override_fonts/font = ExtResource("2_g5uo5")
-theme_override_styles/normal = ExtResource("1_yxm3o")
-theme_override_styles/hover = SubResource("StyleBoxFlat_1ae14")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ao3lg")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jb1sf")
-theme_override_styles/focus = SubResource("StyleBoxFlat_5swti")
+offset_right = 209.0
+offset_bottom = 306.0
+scale = Vector2(1.15, 1.15)
+theme_override_styles/normal = ExtResource("1_2r08d")
+theme_override_styles/hover = ExtResource("2_d7e3u")
 icon = ExtResource("2_2fag4")
 icon_alignment = 1
 
-[node name="Slayer_Survival" type="Label" parent="."]
+[node name="Select_Character" type="Label" parent="."]
 layout_mode = 0
-offset_left = 373.0
-offset_top = 27.0
-offset_right = 825.0
-offset_bottom = 156.0
+offset_left = 397.0
+offset_top = 40.0
+offset_right = 849.0
+offset_bottom = 169.0
 text = "캐릭터 선택"
 label_settings = SubResource("LabelSettings_b5exc")
 

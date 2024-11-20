@@ -142,7 +142,6 @@ volume_db = -5.0
 
 [connection signal="mouse_entered" from="ColorRect/Start_Button" to="." method="_on_start_button_mouse_entered"]
 [connection signal="pressed" from="ColorRect/Start_Button" to="." method="_on_start_button_pressed"]
-[connection signal="mouse_entered" from="ColorRect/Store_Button" to="." method="_on_store_mouse_entered"]
-[connection signal="mouse_entered" from="ColorRect/Store_Button" to="ColorRect/Store_Button" method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="ColorRect/Store_Button" to="." method="_on_store_button_mouse_entered"]
 [connection signal="mouse_entered" from="ColorRect/Setting_Button" to="." method="_on_setting_button_mouse_entered"]
 [connection signal="mouse_entered" from="ColorRect/Setting_Button" to="ColorRect/Setting_Button" method="_on_mouse_entered"]
