@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://xya4xva0d7vj"]
+[gd_scene load_steps=7 format=3 uid="uid://xya4xva0d7vj"]
 
 [ext_resource type="StyleBox" uid="uid://clv8l34xvofwk" path="res://dynamic/5_title_screen/selcet_character/Select_Character_Nornmal.tres" id="1_2r08d"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://dynamic/slime/slime_jump_1.png" id="2_2fag4"]
 [ext_resource type="StyleBox" uid="uid://crljylwyjpvbx" path="res://dynamic/5_title_screen/selcet_character/Select_Character_Hover.tres" id="2_d7e3u"]
 [ext_resource type="Texture2D" uid="uid://cbnbm8x5aevkt" path="res://dynamic/1_player/characters/golem/PNG/Golem_01/PNG Sequences/Golem_01_custom.png" id="2_qmevs"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
 font_size = 83
@@ -49,10 +50,11 @@ icon_alignment = 1
 
 [node name="Select_Character" type="Label" parent="."]
 layout_mode = 0
-offset_left = 397.0
-offset_top = 40.0
-offset_right = 849.0
-offset_bottom = 169.0
+offset_left = 431.964
+offset_top = 56.2786
+offset_right = 822.964
+offset_bottom = 165.279
+theme_override_fonts/font = ExtResource("5_sa8dl")
 text = "캐릭터 선택"
 label_settings = SubResource("LabelSettings_b5exc")
 

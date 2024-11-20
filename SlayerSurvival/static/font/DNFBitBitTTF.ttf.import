@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dxp5py6fm4n58"
-path="res://.godot/imported/Dimbo Italic.ttf-a4e1d9890ea27910d7d5e1d137e34b3b.fontdata"
+uid="uid://cr8el0yjdde3p"
+path="res://.godot/imported/DNFBitBitTTF.ttf-131eaf97ea30d687c5edddfd552ff04c.fontdata"
 
 [deps]
 
-source_file="res://static/font/Dimbo Italic.ttf"
-dest_files=["res://.godot/imported/Dimbo Italic.ttf-a4e1d9890ea27910d7d5e1d137e34b3b.fontdata"]
+source_file="res://static/font/DNFBitBitTTF.ttf"
+dest_files=["res://.godot/imported/DNFBitBitTTF.ttf-131eaf97ea30d687c5edddfd552ff04c.fontdata"]
 
 [params]
 
