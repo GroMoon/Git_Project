@@ -63,6 +63,7 @@ func _physics_process(_delta):
 	else:
 		$AnimatedSprite2D.play("idle")
 
+
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
 
