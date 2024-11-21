@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://x8kdkwfnwtg4"]
+[gd_scene load_steps=7 format=3 uid="uid://x8kdkwfnwtg4"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_vhu8y"]
 [ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://dynamic/4_world/map1/tile_map.tscn" id="2_ci5kd"]
 [ext_resource type="PackedScene" uid="uid://brl7x6dv6h7or" path="res://dynamic/2_enemy/flying_monster/flying_monster_1_spawner/flying_monster_1_spawner.tscn" id="3_8flww"]
 [ext_resource type="PackedScene" uid="uid://dse70xtlwr8du" path="res://dynamic/2_enemy/flying_monster/flying_monster_2_spawner/flying_monster_2_spawner.tscn" id="4_ad5oa"]
 [ext_resource type="PackedScene" uid="uid://xya4xva0d7vj" path="res://dynamic/5_title_screen/selcet_character/Select_Character.tscn" id="5_5yiak"]
+[ext_resource type="AudioStream" uid="uid://dyr5k7evqtx1t" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="6_a63fx"]
 
 [node name="test" type="Node2D"]
 script = ExtResource("1_vhu8y")
@@ -20,10 +21,21 @@ script = ExtResource("1_vhu8y")
 [node name="Select_Character_Panel" parent="." instance=ExtResource("5_5yiak")]
 process_mode = 3
 
-[node name="Slayer_Survival" parent="Select_Character_Panel" index="1"]
-text = "Slayer_Survival"
+[node name="Select_Golem" parent="Select_Character_Panel/ColorRect" index="0"]
+process_mode = 3
 
-[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_pressed"]
+[node name="Select_Slime" parent="Select_Character_Panel/ColorRect" index="1"]
+process_mode = 3
+
+[node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+position = Vector2(900, 220)
+stream = ExtResource("6_a63fx")
+volume_db = -5.0
+
+[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Golem" to="." method="_on_select_golem_mouse_entered"]
 [connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Golem" to="." method="_on_select_golem_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_pressed"]
 
 [editable path="Select_Character_Panel"]
