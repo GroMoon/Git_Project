@@ -115,5 +115,6 @@ shape = SubResource("CapsuleShape2D_d7gii")
 
 [connection signal="area_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_area_entered"]
 [connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]
+[connection signal="body_exited" from="interaction_sensor" to="." method="_on_interaction_sensor_body_exited"]
 
 [editable path="interaction_sensor"]
