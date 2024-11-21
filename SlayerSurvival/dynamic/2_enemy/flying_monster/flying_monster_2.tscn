@@ -94,6 +94,7 @@ height = 288.0
 [node name="FlyingMonster2" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 7
+motion_mode = 1
 script = ExtResource("1_mbr7m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
