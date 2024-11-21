@@ -1,11 +1,13 @@
 extends Control
 
 @onready var pause_panel = get_node("PausePanel")
+@onready var death_panel = get_node("DeathPanel")
 
 var pause_flag = false
 
 func _ready():
 	pause_panel.visible = false		# PausePanel 가리기
+	death_panel.visible = false		# DeathPanel 가리기
 
 func _process(_delta):
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
@@ -31,4 +33,9 @@ func _on_resume_pressed():
 func _on_menu_pressed():
 	pause_flag = !pause_flag
 	get_tree().paused = false
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+
+
+# 게임오버 후 Close 버튼 누를 때
+func _on_close_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=8 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI/BaseUI.gd" id="1_j5gas"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI/health_bar/Hp_Bar.tscn" id="1_wcd45"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cswgkwsq8gfan" path="res://dynamic/1_player/UI/exp_bar/Exp_Bar.tscn" id="3_bf304"]
 [ext_resource type="PackedScene" uid="uid://7hdonowfh837" path="res://dynamic/1_player/UI/gold/goldcount.tscn" id="4_h6h5n"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="5_wu63c"]
+[ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI/death_panel/death_panel.tscn" id="7_6yqui"]
 
 [node name="BaseUI" type="Control"]
 layout_mode = 3
@@ -51,21 +52,40 @@ offset_top = 47.0
 offset_right = 381.0
 offset_bottom = 94.0
 
-[node name="Resume" parent="PausePanel" index="1"]
+[node name="Menu" parent="PausePanel" index="1"]
+offset_left = 192.0
+offset_right = 354.0
+
+[node name="Resume" parent="PausePanel" index="2"]
 offset_left = 189.0
 offset_top = 128.0
 offset_right = 351.0
 offset_bottom = 191.0
-text = "돌아가기"
 
-[node name="menu" parent="PausePanel" index="2"]
-offset_left = 189.0
-offset_top = 232.0
-offset_right = 351.0
-offset_bottom = 295.0
-text = "메인메뉴"
+[node name="DeathPanel" parent="." instance=ExtResource("7_6yqui")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 489.0
+offset_bottom = 495.0
 
+[node name="Pause" parent="DeathPanel" index="0"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 260.0
+offset_bottom = 54.0
+
+[node name="Close" parent="DeathPanel" index="1"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 162.0
+offset_bottom = 63.0
+
+[connection signal="pressed" from="PausePanel/Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="PausePanel/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="PausePanel/menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="DeathPanel/Close" to="." method="_on_close_pressed"]
 
 [editable path="PausePanel"]
+[editable path="DeathPanel"]
