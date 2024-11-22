@@ -19,7 +19,7 @@ func _on_select_slime_pressed():
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
 	# 스케일 조정
-	# instance_character.scale = Vector2(0.5,0.5)
+	instance_character.scale = Vector2(0.5,0.5)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_panel.queue_free()

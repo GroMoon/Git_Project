@@ -11,6 +11,9 @@ var idle_timer     = 0.0
 var move_timer     = 0.0
 var move_direction = Vector2.ZERO
 
+# 캐릭터 특성
+@export var character_name = "slime"
+
 # weapon level
 var sword_1_level = 1
 
