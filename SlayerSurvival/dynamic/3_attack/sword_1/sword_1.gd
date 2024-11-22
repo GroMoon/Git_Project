@@ -1,7 +1,10 @@
 extends Area2D
 
 @onready var character = get_parent().get_parent().get_parent()
-@onready var animated_sprite = get_parent().get_parent().get_parent().get_node("AnimatedSprite2D")
+@onready var animated_sprite = character.get_node("AnimatedSprite2D")
+@onready var collision_shape = character.get_node("CollisionShape2D")
+
+var player_name = "" 	# 캐릭터 이름 전역변수 선언
 
 var level       = 1
 var damage      = 1
@@ -10,6 +13,8 @@ var direction   = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+
+	player_name = character.character_name
 
 	# print("sword_1.gd ready")
 	# print(character.scale.x)
@@ -28,27 +33,41 @@ func _ready():
 			damage = 10
 			attack_size = 2.2
 
-	$AnimatedSprite2D.scale.x = 2
-	$AnimatedSprite2D.scale.y = 2
-	$CollisionShape2D.scale.x = 2
-	$CollisionShape2D.scale.y = 2
-	
-	# var character_width = animated_sprite.texture.get_size().x
+	# print(character.scale)
 
-	if character.velocity.x < 0:
-		# global_position = character.global_position + Vector2(-character_width/2, -10) #TODO offset으로 말고 캐릭터의 파라미터로 수정필요
-		global_position = character.global_position + Vector2(-30, -10)
-		$AnimatedSprite2D.flip_h = true
-	else:
-		# global_position = character.global_position + Vector2(character_width/2, -10)
-		global_position = character.global_position + Vector2(30, -10)
+	match player_name:
+		"slime":
+			$AnimatedSprite2D.scale.x = 0.4
+			$AnimatedSprite2D.scale.y = 0.4
+			$CollisionShape2D.scale.x = 0.4
+			$CollisionShape2D.scale.y = 0.4
+			set_character_side(30, -10)
+		"golem":
+			# 골렘에 맞게 scale 조정 필요
+			$AnimatedSprite2D.scale.x = 2	#TODO 캐릭터 사이즈? offset?
+			$AnimatedSprite2D.scale.y = 2
+			$CollisionShape2D.scale.x = 2
+			$CollisionShape2D.scale.y = 2
+			# 골렘의 스킬 이펙트 위치 설정
+			set_character_side(30, 0)
 	
+	# print("character_width : ", character_width)
+	# print("character_scale : ", character_scale)
+	# print("character global position : ", character.global_position)
+	# print("attack global position : ", global_position)
+
 	$AnimatedSprite2D.play("idle")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-
 func _on_timer_timeout():
 	queue_free() # delete node
+
+func set_character_side(x, y):
+	if character.velocity.x < 0:
+		global_position = character.global_position + Vector2(-x, y)
+		$AnimatedSprite2D.flip_h = true
+	else:
+		global_position = character.global_position + Vector2(x, y)
