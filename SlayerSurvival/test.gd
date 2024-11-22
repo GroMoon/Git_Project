@@ -18,6 +18,8 @@ func _on_select_slime_pressed():
 	character_load = preload("res://dynamic/slime.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
+	# 스케일 조정
+	# instance_character.scale = Vector2(0.5,0.5)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_panel.queue_free()
@@ -27,6 +29,8 @@ func _on_select_golem_pressed():
 	character_load = preload("res://dynamic/1_player/characters/golem/golem.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
+	# 스케일 조정
+	instance_character.scale = Vector2(0.1,0.1)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_panel.queue_free()
