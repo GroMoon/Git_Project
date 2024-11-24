@@ -43,3 +43,4 @@ offset_bottom = 13.7938
 
 [editable path="UI_Layer/BaseUI"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
+[editable path="UI_Layer/BaseUI/DeathPanel"]
