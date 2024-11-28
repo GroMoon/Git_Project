@@ -3,7 +3,7 @@ extends Node2D
 @onready var character = get_parent().get_parent()
 
 var attack_preload = {
-	"sword_1": preload("res://dynamic/3_attack/sword_1/sword_1.tscn")
+	#"sword_1": preload("res://dynamic/3_attack/sword_1/sword_1.tscn")
 }
 
 # sword_1

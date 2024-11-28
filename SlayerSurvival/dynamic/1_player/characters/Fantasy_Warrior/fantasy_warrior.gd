@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
-@onready var attack_area_tscn = $interaction_sensor/CollisionShape2D
+@onready var attack_area_tscn = $attack/CollisionShape2D
 
 # 캐릭터 특성
 @export var character_name  = "fantasy_warrior"
 @export var move_speed      = 200
 @export var character_level = 1
 
-var attack_damge  = 5	# 일반 공격 데미지
+var attack_damage  = 5	# 일반 공격 데미지
 var is_attacking  = false
 
 # 체력
@@ -39,13 +39,14 @@ func _physics_process(_delta):
 
 
 func _on_attack_timer_timeout():
+	print(1)
 	is_attacking = true
-	attack_area_tscn.disabled = false	# 공격 충돌 활성화
+	attack_area_tscn.set_deferred("disabled", false)
 
 	if $AnimatedSprite2D.flip_h:		# 왼쪽 공격
-		attack_area_tscn.position = global_position + Vector2(-36, -14)
+		attack_area_tscn.position = Vector2(-73, 0)
 	else: 								# 오른쪽 공격
-		attack_area_tscn.position = global_position + Vector2(36, -14)
+		attack_area_tscn.position = Vector2(0, 0)
 	
 	# print("character position : ", global_position)
 	# print("attack collision position : ", attack_area_tscn.position)
@@ -54,7 +55,7 @@ func _on_attack_timer_timeout():
 	# 공격 애니메이션이 끝나면 이동할 수 있도록 설정
 	await $AnimatedSprite2D.animation_finished
 	is_attacking = false
-	attack_area_tscn.disabled = true	# 공격 충돌 비활성화
+	attack_area_tscn.set_deferred("disabled", true)
 
 func _on_damage_timer_timeout():
 	damage_flag = true
@@ -86,4 +87,5 @@ func process_collision_enemy(damage):
 	if damage_flag:
 		current_hp -= damage
 		print("현재 체력 : ", current_hp)
+		damage_flag = false
 		# $AnimatedSprite2D.modulate = Color(1, 0, 0)        # 피해 입으면 컬러 변경(빨간색)

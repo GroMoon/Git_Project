@@ -11,8 +11,9 @@ var touch_flag = false
 
 func _ready():
 	# player 노드 찾기
-	player = get_parent().get_parent().get_node("FantasyWarrior")  # 경로는 상황에 맞게 변경
-
+	#player = get_parent().get_parent().get_node("FantasyWarrior")  # 경로는 상황에 맞게 변경
+	player = get_parent().get_parent().get_node("player")
+	
 func _physics_process(_delta):
 	# 플레이어가 존재하면 그 위치로 움직임
 	if player:
@@ -25,8 +26,8 @@ func _physics_process(_delta):
 		$AnimatedSprite2D.play("walk")
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 
-	# if touch_flag:
-	# 	player.process_collision_enemy(damage)
+	if touch_flag:
+		player.process_collision_enemy(damage)
 
 # 접촉 상태가 되었을 때
 func _on_interaction_sensor_body_entered(_body:Node2D):
@@ -40,9 +41,9 @@ func _on_interaction_sensor_body_exited(_body:Node2D):
 	if _body == player:
 		touch_flag = false
 	
-# func _on_interaction_sensor_area_entered(area:Area2D):
-#     if area.is_in_group("attack"):
-#         health -= area.damage            # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
-#         if health <= 0:
-#             queue_free()
-#         #print("enemyHP : ", health)        # Enemy 체력 디버깅
+func _on_interaction_sensor_area_entered(area:Area2D):
+	if area.is_in_group("attack"):
+		health -= area.get_parent().attack_damage            # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
+		if health <= 0:
+			queue_free()
+		print("enemyHP(뼈다구) : ", health)        # Enemy 체력 디버깅

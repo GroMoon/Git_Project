@@ -1,15 +1,15 @@
 extends Node2D
 
-@onready var player = get_parent().get_node("FantasyWarrior")
+@onready var player #= get_parent().get_node("FantasyWarrior")
 
 var skeleton = preload("res://dynamic/2_enemy/Skeleton/skeleton.tscn")
 var mushroom = preload("res://dynamic/2_enemy/Mushroom/mushroom.tscn")
 
 func _ready():
-	pass # Replace with function body.
+	pass
 
 func _process(_delta):
-	pass
+	player = get_parent().get_node_or_null("player")
 
 # 적을 스폰하는 함수
 func spawn_enemy(enemy_tscn):

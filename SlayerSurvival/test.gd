@@ -26,11 +26,11 @@ func _on_select_slime_pressed():
 
 # 골렘 버튼 누르면
 func _on_select_golem_pressed():
-	character_load = preload("res://dynamic/1_player/characters/golem/golem.tscn")
+	character_load = preload("res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
 	# 스케일 조정
-	instance_character.scale = Vector2(0.1,0.1)
+	instance_character.scale = Vector2(1,1)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_panel.queue_free()

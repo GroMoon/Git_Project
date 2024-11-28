@@ -3,7 +3,7 @@
 [ext_resource type="StyleBox" uid="uid://clv8l34xvofwk" path="res://dynamic/5_title_screen/selcet_character/Select_Character_Nornmal.tres" id="1_2r08d"]
 [ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://dynamic/slime/slime_jump_1.png" id="2_2fag4"]
 [ext_resource type="StyleBox" uid="uid://crljylwyjpvbx" path="res://dynamic/5_title_screen/selcet_character/Select_Character_Hover.tres" id="2_d7e3u"]
-[ext_resource type="Texture2D" uid="uid://cbnbm8x5aevkt" path="res://dynamic/1_player/characters/golem/PNG/Golem_01/PNG Sequences/Golem_01_custom.png" id="2_qmevs"]
+[ext_resource type="Texture2D" uid="uid://boj53gry8kwvp" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
@@ -24,6 +24,7 @@ offset_bottom = 654.0
 color = Color(0.117647, 0.145098, 0.14902, 1)
 
 [node name="Select_Golem" type="Button" parent="ColorRect"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 256.0
 offset_top = 225.0
@@ -32,7 +33,7 @@ offset_bottom = 306.0
 scale = Vector2(1.15, 1.15)
 theme_override_styles/normal = ExtResource("1_2r08d")
 theme_override_styles/hover = ExtResource("2_d7e3u")
-icon = ExtResource("2_qmevs")
+icon = ExtResource("3_llvfx")
 icon_alignment = 1
 expand_icon = true
 

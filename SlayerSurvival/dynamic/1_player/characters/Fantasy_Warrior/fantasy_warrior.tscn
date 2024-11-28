@@ -405,15 +405,15 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
-[node name="interaction_sensor" parent="." instance=ExtResource("8_vjbc4")]
+[node name="attack" parent="." groups=["attack"] instance=ExtResource("8_vjbc4")]
 position = Vector2(36, -14)
 collision_layer = 8
 collision_mask = 4
 
-[node name="CollisionShape2D" parent="interaction_sensor" index="0"]
+[node name="CollisionShape2D" parent="attack" index="0"]
 shape = SubResource("RectangleShape2D_icegv")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
-[editable path="interaction_sensor"]
+[editable path="attack"]
