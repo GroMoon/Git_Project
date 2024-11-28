@@ -11,8 +11,15 @@ var attack_damage  = 5	# 일반 공격 데미지
 var is_attacking  = false
 
 # 체력
+@onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
 var max_hp      = 50
-var current_hp  = max_hp
+var current_hp  = max_hp:
+	set(value):
+		current_hp = value
+		hp_bar.max_value = max_hp
+		hp_bar.value = current_hp
+		if current_hp > max_hp:
+			current_hp = max_hp
 var damage_flag = false
 
 func _ready():
@@ -36,10 +43,10 @@ func _physics_process(_delta):
 		$AnimatedSprite2D.flip_h = velocity.x < 0
 	else:
 		$AnimatedSprite2D.play("idle")
+		
 
 
 func _on_attack_timer_timeout():
-	print(1)
 	is_attacking = true
 	attack_area_tscn.set_deferred("disabled", false)
 

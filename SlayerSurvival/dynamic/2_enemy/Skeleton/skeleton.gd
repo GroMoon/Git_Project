@@ -11,7 +11,6 @@ var touch_flag = false
 
 func _ready():
 	# player 노드 찾기
-	#player = get_parent().get_parent().get_node("FantasyWarrior")  # 경로는 상황에 맞게 변경
 	player = get_parent().get_parent().get_node("player")
 	
 func _physics_process(_delta):

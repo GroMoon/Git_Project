@@ -21,7 +21,7 @@ layout_mode = 0
 offset_left = 584.0
 offset_top = 408.0
 offset_right = 639.0
-offset_bottom = 414.0
+offset_bottom = 411.0
 
 [node name="Exp_Bar" parent="." instance=ExtResource("3_bf304")]
 layout_mode = 1
@@ -40,6 +40,7 @@ theme_override_fonts/font = ExtResource("5_wu63c")
 
 [node name="PausePanel" parent="." instance=ExtResource("2_w0nwt")]
 process_mode = 3
+visible = false
 layout_mode = 1
 offset_left = 344.0
 offset_top = 64.0
@@ -70,14 +71,12 @@ offset_right = 489.0
 offset_bottom = 495.0
 
 [node name="Pause" parent="DeathPanel" index="0"]
-layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 260.0
 offset_bottom = 54.0
 
 [node name="Close" parent="DeathPanel" index="1"]
-layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 162.0
