@@ -21,9 +21,9 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 offset_left = 377.0
 offset_top = 78.0
 offset_right = 866.0
-offset_bottom = 573.0
+offset_bottom = 480.0
 
-[node name="Pause" type="Label" parent="."]
+[node name="Gameover" type="Label" parent="."]
 layout_mode = 0
 offset_left = 115.0
 offset_top = 47.0
@@ -35,12 +35,11 @@ text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Close" type="Button" parent="."]
-layout_mode = 0
-offset_left = 163.0
-offset_top = 408.0
-offset_right = 325.0
-offset_bottom = 471.0
+[node name="Restart" type="Button" parent="."]
+offset_left = 167.0
+offset_top = 162.0
+offset_right = 329.0
+offset_bottom = 225.0
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_7ngny")
 theme_override_font_sizes/font_size = 30
@@ -49,4 +48,21 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
 theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
-text = "Close"
+text = "Restart"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 167.0
+offset_top = 266.0
+offset_right = 329.0
+offset_bottom = 329.0
+theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
+theme_override_fonts/font = ExtResource("1_7ngny")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_pjie6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
+text = "Quit
+"

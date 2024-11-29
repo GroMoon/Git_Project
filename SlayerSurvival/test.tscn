@@ -16,22 +16,16 @@ script = ExtResource("1_vhu8y")
 [node name="Select_Character_Panel" parent="." instance=ExtResource("5_5yiak")]
 process_mode = 3
 
-[node name="Select_Golem" parent="Select_Character_Panel/ColorRect" index="0"]
-process_mode = 3
-
-[node name="Select_Slime" parent="Select_Character_Panel/ColorRect" index="1"]
-process_mode = 3
-
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 position = Vector2(900, 220)
 stream = ExtResource("6_a63fx")
 volume_db = -5.0
 
-[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Golem" to="." method="_on_select_golem_mouse_entered"]
-[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Golem" to="." method="_on_select_golem_pressed"]
-[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_mouse_entered"]
-[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_King" to="." method="_on_select_king_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_King" to="." method="_on_select_king_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Warrior" to="." method="_on_select_warrior_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Warrior" to="." method="_on_select_warrior_pressed"]
 
 [editable path="EnemySpwaner"]
 [editable path="Select_Character_Panel"]

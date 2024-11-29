@@ -373,8 +373,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jkprl"]
-radius = 6.0
-height = 40.0
+height = 36.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_icegv"]
 size = Vector2(41.3333, 65.5)
@@ -387,7 +386,7 @@ script = ExtResource("1_cqj1t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lq7wa")
-animation = &"idle"
+animation = &"run"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -401,6 +400,12 @@ autostart = true
 wait_time = 2.0
 autostart = true
 
+[node name="Camera2D" type="Camera2D" parent="."]
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+
 [node name="attack" parent="." groups=["attack"] instance=ExtResource("8_vjbc4")]
 position = Vector2(36, -14)
 collision_layer = 8
@@ -408,12 +413,6 @@ collision_mask = 4
 
 [node name="CollisionShape2D" parent="attack" index="0"]
 shape = SubResource("RectangleShape2D_icegv")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 
@@ -430,6 +429,12 @@ offset_left = 1.0
 offset_top = 1.79385
 offset_right = 1198.0
 offset_bottom = 13.7938
+
+[node name="Restart" parent="UI_Layer/BaseUI/DeathPanel" index="1"]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 162.0
+offset_bottom = 63.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]

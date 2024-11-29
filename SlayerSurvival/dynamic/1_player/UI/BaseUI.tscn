@@ -68,23 +68,13 @@ layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 489.0
-offset_bottom = 495.0
+offset_bottom = 387.0
 
-[node name="Pause" parent="DeathPanel" index="0"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 260.0
-offset_bottom = 54.0
-
-[node name="Close" parent="DeathPanel" index="1"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 162.0
-offset_bottom = 63.0
+[node name="Restart" parent="DeathPanel" index="1"]
+layout_mode = 0
 
 [connection signal="pressed" from="PausePanel/Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="PausePanel/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="DeathPanel/Close" to="." method="_on_close_pressed"]
 
 [editable path="PausePanel"]
 [editable path="DeathPanel"]
