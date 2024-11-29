@@ -35,7 +35,6 @@ func _on_menu_pressed():
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
-
-# 게임오버 후 Close 버튼 누를 때
-func _on_close_pressed():
+# 게임오버 후 Quit 버튼 누를 때
+func _on_quit_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
