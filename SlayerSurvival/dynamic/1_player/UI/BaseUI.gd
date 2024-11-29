@@ -14,10 +14,10 @@ func _process(_delta):
 	check_pause_pressed()
 	if pause_flag:
 		pause_panel.visible = true
-		get_tree().paused = true
+		get_tree().paused   = true
 	else:
 		pause_panel.visible = false
-		get_tree().paused = false
+		get_tree().paused   = false
 
 func check_pause_pressed():
 	if Input.is_action_just_pressed("pause"):

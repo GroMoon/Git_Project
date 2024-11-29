@@ -11,6 +11,7 @@
 [node name="UI_Layer" type="CanvasLayer"]
 
 [node name="BaseUI" type="Control" parent="."]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
