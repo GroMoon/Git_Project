@@ -24,7 +24,7 @@ func _on_select_slime_pressed():
 	get_tree().paused = false
 	select_panel.queue_free()
 
-# 골렘 버튼 누르면
+# Fantasy Warrior
 func _on_select_golem_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn")
 	instance_character = character_load.instantiate()
