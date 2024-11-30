@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 # 캐릭터 특성
 @export var character_name  = "fantasy_warrior"
-@export var move_speed      = 200
+@export var move_speed      = 250
 @export var character_level = 1
 
 var attack_damage  = 5	# 일반 공격 데미지

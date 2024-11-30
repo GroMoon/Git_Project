@@ -9,9 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI/death_panel/death_panel.tscn" id="7_6yqui"]
 
 [node name="UI_Layer" type="CanvasLayer"]
+process_mode = 3
 
 [node name="BaseUI" type="Control" parent="."]
-process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

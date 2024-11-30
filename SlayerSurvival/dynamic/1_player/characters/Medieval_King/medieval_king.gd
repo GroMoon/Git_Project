@@ -1,25 +1,25 @@
 extends CharacterBody2D
 
-# @onready var attack_area_tscn = $attack/CollisionShape2D
+@onready var attack_area_tscn = $attack/CollisionShape2D
 
 # 캐릭터 특성
 @export var character_name  = "medieval_king"
-@export var move_speed      = 200
+@export var move_speed      = 150
 @export var character_level = 1
 
-var attack_damage  = 5	# 일반 공격 데미지
+var attack_damage  = 10	# 일반 공격 데미지
 var is_attacking  = false
 
 # 체력
-# @onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
-# var max_hp      = 50
-# var current_hp  = max_hp:
-# 	set(value):
-# 		current_hp = value
-# 		hp_bar.max_value = max_hp
-# 		hp_bar.value = current_hp
-# 		if current_hp > max_hp:
-# 			current_hp = max_hp
+@onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
+var max_hp      = 75
+var current_hp  = max_hp:
+	set(value):
+		current_hp = value
+		hp_bar.max_value = max_hp
+		hp_bar.value = current_hp
+		if current_hp > max_hp:
+			current_hp = max_hp
 var damage_flag = false
 
 func _ready():
@@ -48,12 +48,12 @@ func _physics_process(_delta):
 
 func _on_attack_timer_timeout():
 	is_attacking = true
-	# attack_area_tscn.set_deferred("disabled", false)
+	attack_area_tscn.set_deferred("disabled", false)
 
-	# if $AnimatedSprite2D.flip_h:		# 왼쪽 공격
-	# 	attack_area_tscn.position = Vector2(-73, 0)
-	# else: 								# 오른쪽 공격
-	# 	attack_area_tscn.position = Vector2(0, 0)
+	if $AnimatedSprite2D.flip_h:		# 왼쪽 공격
+		attack_area_tscn.position = Vector2(-45, 25)
+	else: 								# 오른쪽 공격
+		attack_area_tscn.position = Vector2(45, 25)
 	
 	# print("character position : ", global_position)
 	# print("attack collision position : ", attack_area_tscn.position)
@@ -62,7 +62,7 @@ func _on_attack_timer_timeout():
 	# 공격 애니메이션이 끝나면 이동할 수 있도록 설정
 	await $AnimatedSprite2D.animation_finished
 	is_attacking = false
-	# attack_area_tscn.set_deferred("disabled", true)
+	attack_area_tscn.set_deferred("disabled", true)
 
 func _on_damage_timer_timeout():
 	damage_flag = true
@@ -89,10 +89,10 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 		velocity = Vector2.ZERO
 		return false
 
-# # Enemy 충돌 처리
-# func process_collision_enemy(damage):
-# 	if damage_flag:
-# 		current_hp -= damage
-# 		print("현재 체력 : ", current_hp)
-# 		damage_flag = false
+# Enemy 충돌 처리
+func process_collision_enemy(damage):
+	if damage_flag:
+		current_hp -= damage
+		print("현재 체력 : ", current_hp)
+		damage_flag = false
 		# $AnimatedSprite2D.modulate = Color(1, 0, 0)        # 피해 입으면 컬러 변경(빨간색)

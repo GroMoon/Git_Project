@@ -380,6 +380,7 @@ size = Vector2(41.3333, 65.5)
 
 [node name="FantasyWarrior" type="CharacterBody2D"]
 texture_filter = 1
+scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_cqj1t")
@@ -415,6 +416,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_icegv")
 
 [node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
+visible = false
 
 [node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
 offset_left = 576.0
@@ -424,6 +426,7 @@ offset_bottom = 355.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
+[connection signal="pressed" from="UI_Layer/BaseUI/DeathPanel/Quit" to="UI_Layer/BaseUI" method="_on_quit_pressed"]
 
 [editable path="attack"]
 [editable path="UI_Layer"]

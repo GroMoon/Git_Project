@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://blv0hgymp636q"]
+[gd_scene load_steps=52 format=3 uid="uid://blv0hgymp636q"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
 [ext_resource type="Texture2D" uid="uid://c1t3r7n3v22k1" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://cugcbigw5hlhd" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
 [ext_resource type="Texture2D" uid="uid://bl1phqe2lt0jr" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
 [ext_resource type="Texture2D" uid="uid://br5ryt28b3vy0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
+[ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="9_1a373"]
+[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="10_d704x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fyilj"]
 atlas = ExtResource("1_xk6qn")
@@ -314,20 +316,26 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3njei"]
-radius = 7.0
-height = 48.6667
+radius = 9.5
+height = 44.334
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c58i"]
+size = Vector2(50, 38)
 
 [node name="MedievalKing" type="CharacterBody2D"]
 texture_filter = 1
+scale = Vector2(2, 2)
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_go0kx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xhjrh")
-animation = &"take_hit"
+animation = &"idle"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, 23.3333)
+position = Vector2(0, 23.333)
 shape = SubResource("CapsuleShape2D_3njei")
 
 [node name="AttackTimer" type="Timer" parent="."]
@@ -338,5 +346,20 @@ autostart = true
 wait_time = 3.0
 autostart = true
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="attack" parent="." instance=ExtResource("9_1a373")]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="attack" index="0"]
+position = Vector2(46, 27)
+shape = SubResource("RectangleShape2D_2c58i")
+
+[node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
+visible = false
+
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
+
+[editable path="attack"]
