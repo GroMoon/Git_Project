@@ -54,11 +54,11 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		health -= area.get_parent().attack_damage            # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
 		if health <= 0:
 			# queue_free()
-			die()
+			enemy_die()
 		print("enemyHP(뼈다구) : ", health)        # Enemy 체력 디버깅
 
 # 사망 처리 함수
-func die():
+func enemy_die():
 	is_dead = true 							# 사망 상태 활성화
 	collision_shape.disabled = true			# CollisionShape2D 비활성화
 	interaction_sensor.queue_free()			# interaction_sensor 삭제
