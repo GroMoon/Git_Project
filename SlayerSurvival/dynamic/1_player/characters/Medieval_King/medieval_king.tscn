@@ -326,7 +326,6 @@ size = Vector2(50, 38)
 texture_filter = 1
 scale = Vector2(2, 2)
 collision_layer = 2
-collision_mask = 5
 script = ExtResource("1_go0kx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -348,7 +347,7 @@ autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="attack" parent="." instance=ExtResource("9_1a373")]
+[node name="attack" parent="." groups=["attack"] instance=ExtResource("9_1a373")]
 collision_layer = 8
 collision_mask = 4
 
@@ -357,9 +356,18 @@ position = Vector2(46, 27)
 shape = SubResource("RectangleShape2D_2c58i")
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
-visible = false
+
+[node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
+offset_left = 574.0
+offset_top = 385.0
+offset_right = 629.0
+offset_bottom = 388.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
+[connection signal="pressed" from="UI_Layer/BaseUI/DeathPanel/Quit" to="UI_Layer/BaseUI" method="_on_quit_pressed"]
 
 [editable path="attack"]
+[editable path="UI_Layer"]
+[editable path="UI_Layer/BaseUI/PausePanel"]
+[editable path="UI_Layer/BaseUI/DeathPanel"]

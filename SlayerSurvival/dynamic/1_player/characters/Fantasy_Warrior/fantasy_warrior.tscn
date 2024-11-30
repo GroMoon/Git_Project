@@ -382,12 +382,11 @@ size = Vector2(41.3333, 65.5)
 texture_filter = 1
 scale = Vector2(2, 2)
 collision_layer = 2
-collision_mask = 5
 script = ExtResource("1_cqj1t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lq7wa")
-animation = &"run"
+animation = &"idle"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -416,7 +415,6 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_icegv")
 
 [node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
-visible = false
 
 [node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
 offset_left = 576.0

@@ -1,19 +1,28 @@
 extends CharacterBody2D
 
+@onready var collision_shape    = $CollisionShape2D
+@onready var animated_sprite    = $AnimatedSprite2D
+@onready var interaction_sensor = $interaction_sensor 
+
 # 적 특성
 var health       = 10 	# 적 체력
 var move_speed   = 100 	# 적 이동 속도
-var damage       = 5  		# 적 데미지
+var damage       = 3  		# 적 데미지
 var spawn_radius = 300  # 스폰 범위
 # 전역 변수
 var player 
 var touch_flag = false 
+var is_dead    = false
 
 func _ready():
 	# player 노드 찾기
 	player = get_parent().get_parent().get_node("player")
 	
 func _physics_process(_delta):
+	# 사망 상태에서 아무것도 처리 아지 않도록
+	if is_dead:
+		return
+
 	# 플레이어가 존재하면 그 위치로 움직임
 	if player:
 		var direction = (player.position - position).normalized()        # 플레이어와 적 사이의 방향 계산
@@ -44,5 +53,15 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
 		health -= area.get_parent().attack_damage            # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
 		if health <= 0:
-			queue_free()
+			# queue_free()
+			die()
 		print("enemyHP(뼈다구) : ", health)        # Enemy 체력 디버깅
+
+# 사망 처리 함수
+func die():
+	is_dead = true 							# 사망 상태 활성화
+	collision_shape.disabled = true			# CollisionShape2D 비활성화
+	interaction_sensor.queue_free()			# interaction_sensor 삭제
+	animated_sprite.play("death")
+	await animated_sprite.animation_finished
+	queue_free()							# 적 노드 삭제

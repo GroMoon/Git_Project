@@ -242,7 +242,7 @@ height = 35.0
 [node name="Mushroom" type="CharacterBody2D"]
 texture_filter = 1
 collision_layer = 4
-collision_mask = 5
+collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_x5roa")
 
@@ -256,11 +256,15 @@ position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_jo77c")
 
 [node name="interaction_sensor" parent="." instance=ExtResource("1_h0pe7")]
-collision_layer = 8
-collision_mask = 2
+collision_layer = 4
+collision_mask = 10
 
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_3src1")
+
+[connection signal="area_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_area_entered"]
+[connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]
+[connection signal="body_exited" from="interaction_sensor" to="." method="_on_interaction_sensor_body_exited"]
 
 [editable path="interaction_sensor"]
