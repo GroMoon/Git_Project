@@ -4,6 +4,9 @@ extends CharacterBody2D
 @onready var animated_sprite    = $AnimatedSprite2D
 @onready var interaction_sensor = $interaction_sensor 
 
+# 코인
+var coin = preload("res://dynamic/6_utillity/Items/coin.tscn")
+var coins = 10
 # 적 특성
 var health       = 10 	# 적 체력
 var move_speed   = 100 	# 적 이동 속도
@@ -60,8 +63,18 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 # 사망 처리 함수
 func enemy_die():
 	is_dead = true 							# 사망 상태 활성화
+	drop_item()
 	collision_shape.disabled = true			# CollisionShape2D 비활성화
 	interaction_sensor.queue_free()			# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
 	queue_free()							# 적 노드 삭제
+	
+func drop_item():
+	var coin_chance = randf()
+	if coin_chance <= 0.5:
+		print("코인 드랍")
+		var new_coin = coin.instantiate()
+		new_coin.coin = coins
+		new_coin.global_position = global_position
+		get_parent().call_deferred("add_child", new_coin)
