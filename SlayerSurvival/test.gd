@@ -13,32 +13,29 @@ func _ready():
 func _process(_delta):
 	pass
 
-# 슬라임 버튼 누르면
-func _on_select_slime_pressed():
-	character_load = preload("res://dynamic/slime.tscn")
+# Fantasy Warrior
+func _on_select_warrior_pressed():
+	character_load = preload("res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
 	# 스케일 조정
-	instance_character.scale = Vector2(0.5,0.5)
+	instance_character.scale = Vector2(1,1)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_panel.queue_free()
 
-# 골렘 버튼 누르면
-func _on_select_golem_pressed():
-	character_load = preload("res://dynamic/1_player/characters/golem/golem.tscn")
+func _on_select_king_pressed():
+	character_load = preload("res://dynamic/1_player/characters/Medieval_King/medieval_king.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
 	# 스케일 조정
-	instance_character.scale = Vector2(0.1,0.1)
+	instance_character.scale = Vector2(1,1)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_panel.queue_free()
 
-# Slime 마우스 올리면
-func _on_select_slime_mouse_entered():
+func _on_select_king_mouse_entered():
 	$Button_sound.play()
 
-# Golem 마우스 올리면
-func _on_select_golem_mouse_entered():
+func _on_select_warrior_mouse_entered():
 	$Button_sound.play()

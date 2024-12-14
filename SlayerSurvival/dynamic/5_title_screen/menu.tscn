@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bx8xatwwg81lh"]
+[gd_scene load_steps=27 format=3 uid="uid://bx8xatwwg81lh"]
 
 [ext_resource type="Texture2D" uid="uid://scynp0va5l21" path="res://dynamic/5_title_screen/image/menu_background.png" id="1_6n2bm"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/menu.gd" id="1_7txdb"]
@@ -16,6 +16,62 @@
 [ext_resource type="Texture2D" uid="uid://uhum03wfpdq7" path="res://dynamic/slime/slime_jump_10.png" id="11_7klre"]
 [ext_resource type="Texture2D" uid="uid://caajsnyl8bitk" path="res://dynamic/slime/slime_jump_11.png" id="12_rwnsp"]
 [ext_resource type="AudioStream" uid="uid://c4qsrib6wqpv7" path="res://static/audio/common/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12q8x"]
+bg_color = Color(0.184314, 0.168627, 0.160784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bplh1"]
+bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0o1gf"]
+bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_geo8h"]
+bg_color = Color(0.184314, 0.168627, 0.160784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w73a"]
+bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_57n1i"]
+bg_color = Color(0.184314, 0.168627, 0.160784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wy5jm"]
+bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7dfv"]
+bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
 font_size = 83
@@ -79,38 +135,83 @@ texture = ExtResource("1_6n2bm")
 
 [node name="Start_Button" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 416.0
+offset_left = 384.0
 offset_top = 232.0
-offset_right = 800.0
+offset_right = 816.0
 offset_bottom = 279.0
 theme_override_fonts/font = ExtResource("3_3dttr")
 theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_12q8x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bplh1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0o1gf")
 text = "시 작"
 
-[node name="Store_Button" type="Button" parent="ColorRect"]
+[node name="Item_Button" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 416.0
+offset_left = 384.0
 offset_top = 296.0
-offset_right = 800.0
+offset_right = 816.0
 offset_bottom = 343.0
 theme_override_fonts/font = ExtResource("3_3dttr")
 theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_12q8x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0o1gf")
+text = "아 이 템"
+
+[node name="Store_Button" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 360.0
+offset_right = 816.0
+offset_bottom = 407.0
+theme_override_fonts/font = ExtResource("3_3dttr")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_geo8h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0w73a")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0o1gf")
 text = "상 점"
 
 [node name="Setting_Button" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 416.0
-offset_top = 360.0
-offset_right = 800.0
-offset_bottom = 407.0
+offset_left = 384.0
+offset_top = 424.0
+offset_right = 816.0
+offset_bottom = 471.0
 theme_override_fonts/font = ExtResource("3_3dttr")
 theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_57n1i")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wy5jm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0o1gf")
 text = "설 정"
+
+[node name="Quit_Button" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 488.0
+offset_right = 816.0
+offset_bottom = 535.0
+theme_override_fonts/font = ExtResource("3_3dttr")
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxFlat_12q8x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n7dfv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0o1gf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0o1gf")
+text = "끝 내 기"
 
 [node name="Slayer_Survival" type="Label" parent="."]
 offset_left = 296.0
 offset_top = 24.0
-offset_right = 920.0
+offset_right = 904.0
 offset_bottom = 115.0
 theme_override_fonts/font = ExtResource("3_3dttr")
 text = "Slayer Survival"
@@ -148,6 +249,9 @@ volume_db = -5.0
 
 [connection signal="mouse_entered" from="ColorRect/Start_Button" to="." method="_on_start_button_mouse_entered"]
 [connection signal="pressed" from="ColorRect/Start_Button" to="." method="_on_start_button_pressed"]
+[connection signal="mouse_entered" from="ColorRect/Item_Button" to="." method="_on_item_button_mouse_entered"]
 [connection signal="mouse_entered" from="ColorRect/Store_Button" to="." method="_on_store_button_mouse_entered"]
 [connection signal="mouse_entered" from="ColorRect/Setting_Button" to="." method="_on_setting_button_mouse_entered"]
 [connection signal="mouse_entered" from="ColorRect/Setting_Button" to="ColorRect/Setting_Button" method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="ColorRect/Quit_Button" to="." method="_on_quit_button_mouse_entered"]
+[connection signal="pressed" from="ColorRect/Quit_Button" to="." method="_on_quit_button_pressed"]
