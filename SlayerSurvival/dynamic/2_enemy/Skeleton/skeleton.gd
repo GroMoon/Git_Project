@@ -4,9 +4,9 @@ extends CharacterBody2D
 @onready var animated_sprite    = $AnimatedSprite2D
 @onready var interaction_sensor = $interaction_sensor 
 
-# 코인
-var coin = preload("res://dynamic/6_utillity/Items/coin.tscn")
-var coins = 10
+# 골드
+var gold = preload("res://dynamic/6_utillity/Items/gold.tscn")
+var golds = 10
 # 적 특성
 var health       = 10 	# 적 체력
 var move_speed   = 100 	# 적 이동 속도
@@ -71,10 +71,10 @@ func enemy_die():
 	queue_free()							# 적 노드 삭제
 	
 func drop_item():
-	var coin_chance = randf()
-	if coin_chance <= 0.5:
+	var gold_chance = randf()
+	if gold_chance <= 0.5:
 		print("코인 드랍")
-		var new_coin = coin.instantiate()
-		new_coin.coin = coins
-		new_coin.global_position = global_position
-		get_parent().call_deferred("add_child", new_coin)
+		var new_gold = gold.instantiate()
+		new_gold.gold = golds
+		new_gold.global_position = global_position
+		get_parent().call_deferred("add_child", new_gold)
