@@ -64,8 +64,8 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 func enemy_die():
 	is_dead = true 							# 사망 상태 활성화
 	drop_item()
-	collision_shape.disabled = true			# CollisionShape2D 비활성화
-	interaction_sensor.queue_free()			# interaction_sensor 삭제
+	collision_shape.call_deferred("set_disabled",true)					# CollisionShape2D 비활성화
+	interaction_sensor.call_deferred("queue_free")	# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
 	queue_free()							# 적 노드 삭제
