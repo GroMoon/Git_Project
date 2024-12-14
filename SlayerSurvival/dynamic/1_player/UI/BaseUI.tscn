@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=9 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI/BaseUI.gd" id="1_j5gas"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI/health_bar/Hp_Bar.tscn" id="1_wcd45"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://7hdonowfh837" path="res://dynamic/1_player/UI/gold/goldcount.tscn" id="4_h6h5n"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="5_wu63c"]
 [ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI/death_panel/death_panel.tscn" id="7_6yqui"]
+[ext_resource type="Texture2D" uid="uid://bj4tkx5fjsm0a" path="res://dynamic/6_utillity/Items/Gold.png" id="8_2svbc"]
 
 [node name="UI_Layer" type="CanvasLayer"]
 process_mode = 3
@@ -33,17 +34,8 @@ offset_top = -0.206154
 offset_bottom = 11.7938
 auto_translate = false
 
-[node name="GoldCount" parent="BaseUI" instance=ExtResource("4_h6h5n")]
-layout_mode = 0
-offset_left = 1144.0
-offset_top = 14.0
-offset_right = 1200.0
-offset_bottom = 42.0
-theme_override_fonts/font = ExtResource("5_wu63c")
-
 [node name="PausePanel" parent="BaseUI" instance=ExtResource("2_w0nwt")]
 process_mode = 3
-visible = false
 layout_mode = 1
 offset_left = 344.0
 offset_top = 64.0
@@ -79,6 +71,23 @@ offset_left = 166.0
 offset_top = 158.0
 offset_right = 328.0
 offset_bottom = 221.0
+
+[node name="Quit" parent="BaseUI/DeathPanel" index="2"]
+process_mode = 3
+
+[node name="goldcollect" type="Node2D" parent="BaseUI"]
+
+[node name="GoldCount" parent="BaseUI/goldcollect" instance=ExtResource("4_h6h5n")]
+offset_left = 1144.0
+offset_top = 14.0
+offset_right = 1200.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("5_wu63c")
+
+[node name="gold" type="Sprite2D" parent="BaseUI/goldcollect"]
+position = Vector2(1130, 26)
+scale = Vector2(0.134658, 0.112626)
+texture = ExtResource("8_2svbc")
 
 [connection signal="pressed" from="BaseUI/PausePanel/Menu" to="BaseUI" method="_on_menu_pressed"]
 [connection signal="pressed" from="BaseUI/PausePanel/Resume" to="BaseUI" method="_on_resume_pressed"]
