@@ -330,7 +330,9 @@ script = ExtResource("1_go0kx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xhjrh")
-animation = &"idle"
+animation = &"take_hit"
+frame = 3
+frame_progress = 1.0
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -356,6 +358,7 @@ position = Vector2(46, 27)
 shape = SubResource("RectangleShape2D_2c58i")
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
+visible = false
 
 [node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
 offset_left = 574.0
@@ -365,7 +368,6 @@ offset_bottom = 388.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
-[connection signal="pressed" from="UI_Layer/BaseUI/DeathPanel/Quit" to="UI_Layer/BaseUI" method="_on_quit_pressed"]
 
 [editable path="attack"]
 [editable path="UI_Layer"]

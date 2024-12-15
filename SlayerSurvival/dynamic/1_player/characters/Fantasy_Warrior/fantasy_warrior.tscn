@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=64 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
 [ext_resource type="Texture2D" uid="uid://clqcemcgg54u6" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://iws1q7510i8m" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
 [ext_resource type="Texture2D" uid="uid://bl4w5836gsta8" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
 [ext_resource type="Texture2D" uid="uid://coalck22xuga" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
+[ext_resource type="Texture2D" uid="uid://ctjiash3djope" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="8_vjbc4"]
 [ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="9_j1oyj"]
 
@@ -198,6 +199,18 @@ region = Rect2(972, 0, 162, 162)
 atlas = ExtResource("6_ub3y5")
 region = Rect2(1134, 0, 162, 162)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2i2j"]
+atlas = ExtResource("8_dqamd")
+region = Rect2(0, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccxbg"]
+atlas = ExtResource("8_dqamd")
+region = Rect2(162, 0, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ushrp"]
+atlas = ExtResource("8_dqamd")
+region = Rect2(324, 0, 162, 162)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_lq7wa"]
 animations = [{
 "frames": [{
@@ -370,6 +383,20 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2i2j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccxbg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ushrp")
+}],
+"loop": false,
+"name": &"take_hit",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jkprl"]
@@ -385,8 +412,11 @@ collision_layer = 2
 script = ExtResource("1_cqj1t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.00189, 1)
 sprite_frames = SubResource("SpriteFrames_lq7wa")
-animation = &"idle"
+animation = &"take_hit"
+frame = 2
+frame_progress = 1.0
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -415,6 +445,7 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_icegv")
 
 [node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
+visible = false
 
 [node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
 offset_left = 576.0
@@ -424,7 +455,6 @@ offset_bottom = 355.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
-[connection signal="pressed" from="UI_Layer/BaseUI/DeathPanel/Quit" to="UI_Layer/BaseUI" method="_on_quit_pressed"]
 
 [editable path="attack"]
 [editable path="UI_Layer"]
