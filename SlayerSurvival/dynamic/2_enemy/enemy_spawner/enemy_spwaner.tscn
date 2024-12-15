@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://uii3wm1de8w0"]
+
+[ext_resource type="Script" path="res://dynamic/2_enemy/enemy_spawner/enemy_spwaner.gd" id="1_yjod4"]
+
+[node name="EnemySpwaner" type="Node2D"]
+script = ExtResource("1_yjod4")
+
+[node name="SkeletonTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="MushroomTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="SkeletonTimer" to="." method="_on_skeleton_timer_timeout"]
+[connection signal="timeout" from="MushroomTimer" to="." method="_on_mushroom_timer_timeout"]
