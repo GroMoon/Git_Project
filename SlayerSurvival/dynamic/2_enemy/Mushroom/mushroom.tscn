@@ -248,7 +248,9 @@ script = ExtResource("1_x5roa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_al5qr")
-animation = &"attack"
+animation = &"take_hit"
+frame = 3
+frame_progress = 1.0
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
