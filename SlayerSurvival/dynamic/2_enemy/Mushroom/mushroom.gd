@@ -49,7 +49,7 @@ func _on_interaction_sensor_body_entered(_body:Node2D):
 	if _body == player and not touch_flag:
 		player.process_collision_enemy(damage)
 		touch_flag = true
-		print(touch_flag)
+		# print(touch_flag)
 
 # 접촉 상태에서 벗어날 때
 func _on_interaction_sensor_body_exited(_body:Node2D):
@@ -65,8 +65,8 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		else:
 			# 데미지 모션 추가
 			hit_flag = true
-			animated_sprite.stop()	
-			animated_sprite.speed_scale = 2.0					# 현재 애니메이션(walk)을 중지시킴
+			animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
+			animated_sprite.speed_scale = 2.0
 			animated_sprite.play("take_hit")
 			await animated_sprite.animation_finished
 		hit_flag = false
