@@ -220,7 +220,7 @@ script = ExtResource("1_pivpp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2axdu")
-animation = &"death"
+animation = &"take_hit"
 speed_scale = 1.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
