@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://x8kdkwfnwtg4"]
+[gd_scene load_steps=6 format=3 uid="uid://x8kdkwfnwtg4"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_vhu8y"]
 [ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://dynamic/4_world/map1/tile_map.tscn" id="2_ci5kd"]
-[ext_resource type="PackedScene" uid="uid://brl7x6dv6h7or" path="res://dynamic/2_enemy/flying_monster/flying_monster_1_spawner/flying_monster_1_spawner.tscn" id="3_8flww"]
-[ext_resource type="PackedScene" uid="uid://dse70xtlwr8du" path="res://dynamic/2_enemy/flying_monster/flying_monster_2_spawner/flying_monster_2_spawner.tscn" id="4_ad5oa"]
+[ext_resource type="PackedScene" uid="uid://uii3wm1de8w0" path="res://dynamic/2_enemy/enemy_spawner/enemy_spwaner.tscn" id="4_ad5oa"]
 [ext_resource type="PackedScene" uid="uid://xya4xva0d7vj" path="res://dynamic/5_title_screen/selcet_character/Select_Character.tscn" id="5_5yiak"]
 [ext_resource type="AudioStream" uid="uid://dyr5k7evqtx1t" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="6_a63fx"]
 
@@ -12,19 +11,9 @@ script = ExtResource("1_vhu8y")
 
 [node name="TileMap" parent="." instance=ExtResource("2_ci5kd")]
 
-[node name="enemy_spawner" type="Node2D" parent="."]
-
-[node name="flying_monster_1_spawner" parent="enemy_spawner" instance=ExtResource("3_8flww")]
-
-[node name="flying_monster_2_spawner" parent="enemy_spawner" instance=ExtResource("4_ad5oa")]
+[node name="EnemySpwaner" parent="." instance=ExtResource("4_ad5oa")]
 
 [node name="Select_Character_Panel" parent="." instance=ExtResource("5_5yiak")]
-process_mode = 3
-
-[node name="Select_Golem" parent="Select_Character_Panel/ColorRect" index="0"]
-process_mode = 3
-
-[node name="Select_Slime" parent="Select_Character_Panel/ColorRect" index="1"]
 process_mode = 3
 
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
@@ -33,9 +22,10 @@ position = Vector2(900, 220)
 stream = ExtResource("6_a63fx")
 volume_db = -5.0
 
-[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Golem" to="." method="_on_select_golem_mouse_entered"]
-[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Golem" to="." method="_on_select_golem_pressed"]
-[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_mouse_entered"]
-[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Slime" to="." method="_on_select_slime_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_King" to="." method="_on_select_king_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_King" to="." method="_on_select_king_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/ColorRect/Select_Warrior" to="." method="_on_select_warrior_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/ColorRect/Select_Warrior" to="." method="_on_select_warrior_pressed"]
 
+[editable path="EnemySpwaner"]
 [editable path="Select_Character_Panel"]
