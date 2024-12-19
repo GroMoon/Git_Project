@@ -24,6 +24,10 @@ var current_hp  = max_hp:
 		if current_hp > max_hp:
 			current_hp = max_hp
 
+# 골드
+@onready var gold_count = get_node("UI_Layer/BaseUI/goldcollect/GoldCount")
+@export var gold = 0
+
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
 
@@ -50,7 +54,9 @@ func _physics_process(_delta):
 			animated_sprite.flip_h = velocity.x < 0
 		else:
 			animated_sprite.play("idle")	
-
+	
+	# 골드 라벨 업데이트
+	gold_count.text = str(gold)
 
 func _on_attack_timer_timeout():
 	is_attacking = true
@@ -100,6 +106,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 func process_collision_enemy(damage):
 	if damage_flag:
 		# current_hp -= damage								# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
+		damage_flag = false
 		if current_hp <= 0:
 			print("사망") 									# FIXME : 사망 시 필요한 작업 (메인메뉴 돌아가기, 사망 모션, 사망 사운드 등) 추가 필요
 		else:
@@ -113,6 +120,9 @@ func process_collision_enemy(damage):
 				animated_sprite.play("take_hit")
 				animated_sprite.modulate = Color(1, 0, 0)	# 피해 입으면 컬러 변경(빨간색)
 				await animated_sprite.animation_finished      
-		damage_flag = false
 		hit_flag    = false
 		
+# 골드 추가 처리
+func add_gold(gold_value):
+	gold += gold_value
+	print("현재 골드 : ", gold)

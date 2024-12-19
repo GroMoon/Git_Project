@@ -84,8 +84,8 @@ offset_right = 1200.0
 offset_bottom = 42.0
 theme_override_fonts/font = ExtResource("5_wu63c")
 
-[node name="gold" type="Sprite2D" parent="BaseUI/goldcollect"]
-position = Vector2(1130, 26)
+[node name="gold" type="Sprite2D" parent="BaseUI/goldcollect/GoldCount"]
+position = Vector2(-14, 12)
 scale = Vector2(0.134658, 0.112626)
 texture = ExtResource("8_2svbc")
 

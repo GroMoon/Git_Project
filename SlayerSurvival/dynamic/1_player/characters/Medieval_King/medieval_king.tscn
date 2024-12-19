@@ -358,7 +358,6 @@ position = Vector2(46, 27)
 shape = SubResource("RectangleShape2D_2c58i")
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
-visible = false
 
 [node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
 offset_left = 574.0
