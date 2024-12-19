@@ -25,8 +25,12 @@ var current_hp  = max_hp:
 			current_hp = max_hp
 
 # 골드
-@onready var gold_count = get_node("UI_Layer/BaseUI/goldcollect/GoldCount")
-@export var gold = 0
+@onready var gold_label = get_node("UI_Layer/BaseUI/goldcollect/GoldCount")
+@export var gold_count = 0
+
+# 적 처치
+@onready var kill_label = get_node("UI_Layer/BaseUI/goldcollect/killcollect/KillCount")
+@export var kill_count = 0
 
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
@@ -55,8 +59,9 @@ func _physics_process(_delta):
 		else:
 			animated_sprite.play("idle")	
 	
-	# 골드 라벨 업데이트
-	gold_count.text = str(gold)
+	# 라벨 업데이트
+	gold_label.text = str(gold_count)
+	kill_label.text = str(kill_count)
 
 func _on_attack_timer_timeout():
 	is_attacking = true
@@ -124,5 +129,5 @@ func process_collision_enemy(damage):
 		
 # 골드 추가 처리
 func add_gold(gold_value):
-	gold += gold_value
-	print("현재 골드 : ", gold)
+	gold_count += gold_value
+	print("현재 골드 : ", gold_count)

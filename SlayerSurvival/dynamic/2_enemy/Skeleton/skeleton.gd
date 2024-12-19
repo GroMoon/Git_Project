@@ -76,6 +76,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 func enemy_die():
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
+	player.kill_count += 1
 	collision_shape.call_deferred("set_disabled",true)	# CollisionShape2D 비활성화
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
@@ -85,7 +86,7 @@ func enemy_die():
 # 아이템 드랍 함수(골드)
 func drop_item():
 	var gold_chance = randf()
-	if gold_chance <= 0.5:								# 드랍 확률 조정 (0.0~1.0)
+	if gold_chance <= 1.0:								# 드랍 확률 조정 (0.0~1.0)
 		var new_gold = gold_img.instantiate()
 		new_gold.global_position = global_position
 		get_parent().call_deferred("add_child", new_gold)
