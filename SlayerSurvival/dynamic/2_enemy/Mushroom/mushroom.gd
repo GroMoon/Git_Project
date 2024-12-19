@@ -6,9 +6,10 @@ const ANIMATION_SPEED = 1.5		# 기본 애니메이션 속도
 @onready var animated_sprite    = $AnimatedSprite2D
 @onready var interaction_sensor = $interaction_sensor 
 
-# 코인
-var gold = preload("res://dynamic/6_utillity/Items/gold.tscn")
-var golds = 10
+# 골드
+var gold_img = preload("res://dynamic/6_utillity/Items/gold.tscn")
+#var golds = 25
+
 # 적 특성
 var health       = 15 	# 적 체력
 var move_speed   = 80 	# 적 이동 속도
@@ -75,17 +76,17 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 func enemy_die():
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
+	player.kill_count += 1
 	collision_shape.call_deferred("set_disabled",true)	# CollisionShape2D 비활성화
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
 	queue_free()										# 적 노드 삭제
 
+# 아이템 드랍 함수(골드)
 func drop_item():
 	var gold_chance = randf()
-	if gold_chance <= 0.5:
-		print("코인 드랍")
-		var new_gold = gold.instantiate()
-		new_gold.gold = golds
+	if gold_chance <= 0.5:								# 드랍 확률 조정 (0.0~1.0)
+		var new_gold = gold_img.instantiate()
 		new_gold.global_position = global_position
 		get_parent().call_deferred("add_child", new_gold)
