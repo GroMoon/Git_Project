@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://cswgkwsq8gfan"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g13a4"]
+bg_color = Color(0, 0, 0, 0.384314)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpssi"]
+bg_color = Color(1, 0.870588, 0.541176, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Exp_Bar" type="ProgressBar"]
+custom_minimum_size = Vector2(1195, 12)
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 1197.0
+offset_bottom = 14.0
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_g13a4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gpssi")
+step = 1.0
+value = 50.0
+show_percentage = false

@@ -21,16 +21,14 @@ anti_aliasing = false
 
 [node name="Hp_Bar" type="ProgressBar"]
 unique_name_in_owner = true
-anchors_preset = -1
-anchor_right = 0.0133333
-anchor_bottom = 0.00923077
-offset_left = 647.0
-offset_top = 390.0
-offset_right = 697.0
-offset_bottom = 398.0
+offset_left = 576.0
+offset_top = 373.0
+offset_right = 631.0
+offset_bottom = 376.0
+size_flags_horizontal = 6
+size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_xhsjg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_akqyr")
 step = 1.0
 value = 100.0
 show_percentage = false
-metadata/_edit_use_anchors_ = true
