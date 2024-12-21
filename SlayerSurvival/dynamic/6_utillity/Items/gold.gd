@@ -1,11 +1,12 @@
 extends Area2D
 
-@export var gold = 1
+@export var gold_value = 10
+
+var player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	player = get_parent().get_parent().get_node("player")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -13,4 +14,5 @@ func _process(delta):
 
 # 플레이어 충돌
 func _on_body_entered(body):
+	player.add_gold(gold_value)
 	queue_free()

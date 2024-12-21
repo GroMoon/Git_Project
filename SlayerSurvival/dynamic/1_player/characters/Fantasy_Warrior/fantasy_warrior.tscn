@@ -445,7 +445,6 @@ collision_mask = 4
 shape = SubResource("RectangleShape2D_icegv")
 
 [node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
-visible = false
 
 [node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
 offset_left = 576.0

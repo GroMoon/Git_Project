@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=10 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI/BaseUI.gd" id="1_j5gas"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI/health_bar/Hp_Bar.tscn" id="1_wcd45"]
@@ -8,6 +8,7 @@
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="5_wu63c"]
 [ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI/death_panel/death_panel.tscn" id="7_6yqui"]
 [ext_resource type="Texture2D" uid="uid://bj4tkx5fjsm0a" path="res://dynamic/6_utillity/Items/Gold.png" id="8_2svbc"]
+[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="9_i6bee"]
 
 [node name="UI_Layer" type="CanvasLayer"]
 process_mode = 3
@@ -75,17 +76,33 @@ offset_bottom = 221.0
 [node name="Quit" parent="BaseUI/DeathPanel" index="2"]
 process_mode = 3
 
+[node name="killcollect" type="Node2D" parent="BaseUI"]
+
+[node name="KillCount" parent="BaseUI/killcollect" instance=ExtResource("4_h6h5n")]
+offset_left = 981.0
+offset_top = 14.0
+offset_right = 1037.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("5_wu63c")
+metadata/_edit_use_anchors_ = true
+
+[node name="kill" type="Sprite2D" parent="BaseUI/killcollect/KillCount"]
+position = Vector2(-14, 12)
+scale = Vector2(0.0324631, 0.033699)
+texture = ExtResource("9_i6bee")
+
 [node name="goldcollect" type="Node2D" parent="BaseUI"]
 
 [node name="GoldCount" parent="BaseUI/goldcollect" instance=ExtResource("4_h6h5n")]
-offset_left = 1144.0
+offset_left = 1112.0
 offset_top = 14.0
-offset_right = 1200.0
+offset_right = 1168.0
 offset_bottom = 42.0
 theme_override_fonts/font = ExtResource("5_wu63c")
+metadata/_edit_use_anchors_ = true
 
-[node name="gold" type="Sprite2D" parent="BaseUI/goldcollect"]
-position = Vector2(1130, 26)
+[node name="gold" type="Sprite2D" parent="BaseUI/goldcollect/GoldCount"]
+position = Vector2(-14, 12)
 scale = Vector2(0.134658, 0.112626)
 texture = ExtResource("8_2svbc")
 
