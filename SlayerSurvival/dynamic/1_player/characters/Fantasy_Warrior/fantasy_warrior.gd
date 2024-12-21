@@ -32,7 +32,7 @@ var current_hp = max_hp:
 @export var gold_count = 0
 
 # 적 처치
-@onready var kill_label = get_node("UI_Layer/BaseUI/goldcollect/killcollect/KillCount")
+@onready var kill_label = get_node("UI_Layer/BaseUI/killcollect/KillCount")
 @export var kill_count = 0
 
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
