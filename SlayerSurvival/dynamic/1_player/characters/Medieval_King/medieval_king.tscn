@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://blv0hgymp636q"]
+[gd_scene load_steps=53 format=3 uid="uid://blv0hgymp636q"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
 [ext_resource type="Texture2D" uid="uid://c1t3r7n3v22k1" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bl1phqe2lt0jr" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
 [ext_resource type="Texture2D" uid="uid://br5ryt28b3vy0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="9_1a373"]
+[ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
 [ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="10_d704x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fyilj"]
@@ -356,6 +357,8 @@ collision_mask = 4
 [node name="CollisionShape2D" parent="attack" index="0"]
 position = Vector2(46, 27)
 shape = SubResource("RectangleShape2D_2c58i")
+
+[node name="MagneticArea" parent="." instance=ExtResource("10_b142a")]
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
 

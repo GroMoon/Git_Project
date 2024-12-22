@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ctjiash3djope" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="8_vjbc4"]
 [ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="9_j1oyj"]
+[ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m204h"]
 atlas = ExtResource("3_q0jc1")
@@ -405,8 +406,6 @@ height = 36.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_icegv"]
 size = Vector2(41.3333, 65.5)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pihsk"]
-
 [node name="FantasyWarrior" type="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(2, 2)
@@ -446,10 +445,7 @@ collision_mask = 4
 [node name="CollisionShape2D" parent="attack" index="0"]
 shape = SubResource("RectangleShape2D_icegv")
 
-[node name="magnetic_area" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="magnetic_area"]
-shape = SubResource("CircleShape2D_pihsk")
+[node name="MagneticArea" parent="." instance=ExtResource("10_nxneh")]
 
 [node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
 
@@ -461,7 +457,6 @@ offset_bottom = 355.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
-[connection signal="area_entered" from="magnetic_area" to="." method="_on_magnetic_area_area_entered"]
 
 [editable path="attack"]
 [editable path="UI_Layer"]
