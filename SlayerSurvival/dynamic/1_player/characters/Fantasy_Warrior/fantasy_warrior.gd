@@ -4,14 +4,16 @@ const ANIMATION_SPEED = 2.0
 
 @onready var attack_area_tscn = $attack/CollisionShape2D
 @onready var animated_sprite  = $AnimatedSprite2D
+@onready var magnetic_area    = $magnetic_area/CollisionShape2D
 
 # 캐릭터 특성
 @export var character_name  = "fantasy_warrior"
 @export var move_speed      = 250
 @export var character_level = 1
 
-var attack_damage  = 5	# 일반 공격 데미지
-var is_attacking  = false
+var attack_damage       = 5			# 일반 공격 데미지
+var is_attacking        = false
+var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
 
 # 체력
 @onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
@@ -42,8 +44,9 @@ func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
-
-	
+	# 자석 범위 설정
+	magnetic_area.shape.radius = magnetic_area_scale
+	# print(magnetic_area.radius)
 
 func _physics_process(_delta):
 	# 공격 중에 이동 처리 안 함
@@ -137,3 +140,8 @@ func process_collision_enemy(damage):
 func add_gold(gold_value):
 	gold_count += gold_value
 	print("골드 값 : ", gold_count)
+
+func _on_magnetic_area_area_entered(area:Area2D):
+	if area.is_in_group("Gold") or area.is_in_group("Exp"):
+		area.target = self
+

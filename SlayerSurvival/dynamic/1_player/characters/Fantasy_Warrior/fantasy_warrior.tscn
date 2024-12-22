@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=65 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
 [ext_resource type="Texture2D" uid="uid://clqcemcgg54u6" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
@@ -405,6 +405,8 @@ height = 36.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_icegv"]
 size = Vector2(41.3333, 65.5)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_pihsk"]
+
 [node name="FantasyWarrior" type="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(2, 2)
@@ -444,6 +446,11 @@ collision_mask = 4
 [node name="CollisionShape2D" parent="attack" index="0"]
 shape = SubResource("RectangleShape2D_icegv")
 
+[node name="magnetic_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="magnetic_area"]
+shape = SubResource("CircleShape2D_pihsk")
+
 [node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
 
 [node name="Hp_Bar" parent="UI_Layer/BaseUI" index="0"]
@@ -454,6 +461,7 @@ offset_bottom = 355.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
+[connection signal="area_entered" from="magnetic_area" to="." method="_on_magnetic_area_area_entered"]
 
 [editable path="attack"]
 [editable path="UI_Layer"]

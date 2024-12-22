@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c7whanwt2hu16"]
+
+[node name="MagneticArea" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
