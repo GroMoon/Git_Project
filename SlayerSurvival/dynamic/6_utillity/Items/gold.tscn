@@ -6,15 +6,15 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_437rd"]
 radius = 7.0
 
-[node name="Gold" type="Area2D"]
+[node name="Gold" type="Area2D" groups=["Gold"]]
 collision_mask = 2
 script = ExtResource("1_urk5s")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Gold"]]
 scale = Vector2(0.0868452, 0.0826124)
 texture = ExtResource("2_fm6ps")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Gold"]]
 shape = SubResource("CircleShape2D_437rd")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

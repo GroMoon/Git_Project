@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=65 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
 [ext_resource type="Texture2D" uid="uid://clqcemcgg54u6" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ctjiash3djope" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="8_vjbc4"]
 [ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="9_j1oyj"]
+[ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m204h"]
 atlas = ExtResource("3_q0jc1")
@@ -443,6 +444,8 @@ collision_mask = 4
 
 [node name="CollisionShape2D" parent="attack" index="0"]
 shape = SubResource("RectangleShape2D_icegv")
+
+[node name="MagneticArea" parent="." instance=ExtResource("10_nxneh")]
 
 [node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
 
