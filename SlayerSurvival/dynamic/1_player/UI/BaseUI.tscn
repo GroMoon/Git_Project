@@ -20,6 +20,16 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_j5gas")
 
+[node name="Stopwatch" parent="BaseUI" instance=ExtResource("4_h6h5n")]
+layout_mode = 1
+offset_left = 552.0
+offset_top = 32.0
+offset_right = 651.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("5_wu63c")
+theme_override_font_sizes/font_size = 35
+text = "00:00"
+
 [node name="Hp_Bar" parent="BaseUI" instance=ExtResource("1_wcd45")]
 unique_name_in_owner = false
 layout_mode = 0
@@ -37,6 +47,7 @@ auto_translate = false
 
 [node name="PausePanel" parent="BaseUI" instance=ExtResource("2_w0nwt")]
 process_mode = 3
+visible = false
 layout_mode = 1
 offset_left = 344.0
 offset_top = 64.0
@@ -60,6 +71,7 @@ offset_right = 351.0
 offset_bottom = 191.0
 
 [node name="DeathPanel" parent="BaseUI" instance=ExtResource("7_6yqui")]
+visible = false
 layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0
