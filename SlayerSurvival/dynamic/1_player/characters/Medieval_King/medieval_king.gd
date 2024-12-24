@@ -139,10 +139,14 @@ func process_collision_enemy(damage):
 				await animated_sprite.animation_finished      
 		hit_flag    = false
 		
-# 골드 추가 처리
+# 골드 추가 
 func add_gold(gold_value):
 	gold_count += gold_value
 	print("현재 골드 : ", gold_count)
+
+# 경험치 추가
+func add_exp(_exp_value):
+	print("경험치 획득!")
 
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):

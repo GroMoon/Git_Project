@@ -16,6 +16,6 @@ func _physics_process(delta):
 		speed += 3*delta
 
 # 플레이어 충돌
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	player.add_gold(gold_value)
 	queue_free()

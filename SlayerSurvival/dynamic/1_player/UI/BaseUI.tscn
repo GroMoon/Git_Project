@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://7hdonowfh837" path="res://dynamic/1_player/UI/gold/goldcount.tscn" id="4_h6h5n"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="5_wu63c"]
 [ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI/death_panel/death_panel.tscn" id="7_6yqui"]
-[ext_resource type="Texture2D" uid="uid://bj4tkx5fjsm0a" path="res://dynamic/6_utillity/Items/Gold.png" id="8_2svbc"]
 [ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="9_i6bee"]
+[ext_resource type="Texture2D" uid="uid://bj4tkx5fjsm0a" path="res://dynamic/6_utillity/Items/gold/Gold.png" id="9_jtnuo"]
 
 [node name="UI_Layer" type="CanvasLayer"]
 process_mode = 3
@@ -116,7 +116,7 @@ metadata/_edit_use_anchors_ = true
 [node name="gold" type="Sprite2D" parent="BaseUI/goldcollect/GoldCount"]
 position = Vector2(-14, 12)
 scale = Vector2(0.134658, 0.112626)
-texture = ExtResource("8_2svbc")
+texture = ExtResource("9_jtnuo")
 
 [connection signal="pressed" from="BaseUI/PausePanel/Menu" to="BaseUI" method="_on_menu_pressed"]
 [connection signal="pressed" from="BaseUI/PausePanel/Resume" to="BaseUI" method="_on_resume_pressed"]
