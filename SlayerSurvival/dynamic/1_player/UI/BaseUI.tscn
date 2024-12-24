@@ -76,6 +76,21 @@ offset_bottom = 221.0
 [node name="Quit" parent="BaseUI/DeathPanel" index="2"]
 process_mode = 3
 
+[node name="killcollect" type="Node2D" parent="BaseUI"]
+
+[node name="KillCount" parent="BaseUI/killcollect" instance=ExtResource("4_h6h5n")]
+offset_left = 981.0
+offset_top = 14.0
+offset_right = 1037.0
+offset_bottom = 42.0
+theme_override_fonts/font = ExtResource("5_wu63c")
+metadata/_edit_use_anchors_ = true
+
+[node name="kill" type="Sprite2D" parent="BaseUI/killcollect/KillCount"]
+position = Vector2(-14, 12)
+scale = Vector2(0.0324631, 0.033699)
+texture = ExtResource("9_i6bee")
+
 [node name="goldcollect" type="Node2D" parent="BaseUI"]
 
 [node name="GoldCount" parent="BaseUI/goldcollect" instance=ExtResource("4_h6h5n")]
@@ -90,21 +105,6 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-14, 12)
 scale = Vector2(0.134658, 0.112626)
 texture = ExtResource("8_2svbc")
-
-[node name="killcollect" type="Node2D" parent="BaseUI/goldcollect"]
-
-[node name="KillCount" parent="BaseUI/goldcollect/killcollect" instance=ExtResource("4_h6h5n")]
-offset_left = 981.0
-offset_top = 14.0
-offset_right = 1037.0
-offset_bottom = 42.0
-theme_override_fonts/font = ExtResource("5_wu63c")
-metadata/_edit_use_anchors_ = true
-
-[node name="kill" type="Sprite2D" parent="BaseUI/goldcollect/killcollect/KillCount"]
-position = Vector2(-14, 12)
-scale = Vector2(0.0324631, 0.033699)
-texture = ExtResource("9_i6bee")
 
 [connection signal="pressed" from="BaseUI/PausePanel/Menu" to="BaseUI" method="_on_menu_pressed"]
 [connection signal="pressed" from="BaseUI/PausePanel/Resume" to="BaseUI" method="_on_resume_pressed"]

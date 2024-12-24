@@ -1,25 +1,32 @@
 extends CharacterBody2D
 
 const ANIMATION_SPEED = 1.5
+const START_HP        = 75
 
 @onready var attack_area_tscn = $attack/CollisionShape2D
 @onready var animated_sprite  = $AnimatedSprite2D
+@onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
 # 캐릭터 특성
 @export var character_name  = "medieval_king"
 @export var move_speed      = 150
 @export var character_level = 1
 
-var attack_damage  = 10	# 일반 공격 데미지
-var is_attacking  = false
+var attack_damage       = 10		# 일반 공격 데미지
+var is_attacking        = false
+var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
 
 # 체력
 @onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
-var max_hp      = 75
-var current_hp  = max_hp:
-	set(value):
-		current_hp = value
+
+var max_hp = START_HP:
+	set(set_value):
+		max_hp = set_value
 		hp_bar.max_value = max_hp
+
+var current_hp = max_hp:
+	set(set_value):
+		current_hp = set_value
 		hp_bar.value = current_hp
 		if current_hp > max_hp:
 			current_hp = max_hp
@@ -29,7 +36,7 @@ var current_hp  = max_hp:
 @export var gold_count = 0
 
 # 적 처치
-@onready var kill_label = get_node("UI_Layer/BaseUI/goldcollect/killcollect/KillCount")
+@onready var kill_label = get_node("UI_Layer/BaseUI/killcollect/KillCount")
 @export var kill_count = 0
 
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
@@ -39,6 +46,11 @@ func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
+	# 캐릭터 특성 설정
+	max_hp = START_HP
+	# 자석 범위 설정
+	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
+	magnetic_area.shape.radius = magnetic_area_scale
 
 func _physics_process(_delta):
 	# 공격 중에 이동 처리 안 함
@@ -110,7 +122,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
 	if damage_flag:
-		# current_hp -= damage								# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
+		current_hp -= damage								# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
 		damage_flag = false
 		if current_hp <= 0:
 			print("사망") 									# FIXME : 사망 시 필요한 작업 (메인메뉴 돌아가기, 사망 모션, 사망 사운드 등) 추가 필요
@@ -131,3 +143,7 @@ func process_collision_enemy(damage):
 func add_gold(gold_value):
 	gold_count += gold_value
 	print("현재 골드 : ", gold_count)
+
+func _on_magnetic_area_area_entered(area:Area2D):
+	if area.is_in_group("Gold") or area.is_in_group("Exp"):
+		area.target = self

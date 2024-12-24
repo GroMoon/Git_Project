@@ -4,13 +4,16 @@ extends Area2D
 
 var player
 
-# Called when the node enters the scene tree for the first time.
+var target = null
+var speed  = -1
+
 func _ready():
 	player = get_parent().get_parent().get_node("player")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _physics_process(delta):
+	if target != null:
+		global_position = global_position.move_toward(target.global_position, speed)
+		speed += 3*delta
 
 # 플레이어 충돌
 func _on_body_entered(body):
