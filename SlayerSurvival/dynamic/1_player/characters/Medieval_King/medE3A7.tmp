@@ -328,6 +328,11 @@ texture_filter = 1
 scale = Vector2(2, 2)
 collision_layer = 2
 script = ExtResource("1_go0kx")
+character_name = null
+move_speed = null
+character_level = null
+gold_count = null
+kill_count = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xhjrh")
@@ -362,7 +367,7 @@ shape = SubResource("RectangleShape2D_2c58i")
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
 
-[node name="Hp_Bar" parent="UI_Layer/BaseUI" index="2"]
+[node name="Hp_Bar" parent="UI_Layer/BaseUI" index="1"]
 offset_left = 574.0
 offset_top = 385.0
 offset_right = 629.0
