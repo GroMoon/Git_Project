@@ -8,6 +8,9 @@ extends Control
 var sec = 0.0
 var min = 0
 
+# LEVEL
+@onready var level_label = get_node("level")
+
 var pause_flag = false
 
 func _ready():

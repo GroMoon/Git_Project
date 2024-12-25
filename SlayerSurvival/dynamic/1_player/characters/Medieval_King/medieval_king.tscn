@@ -362,7 +362,7 @@ shape = SubResource("RectangleShape2D_2c58i")
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
 
-[node name="Hp_Bar" parent="UI_Layer/BaseUI" index="1"]
+[node name="Hp_Bar" parent="UI_Layer/BaseUI" index="2"]
 offset_left = 574.0
 offset_top = 385.0
 offset_right = 629.0

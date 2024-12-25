@@ -52,6 +52,8 @@ var current_hp = max_hp:
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
 
+@onready var level_label = $UI_Layer/BaseUI/level
+
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
@@ -85,6 +87,7 @@ func _physics_process(_delta):
 	# 라벨 업데이트
 	gold_label.text = str(gold_count)
 	kill_label.text = str(kill_count)
+	level_label.text = "LV " + str(character_level)
 
 func _on_attack_timer_timeout():
 	is_attacking = true

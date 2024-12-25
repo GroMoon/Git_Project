@@ -30,6 +30,16 @@ theme_override_fonts/font = ExtResource("5_wu63c")
 theme_override_font_sizes/font_size = 35
 text = "00:00"
 
+[node name="level" type="Label" parent="BaseUI"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 20.0
+offset_right = 46.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("5_wu63c")
+theme_override_font_sizes/font_size = 20
+text = "LV"
+
 [node name="Hp_Bar" parent="BaseUI" instance=ExtResource("1_wcd45")]
 unique_name_in_owner = false
 layout_mode = 0
@@ -40,9 +50,9 @@ offset_bottom = 411.0
 
 [node name="Exp_Bar" parent="BaseUI" instance=ExtResource("3_bf304")]
 layout_mode = 1
-offset_left = 0.0
-offset_top = -0.206154
-offset_bottom = 11.7938
+offset_top = 1.79385
+offset_right = 1199.0
+offset_bottom = 13.7938
 auto_translate = false
 
 [node name="PausePanel" parent="BaseUI" instance=ExtResource("2_w0nwt")]
