@@ -31,6 +31,3 @@ func _on_quit_button_mouse_entered():
 
 func _on_quit_button_pressed():
 	get_tree().quit()
-
-
-

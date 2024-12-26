@@ -96,5 +96,5 @@ func drop_item():
 	var exp_chance = randf()
 	if exp_chance <= 0.7:								# 드랍 확률 조정 (0.0~1.0)
 		var new_exp = exp_img.instantiate()
-		new_exp.global_position = global_position #+ Vector2(10, 0)
+		new_exp.global_position = global_position + Vector2(10, 0)
 		get_parent().call_deferred("add_child", new_exp)
