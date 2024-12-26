@@ -6,7 +6,7 @@ extends Control
 # 스톱워치
 @onready var stopwatch = get_node("Stopwatch")
 var sec = 0.0
-var min = 0
+var minute = 0
 
 var pause_flag = false
 
@@ -14,7 +14,7 @@ func _ready():
 	pause_panel.visible = false		# PausePanel 가리기
 	death_panel.visible = false		# DeathPanel 가리기
 
-func _process(_delta):
+func _process(delta):
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
 	check_pause_pressed()
 	if pause_flag:
@@ -25,7 +25,7 @@ func _process(_delta):
 		get_tree().paused   = false
 		
 	if !pause_flag:
-		process_stopwatch(_delta)
+		process_stopwatch(delta)
 
 func check_pause_pressed():
 	if Input.is_action_just_pressed("pause"):
@@ -51,8 +51,8 @@ func _on_quit_pressed():
 func process_stopwatch(time):
 	sec += time							# time은 process에서 delta 값 으로 설정
 	if sec >= 60.0:
-		min += 1
+		minute += 1
 		sec = 0.0
-	var min_str = str(min).pad_zeros(2)
+	var minute_str = str(minute).pad_zeros(2)
 	var sec_str = str(int(sec)).pad_zeros(2)
-	stopwatch.text = min_str + ":" + sec_str
+	stopwatch.text = minute_str + ":" + sec_str
