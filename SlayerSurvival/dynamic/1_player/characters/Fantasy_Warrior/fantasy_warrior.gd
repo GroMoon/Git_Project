@@ -16,14 +16,24 @@ var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
 
+# 경험치
+@onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
+var start_exp = 0
+var max_exp:
+	set(set_value):
+		max_exp = set_value
+		exp_bar.max_value = max_exp
+var current_exp:
+	set(set_value):
+		current_exp = set_value
+		exp_bar.value = current_exp
+
 # 체력
 @onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
-
 var max_hp = START_HP:
 	set(set_value):
 		max_hp = set_value
 		hp_bar.max_value = max_hp
-
 var current_hp = max_hp:
 	set(set_value):
 		current_hp = set_value
@@ -42,12 +52,15 @@ var current_hp = max_hp:
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
 
+@onready var level_label = $UI_Layer/BaseUI/level
+
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
 	# 캐릭터 특성 설정
 	max_hp = START_HP
+	current_exp = start_exp
 	# 자석 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
 	magnetic_area.shape.radius = magnetic_area_scale
@@ -74,6 +87,7 @@ func _physics_process(_delta):
 	# 라벨 업데이트
 	gold_label.text = str(gold_count)
 	kill_label.text = str(kill_count)
+	level_label.text = "LV " + str(character_level)
 
 func _on_attack_timer_timeout():
 	is_attacking = true
@@ -141,10 +155,35 @@ func process_collision_enemy(damage):
 				await animated_sprite.animation_finished      
 		hit_flag    = false
 		
-# 골드 추가 처리
+# 골드 추가
 func add_gold(gold_value):
 	gold_count += gold_value
-	print("골드 값 : ", gold_count)
+	#print("현재 골드 : ", gold_count)
+
+# 경험치 추가
+func add_exp(_exp_value):
+	current_exp += _exp_value
+	calculate_exp()
+	#print("경험치 획득!")
+
+# 경험치 계산
+func calculate_exp():
+	var increase_exp = 10
+	if character_level < 5:
+		max_exp = (character_level * 15) + increase_exp
+		print("max 경험치 : ",max_exp)
+		calculate_level_up()
+	elif character_level < 10:
+		max_exp = (character_level * 15) + (increase_exp * 1.1)
+		print("max 경험치 : ",max_exp)
+		calculate_level_up()
+
+# 레벨 업
+func calculate_level_up():
+	if current_exp >= max_exp:
+		character_level += 1
+		print("레벨 업! : ", character_level)
+		current_exp = current_exp - max_exp
 
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):

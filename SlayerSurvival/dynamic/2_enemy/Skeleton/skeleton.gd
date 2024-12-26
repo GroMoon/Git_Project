@@ -6,9 +6,11 @@ const ANIMATION_SPEED = 1.2		# 기본 애니메이션 속도
 @onready var animated_sprite    = $AnimatedSprite2D
 @onready var interaction_sensor = $interaction_sensor 
 
-# 골드
-@onready var gold_img = preload("res://dynamic/6_utillity/Items/gold.tscn")
+# 아이템
+@onready var gold_img = preload("res://dynamic/6_utillity/Items/gold/gold.tscn")
+@onready var exp_img = preload("res://dynamic/6_utillity/Items/exp/exp.tscn")
 #var gold_value = 10
+
 
 # 적 특성
 var health       = 10 	# 적 체력
@@ -83,10 +85,17 @@ func enemy_die():
 	await animated_sprite.animation_finished
 	queue_free()										# 적 노드 삭제
 	
-# 아이템 드랍 함수(골드)
+# 아이템 드랍 함수
 func drop_item():
+	# 골드
 	var gold_chance = randf()
 	if gold_chance <= 1.0:								# 드랍 확률 조정 (0.0~1.0)
 		var new_gold = gold_img.instantiate()
 		new_gold.global_position = global_position
 		get_parent().call_deferred("add_child", new_gold)
+	# 경험치
+	var exp_chance = randf()
+	if exp_chance <= 1.0:								# 드랍 확률 조정 (0.0~1.0)
+		var new_exp = exp_img.instantiate()
+		new_exp.global_position = global_position + Vector2(10, 0)
+		get_parent().call_deferred("add_child", new_exp)
