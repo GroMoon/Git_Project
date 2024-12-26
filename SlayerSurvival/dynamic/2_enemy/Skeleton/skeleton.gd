@@ -15,7 +15,7 @@ const ANIMATION_SPEED = 1.2		# 기본 애니메이션 속도
 # 적 특성
 var health       = 10 	# 적 체력
 var move_speed   = 100 	# 적 이동 속도
-var damage       = 3  	# 적 데미지
+var damage       = 30  	# 적 데미지
 var spawn_radius = 300  # 스폰 범위
 # 전역 변수
 var player 
