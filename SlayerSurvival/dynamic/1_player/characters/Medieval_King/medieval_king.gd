@@ -64,6 +64,7 @@ func _ready():
 	# 자석 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
 	magnetic_area.shape.radius = magnetic_area_scale
+	
 
 func _physics_process(_delta):
 	# 공격 중에 이동 처리 안 함
@@ -160,6 +161,10 @@ func die_character():
 	BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().paused = true
 	death_pannel.visible = true
+	
+	var cur_gold = int(gold_count)
+	Global.character_data["GOLD"]["gold"] += cur_gold
+	Global.save_character_data()
 
 # 골드 추가 
 func add_gold(gold_value):

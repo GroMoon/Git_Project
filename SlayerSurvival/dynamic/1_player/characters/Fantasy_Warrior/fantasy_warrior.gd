@@ -162,6 +162,10 @@ func die_character():
 	BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().paused = true
 	death_pannel.visible = true
+	
+	var cur_gold = int(gold_count)
+	Global.character_data["GOLD"]["gold"] += cur_gold
+	Global.save_character_data()
 
 # 골드 추가
 func add_gold(gold_value):

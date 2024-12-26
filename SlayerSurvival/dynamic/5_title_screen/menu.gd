@@ -20,6 +20,7 @@ func _on_item_button_mouse_entered():
 # SETTING BUTTON
 func _on_setting_button_mouse_entered():
 	$Button_sound.play()
+	print(Global.character_data)
 
 # STORE BUTTON
 func _on_store_button_mouse_entered():
