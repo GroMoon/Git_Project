@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddwvg84utywph"]
+
+[ext_resource type="Script" path="res://dynamic/6_utillity/Items/gold/gold.gd" id="1_2hx1u"]
+[ext_resource type="Texture2D" uid="uid://bj4tkx5fjsm0a" path="res://dynamic/6_utillity/Items/gold/Gold.png" id="2_psywl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_437rd"]
+radius = 7.0
+
+[node name="Gold" type="Area2D" groups=["Gold"]]
+collision_mask = 2
+script = ExtResource("1_2hx1u")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Gold"]]
+scale = Vector2(0.0868452, 0.0826124)
+texture = ExtResource("2_psywl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Gold"]]
+shape = SubResource("CircleShape2D_437rd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

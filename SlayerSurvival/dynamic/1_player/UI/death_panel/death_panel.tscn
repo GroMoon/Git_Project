@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmljwk5vyd15y"]
+
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjie6"]
+bg_color = Color(0.196078, 0.192157, 0.172549, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6jv2"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nw2gc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4xbt"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgbvn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="DeathPanel" type="Panel"]
+offset_left = 377.0
+offset_top = 78.0
+offset_right = 866.0
+offset_bottom = 480.0
+
+[node name="Gameover" type="Label" parent="."]
+layout_mode = 0
+offset_left = 115.0
+offset_top = 47.0
+offset_right = 375.0
+offset_bottom = 101.0
+theme_override_fonts/font = ExtResource("1_7ngny")
+theme_override_font_sizes/font_size = 50
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Restart" type="Button" parent="."]
+layout_mode = 1
+offset_left = 167.0
+offset_top = 178.0
+offset_right = 329.0
+offset_bottom = 241.0
+theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
+theme_override_fonts/font = ExtResource("1_7ngny")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_pjie6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
+text = "Restart"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+offset_left = 167.0
+offset_top = 266.0
+offset_right = 329.0
+offset_bottom = 329.0
+theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
+theme_override_fonts/font = ExtResource("1_7ngny")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_pjie6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
+theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
+text = "Quit
+"
