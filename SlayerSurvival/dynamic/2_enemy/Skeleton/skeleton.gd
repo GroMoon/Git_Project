@@ -47,35 +47,8 @@ func _physics_process(_delta):
 	if touch_flag:
 		player.process_collision_enemy(damage)
 
-# 접촉 상태가 되었을 때
-func _on_interaction_sensor_body_entered(_body:Node2D):
-	if _body == player and not touch_flag:
-		player.process_collision_enemy(damage)
-		touch_flag = true
-		# print(touch_flag)
-
-# 접촉 상태에서 벗어날 때
-func _on_interaction_sensor_body_exited(_body:Node2D):
-	if _body == player:
-		touch_flag = false
-	
-func _on_interaction_sensor_area_entered(area:Area2D):
-	if area.is_in_group("attack"):
-		health -= area.get_parent().attack_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
-		if health <= 0:
-			# queue_free()
-			enemy_die()
-		else:
-			# 데미지 모션 추가
-			hit_flag = true
-			animated_sprite.stop()
-			animated_sprite.speed_scale = 2.0					# 현재 애니메이션(walk)을 중지시킴
-			animated_sprite.play("take_hit")
-			await animated_sprite.animation_finished
-		hit_flag = false
-
 # 사망 처리 함수
-func enemy_die():
+func die_enemy():
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
 	player.kill_count += 1
@@ -99,3 +72,30 @@ func drop_item():
 		var new_exp = exp_img.instantiate()
 		new_exp.global_position = global_position + Vector2(10, 0)
 		get_parent().call_deferred("add_child", new_exp)
+
+# 접촉 상태가 되었을 때
+func _on_interaction_sensor_body_entered(_body:Node2D):
+	if _body == player and not touch_flag:
+		player.process_collision_enemy(damage)
+		touch_flag = true
+		# print(touch_flag)
+
+# 접촉 상태에서 벗어날 때
+func _on_interaction_sensor_body_exited(_body:Node2D):
+	if _body == player:
+		touch_flag = false
+	
+func _on_interaction_sensor_area_entered(area:Area2D):
+	if area.is_in_group("attack"):
+		health -= area.get_parent().attack_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
+		if health <= 0:
+			# queue_free()
+			die_enemy()
+		else:
+			# 데미지 모션 추가
+			hit_flag = true
+			animated_sprite.stop()
+			animated_sprite.speed_scale = 2.0					# 현재 애니메이션(walk)을 중지시킴
+			animated_sprite.play("take_hit")
+			await animated_sprite.animation_finished
+		hit_flag = false
