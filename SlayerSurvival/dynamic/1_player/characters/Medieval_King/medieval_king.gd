@@ -90,28 +90,6 @@ func _physics_process(_delta):
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
 
-func _on_attack_timer_timeout():
-	is_attacking = true
-	attack_area_tscn.set_deferred("disabled", false)
-
-	if animated_sprite.flip_h:		# 왼쪽 공격
-		attack_area_tscn.position = Vector2(-45, 25)
-	else: 								# 오른쪽 공격
-		attack_area_tscn.position = Vector2(45, 25)
-	
-	# print("character position : ", global_position)
-	# print("attack collision position : ", attack_area_tscn.position)
-	animated_sprite.speed_scale = ANIMATION_SPEED
-	animated_sprite.play("attack")
-	# 공격 애니메이션이 끝나면 이동할 수 있도록 설정
-	await animated_sprite.animation_finished
-	is_attacking = false
-	attack_area_tscn.set_deferred("disabled", true)
-
-func _on_damage_timer_timeout():
-	damage_flag = true
-	animated_sprite.modulate = Color(1, 1, 1)        # 피해 이펙트 원상복귀
-
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
 
@@ -199,3 +177,25 @@ func calculate_level_up():
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
 		area.target = self
+
+func _on_attack_timer_timeout():
+	is_attacking = true
+	attack_area_tscn.set_deferred("disabled", false)
+
+	if animated_sprite.flip_h:		# 왼쪽 공격
+		attack_area_tscn.position = Vector2(-45, 25)
+	else: 								# 오른쪽 공격
+		attack_area_tscn.position = Vector2(45, 25)
+	
+	# print("character position : ", global_position)
+	# print("attack collision position : ", attack_area_tscn.position)
+	animated_sprite.speed_scale = ANIMATION_SPEED
+	animated_sprite.play("attack")
+	# 공격 애니메이션이 끝나면 이동할 수 있도록 설정
+	await animated_sprite.animation_finished
+	is_attacking = false
+	attack_area_tscn.set_deferred("disabled", true)
+
+func _on_damage_timer_timeout():
+	damage_flag = true
+	animated_sprite.modulate = Color(1, 1, 1)        # 피해 이펙트 원상복귀
