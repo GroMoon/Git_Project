@@ -64,6 +64,7 @@ func _ready():
 	# 자석 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
 	magnetic_area.shape.radius = magnetic_area_scale
+	
 
 func _physics_process(_delta):
 	# 공격 중에 이동 처리 안 함
@@ -88,28 +89,6 @@ func _physics_process(_delta):
 	gold_label.text = str(gold_count)
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
-
-func _on_attack_timer_timeout():
-	is_attacking = true
-	attack_area_tscn.set_deferred("disabled", false)
-
-	if animated_sprite.flip_h:		# 왼쪽 공격
-		attack_area_tscn.position = Vector2(-45, 25)
-	else: 								# 오른쪽 공격
-		attack_area_tscn.position = Vector2(45, 25)
-	
-	# print("character position : ", global_position)
-	# print("attack collision position : ", attack_area_tscn.position)
-	animated_sprite.speed_scale = ANIMATION_SPEED
-	animated_sprite.play("attack")
-	# 공격 애니메이션이 끝나면 이동할 수 있도록 설정
-	await animated_sprite.animation_finished
-	is_attacking = false
-	attack_area_tscn.set_deferred("disabled", true)
-
-func _on_damage_timer_timeout():
-	damage_flag = true
-	animated_sprite.modulate = Color(1, 1, 1)        # 피해 이펙트 원상복귀
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
@@ -139,6 +118,7 @@ func process_collision_enemy(damage):
 		current_hp -= damage								# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
 		damage_flag = false
 		if current_hp <= 0:
+			die_character()
 			print("사망") 									# FIXME : 사망 시 필요한 작업 (메인메뉴 돌아가기, 사망 모션, 사망 사운드 등) 추가 필요
 		else:
 			print("현재 체력 : ", current_hp)
@@ -152,7 +132,18 @@ func process_collision_enemy(damage):
 				animated_sprite.modulate = Color(1, 0, 0)	# 피해 입으면 컬러 변경(빨간색)
 				await animated_sprite.animation_finished      
 		hit_flag    = false
-		
+
+func die_character():
+	var BaseUI_PATH = $UI_Layer
+	var death_pannel = $UI_Layer/BaseUI/DeathPanel
+	BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
+	get_tree().paused = true
+	death_pannel.visible = true
+	
+	var cur_gold = int(gold_count)
+	Global.character_data["GOLD"]["gold"] += cur_gold
+	Global.save_character_data()
+
 # 골드 추가 
 func add_gold(gold_value):
 	gold_count += gold_value
@@ -186,3 +177,25 @@ func calculate_level_up():
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
 		area.target = self
+
+func _on_attack_timer_timeout():
+	is_attacking = true
+	attack_area_tscn.set_deferred("disabled", false)
+
+	if animated_sprite.flip_h:		# 왼쪽 공격
+		attack_area_tscn.position = Vector2(-45, 25)
+	else: 								# 오른쪽 공격
+		attack_area_tscn.position = Vector2(45, 25)
+	
+	# print("character position : ", global_position)
+	# print("attack collision position : ", attack_area_tscn.position)
+	animated_sprite.speed_scale = ANIMATION_SPEED
+	animated_sprite.play("attack")
+	# 공격 애니메이션이 끝나면 이동할 수 있도록 설정
+	await animated_sprite.animation_finished
+	is_attacking = false
+	attack_area_tscn.set_deferred("disabled", true)
+
+func _on_damage_timer_timeout():
+	damage_flag = true
+	animated_sprite.modulate = Color(1, 1, 1)        # 피해 이펙트 원상복귀

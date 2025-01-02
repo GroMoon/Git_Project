@@ -15,6 +15,11 @@ run/main_scene="res://dynamic/5_title_screen/menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/show_image=false
 
+[autoload]
+
+Global="*res://dynamic/6_utillity/global/global.gd"
+Store="*res://dynamic/6_utillity/global/store.gd"
+
 [display]
 
 window/size/viewport_width=1200

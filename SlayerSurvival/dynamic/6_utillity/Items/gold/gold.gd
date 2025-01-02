@@ -13,7 +13,7 @@ func _ready():
 func _physics_process(delta):
 	if target != null:
 		global_position = global_position.move_toward(target.global_position, speed)
-		speed += 3*delta
+		speed += 4*delta
 
 # 플레이어 충돌
 func _on_body_entered(_body):
