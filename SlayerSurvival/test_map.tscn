@@ -1,13 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1bdptjmtt5kq"]
+[gd_scene load_steps=3 format=3 uid="uid://d1bdptjmtt5kq"]
 
-[ext_resource type="PackedScene" uid="uid://b4ivh3w3sluv" path="res://dynamic/4_world/map1/tile_map.tscn" id="1_nalbh"]
+[ext_resource type="PackedScene" uid="uid://bj36c0yt76i4d" path="res://dynamic/4_world/map_whs/map_whs.tscn" id="1_njbfi"]
 [ext_resource type="PackedScene" uid="uid://dgaohd3soufg8" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn" id="2_rixi1"]
-[ext_resource type="PackedScene" uid="uid://uii3wm1de8w0" path="res://dynamic/2_enemy/enemy_spawner/enemy_spwaner.tscn" id="3_dbpgw"]
 
 [node name="TestMap" type="Node2D"]
 
-[node name="TileMap" parent="." instance=ExtResource("1_nalbh")]
+[node name="MapWhs" parent="." instance=ExtResource("1_njbfi")]
 
 [node name="FantasyWarrior" parent="." instance=ExtResource("2_rixi1")]
-
-[node name="EnemySpwaner" parent="." instance=ExtResource("3_dbpgw")]
+scale = Vector2(1, 1)
