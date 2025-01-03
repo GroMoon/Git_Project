@@ -12,6 +12,7 @@ outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Select_Character_Panel" type="Panel"]
+process_mode = 3
 offset_right = 1200.0
 offset_bottom = 651.0
 rotation = -0.000645014

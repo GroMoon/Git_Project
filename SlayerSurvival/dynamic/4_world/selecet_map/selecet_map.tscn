@@ -44,6 +44,7 @@ border_blend = true
 font_size = 83
 
 [node name="Selecet_Map_Panel" type="Panel"]
+process_mode = 3
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
