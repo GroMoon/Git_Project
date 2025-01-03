@@ -7,14 +7,22 @@ func _ready():
 	load_character_data()
 
 func load_character_data():
+	# 1) 먼저 읽기 시도도
 	var character_data_file = FileAccess.open(CHARACTER_DATA_PATH, FileAccess.READ)
+	# 2) 파일이 없으면? -> 기본 생성 + 저장 후 다시 읽기 시도도
 	if not character_data_file:
-		print(1)
+		# print(1)
 		create_default_character_data()
 		save_character_data()
-	var json = JSON.new()							# 데이터 파싱 or 문자열 변환
+		# 다시 읽기 재시도
+		character_data_file = FileAccess.open(CHARACTER_DATA_PATH, FileAccess.READ)
+		if not character_data_file:
+			print("Error: cannot read file after creating default. Check path or permission.")
+			return
 
-# 데이터를 파싱 하고 실패하면 오류 구문 출력 		(!)오류인지 확인하는 구문이 아니라 파싱까지 하는 함수
+	# 3) 정상적으로 열렸으면 JSON 파싱싱
+	var json = JSON.new()							# 데이터 파싱 or 문자열 변환
+	# 데이터를 파싱 하고 실패하면 오류 구문 출력 		(!)오류인지 확인하는 구문이 아니라 파싱까지 하는 함수
 	if json.parse(character_data_file.get_as_text()) != OK:
 		print("Error: Failed to parse JSON from character_data")
 		#json.close()
