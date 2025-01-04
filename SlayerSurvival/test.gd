@@ -1,13 +1,18 @@
 extends Node2D
 
-@onready var select_panel = get_node("Select_Character_Panel")
+@onready var select_character = get_node("Select_Character_Panel")
+@onready var select_map = get_node("Selecet_Map_Panel")
 
 # 캐릭터를 인스턴스 하기 위한 선언
 var character_load
 var instance_character
+# 맵을 인스턴스 하기 위한 선언
+var map_load
+var instance_map
 
 func _ready():
-	select_panel.visible = true
+	select_character.visible = true
+	select_map.visible = true
 	get_tree().paused = true
 
 func _process(_delta):
@@ -22,8 +27,9 @@ func _on_select_warrior_pressed():
 	instance_character.scale = Vector2(1,1)
 	add_child(instance_character)
 	get_tree().paused = false
-	select_panel.queue_free()
+	select_character.queue_free()
 
+# Medieval King
 func _on_select_king_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Medieval_King/medieval_king.tscn")
 	instance_character = character_load.instantiate()
@@ -32,10 +38,34 @@ func _on_select_king_pressed():
 	instance_character.scale = Vector2(1,1)
 	add_child(instance_character)
 	get_tree().paused = false
-	select_panel.queue_free()
+	select_character.queue_free()
+
+# Cave
+func _on_cave_button_pressed():
+	map_load = preload("res://dynamic/4_world/cave/cave.tscn")
+	instance_map = map_load.instantiate()
+	instance_map.name = "map"
+	add_child(instance_map)
+	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
+	select_map.queue_free()
+
+# Dungeon_B1F
+func _on_dungeon_button_pressed():
+	map_load = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F.tscn")
+	instance_map = map_load.instantiate()
+	instance_map.name = "map"
+	add_child(instance_map)
+	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
+	select_map.queue_free()
 
 func _on_select_king_mouse_entered():
 	$Button_sound.play()
 
 func _on_select_warrior_mouse_entered():
+	$Button_sound.play()
+
+func _on_cave_button_mouse_entered():
+	$Button_sound.play()
+
+func _on_dungeon_button_mouse_entered():
 	$Button_sound.play()
