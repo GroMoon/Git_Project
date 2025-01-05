@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://blv0hgymp636q"]
+[gd_scene load_steps=54 format=3 uid="uid://blv0hgymp636q"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
 [ext_resource type="Texture2D" uid="uid://c1t3r7n3v22k1" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://cugcbigw5hlhd" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
 [ext_resource type="Texture2D" uid="uid://bl1phqe2lt0jr" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
 [ext_resource type="Texture2D" uid="uid://br5ryt28b3vy0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
-[ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="9_1a373"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
 [ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="10_d704x"]
 
@@ -180,7 +179,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_qrglg")
 }],
 "loop": false,
-"name": &"attack",
+"name": &"attack_1",
 "speed": 5.0
 }, {
 "frames": [{
@@ -197,7 +196,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_kb8o5")
 }],
 "loop": false,
-"name": &"attack2",
+"name": &"attack_2",
 "speed": 5.0
 }, {
 "frames": [{
@@ -214,7 +213,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_xcd7f")
 }],
 "loop": false,
-"name": &"attack3",
+"name": &"attack_3",
 "speed": 5.0
 }, {
 "frames": [{
@@ -320,8 +319,14 @@ animations = [{
 radius = 9.5
 height = 44.334
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c58i"]
-size = Vector2(50, 38)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tlxt"]
+size = Vector2(72.75, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f3rbu"]
+size = Vector2(145.5, 50.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghd4c"]
+size = Vector2(84.5, 104)
 
 [node name="MedievalKing" type="CharacterBody2D"]
 texture_filter = 1
@@ -331,9 +336,8 @@ script = ExtResource("1_go0kx")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xhjrh")
-animation = &"take_hit"
-frame = 3
-frame_progress = 1.0
+animation = &"attack_3"
+frame = 2
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -350,15 +354,24 @@ autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="attack" parent="." groups=["attack"] instance=ExtResource("9_1a373")]
+[node name="Attack" type="Area2D" parent="." groups=["attack"]]
 collision_layer = 8
 collision_mask = 4
 
-[node name="CollisionShape2D" parent="attack" index="0"]
-position = Vector2(46, 27)
-shape = SubResource("RectangleShape2D_2c58i")
+[node name="attack_1" type="CollisionShape2D" parent="Attack"]
+position = Vector2(37, 24)
+shape = SubResource("RectangleShape2D_8tlxt")
+
+[node name="attack_2" type="CollisionShape2D" parent="Attack"]
+position = Vector2(7, 25)
+shape = SubResource("RectangleShape2D_f3rbu")
+
+[node name="attack_3" type="CollisionShape2D" parent="Attack"]
+position = Vector2(33, -2)
+shape = SubResource("RectangleShape2D_ghd4c")
 
 [node name="MagneticArea" parent="." instance=ExtResource("10_b142a")]
+position = Vector2(0, 23.33)
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
 
@@ -371,7 +384,6 @@ offset_bottom = 388.0
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
-[editable path="attack"]
 [editable path="UI_Layer"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
 [editable path="UI_Layer/BaseUI/DeathPanel"]
