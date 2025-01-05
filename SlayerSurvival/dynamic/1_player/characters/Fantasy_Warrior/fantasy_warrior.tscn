@@ -434,19 +434,19 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
-[node name="attack_temp" type="Area2D" parent="." groups=["attack"]]
+[node name="Attack" type="Area2D" parent="." groups=["attack"]]
 collision_layer = 8
 collision_mask = 4
 
-[node name="attack_1" type="CollisionShape2D" parent="attack_temp"]
+[node name="attack_1" type="CollisionShape2D" parent="Attack"]
 position = Vector2(29, -6)
 shape = SubResource("RectangleShape2D_ixcod")
 
-[node name="attack_2" type="CollisionShape2D" parent="attack_temp"]
+[node name="attack_2" type="CollisionShape2D" parent="Attack"]
 position = Vector2(-4, -10)
 shape = SubResource("RectangleShape2D_t0sob")
 
-[node name="attack_3" type="CollisionShape2D" parent="attack_temp"]
+[node name="attack_3" type="CollisionShape2D" parent="Attack"]
 position = Vector2(30, -24)
 shape = SubResource("RectangleShape2D_nse38")
 

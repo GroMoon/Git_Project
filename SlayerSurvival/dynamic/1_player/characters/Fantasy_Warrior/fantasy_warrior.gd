@@ -3,9 +3,9 @@ extends CharacterBody2D
 const ANIMATION_SPEED = 2.0
 const START_HP        = 50
 
-@onready var attack_area_1    = $attack_temp/attack_1
-@onready var attack_area_2    = $attack_temp/attack_2
-@onready var attack_area_3    = $attack_temp/attack_3
+@onready var attack_area_1    = $Attack/attack_1
+@onready var attack_area_2    = $Attack/attack_2
+@onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
