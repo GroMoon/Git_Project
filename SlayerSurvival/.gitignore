@@ -1,2 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
+
+# ignore global data
+store_data.json
+player_data.json

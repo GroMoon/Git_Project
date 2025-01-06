@@ -3,7 +3,10 @@ extends CharacterBody2D
 const ANIMATION_SPEED = 1.5
 const START_HP        = 75
 
-@onready var attack_area_tscn = $attack/CollisionShape2D
+@onready var attack_area_1    = $Attack/attack_1
+@onready var attack_area_2    = $Attack/attack_2
+@onready var attack_area_3    = $Attack/attack_3
+# @onready var attack_area_tscn = $attack/CollisionShape2D
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
@@ -11,6 +14,7 @@ const START_HP        = 75
 @export var character_name  = "medieval_king"
 @export var move_speed      = 150
 @export var character_level = 1
+@export var attack_times    = 3 	# 공격 횟수(default 1)
 
 var attack_damage       = 10		# 일반 공격 데미지
 var is_attacking        = false
@@ -90,28 +94,6 @@ func _physics_process(_delta):
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
 
-func _on_attack_timer_timeout():
-	is_attacking = true
-	attack_area_tscn.set_deferred("disabled", false)
-
-	if animated_sprite.flip_h:		# 왼쪽 공격
-		attack_area_tscn.position = Vector2(-45, 25)
-	else: 								# 오른쪽 공격
-		attack_area_tscn.position = Vector2(45, 25)
-	
-	# print("character position : ", global_position)
-	# print("attack collision position : ", attack_area_tscn.position)
-	animated_sprite.speed_scale = ANIMATION_SPEED
-	animated_sprite.play("attack")
-	# 공격 애니메이션이 끝나면 이동할 수 있도록 설정
-	await animated_sprite.animation_finished
-	is_attacking = false
-	attack_area_tscn.set_deferred("disabled", true)
-
-func _on_damage_timer_timeout():
-	damage_flag = true
-	animated_sprite.modulate = Color(1, 1, 1)        # 피해 이펙트 원상복귀
-
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
 
@@ -145,7 +127,7 @@ func process_collision_enemy(damage):
 		else:
 			print("현재 체력 : ", current_hp)
 			hit_flag = true
-			if (animated_sprite.is_playing()) && (animated_sprite.animation == "attack"):
+			if (animated_sprite.is_playing()) && ((animated_sprite.animation == "attack_1")||(animated_sprite.animation == "attack_2")||(animated_sprite.animation == "attack_3")):
 				animated_sprite.modulate = Color(1,0,0)
 			else:
 				animated_sprite.stop()
@@ -199,3 +181,75 @@ func calculate_level_up():
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
 		area.target = self
+
+func _on_attack_timer_timeout():
+	is_attacking = true
+	# print("character position : ", global_position)
+	# print("attack collision position : ", attack_area_1.position)
+	animated_sprite.speed_scale = ANIMATION_SPEED
+	# print("attack timer timeout!")
+	if attack_times == 2:
+		# 공격 1
+		attack_area_1.set_deferred("disabled", false)
+		if animated_sprite.flip_h:		# 왼쪽 공격
+			attack_area_1.position = Vector2(-37, 24)
+		else: 							# 오른쪽 공격
+			attack_area_1.position = Vector2(37, 24)
+		animated_sprite.play("attack_1")
+		await animated_sprite.animation_finished
+		attack_area_1.set_deferred("disabled", true)
+		# 공격 2
+		attack_area_2.set_deferred("disabled", false)
+		if animated_sprite.flip_h:		# 왼쪽 공격
+			attack_area_2.position = Vector2(-7, 25)
+		else: 							# 오른쪽 공격
+			attack_area_2.position = Vector2(7, 25)
+		animated_sprite.play("attack_2")
+		await animated_sprite.animation_finished
+		attack_area_2.set_deferred("disabled", true)
+	elif attack_times == 3:
+		# 공격 1
+		attack_area_1.set_deferred("disabled", false)
+		if animated_sprite.flip_h:		# 왼쪽 공격
+			attack_area_1.position = Vector2(-37, 24)
+		else: 							# 오른쪽 공격
+			attack_area_1.position = Vector2(37, 24)
+		animated_sprite.play("attack_1")
+		await animated_sprite.animation_finished
+		attack_area_1.set_deferred("disabled", true)
+		# 공격 2
+		attack_area_2.set_deferred("disabled", false)
+		if animated_sprite.flip_h:		# 왼쪽 공격
+			attack_area_2.position = Vector2(-7, 25)
+		else: 							# 오른쪽 공격
+			attack_area_2.position = Vector2(7, 25)
+		animated_sprite.play("attack_2")
+		await animated_sprite.animation_finished
+		attack_area_2.set_deferred("disabled", true)
+		# 공격 3
+		attack_area_3.set_deferred("disabled", false)
+		if animated_sprite.flip_h:		# 왼쪽 공격
+			attack_area_3.position = Vector2(-33, -2)
+		else: 							# 오른쪽 공격
+			attack_area_3.position = Vector2(33, -2)
+		animated_sprite.play("attack_3")
+		await animated_sprite.animation_finished
+		attack_area_3.set_deferred("disabled", true)
+	else:
+		# 공격 1
+		attack_area_1.set_deferred("disabled", false)
+		if animated_sprite.flip_h:		# 왼쪽 공격
+			attack_area_1.position = Vector2(-29, -6)
+		else: 							# 오른쪽 공격
+			attack_area_1.position = Vector2(29, -6)
+		animated_sprite.play("attack_1")
+		await animated_sprite.animation_finished
+		attack_area_1.set_deferred("disabled", true)	
+
+	is_attacking = false
+	# 타이머 재시작
+	$AttackTimer.start()
+
+func _on_damage_timer_timeout():
+	damage_flag = true
+	animated_sprite.modulate = Color(1, 1, 1)        # 피해 이펙트 원상복귀
