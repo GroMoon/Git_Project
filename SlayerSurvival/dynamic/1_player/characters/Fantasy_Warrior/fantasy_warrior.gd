@@ -160,18 +160,29 @@ func add_exp(_exp_value):
 
 # 경험치 계산
 func calculate_exp():
-	var increase_exp = 10
 	if character_level < 5:
-		max_exp = (character_level * 15) + increase_exp
+		max_exp = character_level * 20
 		print("max 경험치 : ",max_exp)
-		calculate_level_up()
+		level_up()
 	elif character_level < 10:
-		max_exp = (character_level * 15) + (increase_exp * 1.1)
+		max_exp = character_level * 24
 		print("max 경험치 : ",max_exp)
-		calculate_level_up()
+		level_up()
+	elif character_level < 15:
+		max_exp = character_level * 27
+		level_up()
+	elif character_level < 20:
+		max_exp = character_level * 30
+		level_up()
+	elif character_level < 25:
+		max_exp = character_level * 32
+		level_up()
+	else:
+		max_exp = character_level * 34
+		level_up()
 
 # 레벨 업
-func calculate_level_up():
+func level_up():
 	if current_exp >= max_exp:
 		character_level += 1
 		print("레벨 업! : ", character_level)
