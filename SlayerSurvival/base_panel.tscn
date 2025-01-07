@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://diwn3cd3rbe0b"]
+
+[ext_resource type="Texture2D" uid="uid://b445mfn5b3b6f" path="res://static/png/ui/panels_2.png" id="1_dgvvy"]
+
+[node name="base_panel" type="Panel"]
+
+[node name="frame" type="Sprite2D" parent="."]
+position = Vector2(54, 63)
+scale = Vector2(1.1, 1.32979)
+texture = ExtResource("1_dgvvy")
+region_enabled = true
+region_rect = Rect2(17.4305, 26, 95.326, 94.1888)
