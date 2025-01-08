@@ -1,17 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://be82hcs86t7he"]
+[gd_scene load_steps=5 format=3 uid="uid://be82hcs86t7he"]
 
 [ext_resource type="Script" path="res://dynamic/6_utillity/Items/exp/exp.gd" id="1_8vvxu"]
 [ext_resource type="Texture2D" uid="uid://dsj4i7448xuc0" path="res://dynamic/6_utillity/Items/exp/bule_gem.png" id="1_ltwej"]
+[ext_resource type="Texture2D" uid="uid://d3lvcwmrttsgb" path="res://dynamic/6_utillity/Items/exp/materials1.png" id="2_h2ktx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bcoft"]
 radius = 8.0
 
 [node name="exp" type="Area2D" groups=["Exp"]]
+texture_filter = 1
 collision_mask = 2
 script = ExtResource("1_8vvxu")
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
+scale = Vector2(0.614805, 0.588554)
+texture = ExtResource("2_h2ktx")
+hframes = 8
+vframes = 8
+frame = 61
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 2
+visible = false
+texture_filter = 1
+scale = Vector2(0.624531, 0.605412)
 texture = ExtResource("1_ltwej")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
