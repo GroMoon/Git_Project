@@ -68,6 +68,10 @@ func _ready():
 	# 자석 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
 	magnetic_area.shape.radius = magnetic_area_scale
+	# 공격 범위 초기화(off)
+	attack_area_1.set_deferred("disabled", true)
+	attack_area_2.set_deferred("disabled", true)
+	attack_area_3.set_deferred("disabled", true)
 	
 
 func _physics_process(_delta):
