@@ -411,7 +411,7 @@ script = ExtResource("1_n62qh")
 texture_filter = 1
 scale = Vector2(1.00189, 1)
 sprite_frames = SubResource("SpriteFrames_ykyx8")
-animation = &"attack_3"
+animation = &"attack_1"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

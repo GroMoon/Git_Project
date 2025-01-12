@@ -22,7 +22,7 @@ func _ready():
 func _process(_delta):
 	player = get_node("player")
 	if player:
-		if (player.shodow_attack == 1) and (player.is_shadow_on == 0):
+		if (player.shadow_attack == 1) and (player.is_shadow_on == 0):
 			var shadow_instance = shadow_preload.instantiate()
 			shadow_instance.name = "shadow"
 			shadow_instance.global_position = player.global_position

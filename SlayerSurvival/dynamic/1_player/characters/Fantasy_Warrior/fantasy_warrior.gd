@@ -9,14 +9,12 @@ const START_HP        = 50
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
-@onready var shadow = preload("res://dynamic/1_player/characters/Fantasy_Warrior/Shadow/fantasy_warrior_shadow.tscn")
-
 # 캐릭터 특성
 @export var character_name  = "fantasy_warrior"
 @export var move_speed      = 250
 @export var character_level = 1
-@export var attack_times    = 1 	# 공격 횟수(default 1)
-@export var shodow_attack   = 1		# 그림자 분신술
+@export var attack_times    = 1 	# 공격 횟수 (default 1)
+@export var shadow_attack   = 1		# 그림자 분신술 (default 0)
 
 var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false
@@ -100,7 +98,7 @@ func _physics_process(_delta):
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
 	# 그림자 분신술
-	# add_shadow(shodow_attack)
+	# add_shadow(shadow_attack)
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO

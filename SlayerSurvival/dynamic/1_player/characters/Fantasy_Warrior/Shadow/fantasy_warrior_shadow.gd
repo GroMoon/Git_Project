@@ -54,6 +54,9 @@ func _physics_process(_delta):
 
 func _on_attack_timer_timeout():
 	is_attacking = true
+	# shadow에 대해서 공격 애니메이션 반대로 실행
+	var original_flip = animated_sprite.flip_h
+	animated_sprite.flip_h = not original_flip
 	# print("character position : ", global_position)
 	# print("attack collision position : ", attack_area_1.position)
 	animated_sprite.speed_scale = ANIMATION_SPEED
@@ -116,6 +119,7 @@ func _on_attack_timer_timeout():
 		await animated_sprite.animation_finished
 		attack_area_1.set_deferred("disabled", true)	
 
+	# animated_sprite.filp_h = original_flip
 	is_attacking = false
 	# 타이머 재시작
 	$AttackTimer.start()
