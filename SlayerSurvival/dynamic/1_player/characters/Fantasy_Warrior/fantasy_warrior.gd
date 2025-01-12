@@ -9,15 +9,19 @@ const START_HP        = 50
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
+@onready var shadow = preload("res://dynamic/1_player/characters/Fantasy_Warrior/Shadow/fantasy_warrior_shadow.tscn")
+
 # 캐릭터 특성
 @export var character_name  = "fantasy_warrior"
 @export var move_speed      = 250
 @export var character_level = 1
 @export var attack_times    = 1 	# 공격 횟수(default 1)
+@export var shodow_attack   = 1		# 그림자 분신술
 
 var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
+var is_shadow_on        = 0
 
 # 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
@@ -95,6 +99,8 @@ func _physics_process(_delta):
 	gold_label.text = str(gold_count)
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
+	# 그림자 분신술
+	# add_shadow(shodow_attack)
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
@@ -191,6 +197,17 @@ func level_up():
 		character_level += 1
 		print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
+
+# 그림자 공격
+# func add_shadow(shadow_attack):
+# 	if shadow_attack and !is_shadow_on:
+# 		var shadow_instance = shadow.instantiate()
+# 		shadow_instance.name = "shadow"
+# 		add_child(shadow_instance)
+# 		is_shadow_on = 1
+# 	else:
+# 		pass
+
 
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):

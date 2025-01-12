@@ -9,30 +9,39 @@ const ANIMATION_SPEED = 2.0
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
 # 캐릭터 특성
-@export var character_name  = "fantasy_warrior"
-@export var move_speed      = 250
-@export var character_level = 1
+# @export var character_name  = "fantasy_warrior"
+@export var move_speed      = 250 * 0.8
+# @export var character_level = 1
 @export var attack_times    = 1 	# 공격 횟수(default 1)
+
+var player = null
 
 var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false
 var hit_flag            = false 	# 히트 플래그
 
 func _ready():
+	# 그림자 처리(회색 처리)
+	animated_sprite.modulate = Color(0.3, 0.3, 0.3, 1.0)
 	# 공격 범위 초기화(off)
 	attack_area_1.set_deferred("disabled", true)
 	attack_area_2.set_deferred("disabled", true)
 	attack_area_3.set_deferred("disabled", true)
 
 func _physics_process(_delta):
+	# player 세팅
+	if player == null:
+		player = get_parent().get_node("player")
+		# print(player)
 	# 공격 중에 이동 처리 안 함
 	if is_attacking:
 		return
 		
-	# 키보드 입력
-	# process_keyboard_input()
-	# 캐릭터 이동 및 충돌 감지
-	move_and_slide()
+	# 플레이어가 존재하면 플레이어를 향해 이동
+	if player:
+		var direction = (player.position - position).normalized()
+		velocity = direction * move_speed
+		move_and_slide()
 
 	# 애니메이션 처리
 	if !hit_flag:
@@ -42,28 +51,6 @@ func _physics_process(_delta):
 			animated_sprite.flip_h = velocity.x < 0
 		else:
 			animated_sprite.play("idle")
-
-func process_keyboard_input() -> bool:  # -> 반환 값
-	var direction = Vector2.ZERO
-
-	# 키보드 입력 처리
-	if Input.is_action_pressed("right"):
-		direction.x += 1
-	if Input.is_action_pressed("left"):
-		direction.x -= 1
-	if Input.is_action_pressed("up"):
-		direction.y -= 1
-	if Input.is_action_pressed("down"):
-		direction.y += 1
-	
-	if direction != Vector2.ZERO:
-		# 키보드 입력에 따른 이동
-		direction = direction.normalized()
-		velocity = direction * move_speed
-		return true
-	else:
-		velocity = Vector2.ZERO
-		return false
 
 func _on_attack_timer_timeout():
 	is_attacking = true

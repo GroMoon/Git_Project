@@ -403,6 +403,8 @@ size = Vector2(104, 60)
 size = Vector2(60, 88)
 
 [node name="FantasyWarriorShadow" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_n62qh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -434,3 +436,5 @@ shape = SubResource("RectangleShape2D_t7rtt")
 [node name="attack_3" type="CollisionShape2D" parent="Attack"]
 position = Vector2(30, -24)
 shape = SubResource("RectangleShape2D_8tfga")
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
