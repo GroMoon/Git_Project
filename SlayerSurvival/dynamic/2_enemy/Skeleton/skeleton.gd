@@ -7,8 +7,8 @@ const ANIMATION_SPEED = 1.2		# 기본 애니메이션 속도
 @onready var interaction_sensor = $interaction_sensor 
 
 # 아이템
-@onready var gold_img = preload("res://dynamic/6_utillity/Items/gold/gold.tscn")
-@onready var exp_img = preload("res://dynamic/6_utillity/Items/exp/exp.tscn")
+@onready var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
+@onready var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
 #var gold_value = 10
 
 

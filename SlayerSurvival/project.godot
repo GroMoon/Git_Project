@@ -17,8 +17,8 @@ boot_splash/show_image=false
 
 [autoload]
 
-Global="*res://dynamic/6_utillity/global/global.gd"
-Store="*res://dynamic/6_utillity/global/store.gd"
+Global="*res://dynamic/6_utillity/data/global.gd"
+Store="*res://dynamic/6_utillity/data/store.gd"
 
 [display]
 

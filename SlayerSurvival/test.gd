@@ -55,7 +55,7 @@ func _on_select_king_pressed():
 
 # Cave
 func _on_cave_button_pressed():
-	map_load = preload("res://dynamic/4_world/cave/cave.tscn")
+	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
 	instance_map = map_load.instantiate()
 	instance_map.name = "map"
 	add_child(instance_map)
@@ -64,7 +64,7 @@ func _on_cave_button_pressed():
 
 # Dungeon_B1F
 func _on_dungeon_button_pressed():
-	map_load = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F.tscn")
+	map_load = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.tscn")
 	instance_map = map_load.instantiate()
 	instance_map.name = "map"
 	add_child(instance_map)
