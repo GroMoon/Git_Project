@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dsj4i7448xuc0"
-path="res://.godot/imported/bule_gem.png-9089845a47794491694f53dd612da15e.ctex"
+path="res://.godot/imported/bule_gem.png-a5312eac055033feecadd600316c8876.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dynamic/6_utillity/Items/exp/bule_gem.png"
-dest_files=["res://.godot/imported/bule_gem.png-9089845a47794491694f53dd612da15e.ctex"]
+source_file="res://dynamic/6_utillity/items/exp/bule_gem.png"
+dest_files=["res://.godot/imported/bule_gem.png-a5312eac055033feecadd600316c8876.ctex"]
 
 [params]
 
