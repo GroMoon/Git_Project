@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://cerw8i00egrym"]
+
+[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="1_cqoft"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_1vlbl"]
+
+[node name="IncreaseMovingSpeed" type="Button"]
+offset_right = 470.0
+offset_bottom = 136.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 72)
+scale = Vector2(0.171875, 0.171875)
+texture = ExtResource("1_cqoft")
+
+[node name="name" type="Label" parent="."]
+offset_left = 112.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("2_1vlbl")
+theme_override_font_sizes/font_size = 20
+text = "이동 속도 증가"
+
+[node name="details" type="Label" parent="."]
+offset_left = 112.0
+offset_top = 32.0
+offset_right = 464.0
+offset_bottom = 69.0
+theme_override_fonts/font = ExtResource("2_1vlbl")
+theme_override_font_sizes/font_size = 15
+text = "플레이어의 이동속도가 +5 증가합니다."
+vertical_alignment = 3
+autowrap_mode = 2

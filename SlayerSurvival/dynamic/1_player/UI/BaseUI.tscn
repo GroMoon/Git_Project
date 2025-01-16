@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=11 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI/BaseUI.gd" id="1_j5gas"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI/health_bar/Hp_Bar.tscn" id="1_wcd45"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI/death_panel/death_panel.tscn" id="7_6yqui"]
 [ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="9_i6bee"]
 [ext_resource type="Texture2D" uid="uid://bj4tkx5fjsm0a" path="res://dynamic/6_utillity/items/gold/Gold.png" id="9_jtnuo"]
+[ext_resource type="PackedScene" uid="uid://j7kkv4b3ad6n" path="res://dynamic/1_player/UI/SelectUI/select_ui.tscn" id="10_jt70g"]
 
 [node name="UI_Layer" type="CanvasLayer"]
 process_mode = 3
@@ -126,9 +127,17 @@ position = Vector2(-14, 12)
 scale = Vector2(0.134658, 0.112626)
 texture = ExtResource("9_jtnuo")
 
+[node name="selectUI" parent="BaseUI" instance=ExtResource("10_jt70g")]
+layout_mode = 0
+offset_left = 428.0
+offset_top = 78.0
+offset_right = 964.0
+offset_bottom = 590.0
+
 [connection signal="pressed" from="BaseUI/PausePanel/Menu" to="BaseUI" method="_on_menu_pressed"]
 [connection signal="pressed" from="BaseUI/PausePanel/Resume" to="BaseUI" method="_on_resume_pressed"]
 [connection signal="pressed" from="BaseUI/DeathPanel/Quit" to="BaseUI" method="_on_quit_pressed"]
 
 [editable path="BaseUI/PausePanel"]
 [editable path="BaseUI/DeathPanel"]
+[editable path="BaseUI/selectUI"]

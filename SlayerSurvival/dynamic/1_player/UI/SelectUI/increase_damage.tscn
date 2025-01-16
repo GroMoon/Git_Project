@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://dluplinrf3xo3"]
+
+[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="1_enhrp"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_wewlt"]
+
+[node name="IncreaseDamage" type="Button"]
+offset_left = 72.0
+offset_top = 32.0
+offset_right = 542.0
+offset_bottom = 168.0
+size_flags_vertical = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 64)
+scale = Vector2(0.171875, 0.171875)
+texture = ExtResource("1_enhrp")
+
+[node name="name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 226.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("2_wewlt")
+theme_override_font_sizes/font_size = 20
+text = "데미지 증가"
+
+[node name="datails" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 32.0
+offset_right = 456.0
+offset_bottom = 69.0
+theme_override_fonts/font = ExtResource("2_wewlt")
+theme_override_font_sizes/font_size = 15
+text = "플레이어의 데미지가 +5 증가합니다."
+vertical_alignment = 3
+autowrap_mode = 2

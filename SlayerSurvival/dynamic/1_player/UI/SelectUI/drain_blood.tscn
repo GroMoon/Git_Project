@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvd03mrr7ibud"]
+
+[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="1_hp4i8"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_6338j"]
+
+[node name="DrainBlood" type="Button"]
+offset_right = 470.0
+offset_bottom = 136.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 72)
+scale = Vector2(0.171875, 0.171875)
+texture = ExtResource("1_hp4i8")
+
+[node name="name" type="Label" parent="."]
+offset_left = 112.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("2_6338j")
+theme_override_font_sizes/font_size = 20
+text = "흡혈"
+
+[node name="details" type="Label" parent="."]
+offset_left = 112.0
+offset_top = 32.0
+offset_right = 464.0
+offset_bottom = 69.0
+theme_override_fonts/font = ExtResource("2_6338j")
+theme_override_font_sizes/font_size = 15
+text = "플레이어의 공격이 흡혈 효과를 얻습니다."
+vertical_alignment = 3
+autowrap_mode = 2
