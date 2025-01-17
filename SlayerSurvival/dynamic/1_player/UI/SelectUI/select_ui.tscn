@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_fkap6"]
 
 [node name="selectUI" type="Panel"]
+process_mode = 3
 offset_left = 336.0
 offset_top = 56.0
 offset_right = 872.0
@@ -11,9 +12,9 @@ scale = Vector2(0.748551, 0.922905)
 
 [node name="label" type="Label" parent="."]
 layout_mode = 2
-offset_left = 32.0
+offset_left = 85.0
 offset_top = 17.0
-offset_right = 502.0
+offset_right = 449.0
 offset_bottom = 49.0
 theme_override_fonts/font = ExtResource("1_fkap6")
 theme_override_font_sizes/font_size = 25

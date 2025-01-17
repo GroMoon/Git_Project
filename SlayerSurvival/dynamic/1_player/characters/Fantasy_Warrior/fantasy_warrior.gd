@@ -59,6 +59,22 @@ var hit_flag    = false 	# 히트 플래그
 
 @onready var level_label = $UI_Layer/BaseUI/level
 
+# 업그레이드 
+@onready var upgrade_container = $UI_Layer/BaseUI/selectUI/upgrade_container
+@onready var select_panel = $UI_Layer/BaseUI/selectUI
+# 뒤의 값은 확률 조정을 위한 가중치 값
+var upgrade_preload = {
+	"increase_max_hp" : [preload("res://dynamic/1_player/UI/SelectUI/increase_max_hp.tscn"), 50],
+	"increase_damage" : [preload("res://dynamic/1_player/UI/SelectUI/increase_damage.tscn"), 50],
+	"increase_moving_speed" : [preload("res://dynamic/1_player/UI/SelectUI/increase_moving_speed.tscn"), 50],
+	"drain_blood" : [preload("res://dynamic/1_player/UI/SelectUI/drain_blood.tscn"), 20],
+	# ====================== 캐릭터 특성 =====================
+	"combo2" : [preload("res://dynamic/1_player/UI/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
+	"combo3" : [preload("res://dynamic/1_player/UI/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
+}
+var selected_upgrade = []
+
+
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
@@ -145,9 +161,9 @@ func process_collision_enemy(damage):
 		hit_flag    = false
 
 func die_character():
-	var BaseUI_PATH = $UI_Layer
+	#var BaseUI_PATH = $UI_Layer
 	var death_pannel = $UI_Layer/BaseUI/DeathPanel
-	BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
+	#BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().paused = true
 	death_pannel.visible = true
 	
@@ -158,36 +174,27 @@ func die_character():
 # 골드 추가
 func add_gold(gold_value):
 	gold_count += gold_value
-	#print("현재 골드 : ", gold_count)
 
 # 경험치 추가
 func add_exp(_exp_value):
 	current_exp += _exp_value
 	calculate_exp()
-	#print("경험치 획득!")
 
 # 경험치 계산
 func calculate_exp():
 	if character_level < 5:
 		max_exp = character_level * 20
-		print("max 경험치 : ",max_exp)
-		level_up()
 	elif character_level < 10:
 		max_exp = character_level * 24
-		print("max 경험치 : ",max_exp)
-		level_up()
 	elif character_level < 15:
 		max_exp = character_level * 27
-		level_up()
 	elif character_level < 20:
 		max_exp = character_level * 30
-		level_up()
 	elif character_level < 25:
 		max_exp = character_level * 32
-		level_up()
 	else:
 		max_exp = character_level * 34
-		level_up()
+	level_up()
 
 # 레벨 업
 func level_up():
@@ -195,6 +202,73 @@ func level_up():
 		character_level += 1
 		print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
+		create_upgrade_selection()
+		#$UI_Layer.process_mode = Node.PROCESS_MODE_INHERIT
+		get_tree().paused = true
+
+# 업그레이드 선택 생성
+func create_upgrade_selection():
+	var select_temp = []
+	select_panel.visible = true
+	
+	select_temp = select_random_upgrades(3)
+	
+	# 선택된 3개의 업그레이드를 인스턴스
+	for upgrade_key in select_temp:
+		var button_instance = upgrade_preload[upgrade_key][0].instantiate()
+		upgrade_container.add_child(button_instance)
+		button_instance.connect("pressed", Callable(self, "_on_upgrade_button_pressed").bind(upgrade_key))
+
+# 확률 설정
+func select_random_upgrades(count: int) -> Array:
+	var total_weight = 0
+	var weighted_keys = []
+	var selected = []
+	
+	for key in upgrade_preload.keys():
+		var weight = upgrade_preload[key][1]
+		total_weight += weight
+		weighted_keys.append({ "key": key, "weight": weight })
+	
+	for i in range(count):
+		var random_value = randi() % total_weight
+		for item in weighted_keys:
+			random_value -= item["weight"]
+			if random_value < 0:
+				selected.append(item["key"])
+				total_weight -= item["weight"]
+				weighted_keys.erase(item)
+				break
+	
+	return selected
+
+# 업그레이드 적용
+func _on_upgrade_button_pressed(upgrade_key):
+	match upgrade_key:
+		"increase_max_hp":
+			max_hp += 10
+			current_hp += 10
+			print("최대 체력 증가",max_hp)
+		"increase_damage":
+			attack_damage += 5
+			print("현재 공격력 : ", attack_damage)
+		"increase_moving_speed":
+			move_speed += 10
+		"drain_blood":
+			print("아직 구현되지 않음")
+# =============== 캐릭터 특성 ==================
+		"combo2":
+			upgrade_preload["combo2"][1] = 0
+			upgrade_preload["combo3"][1] = 5
+			pass
+		"combo3":
+			upgrade_preload["combo3"][1] = 0
+			pass
+		_:
+			print("ERROR -> 아무것도 선택되지 않음")
+			pass
+	get_tree().paused = false
+	select_panel.visible = false
 
 # 그림자 공격
 # func add_shadow(shadow_attack):

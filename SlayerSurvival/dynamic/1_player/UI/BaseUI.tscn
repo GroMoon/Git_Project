@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://j7kkv4b3ad6n" path="res://dynamic/1_player/UI/SelectUI/select_ui.tscn" id="10_jt70g"]
 
 [node name="UI_Layer" type="CanvasLayer"]
-process_mode = 3
 
 [node name="BaseUI" type="Control" parent="."]
 layout_mode = 3

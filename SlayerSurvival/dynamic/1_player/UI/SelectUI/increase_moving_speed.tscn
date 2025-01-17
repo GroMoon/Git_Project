@@ -6,6 +6,7 @@
 [node name="IncreaseMovingSpeed" type="Button"]
 offset_right = 470.0
 offset_bottom = 136.0
+size_flags_vertical = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(64, 72)
