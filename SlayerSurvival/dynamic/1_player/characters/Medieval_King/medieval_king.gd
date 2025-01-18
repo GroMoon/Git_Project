@@ -15,10 +15,12 @@ const START_HP        = 75
 @export var move_speed      = 150
 @export var character_level = 1
 @export var attack_times    = 3 	# 공격 횟수(default 1)
+@export var shadow_attack   = 1		# 그림자 분신술 (default 0)
 
 var attack_damage       = 10		# 일반 공격 데미지
 var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
+var is_shadow_on        = 0
 
 # 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar

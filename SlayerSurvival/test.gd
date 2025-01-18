@@ -45,6 +45,8 @@ func _on_select_warrior_pressed():
 # Medieval King
 func _on_select_king_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Medieval_King/medieval_king.tscn")
+	# 그림자 결정
+	shadow_preload = preload("res://dynamic/1_player/characters/Medieval_King/Shadow/medieval_king_shadow.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
 	# 스케일 조정

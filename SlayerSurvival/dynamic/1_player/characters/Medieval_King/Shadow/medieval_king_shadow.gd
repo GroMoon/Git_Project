@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const ANIMATION_SPEED = 2.0
+const ANIMATION_SPEED = 1.5
 
 @onready var attack_area_1    = $Attack/attack_1
 @onready var attack_area_2    = $Attack/attack_2
@@ -8,14 +8,14 @@ const ANIMATION_SPEED = 2.0
 @onready var animated_sprite  = $AnimatedSprite2D
 
 # 캐릭터 특성
-@export var move_speed      = 250 * 0.8
-@export var attack_times    = 1 	# 공격 횟수(default 1)
+@export var move_speed      = 150 * 0.8
+@export var attack_times    = 3 	# 공격 횟수(default 1)
 
 var player = null
 
-var attack_damage       = 5			# 일반 공격 데미지
+var attack_damage       = 10			# 일반 공격 데미지
 var is_attacking        = false
-var hit_flag            = false 	# 히트 플래그
+var hit_flag            = false 		# 히트 플래그
 
 func _ready():
 	# 그림자 처리(회색 처리)
@@ -54,26 +54,24 @@ func _on_attack_timer_timeout():
 	# shadow에 대해서 공격 애니메이션 반대로 실행
 	var original_flip = animated_sprite.flip_h
 	animated_sprite.flip_h = not original_flip
-	# print("character position : ", global_position)
-	# print("attack collision position : ", attack_area_1.position)
 	animated_sprite.speed_scale = ANIMATION_SPEED
 	# print("attack timer timeout!")
 	if attack_times == 2:
 		# 공격 1
 		attack_area_1.set_deferred("disabled", false)
 		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-29, -6)
+			attack_area_1.position = Vector2(-37, 24)
 		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(29, -6)
+			attack_area_1.position = Vector2(37, 24)
 		animated_sprite.play("attack_1")
 		await animated_sprite.animation_finished
 		attack_area_1.set_deferred("disabled", true)
 		# 공격 2
 		attack_area_2.set_deferred("disabled", false)
 		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_2.position = Vector2(4, -10)
+			attack_area_2.position = Vector2(-7, 25)
 		else: 							# 오른쪽 공격
-			attack_area_2.position = Vector2(-4, -10)
+			attack_area_2.position = Vector2(7, 25)
 		animated_sprite.play("attack_2")
 		await animated_sprite.animation_finished
 		attack_area_2.set_deferred("disabled", true)
@@ -81,27 +79,27 @@ func _on_attack_timer_timeout():
 		# 공격 1
 		attack_area_1.set_deferred("disabled", false)
 		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-29, -6)
+			attack_area_1.position = Vector2(-37, 24)
 		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(29, -6)
+			attack_area_1.position = Vector2(37, 24)
 		animated_sprite.play("attack_1")
 		await animated_sprite.animation_finished
 		attack_area_1.set_deferred("disabled", true)
 		# 공격 2
 		attack_area_2.set_deferred("disabled", false)
 		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_2.position = Vector2(4, -10)
+			attack_area_2.position = Vector2(-7, 25)
 		else: 							# 오른쪽 공격
-			attack_area_2.position = Vector2(-4, -10)
+			attack_area_2.position = Vector2(7, 25)
 		animated_sprite.play("attack_2")
 		await animated_sprite.animation_finished
 		attack_area_2.set_deferred("disabled", true)
 		# 공격 3
 		attack_area_3.set_deferred("disabled", false)
 		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_3.position = Vector2(-30, -24)
+			attack_area_3.position = Vector2(-33, -2)
 		else: 							# 오른쪽 공격
-			attack_area_3.position = Vector2(30, -24)
+			attack_area_3.position = Vector2(33, -2)
 		animated_sprite.play("attack_3")
 		await animated_sprite.animation_finished
 		attack_area_3.set_deferred("disabled", true)
