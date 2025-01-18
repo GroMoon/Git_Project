@@ -6,7 +6,7 @@ const ANIMATION_SPEED = 2.0
 @onready var attack_area_2    = $Attack/attack_2
 @onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
-@onready var magnetic_area    = $MagneticArea/CollisionShape2D
+# @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
 # 캐릭터 특성
 # @export var character_name  = "fantasy_warrior"
