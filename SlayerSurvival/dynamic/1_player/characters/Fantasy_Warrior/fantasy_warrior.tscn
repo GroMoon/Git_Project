@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bl4w5836gsta8" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
 [ext_resource type="Texture2D" uid="uid://coalck22xuga" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
 [ext_resource type="Texture2D" uid="uid://ctjiash3djope" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
-[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="9_j1oyj"]
+[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI_Layer/BaseUI.tscn" id="10_fep3v"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ypgsu"]
@@ -452,13 +452,13 @@ shape = SubResource("RectangleShape2D_nse38")
 
 [node name="MagneticArea" parent="." instance=ExtResource("10_nxneh")]
 
-[node name="UI_Layer" parent="." instance=ExtResource("9_j1oyj")]
+[node name="UI_Layer" parent="." instance=ExtResource("10_fep3v")]
 
-[node name="Hp_Bar" parent="UI_Layer/BaseUI" index="2"]
-offset_left = 576.0
-offset_top = 352.0
-offset_right = 631.0
-offset_bottom = 355.0
+[node name="Health_Bar" parent="UI_Layer/BaseUI" index="3"]
+offset_left = 575.0
+offset_top = 353.0
+offset_right = 630.0
+offset_bottom = 356.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
@@ -466,4 +466,4 @@ offset_bottom = 355.0
 [editable path="UI_Layer"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
 [editable path="UI_Layer/BaseUI/DeathPanel"]
-[editable path="UI_Layer/BaseUI/selectUI"]
+[editable path="UI_Layer/SelectUI/select_panel"]

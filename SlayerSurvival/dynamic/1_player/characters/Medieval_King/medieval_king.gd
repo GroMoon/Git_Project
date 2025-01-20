@@ -35,7 +35,7 @@ var current_exp:
 		exp_bar.value = current_exp
 
 # 체력
-@onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
+@onready var hp_bar = $UI_Layer/BaseUI/Health_Bar
 var max_hp = START_HP:
 	set(set_value):
 		max_hp = set_value
@@ -58,20 +58,20 @@ var current_hp = max_hp:
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
 
-@onready var level_label = $UI_Layer/BaseUI/level
+@onready var level_label = $UI_Layer/BaseUI/Level
 
 # 업그레이드 
-@onready var upgrade_container = $UI_Layer/BaseUI/selectUI/upgrade_container
-@onready var select_panel = $UI_Layer/BaseUI/selectUI
+@onready var upgrade_container = $UI_Layer/SelectUI/select_panel/upgrade_container
+@onready var select_panel = $UI_Layer/SelectUI/select_panel
 # 뒤의 값은 확률 조정을 위한 가중치 값
 var upgrade_preload = {
-	"increase_max_hp" : [preload("res://dynamic/1_player/UI/SelectUI/increase_max_hp.tscn"), 50],
-	"increase_damage" : [preload("res://dynamic/1_player/UI/SelectUI/increase_damage.tscn"), 50],
-	"increase_moving_speed" : [preload("res://dynamic/1_player/UI/SelectUI/increase_moving_speed.tscn"), 50],
-	"drain_blood" : [preload("res://dynamic/1_player/UI/SelectUI/drain_blood.tscn"), 20],
+	"increase_max_hp" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_max_hp.tscn"), 50],
+	"increase_damage" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_damage.tscn"), 50],
+	"increase_moving_speed" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_moving_speed.tscn"), 50],
+	"drain_blood" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/drain_blood.tscn"), 20],
 	# ====================== 캐릭터 특성 =====================
-	"combo2" : [preload("res://dynamic/1_player/UI/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
-	"combo3" : [preload("res://dynamic/1_player/UI/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
+	"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
+	"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
 }
 var selected_upgrade = []
 

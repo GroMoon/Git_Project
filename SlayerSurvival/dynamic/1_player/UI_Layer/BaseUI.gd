@@ -2,7 +2,7 @@ extends Control
 
 @onready var pause_panel = get_node("PausePanel")
 @onready var death_panel = get_node("DeathPanel")
-@onready var selcetUI_panel = get_node("selectUI")
+#@onready var selcetUI_panel = get_parent().get_node("SelectUI/select_panel")
 # 스톱워치
 @onready var stopwatch = get_node("Stopwatch")
 var sec = 0.0
@@ -13,7 +13,7 @@ var pause_flag = false
 func _ready():
 	pause_panel.visible = false		# PausePanel 가리기
 	death_panel.visible = false		# DeathPanel 가리기
-	selcetUI_panel.visible = false	# selectUI_panel 가리기
+	#selcetUI_panel.visible = false	# selectUI_panel 가리기
 
 func _process(delta):
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)

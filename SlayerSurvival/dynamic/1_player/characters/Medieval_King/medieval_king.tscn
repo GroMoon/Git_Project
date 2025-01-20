@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://cugcbigw5hlhd" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
 [ext_resource type="Texture2D" uid="uid://bl1phqe2lt0jr" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
 [ext_resource type="Texture2D" uid="uid://br5ryt28b3vy0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
+[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI_Layer/BaseUI.tscn" id="10_0mkg5"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
-[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI/BaseUI.tscn" id="10_d704x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fyilj"]
 atlas = ExtResource("1_xk6qn")
@@ -373,13 +373,13 @@ shape = SubResource("RectangleShape2D_ghd4c")
 [node name="MagneticArea" parent="." instance=ExtResource("10_b142a")]
 position = Vector2(0, 23.33)
 
-[node name="UI_Layer" parent="." instance=ExtResource("10_d704x")]
+[node name="UI_Layer" parent="." instance=ExtResource("10_0mkg5")]
 
-[node name="Hp_Bar" parent="UI_Layer/BaseUI" index="2"]
-offset_left = 574.0
-offset_top = 385.0
-offset_right = 629.0
-offset_bottom = 388.0
+[node name="Health_Bar" parent="UI_Layer/BaseUI" index="3"]
+offset_left = 573.0
+offset_top = 386.0
+offset_right = 628.0
+offset_bottom = 389.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
@@ -387,4 +387,4 @@ offset_bottom = 388.0
 [editable path="UI_Layer"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
 [editable path="UI_Layer/BaseUI/DeathPanel"]
-[editable path="UI_Layer/BaseUI/selectUI"]
+[editable path="UI_Layer/SelectUI/select_panel"]

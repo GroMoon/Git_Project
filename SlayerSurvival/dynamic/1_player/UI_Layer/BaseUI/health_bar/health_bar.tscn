@@ -19,7 +19,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 anti_aliasing = false
 
-[node name="Hp_Bar" type="ProgressBar"]
+[node name="Health_Bar" type="ProgressBar"]
 unique_name_in_owner = true
 offset_left = 576.0
 offset_top = 373.0
