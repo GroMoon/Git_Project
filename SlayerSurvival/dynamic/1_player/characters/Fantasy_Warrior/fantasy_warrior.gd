@@ -267,6 +267,11 @@ func _on_upgrade_button_pressed(upgrade_key):
 		_:
 			print("ERROR -> 아무것도 선택되지 않음")
 			pass
+	
+	# 업그레이드 버튼 초기화
+	for child in upgrade_container.get_children():
+		child.queue_free()
+		
 	get_tree().paused = false
 	select_panel.visible = false
 
