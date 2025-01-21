@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://6uhmdvchlrp4"]
+
+[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI_Layer/BaseUI/BaseUI.tscn" id="1_gmbuo"]
+[ext_resource type="PackedScene" uid="uid://c3qtgwa08pvbr" path="res://dynamic/1_player/UI_Layer/SelectUI/SelectUI.tscn" id="2_b6516"]
+
+[node name="UI_Layer" type="CanvasLayer"]
+
+[node name="BaseUI" parent="." instance=ExtResource("1_gmbuo")]
+
+[node name="SelectUI" parent="." instance=ExtResource("2_b6516")]
+
+[editable path="BaseUI"]
+[editable path="BaseUI/PausePanel"]
+[editable path="BaseUI/DeathPanel"]
+[editable path="SelectUI"]
+[editable path="SelectUI/select_panel"]

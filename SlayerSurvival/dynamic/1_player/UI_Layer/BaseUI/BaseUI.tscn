@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://sxradkvyaick"]
+
+[ext_resource type="Script" path="res://dynamic/1_player/UI_Layer/BaseUI/BaseUI.gd" id="1_8bwr7"]
+[ext_resource type="PackedScene" uid="uid://yqejq1wcj6a3" path="res://dynamic/1_player/UI_Layer/BaseUI/level/level.tscn" id="2_3bx10"]
+[ext_resource type="PackedScene" uid="uid://cibswvdy26rel" path="res://dynamic/1_player/UI_Layer/BaseUI/stopwatch/stopwatch.tscn" id="3_hws3o"]
+[ext_resource type="PackedScene" uid="uid://cswgkwsq8gfan" path="res://dynamic/1_player/UI_Layer/BaseUI/exp_bar/exp_bar.tscn" id="4_1juvo"]
+[ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="5_h7s6m"]
+[ext_resource type="PackedScene" uid="uid://dtljeado5ue3p" path="res://dynamic/1_player/UI_Layer/BaseUI/pause_panel/pause_panel.tscn" id="6_ldc4x"]
+[ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI_Layer/BaseUI/death_panel/death_panel.tscn" id="7_4nwpg"]
+[ext_resource type="PackedScene" uid="uid://cdqyecvpdyqhu" path="res://dynamic/1_player/UI_Layer/BaseUI/killcollect/killcount.tscn" id="8_syuyv"]
+[ext_resource type="PackedScene" uid="uid://7hdonowfh837" path="res://dynamic/1_player/UI_Layer/BaseUI/goldcollect/goldcount.tscn" id="9_afo50"]
+
+[node name="BaseUI" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_8bwr7")
+
+[node name="Level" parent="." instance=ExtResource("2_3bx10")]
+layout_mode = 0
+offset_top = 14.0
+offset_right = 25.0
+offset_bottom = 37.0
+
+[node name="Stopwatch" parent="." instance=ExtResource("3_hws3o")]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 25.0
+offset_right = 659.0
+offset_bottom = 64.0
+scale = Vector2(0.991197, 1.04129)
+
+[node name="Exp_Bar" parent="." instance=ExtResource("4_1juvo")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 1.79385
+offset_right = 1199.0
+offset_bottom = 13.7938
+auto_translate = false
+
+[node name="Health_Bar" parent="." instance=ExtResource("5_h7s6m")]
+layout_mode = 0
+offset_left = 584.0
+offset_top = 408.0
+offset_right = 639.0
+offset_bottom = 411.0
+
+[node name="PausePanel" parent="." instance=ExtResource("6_ldc4x")]
+process_mode = 3
+layout_mode = 0
+offset_left = 344.0
+offset_top = 64.0
+offset_right = 872.0
+offset_bottom = 562.0
+
+[node name="Pause" parent="PausePanel" index="0"]
+offset_left = 157.0
+offset_top = 47.0
+offset_right = 381.0
+offset_bottom = 94.0
+
+[node name="Menu" parent="PausePanel" index="1"]
+offset_left = 192.0
+offset_right = 354.0
+
+[node name="Resume" parent="PausePanel" index="2"]
+offset_left = 189.0
+offset_top = 128.0
+offset_right = 351.0
+offset_bottom = 191.0
+
+[node name="DeathPanel" parent="." instance=ExtResource("7_4nwpg")]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 108.0
+offset_right = 849.0
+offset_bottom = 495.0
+
+[node name="Restart" parent="DeathPanel" index="1"]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 158.0
+offset_right = 328.0
+offset_bottom = 221.0
+
+[node name="Quit" parent="DeathPanel" index="2"]
+process_mode = 3
+
+[node name="killcollect" type="Node2D" parent="."]
+position = Vector2(960, 16)
+
+[node name="KillCount" parent="killcollect" instance=ExtResource("8_syuyv")]
+
+[node name="goldcollect" type="Node2D" parent="."]
+
+[node name="GoldCount" parent="goldcollect" instance=ExtResource("9_afo50")]
+offset_left = 1124.0
+offset_top = 16.0
+offset_right = 1162.0
+offset_bottom = 44.0
+scale = Vector2(0.998853, 1)
+
+[editable path="PausePanel"]
+[editable path="DeathPanel"]
