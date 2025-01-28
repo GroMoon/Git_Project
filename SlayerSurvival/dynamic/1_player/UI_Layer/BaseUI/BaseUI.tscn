@@ -100,5 +100,8 @@ offset_right = 1162.0
 offset_bottom = 44.0
 scale = Vector2(0.998853, 1)
 
+[connection signal="pressed" from="PausePanel/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="PausePanel/Resume" to="." method="_on_resume_pressed"]
+
 [editable path="PausePanel"]
 [editable path="DeathPanel"]
