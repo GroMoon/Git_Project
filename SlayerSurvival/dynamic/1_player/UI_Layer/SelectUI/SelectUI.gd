@@ -13,6 +13,8 @@ var upgrade_preload = {
 }
 var character_features
 
+signal pause
+
 func _ready():
 	player = get_parent().get_parent()
 	character_features = player.character_feature	# 특성 가져오기
@@ -27,6 +29,7 @@ func _process(_delta):
 
 # 업그레이드 선택 생성
 func create_upgrade_selection():
+	emit_signal("pause", true)
 	var select_temp = []
 	selectUI_panel.visible = true
 	select_temp = select_random_upgrades(3)			# select_temp에 랜덤으로 3개를 저장
@@ -85,5 +88,5 @@ func _on_upgrade_button_pressed(upgrade_key):
 	# 업그레이드 버튼 초기화 (count 갯수의 선택 창들을 모두 제거)
 	for child in upgrade_container.get_children():
 		child.queue_free()
-		
 	selectUI_panel.visible = false
+	emit_signal("pause", false)
