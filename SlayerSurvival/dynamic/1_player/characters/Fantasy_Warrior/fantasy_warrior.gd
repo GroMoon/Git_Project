@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal levelup
+
 const ANIMATION_SPEED = 2.0
 const START_HP        = 50
 
@@ -67,8 +69,6 @@ var hit_flag    = false 	# 히트 플래그
 	"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
 	"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
 }
-
-signal levelup
 
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
@@ -156,9 +156,7 @@ func process_collision_enemy(damage):
 		hit_flag    = false
 
 func die_character():
-	#var BaseUI_PATH = $UI_Layer
 	var death_pannel = $UI_Layer/BaseUI/DeathPanel
-	#BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().paused = true
 	death_pannel.visible = true
 	

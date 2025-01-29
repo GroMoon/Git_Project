@@ -1,9 +1,9 @@
 extends Control
 
+signal pause
+
 @onready var selectUI_panel = $select_panel
 @onready var upgrade_container = $select_panel/upgrade_container
-
-var player
 
 var upgrade_preload = {
 	"increase_max_hp" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_max_hp.tscn"), 50],
@@ -11,16 +11,14 @@ var upgrade_preload = {
 	"increase_moving_speed" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_moving_speed.tscn"), 50],
 	"drain_blood" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/drain_blood.tscn"), 20],
 }
+var player
 var character_features
-
-signal pause
 
 func _ready():
 	player = get_parent().get_parent()
 	character_features = player.character_feature	# 특성 가져오기
 	for key in character_features.keys():			# 특성 append
 		upgrade_preload[key] = character_features[key]
-	#print(upgrade_preload)
 	selectUI_panel.visible = false
 	player.connect("levelup", Callable(self, "create_upgrade_selection"))
 
@@ -29,7 +27,7 @@ func _process(_delta):
 
 # 업그레이드 선택 생성
 func create_upgrade_selection():
-	emit_signal("pause", true)
+	emit_signal("pause", true)						# 퍼즈 신호 BaseUI에 보내기
 	var select_temp = []
 	selectUI_panel.visible = true
 	select_temp = select_random_upgrades(3)			# select_temp에 랜덤으로 3개를 저장
@@ -88,5 +86,6 @@ func _on_upgrade_button_pressed(upgrade_key):
 	# 업그레이드 버튼 초기화 (count 갯수의 선택 창들을 모두 제거)
 	for child in upgrade_container.get_children():
 		child.queue_free()
+	
 	selectUI_panel.visible = false
 	emit_signal("pause", false)

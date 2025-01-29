@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal levelup
+
 const ANIMATION_SPEED = 1.5
 const START_HP        = 75
 
@@ -68,8 +70,6 @@ var hit_flag    = false 	# 히트 플래그
 	"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo2.tscn"), 10],
 	"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo3.tscn"), 0],
 }
-
-signal levelup
 
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
@@ -155,9 +155,7 @@ func process_collision_enemy(damage):
 		hit_flag    = false
 
 func die_character():
-	#var BaseUI_PATH = $UI_Layer
 	var death_pannel = $UI_Layer/BaseUI/DeathPanel
-	#BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().paused = true
 	death_pannel.visible = true
 	
@@ -196,9 +194,6 @@ func level_up():
 		character_level += 1
 		print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
-		#create_upgrade_selection()
-		#$UI_Layer.process_mode = Node.PROCESS_MODE_INHERIT
-		emit_signal("pause")
 		emit_signal("levelup")
 
 func _on_attack_timer_timeout():
