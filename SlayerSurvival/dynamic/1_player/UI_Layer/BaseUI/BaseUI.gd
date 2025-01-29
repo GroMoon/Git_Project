@@ -8,10 +8,8 @@ extends Control
 var sec = 0.0
 var minute = 0
 
-var signal_pause
-
 var pause_flag = false
-var level_up_flag = false
+var level_up_pause_flag = false
 
 func _ready():
 	pause_panel.visible = false		# PausePanel 가리기
@@ -21,7 +19,7 @@ func _ready():
 func _process(delta):
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
 	check_pause_pressed()
-	if pause_flag && level_up_flag:
+	if pause_flag && level_up_pause_flag:
 		pause_panel.visible = false
 		get_tree().paused = true
 		print("레벨업으로 인한 퍼즈")
@@ -37,12 +35,12 @@ func _process(delta):
 		process_stopwatch(delta)
 
 func check_pause_pressed():
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause") && level_up_pause_flag == false:
 		pause_flag = !pause_flag
 
-func check_level_up_flag(pause_state: bool):
+func check_level_up_pause_flag(pause_state: bool):
 	pause_flag = !pause_flag
-	level_up_flag = pause_state
+	level_up_pause_flag = pause_state
 
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():
