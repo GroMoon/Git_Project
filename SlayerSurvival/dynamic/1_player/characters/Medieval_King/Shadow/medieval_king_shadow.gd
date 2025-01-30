@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const ANIMATION_SPEED = 1.5
+const STOP_DISTANCE   = 50.0 	# 플레이어와의 거리가 해당 값 이하일 땐 멈춤
 
 @onready var attack_area_1    = $Attack/attack_1
 @onready var attack_area_2    = $Attack/attack_2
@@ -34,6 +35,14 @@ func _physics_process(_delta):
 	if is_attacking:
 		return
 		
+	# 플레이어와 거리 계산
+	var distance_to_player = global_position.distance_to(player.global_position)
+	# STOP_DISTANCE 안에 들어오면 idle 상태 유지
+	if distance_to_player <= STOP_DISTANCE:
+		velocity = Vector2.ZERO
+		animated_sprite.play("idle")
+		return
+
 	# 플레이어가 존재하면 플레이어를 향해 이동
 	if player:
 		var direction = (player.position - position).normalized()

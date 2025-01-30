@@ -27,6 +27,7 @@ func _process(_delta):
 			shadow_instance.name = "shadow"
 			shadow_instance.global_position = player.global_position
 			add_child(shadow_instance)
+			move_child(shadow_instance, player.get_index() - 1)
 			player.is_shadow_on = 1
 
 # Fantasy Warrior
