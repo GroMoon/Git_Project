@@ -1,23 +1,27 @@
 extends Control
 
+@onready var CONNECT_SelectUI = get_parent().get_node("SelectUI")
 @onready var pause_panel = get_node("PausePanel")
 @onready var death_panel = get_node("DeathPanel")
-
-# 스톱워치
 @onready var stopwatch = get_node("Stopwatch")
+
 var sec = 0.0
 var minute = 0
-
 var pause_flag = false
+var level_up_pause_flag = false
 
 func _ready():
 	pause_panel.visible = false		# PausePanel 가리기
 	death_panel.visible = false		# DeathPanel 가리기
+	CONNECT_SelectUI.connect("pause", Callable(self, "check_level_up_pause_flag"))
 
 func _process(delta):
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
 	check_pause_pressed()
-	if pause_flag:
+	if pause_flag && level_up_pause_flag:
+		pause_panel.visible = false
+		get_tree().paused = true
+	elif pause_flag:
 		pause_panel.visible = true
 		get_tree().paused   = true
 	else:
@@ -28,8 +32,12 @@ func _process(delta):
 		process_stopwatch(delta)
 
 func check_pause_pressed():
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause") && level_up_pause_flag == false:
 		pause_flag = !pause_flag
+
+func check_level_up_pause_flag(pause_state: bool):
+	level_up_pause_flag = pause_state
+	pause_flag = !pause_flag
 
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():

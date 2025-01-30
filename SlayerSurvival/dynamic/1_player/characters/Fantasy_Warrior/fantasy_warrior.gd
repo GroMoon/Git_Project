@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal levelup
+
 const ANIMATION_SPEED = 2.0
 const START_HP        = 50
 
@@ -13,11 +15,13 @@ const START_HP        = 50
 @export var character_name  = "fantasy_warrior"
 @export var move_speed      = 250
 @export var character_level = 1
-@export var attack_times    = 1 	# 공격 횟수(default 1)
+@export var attack_times    = 1 	# 공격 횟수 (default 1)
+@export var shadow_attack   = 1		# 그림자 분신술 (default 0)
 
 var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
+var is_shadow_on        = 0
 
 # 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
@@ -32,7 +36,7 @@ var current_exp:
 		exp_bar.value = current_exp
 
 # 체력
-@onready var hp_bar = $UI_Layer/BaseUI/Hp_Bar
+@onready var hp_bar = $UI_Layer/BaseUI/Health_Bar
 var max_hp = START_HP:
 	set(set_value):
 		max_hp = set_value
@@ -55,7 +59,16 @@ var current_hp = max_hp:
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
 
-@onready var level_label = $UI_Layer/BaseUI/level
+@onready var level_label = $UI_Layer/BaseUI/Level
+
+# 업그레이드 
+@onready var upgrade_container = $UI_Layer/SelectUI/select_panel/upgrade_container
+@onready var select_panel = $UI_Layer/SelectUI/select_panel
+
+@export var character_feature = {
+	"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
+	"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
+}
 
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
@@ -95,6 +108,8 @@ func _physics_process(_delta):
 	gold_label.text = str(gold_count)
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
+	# 그림자 분신술
+	# add_shadow(shadow_attack)
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
@@ -141,9 +156,7 @@ func process_collision_enemy(damage):
 		hit_flag    = false
 
 func die_character():
-	var BaseUI_PATH = $UI_Layer
 	var death_pannel = $UI_Layer/BaseUI/DeathPanel
-	BaseUI_PATH.process_mode = Node.PROCESS_MODE_INHERIT
 	get_tree().paused = true
 	death_pannel.visible = true
 	
@@ -154,43 +167,36 @@ func die_character():
 # 골드 추가
 func add_gold(gold_value):
 	gold_count += gold_value
-	#print("현재 골드 : ", gold_count)
 
 # 경험치 추가
 func add_exp(_exp_value):
 	current_exp += _exp_value
 	calculate_exp()
-	#print("경험치 획득!")
 
 # 경험치 계산
 func calculate_exp():
 	if character_level < 5:
 		max_exp = character_level * 20
-		print("max 경험치 : ",max_exp)
-		level_up()
 	elif character_level < 10:
 		max_exp = character_level * 24
-		print("max 경험치 : ",max_exp)
-		level_up()
 	elif character_level < 15:
 		max_exp = character_level * 27
-		level_up()
 	elif character_level < 20:
 		max_exp = character_level * 30
-		level_up()
 	elif character_level < 25:
 		max_exp = character_level * 32
-		level_up()
 	else:
 		max_exp = character_level * 34
-		level_up()
+	level_up()
 
 # 레벨 업
 func level_up():
 	if current_exp >= max_exp:
 		character_level += 1
-		print("레벨 업! : ", character_level)
+		#print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
+		get_tree().paused = true
+		emit_signal("levelup")
 
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
