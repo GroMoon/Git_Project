@@ -196,6 +196,10 @@ func level_up():
 		current_exp = current_exp - max_exp
 		emit_signal("levelup")
 
+func _on_magnetic_area_area_entered(area:Area2D):
+	if area.is_in_group("Gold") or area.is_in_group("Exp"):
+		area.target = self
+		
 func _on_attack_timer_timeout():
 	is_attacking = true
 	# print("character position : ", global_position)

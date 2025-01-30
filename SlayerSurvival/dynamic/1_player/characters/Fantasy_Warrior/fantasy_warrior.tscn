@@ -463,6 +463,7 @@ offset_bottom = 361.0
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
+[editable path="MagneticArea"]
 [editable path="UI_Layer"]
 [editable path="UI_Layer/BaseUI"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
