@@ -16,7 +16,20 @@ var character_features
 
 func _ready():
 	player = get_parent().get_parent()
-	character_features = player.character_feature	# 특성 가져오기
+	var character_name = player.character_name
+	if character_name == "fantasy_warrior":
+		character_features = {
+			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
+			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
+		}
+	elif character_name == "medieval_king":
+		character_features = {
+			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo2.tscn"), 10],
+			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo3.tscn"), 0],
+		}
+	else:
+		print("character_name을 찾을 수 없음")
+		pass
 	for key in character_features.keys():			# 특성 append
 		upgrade_preload[key] = character_features[key]
 	selectUI_panel.visible = false

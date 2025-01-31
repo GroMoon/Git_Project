@@ -65,11 +65,6 @@ var hit_flag    = false 	# 히트 플래그
 @onready var upgrade_container = $UI_Layer/SelectUI/select_panel/upgrade_container
 @onready var select_panel = $UI_Layer/SelectUI/select_panel
 
-@export var character_feature = {
-	"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
-	"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
-}
-
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
