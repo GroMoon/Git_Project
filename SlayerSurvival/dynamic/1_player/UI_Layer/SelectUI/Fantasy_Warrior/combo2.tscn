@@ -22,7 +22,7 @@ offset_top = 8.0
 offset_right = 192.0
 offset_bottom = 31.0
 theme_override_fonts/font = ExtResource("2_gt1nc")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 26
 text = "콤보2 "
 
 [node name="details" type="Label" parent="."]
@@ -30,9 +30,9 @@ layout_mode = 1
 offset_left = 112.0
 offset_top = 32.0
 offset_right = 464.0
-offset_bottom = 69.0
+offset_bottom = 98.0
 theme_override_fonts/font = ExtResource("2_gt1nc")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 20
 text = "플레이어의 공격이  2회 콤보 공격을 합니다."
-vertical_alignment = 3
+vertical_alignment = 1
 autowrap_mode = 2

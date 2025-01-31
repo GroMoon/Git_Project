@@ -64,7 +64,6 @@ func _on_upgrade_button_pressed(upgrade_key):
 	match upgrade_key:
 		"increase_max_hp":
 			player.max_hp += 10
-			player.current_hp += 10
 			print("최대 체력 증가",player.max_hp)
 		"increase_damage":
 			player.attack_damage += 5
