@@ -16,7 +16,7 @@ const START_HP        = 50
 @export var move_speed      = 250
 @export var character_level = 1
 @export var attack_times    = 1 	# 공격 횟수 (default 1)
-@export var shadow_attack   = 1		# 그림자 분신술 (default 0)
+@export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
 var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false

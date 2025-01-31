@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cerw8i00egrym"]
+[gd_scene load_steps=3 format=3 uid="uid://cvd03mrr7ibud"]
 
-[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="1_cqoft"]
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_1vlbl"]
+[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="1_2k10e"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_d1muf"]
 
-[node name="IncreaseMovingSpeed" type="Button"]
+[node name="DrainBlood" type="Button"]
 offset_right = 470.0
 offset_bottom = 136.0
 size_flags_vertical = 3
@@ -11,7 +11,7 @@ size_flags_vertical = 3
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(64, 72)
 scale = Vector2(0.171875, 0.171875)
-texture = ExtResource("1_cqoft")
+texture = ExtResource("1_2k10e")
 
 [node name="name" type="Label" parent="."]
 layout_mode = 0
@@ -19,9 +19,9 @@ offset_left = 112.0
 offset_top = 8.0
 offset_right = 192.0
 offset_bottom = 31.0
-theme_override_fonts/font = ExtResource("2_1vlbl")
+theme_override_fonts/font = ExtResource("2_d1muf")
 theme_override_font_sizes/font_size = 26
-text = "이동 속도 증가"
+text = "흡혈"
 
 [node name="details" type="Label" parent="."]
 layout_mode = 0
@@ -29,8 +29,8 @@ offset_left = 112.0
 offset_top = 32.0
 offset_right = 464.0
 offset_bottom = 98.0
-theme_override_fonts/font = ExtResource("2_1vlbl")
+theme_override_fonts/font = ExtResource("2_d1muf")
 theme_override_font_sizes/font_size = 20
-text = "플레이어의 이동속도가 +5 증가합니다."
+text = "플레이어의 공격이 흡혈 효과를 얻습니다."
 vertical_alignment = 1
 autowrap_mode = 2

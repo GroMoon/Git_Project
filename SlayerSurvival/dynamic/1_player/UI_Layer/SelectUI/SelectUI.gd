@@ -6,10 +6,12 @@ signal pause
 @onready var upgrade_container = $select_panel/upgrade_container
 
 var upgrade_preload = {
-	"increase_max_hp" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_max_hp.tscn"), 50],
-	"increase_damage" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_damage.tscn"), 50],
-	"increase_moving_speed" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/increase_moving_speed.tscn"), 50],
-	"drain_blood" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/drain_blood.tscn"), 20],
+	"increase_max_hp" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_max_hp.tscn"), 50],
+	"increase_damage" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_damage.tscn"), 50],
+	"increase_moving_speed" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_moving_speed.tscn"), 50],
+	"drain_blood" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_drain_blood.tscn"), 20],
+	"shadow_partner" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_shadow_partner.tscn"), 15],
+	"increase_magnetic_area" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_magnetic_area.tscn"), 50]
 }
 var player
 var character_features
@@ -19,13 +21,13 @@ func _ready():
 	var character_name = player.character_name
 	if character_name == "fantasy_warrior":
 		character_features = {
-			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo2.tscn"), 10],
-			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/combo3.tscn"), 0],
+			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/S_combo2.tscn"), 10],
+			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Fantasy_Warrior/S_combo3.tscn"), 0],
 		}
 	elif character_name == "medieval_king":
 		character_features = {
-			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo2.tscn"), 10],
-			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo3.tscn"), 0],
+			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/S_combo2.tscn"), 10],
+			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/S_combo3.tscn"), 0],
 		}
 	else:
 		print("character_name을 찾을 수 없음")
@@ -85,12 +87,20 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.move_speed += 10
 		"drain_blood":
 			print("아직 구현되지 않음")
+		
 # =============== 캐릭터 특성 ==================
 		"combo2":
+			player.attack_times = 2
 			upgrade_preload["combo2"][1] = 0
 			upgrade_preload["combo3"][1] = 5
 		"combo3":
+			player.attack_times = 3
 			upgrade_preload["combo3"][1] = 0
+		"shadow_partner":
+			player.shadow_attack = 1
+			upgrade_preload["shadow_partner"][1] = 0				# FIXME : 그림자 공격 횟수에 따라 의논 후 변경 필요
+		"increase_magnetic_area":
+			player.magnetic_area_scale += 20.0
 		_:
 			print("ERROR -> 아무것도 선택되지 않음")
 			pass
