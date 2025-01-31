@@ -16,8 +16,8 @@ const START_HP        = 75
 @export var character_name  = "medieval_king"
 @export var move_speed      = 150
 @export var character_level = 1
-@export var attack_times    = 3 	# 공격 횟수(default 1)
-@export var shadow_attack   = 1		# 그림자 분신술 (default 0)
+@export var attack_times    = 1 	# 공격 횟수(default 1)
+@export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
 var attack_damage       = 10		# 일반 공격 데미지
 var is_attacking        = false
@@ -65,11 +65,6 @@ var hit_flag    = false 	# 히트 플래그
 # 업그레이드 
 @onready var upgrade_container = $UI_Layer/SelectUI/select_panel/upgrade_container
 @onready var select_panel = $UI_Layer/SelectUI/select_panel
-
-@export var character_feature = {
-	"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo2.tscn"), 10],
-	"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/combo3.tscn"), 0],
-}
 
 func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동

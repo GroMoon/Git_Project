@@ -4,11 +4,11 @@
 
 [node name="select_panel" type="Panel"]
 process_mode = 3
-offset_left = 418.0
-offset_top = 73.0
-offset_right = 954.0
-offset_bottom = 585.0
-scale = Vector2(0.748551, 0.922905)
+offset_left = 364.0
+offset_top = 107.0
+offset_right = 900.0
+offset_bottom = 619.0
+scale = Vector2(0.887454, 0.951006)
 
 [node name="label" type="Label" parent="."]
 layout_mode = 2
@@ -17,9 +17,10 @@ offset_top = 17.0
 offset_right = 449.0
 offset_bottom = 49.0
 theme_override_fonts/font = ExtResource("1_s3hhe")
-theme_override_font_sizes/font_size = 25
-text = "Level Up"
+theme_override_font_sizes/font_size = 27
+text = "Level Up!"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="upgrade_container" type="VBoxContainer" parent="."]
 layout_mode = 1
