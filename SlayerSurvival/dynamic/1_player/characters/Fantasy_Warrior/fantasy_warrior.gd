@@ -136,8 +136,14 @@ func process_collision_enemy(damage):
 		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
 		damage_flag = false
 		if current_hp <= 0:
-			die_character()
-			print("사망") 									# FIXME : 사망 시 필요한 작업 (메인메뉴 돌아가기, 사망 모션, 사망 사운드 등) 추가 필요
+			print("사망")
+			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
+			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
+			animated_sprite.stop()
+			animated_sprite.speed_scale = ANIMATION_SPEED
+			animated_sprite.play("death")
+			await animated_sprite.animation_finished
+			die_character()									
 		else:
 			print("현재 체력 : ", current_hp)
 			hit_flag = true
@@ -147,7 +153,7 @@ func process_collision_enemy(damage):
 			else:
 				print("공격 실행 중이 아니므로 히트 모션 출력력")
 				animated_sprite.stop()
-				animated_sprite.speed_scale = 3.0
+				animated_sprite.speed_scale = 1.0
 				animated_sprite.play("take_hit")
 				animated_sprite.modulate = Color(1, 0, 0)	# 피해 입으면 컬러 변경(빨간색)
 				await animated_sprite.animation_finished      
@@ -157,11 +163,11 @@ func die_character():
 	# var death_pannel = $UI_Layer/BaseUI/DeathPanel
 	# get_tree().paused = true
 	# death_pannel.visible = true
-	death_flag = true
-	
 	var cur_gold = int(gold_count)
 	Global.character_data["GOLD"]["gold"] += cur_gold
 	Global.save_character_data()
+	
+	death_flag = true	
 
 # 골드 추가
 func add_gold(gold_value):
