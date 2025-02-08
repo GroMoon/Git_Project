@@ -11,10 +11,16 @@ var pause_flag          = false
 var global_pause_flag   = false
 var level_up_pause_flag = false
 
+var player = null
+
 func _ready():
 	pause_panel.visible = false		# PausePanel 가리기
 	death_panel.visible = false		# DeathPanel 가리기
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
+	# player 세팅
+	player = get_parent().get_parent()
+	print(player)
+	print(player.death_flag)
 
 func _process(delta):
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
@@ -30,6 +36,10 @@ func _process(delta):
 			pause_panel.visible = true
 		else:
 			pass
+	elif player.death_flag:			# 플레이서 사망 시
+		pause_panel.visible = false
+		death_panel.visible = true
+		get_tree().paused   = true
 	else:
 		pause_panel.visible = false
 		get_tree().paused   = false

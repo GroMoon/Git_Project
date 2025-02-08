@@ -58,6 +58,7 @@ var current_hp = max_hp:
 
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
+var death_flag  = false 	# 데스 플래그
 
 @onready var level_label = $UI_Layer/BaseUI/Level
 
@@ -141,19 +142,22 @@ func process_collision_enemy(damage):
 			print("현재 체력 : ", current_hp)
 			hit_flag = true
 			if (animated_sprite.is_playing()) && ((animated_sprite.animation == "attack_1")||(animated_sprite.animation == "attack_2")||(animated_sprite.animation == "attack_3")):
+				print("공격 모션 실행 중으로 데미지 이펙트만 적용")
 				animated_sprite.modulate = Color(1,0,0)
 			else:
+				print("공격 실행 중이 아니므로 히트 모션 출력력")
 				animated_sprite.stop()
 				animated_sprite.speed_scale = 3.0
 				animated_sprite.play("take_hit")
 				animated_sprite.modulate = Color(1, 0, 0)	# 피해 입으면 컬러 변경(빨간색)
 				await animated_sprite.animation_finished      
-		hit_flag    = false
+		hit_flag = false
 
 func die_character():
-	var death_pannel = $UI_Layer/BaseUI/DeathPanel
-	get_tree().paused = true
-	death_pannel.visible = true
+	# var death_pannel = $UI_Layer/BaseUI/DeathPanel
+	# get_tree().paused = true
+	# death_pannel.visible = true
+	death_flag = true
 	
 	var cur_gold = int(gold_count)
 	Global.character_data["GOLD"]["gold"] += cur_gold
