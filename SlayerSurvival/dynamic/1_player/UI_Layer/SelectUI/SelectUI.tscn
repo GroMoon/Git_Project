@@ -9,6 +9,7 @@ anchors_preset = 0
 script = ExtResource("1_86iio")
 
 [node name="select_panel" parent="." instance=ExtResource("1_ge36q")]
+z_index = 1
 layout_mode = 0
 offset_left = 372.0
 offset_top = 103.0
