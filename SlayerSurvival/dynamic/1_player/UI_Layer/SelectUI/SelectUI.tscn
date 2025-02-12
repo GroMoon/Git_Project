@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3qtgwa08pvbr"]
+
+[ext_resource type="Script" path="res://dynamic/1_player/UI_Layer/SelectUI/SelectUI.gd" id="1_86iio"]
+[ext_resource type="PackedScene" uid="uid://j7kkv4b3ad6n" path="res://dynamic/1_player/UI_Layer/SelectUI/select_panel/select_panel.tscn" id="1_ge36q"]
+
+[node name="SelectUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_86iio")
+
+[node name="select_panel" parent="." instance=ExtResource("1_ge36q")]
+layout_mode = 0
+offset_left = 372.0
+offset_top = 103.0
+offset_right = 908.0
+offset_bottom = 615.0
+
+[editable path="select_panel"]

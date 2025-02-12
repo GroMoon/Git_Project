@@ -9,6 +9,10 @@ var instance_character
 # 맵을 인스턴스 하기 위한 선언
 var map_load
 var instance_map
+# 그림자를 인스턴스 하기 위한 선언
+var player
+var player_shadow_attack_on = 0
+var shadow_preload
 
 func _ready():
 	select_character.visible = true
@@ -16,11 +20,21 @@ func _ready():
 	get_tree().paused = true
 
 func _process(_delta):
-	pass
+	player = get_node("player")
+	if player:
+		if (player.shadow_attack == 1) and (player.is_shadow_on == 0):
+			var shadow_instance = shadow_preload.instantiate()
+			shadow_instance.name = "shadow"
+			shadow_instance.global_position = player.global_position
+			add_child(shadow_instance)
+			move_child(shadow_instance, player.get_index() - 1)
+			player.is_shadow_on = 1
 
 # Fantasy Warrior
 func _on_select_warrior_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn")
+	# 그림자 결정
+	shadow_preload = preload("res://dynamic/1_player/characters/Fantasy_Warrior/Shadow/fantasy_warrior_shadow.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
 	# 스케일 조정
@@ -32,6 +46,8 @@ func _on_select_warrior_pressed():
 # Medieval King
 func _on_select_king_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Medieval_King/medieval_king.tscn")
+	# 그림자 결정
+	shadow_preload = preload("res://dynamic/1_player/characters/Medieval_King/Shadow/medieval_king_shadow.tscn")
 	instance_character = character_load.instantiate()
 	instance_character.name = "player"
 	# 스케일 조정
@@ -42,7 +58,7 @@ func _on_select_king_pressed():
 
 # Cave
 func _on_cave_button_pressed():
-	map_load = preload("res://dynamic/4_world/cave/cave.tscn")
+	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
 	instance_map = map_load.instantiate()
 	instance_map.name = "map"
 	add_child(instance_map)
@@ -51,7 +67,7 @@ func _on_cave_button_pressed():
 
 # Dungeon_B1F
 func _on_dungeon_button_pressed():
-	map_load = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F.tscn")
+	map_load = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.tscn")
 	instance_map = map_load.instantiate()
 	instance_map.name = "map"
 	add_child(instance_map)

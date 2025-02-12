@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://kvaos8n1drsa"]
+
+[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="1_2t1cs"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_imcnh"]
+
+[node name="IncreaseMagneticArea" type="Button"]
+offset_right = 470.0
+offset_bottom = 136.0
+size_flags_vertical = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 72)
+scale = Vector2(0.171875, 0.171875)
+texture = ExtResource("1_2t1cs")
+
+[node name="name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 8.0
+offset_right = 192.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("2_imcnh")
+theme_override_font_sizes/font_size = 26
+text = "자석 범위 증가"
+
+[node name="details" type="Label" parent="."]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 32.0
+offset_right = 464.0
+offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("2_imcnh")
+theme_override_font_sizes/font_size = 20
+text = "플레이어의 아이템 획득 범위가 증가합니다."
+vertical_alignment = 1
+autowrap_mode = 2

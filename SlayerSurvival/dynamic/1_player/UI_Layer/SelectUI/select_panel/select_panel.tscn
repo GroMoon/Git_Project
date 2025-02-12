@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://j7kkv4b3ad6n"]
+
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_s3hhe"]
+
+[node name="select_panel" type="Panel"]
+process_mode = 3
+offset_left = 364.0
+offset_top = 107.0
+offset_right = 900.0
+offset_bottom = 619.0
+scale = Vector2(0.887454, 0.951006)
+
+[node name="label" type="Label" parent="."]
+layout_mode = 2
+offset_left = 85.0
+offset_top = 17.0
+offset_right = 449.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("1_s3hhe")
+theme_override_font_sizes/font_size = 27
+text = "Level Up!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="upgrade_container" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 32.0619
+offset_top = 60.678
+offset_right = 502.062
+offset_bottom = 476.678
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

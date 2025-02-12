@@ -1,169 +1,167 @@
-[gd_scene load_steps=54 format=3 uid="uid://blv0hgymp636q"]
+[gd_scene load_steps=52 format=3 uid="uid://byoiver4o27fs"]
 
-[ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
-[ext_resource type="Texture2D" uid="uid://c1t3r7n3v22k1" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
-[ext_resource type="Texture2D" uid="uid://br0y6i1wapdc2" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
-[ext_resource type="Texture2D" uid="uid://br75wnn75rs1i" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
-[ext_resource type="Texture2D" uid="uid://bqc6shvwj5fs3" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
-[ext_resource type="Texture2D" uid="uid://cugcbigw5hlhd" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
-[ext_resource type="Texture2D" uid="uid://bl1phqe2lt0jr" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
-[ext_resource type="Texture2D" uid="uid://br5ryt28b3vy0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
-[ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
-[ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_l0wkq"]
+[ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/Shadow/medieval_king_shadow.gd" id="1_6k83m"]
+[ext_resource type="Texture2D" uid="uid://c1t3r7n3v22k1" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_s5adv"]
+[ext_resource type="Texture2D" uid="uid://br0y6i1wapdc2" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_ps3l7"]
+[ext_resource type="Texture2D" uid="uid://br75wnn75rs1i" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_e2oah"]
+[ext_resource type="Texture2D" uid="uid://bqc6shvwj5fs3" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_07vw4"]
+[ext_resource type="Texture2D" uid="uid://cugcbigw5hlhd" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_qfd31"]
+[ext_resource type="Texture2D" uid="uid://bl1phqe2lt0jr" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_h4myx"]
+[ext_resource type="Texture2D" uid="uid://br5ryt28b3vy0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_kqck5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fyilj"]
-atlas = ExtResource("1_xk6qn")
+atlas = ExtResource("1_s5adv")
 region = Rect2(0, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j1fo2"]
-atlas = ExtResource("1_xk6qn")
+atlas = ExtResource("1_s5adv")
 region = Rect2(160, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bi5j2"]
-atlas = ExtResource("1_xk6qn")
+atlas = ExtResource("1_s5adv")
 region = Rect2(320, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qrglg"]
-atlas = ExtResource("1_xk6qn")
+atlas = ExtResource("1_s5adv")
 region = Rect2(480, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qd6t0"]
-atlas = ExtResource("2_s3lbo")
+atlas = ExtResource("2_ps3l7")
 region = Rect2(0, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e21dk"]
-atlas = ExtResource("2_s3lbo")
+atlas = ExtResource("2_ps3l7")
 region = Rect2(160, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5c2xw"]
-atlas = ExtResource("2_s3lbo")
+atlas = ExtResource("2_ps3l7")
 region = Rect2(320, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kb8o5"]
-atlas = ExtResource("2_s3lbo")
+atlas = ExtResource("2_ps3l7")
 region = Rect2(480, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jrexu"]
-atlas = ExtResource("3_k2hvj")
+atlas = ExtResource("3_e2oah")
 region = Rect2(0, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3cb2q"]
-atlas = ExtResource("3_k2hvj")
+atlas = ExtResource("3_e2oah")
 region = Rect2(160, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wi83f"]
-atlas = ExtResource("3_k2hvj")
+atlas = ExtResource("3_e2oah")
 region = Rect2(320, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xcd7f"]
-atlas = ExtResource("3_k2hvj")
+atlas = ExtResource("3_e2oah")
 region = Rect2(480, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m0qcv"]
-atlas = ExtResource("4_0mln5")
+atlas = ExtResource("4_07vw4")
 region = Rect2(0, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a2dft"]
-atlas = ExtResource("4_0mln5")
+atlas = ExtResource("4_07vw4")
 region = Rect2(160, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6dtvc"]
-atlas = ExtResource("4_0mln5")
+atlas = ExtResource("4_07vw4")
 region = Rect2(320, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i3vc0"]
-atlas = ExtResource("4_0mln5")
+atlas = ExtResource("4_07vw4")
 region = Rect2(480, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c66mc"]
-atlas = ExtResource("4_0mln5")
+atlas = ExtResource("4_07vw4")
 region = Rect2(640, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u68py"]
-atlas = ExtResource("4_0mln5")
+atlas = ExtResource("4_07vw4")
 region = Rect2(800, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twtq2"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(0, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rotex"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(160, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c3ne6"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(320, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fx1gc"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(480, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8yj82"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(640, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2hpyp"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(800, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qquwf"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(960, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v7jl2"]
-atlas = ExtResource("5_jabdf")
+atlas = ExtResource("5_qfd31")
 region = Rect2(1120, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wix36"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(0, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_82rli"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(160, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dnbem"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(320, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j6t0a"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(480, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hpqj3"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(640, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5ppc"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(800, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pop4s"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(960, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jsq2u"]
-atlas = ExtResource("6_bamps")
+atlas = ExtResource("6_h4myx")
 region = Rect2(1120, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8yg7e"]
-atlas = ExtResource("7_aqs6b")
+atlas = ExtResource("7_kqck5")
 region = Rect2(0, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uci43"]
-atlas = ExtResource("7_aqs6b")
+atlas = ExtResource("7_kqck5")
 region = Rect2(160, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6kka3"]
-atlas = ExtResource("7_aqs6b")
+atlas = ExtResource("7_kqck5")
 region = Rect2(320, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8v1xw"]
-atlas = ExtResource("7_aqs6b")
+atlas = ExtResource("7_kqck5")
 region = Rect2(480, 0, 160, 111)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_xhjrh"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_bo12k"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -315,43 +313,36 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3njei"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_53x7d"]
 radius = 9.5
 height = 44.334
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8tlxt"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gorf3"]
 size = Vector2(72.75, 37)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f3rbu"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rquch"]
 size = Vector2(145.5, 50.5)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghd4c"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dsucp"]
 size = Vector2(84.5, 104)
 
-[node name="MedievalKing" type="CharacterBody2D"]
-texture_filter = 1
-scale = Vector2(2, 2)
-collision_layer = 2
-script = ExtResource("1_go0kx")
+[node name="MedievalKingShadow" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_6k83m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_xhjrh")
-animation = &"idle"
+sprite_frames = SubResource("SpriteFrames_bo12k")
+animation = &"attack_3"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 23.333)
-shape = SubResource("CapsuleShape2D_3njei")
+shape = SubResource("CapsuleShape2D_53x7d")
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
-
-[node name="DamageTimer" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true
-
-[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Attack" type="Area2D" parent="." groups=["attack"]]
 collision_layer = 8
@@ -359,34 +350,14 @@ collision_mask = 4
 
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
 position = Vector2(37, 24)
-shape = SubResource("RectangleShape2D_8tlxt")
+shape = SubResource("RectangleShape2D_gorf3")
 
 [node name="attack_2" type="CollisionShape2D" parent="Attack"]
 position = Vector2(7, 25)
-shape = SubResource("RectangleShape2D_f3rbu")
+shape = SubResource("RectangleShape2D_rquch")
 
 [node name="attack_3" type="CollisionShape2D" parent="Attack"]
 position = Vector2(33, -2)
-shape = SubResource("RectangleShape2D_ghd4c")
-
-[node name="MagneticArea" parent="." instance=ExtResource("10_b142a")]
-position = Vector2(0, 23.33)
-
-[node name="UI_Layer" parent="." instance=ExtResource("10_l0wkq")]
-
-[node name="Health_Bar" parent="UI_Layer/BaseUI" index="3"]
-offset_left = 577.0
-offset_top = 386.0
-offset_right = 632.0
-offset_bottom = 389.0
+shape = SubResource("RectangleShape2D_dsucp")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
-
-[editable path="MagneticArea"]
-[editable path="UI_Layer"]
-[editable path="UI_Layer/SelectUI"]
-[editable path="UI_Layer/SelectUI/select_panel"]
-[editable path="UI_Layer/BaseUI"]
-[editable path="UI_Layer/BaseUI/PausePanel"]
-[editable path="UI_Layer/BaseUI/DeathPanel"]
