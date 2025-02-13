@@ -413,8 +413,7 @@ script = ExtResource("1_cqj1t")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.00189, 1)
 sprite_frames = SubResource("SpriteFrames_lq7wa")
-animation = &"attack_3"
-frame = 3
+animation = &"idle"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
