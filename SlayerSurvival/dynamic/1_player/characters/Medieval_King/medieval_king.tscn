@@ -385,8 +385,8 @@ offset_bottom = 389.0
 
 [editable path="MagneticArea"]
 [editable path="UI_Layer"]
-[editable path="UI_Layer/SelectUI"]
-[editable path="UI_Layer/SelectUI/select_panel"]
 [editable path="UI_Layer/BaseUI"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
 [editable path="UI_Layer/BaseUI/DeathPanel"]
+[editable path="UI_Layer/SelectUI"]
+[editable path="UI_Layer/SelectUI/select_panel"]
