@@ -5,8 +5,6 @@
 
 [node name="UI_Layer" type="CanvasLayer"]
 
-[node name="SelectUI" parent="." instance=ExtResource("2_b6516")]
-
 [node name="BaseUI" parent="." instance=ExtResource("1_gmbuo")]
 
 [node name="PausePanel" parent="BaseUI" index="4"]
@@ -15,8 +13,10 @@ offset_top = 0.0
 offset_right = 1200.0
 offset_bottom = 650.0
 
-[editable path="SelectUI"]
-[editable path="SelectUI/select_panel"]
+[node name="SelectUI" parent="." instance=ExtResource("2_b6516")]
+
 [editable path="BaseUI"]
 [editable path="BaseUI/PausePanel"]
 [editable path="BaseUI/DeathPanel"]
+[editable path="SelectUI"]
+[editable path="SelectUI/select_panel"]

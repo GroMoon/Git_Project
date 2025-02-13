@@ -45,6 +45,20 @@ offset_top = 408.0
 offset_right = 639.0
 offset_bottom = 411.0
 
+[node name="killcollect" type="Node2D" parent="."]
+position = Vector2(960, 16)
+
+[node name="KillCount" parent="killcollect" instance=ExtResource("8_syuyv")]
+
+[node name="goldcollect" type="Node2D" parent="."]
+
+[node name="GoldCount" parent="goldcollect" instance=ExtResource("9_afo50")]
+offset_left = 1124.0
+offset_top = 16.0
+offset_right = 1162.0
+offset_bottom = 44.0
+scale = Vector2(0.998853, 1)
+
 [node name="PausePanel" parent="." instance=ExtResource("6_ldc4x")]
 process_mode = 3
 layout_mode = 0
@@ -85,20 +99,6 @@ offset_bottom = 221.0
 
 [node name="Quit" parent="DeathPanel" index="2"]
 process_mode = 3
-
-[node name="killcollect" type="Node2D" parent="."]
-position = Vector2(960, 16)
-
-[node name="KillCount" parent="killcollect" instance=ExtResource("8_syuyv")]
-
-[node name="goldcollect" type="Node2D" parent="."]
-
-[node name="GoldCount" parent="goldcollect" instance=ExtResource("9_afo50")]
-offset_left = 1124.0
-offset_top = 16.0
-offset_right = 1162.0
-offset_bottom = 44.0
-scale = Vector2(0.998853, 1)
 
 [connection signal="pressed" from="PausePanel/Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="PausePanel/Resume" to="." method="_on_resume_pressed"]
