@@ -1,126 +1,134 @@
-[gd_scene load_steps=39 format=3 uid="uid://ksnuma6hbkee"]
+[gd_scene load_steps=39 format=3 uid="uid://c6ft8nxddbxd1"]
 
-[ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="1_h0pe7"]
-[ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/mushroom.gd" id="1_x5roa"]
-[ext_resource type="Texture2D" uid="uid://buj81rauwcwfa" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_x8ugl"]
-[ext_resource type="Texture2D" uid="uid://ddtuwghywwgg6" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="2_2tydc"]
-[ext_resource type="Texture2D" uid="uid://xr4mbdnmsgn1" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="3_d7nuq"]
-[ext_resource type="Texture2D" uid="uid://cf1atgno87xpi" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="4_ib2go"]
-[ext_resource type="Texture2D" uid="uid://ci44sfpfat3d5" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="5_ju4ha"]
+[ext_resource type="Texture2D" uid="uid://buj81rauwcwfa" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_jduur"]
+[ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.gd" id="1_wy06c"]
+[ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="2_6u0w2"]
+[ext_resource type="Texture2D" uid="uid://ddtuwghywwgg6" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="2_fd1hu"]
+[ext_resource type="Texture2D" uid="uid://xr4mbdnmsgn1" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="3_gfc2c"]
+[ext_resource type="Texture2D" uid="uid://cf1atgno87xpi" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="4_g3fev"]
+[ext_resource type="Texture2D" uid="uid://ci44sfpfat3d5" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="5_14hni"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vlskx"]
+shader = ExtResource("2_6u0w2")
+shader_parameter/color = Vector4(0.5, 1, 0.5, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_awska"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ybglx"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lp55f"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k5jx5"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ffreu"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(600, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r4s3x"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(750, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1vnt"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(900, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qtrlh"]
-atlas = ExtResource("1_x8ugl")
+atlas = ExtResource("1_jduur")
 region = Rect2(1050, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t3cbj"]
-atlas = ExtResource("2_2tydc")
+atlas = ExtResource("2_fd1hu")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5yugq"]
-atlas = ExtResource("2_2tydc")
+atlas = ExtResource("2_fd1hu")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7rx2f"]
-atlas = ExtResource("2_2tydc")
+atlas = ExtResource("2_fd1hu")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o21f5"]
-atlas = ExtResource("2_2tydc")
+atlas = ExtResource("2_fd1hu")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0phow"]
-atlas = ExtResource("3_d7nuq")
+atlas = ExtResource("3_gfc2c")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5jn5y"]
-atlas = ExtResource("3_d7nuq")
+atlas = ExtResource("3_gfc2c")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dri4"]
-atlas = ExtResource("3_d7nuq")
+atlas = ExtResource("3_gfc2c")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o7ibq"]
-atlas = ExtResource("3_d7nuq")
+atlas = ExtResource("3_gfc2c")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wj72u"]
-atlas = ExtResource("4_ib2go")
+atlas = ExtResource("4_g3fev")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ri2jf"]
-atlas = ExtResource("4_ib2go")
+atlas = ExtResource("4_g3fev")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i2glr"]
-atlas = ExtResource("4_ib2go")
+atlas = ExtResource("4_g3fev")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jnvei"]
-atlas = ExtResource("4_ib2go")
+atlas = ExtResource("4_g3fev")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mslik"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g8iiq"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7dlu"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nf0n8"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqnt7"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(600, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fq3gj"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(750, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mq63"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(900, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2gx5p"]
-atlas = ExtResource("5_ju4ha")
+atlas = ExtResource("5_14hni")
 region = Rect2(1050, 0, 150, 150)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_al5qr"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_0rbba"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -232,39 +240,19 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jo77c"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lhlln"]
 radius = 7.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3src1"]
-radius = 9.0
-height = 35.0
-
-[node name="Mushroom" type="CharacterBody2D"]
+[node name="MushroomPet" type="CharacterBody2D"]
 texture_filter = 1
-collision_layer = 4
-collision_mask = 7
-motion_mode = 1
-script = ExtResource("1_x5roa")
+script = ExtResource("1_wy06c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_al5qr")
-animation = &"idle"
+material = SubResource("ShaderMaterial_vlskx")
+sprite_frames = SubResource("SpriteFrames_0rbba")
+animation = &"attack"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)
-shape = SubResource("CapsuleShape2D_jo77c")
-
-[node name="interaction_sensor" parent="." instance=ExtResource("1_h0pe7")]
-collision_layer = 4
-collision_mask = 10
-
-[node name="CollisionShape2D" parent="interaction_sensor" index="0"]
-position = Vector2(0, 7)
-shape = SubResource("CapsuleShape2D_3src1")
-
-[connection signal="area_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_area_entered"]
-[connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]
-[connection signal="body_exited" from="interaction_sensor" to="." method="_on_interaction_sensor_body_exited"]
-
-[editable path="interaction_sensor"]
+shape = SubResource("CapsuleShape2D_lhlln")
