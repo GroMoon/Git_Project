@@ -250,7 +250,7 @@ script = ExtResource("1_wy06c")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_vlskx")
 sprite_frames = SubResource("SpriteFrames_0rbba")
-animation = &"attack"
+animation = &"idle"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
