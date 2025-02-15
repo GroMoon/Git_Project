@@ -44,7 +44,7 @@ func _process(delta):
 		pause_panel.visible = false
 		get_tree().paused   = false
 		
-	if !pause_flag:
+	if (!pause_flag)&&(!player.death_flag)&&(!global_pause_flag):
 		process_stopwatch(delta)
 
 # esc 키(=pause)를 눌렀을 때
