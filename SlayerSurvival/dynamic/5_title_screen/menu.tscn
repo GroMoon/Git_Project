@@ -1,20 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://bx8xatwwg81lh"]
+[gd_scene load_steps=15 format=3 uid="uid://bx8xatwwg81lh"]
 
 [ext_resource type="Texture2D" uid="uid://scynp0va5l21" path="res://dynamic/5_title_screen/image/menu_background.png" id="1_6n2bm"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/menu.gd" id="1_7txdb"]
-[ext_resource type="Texture2D" uid="uid://kjjrldglgd1i" path="res://dynamic/slime/slime_jump_1.png" id="2_v6ktv"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
-[ext_resource type="Texture2D" uid="uid://c1brdtdj8gjiq" path="res://dynamic/slime/slime_jump_2.png" id="3_4kx3r"]
 [ext_resource type="AudioStream" uid="uid://dyr5k7evqtx1t" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="3_k3155"]
-[ext_resource type="Texture2D" uid="uid://cyw2uuwy8gt1n" path="res://dynamic/slime/slime_jump_3.png" id="4_7ghbs"]
-[ext_resource type="Texture2D" uid="uid://du2bx78ds3p7x" path="res://dynamic/slime/slime_jump_4.png" id="5_g51sc"]
-[ext_resource type="Texture2D" uid="uid://chippl036dp4f" path="res://dynamic/slime/slime_jump_5.png" id="6_dn17b"]
-[ext_resource type="Texture2D" uid="uid://dxv1hlk4krghi" path="res://dynamic/slime/slime_jump_6.png" id="7_kqkjp"]
-[ext_resource type="Texture2D" uid="uid://d3274faejs8dk" path="res://dynamic/slime/slime_jump_7.png" id="8_30f71"]
-[ext_resource type="Texture2D" uid="uid://dcdnxmmqep7jw" path="res://dynamic/slime/slime_jump_8.png" id="9_rrox6"]
-[ext_resource type="Texture2D" uid="uid://c3jkq4ym28lro" path="res://dynamic/slime/slime_jump_9.png" id="10_umy21"]
-[ext_resource type="Texture2D" uid="uid://uhum03wfpdq7" path="res://dynamic/slime/slime_jump_10.png" id="11_7klre"]
-[ext_resource type="Texture2D" uid="uid://caajsnyl8bitk" path="res://dynamic/slime/slime_jump_11.png" id="12_rwnsp"]
 [ext_resource type="AudioStream" uid="uid://c4qsrib6wqpv7" path="res://static/audio/common/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12q8x"]
@@ -78,48 +67,8 @@ font_size = 83
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_4w12h"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_v6ktv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_4kx3r")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_7ghbs")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_g51sc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_dn17b")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_kqkjp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_30f71")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_rrox6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_umy21")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_7klre")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_rwnsp")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="Menu" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_7txdb")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -226,16 +175,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_3dttr")
 theme_override_font_sizes/font_size = 20
 text = "v 1.0.0 (Test)"
-
-[node name="Slime" type="Node2D" parent="."]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Slime"]
-position = Vector2(334, 617)
-scale = Vector2(3.13426, 3.72619)
-sprite_frames = SubResource("SpriteFrames_4w12h")
-autoplay = "default"
-frame_progress = 0.127648
-speed_scale = 2.0
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_x38mp")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdqyecvpdyqhu"]
+
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_q1jrw"]
+[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="2_2ii6b"]
+
+[node name="KillCount" type="Label"]
+offset_right = 56.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("1_q1jrw")
+theme_override_font_sizes/font_size = 20
+text = "000"
+
+[node name="kill" type="Sprite2D" parent="."]
+position = Vector2(-14, 12)
+scale = Vector2(0.0324631, 0.033699)
+texture = ExtResource("2_2ii6b")

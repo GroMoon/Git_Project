@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://be82hcs86t7he"]
+
+[ext_resource type="Script" path="res://dynamic/6_utillity/Items/exp/exp.gd" id="1_8vvxu"]
+[ext_resource type="Texture2D" uid="uid://d3lvcwmrttsgb" path="res://dynamic/6_utillity/Items/exp/materials1.png" id="2_h2ktx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bcoft"]
+radius = 8.0
+
+[node name="exp" type="Area2D" groups=["Exp"]]
+texture_filter = 1
+collision_mask = 2
+script = ExtResource("1_8vvxu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.951862, 1.02942)
+texture = ExtResource("2_h2ktx")
+hframes = 8
+vframes = 8
+frame = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bcoft")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
