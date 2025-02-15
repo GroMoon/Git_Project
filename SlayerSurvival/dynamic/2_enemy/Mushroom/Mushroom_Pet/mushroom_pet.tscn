@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://c6ft8nxddbxd1"]
+[gd_scene load_steps=40 format=3 uid="uid://c6ft8nxddbxd1"]
 
 [ext_resource type="Texture2D" uid="uid://buj81rauwcwfa" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_jduur"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.gd" id="1_wy06c"]
@@ -243,6 +243,9 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lhlln"]
 radius = 7.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2a64"]
+size = Vector2(43, 37)
+
 [node name="MushroomPet" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_wy06c")
@@ -250,9 +253,22 @@ script = ExtResource("1_wy06c")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_vlskx")
 sprite_frames = SubResource("SpriteFrames_0rbba")
-animation = &"idle"
+animation = &"attack"
+frame = 7
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_lhlln")
+
+[node name="Attack" type="Area2D" parent="." groups=["attack"]]
+collision_layer = 8
+collision_mask = 4
+
+[node name="attack_1" type="CollisionShape2D" parent="Attack"]
+position = Vector2(21, 9)
+shape = SubResource("RectangleShape2D_x2a64")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true

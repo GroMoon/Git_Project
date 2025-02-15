@@ -1,17 +1,22 @@
 extends CharacterBody2D
 
 const STOP_DISTANCE   = 50.0 		# 플레이어와의 거리가 해당 값 이하일 땐 멈춤
+const ATTACK_DISTANCE = 50.0		# 공격을 시작하는 거리
 const ANIMATION_SPEED = 1.5			# 기본 애니메이션 속도
+const ATTACK_ANIMATION_SPEED = 2.0  # 공격 애니메이션 속도
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var attack_area     = $Attack/attack_1
 
-var move_speed = 80  				# 펫 이동 속도
+var move_speed    = 80  			# 펫 이동 속도
+var attack_damage = 5
+var is_attacking  = false
 
 var target_enemy: Node2D = null     # 현재 목표로 하는 적
 var player               = null
 
 func _ready():
-	pass
+	attack_area.set_deferred("disabled", true)
 
 func _physics_process(_delta):
 	# player 세팅
@@ -19,8 +24,8 @@ func _physics_process(_delta):
 		player = get_parent().get_node("player")
 	
 	# 공격 중에는 이동하지 않음
-	# if is_attacking:
-	# 	return
+	if is_attacking:
+		return
 
 	# 적(target_enemy)이 유효하면 적을 따라 이동, 아니면 플레이어를 따라 이동
 	if target_enemy != null and is_instance_valid(target_enemy):
@@ -69,3 +74,19 @@ func find_closest_enemy() -> Node2D:
 				min_dist = d
 				closest = enemy
 	return closest
+
+func _on_attack_timer_timeout():
+	is_attacking = true
+	animated_sprite.speed_scale = ATTACK_ANIMATION_SPEED
+	# 공격 1
+	attack_area.set_deferred("disabled", false)
+	if animated_sprite.flip_h:		# 왼쪽 공격
+		attack_area.position = Vector2(-21, 9)
+	else: 							# 오른쪽 공격
+		attack_area.position = Vector2(21, 9)
+	animated_sprite.play("attack")
+	await animated_sprite.animation_finished
+	attack_area.set_deferred("disabled", true)	
+	is_attacking = false
+	# 타이머 재시작
+	$AttackTimer.start()
