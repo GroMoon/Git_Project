@@ -33,7 +33,7 @@ func _ready():
 	player = get_parent().get_parent().get_node("player")
 	
 func _physics_process(delta):
-	# 사망 상태에서 아무것도 처리 하지 않도록
+	# 사망 상태에서 아무것도 처리 아지 않도록
 	if is_dead:
 		return
 
@@ -58,7 +58,7 @@ func _physics_process(delta):
 			$AnimatedSprite2D.flip_h = velocity.x < 0
 
 	if touch_flag:
-		player.process_collision_enemy(damage, self)
+		player.process_collision_enemy(damage)
 
 # 사망 처리 함수
 func die_enemy():
@@ -96,7 +96,7 @@ func apply_knockback(attacker: Node2D):
 # 접촉 상태가 되었을 때
 func _on_interaction_sensor_body_entered(_body:Node2D):
 	if _body == player and not touch_flag:
-		player.process_collision_enemy(damage, self)
+		player.process_collision_enemy(damage)
 		touch_flag = true
 		# print(touch_flag)
 

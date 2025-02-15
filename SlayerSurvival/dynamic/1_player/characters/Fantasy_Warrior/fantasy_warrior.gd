@@ -23,12 +23,6 @@ var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
 var is_shadow_on        = 0
 
-# 넉백 관련
-var knockback_vector   = Vector2.ZERO
-var knockback_time     = 0.0			# 넉백 유지 시간
-var knockback_duration = 0.2			# 넉백 몇 초 동안?
-var knockback_strength = 200.0  		# 넉백 세기
-
 # 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
 var start_exp = 0
@@ -91,11 +85,12 @@ func _physics_process(_delta):
 	# 공격 중에 이동 처리 안 함
 	if is_attacking:
 		return
+		
 	# 키보드 입력
 	process_keyboard_input()
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
-	
+
 	# 애니메이션 처리
 	if !hit_flag:
 		animated_sprite.speed_scale = ANIMATION_SPEED
@@ -104,10 +99,6 @@ func _physics_process(_delta):
 			animated_sprite.flip_h = velocity.x < 0
 		else:
 			animated_sprite.play("idle")
-	# 넉백 될 때
-	elif knockback_time > 0 && hit_flag:
-		position += knockback_vector * _delta
-		knockback_time -= _delta
 		
 	# 라벨 업데이트
 	gold_label.text = str(gold_count)
@@ -139,7 +130,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 		return false
 
 # Enemy 충돌 처리
-func process_collision_enemy(damage, enemy : Node2D):
+func process_collision_enemy(damage):
 	if damage_flag:
 		current_hp -= damage
 		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
@@ -155,7 +146,6 @@ func process_collision_enemy(damage, enemy : Node2D):
 			die_character()									
 		else:
 			print("현재 체력 : ", current_hp)
-			apply_knockback(enemy)					# 넉백 함수
 			hit_flag = true
 			if (animated_sprite.is_playing()) && ((animated_sprite.animation == "attack_1")||(animated_sprite.animation == "attack_2")||(animated_sprite.animation == "attack_3")):
 				print("공격 모션 실행 중으로 데미지 이펙트만 적용")
@@ -178,18 +168,6 @@ func die_character():
 	Global.save_character_data()
 	
 	death_flag = true	
-
-# 넉백 함수
-func apply_knockback(attacker: Node2D):
-	# 방향 : (나의 위치 - 공격자=적 위치)
-	var view_direction    = (position - attacker.position).normalized()
-	# 바라보는 방향을 피해받은 방향으로 설정
-	if view_direction.x > 0:
-		animated_sprite.flip_h
-	else:
-		!animated_sprite.flip_h
-	knockback_vector = view_direction * knockback_strength
-	knockback_time   = knockback_duration
 
 # 골드 추가
 func add_gold(gold_value):
