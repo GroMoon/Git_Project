@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://6s7fphrpcg7t"]
 
-[ext_resource type="Texture2D" uid="uid://c6p8014iwegxt" path="res://static/png/skull.png" id="1_i2jhv"]
+[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_30ai3"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_hqktd"]
 
 [node name="IncreaseMaxHp" type="Button"]
@@ -11,9 +11,13 @@ offset_bottom = 152.0
 size_flags_vertical = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(64, 72)
-scale = Vector2(0.171875, 0.171875)
-texture = ExtResource("1_i2jhv")
+texture_filter = 1
+position = Vector2(64, 64)
+scale = Vector2(6, 6)
+texture = ExtResource("1_30ai3")
+hframes = 12
+vframes = 12
+frame = 108
 
 [node name="name" type="Label" parent="."]
 layout_mode = 0
