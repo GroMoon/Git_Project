@@ -18,6 +18,12 @@ const START_HP        = 50
 @export var attack_times    = 1 	# 공격 횟수 (default 1)
 @export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
+# 펫 관련
+var mushroom_pet    = true
+var is_mushroom_pet = false
+var skeleton_pet    = false
+var is_skeleton_pet = false
+
 var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
