@@ -13,15 +13,22 @@ var instance_map
 var player
 var player_shadow_attack_on = 0
 var shadow_preload
+# 펫을 인스턴스 하기 위한 선언
+var mushroom_pet_preload
+var skeleton_pet_preload
 
 func _ready():
 	select_character.visible = true
 	select_map.visible = true
 	get_tree().paused = true
+	# 펫 미리 preload
+	mushroom_pet_preload = preload("res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.tscn")
+	skeleton_pet_preload = preload("res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.tscn")
 
 func _process(_delta):
 	player = get_node("player")
 	if player:
+		# 그림자 소환 알고리즘
 		if (player.shadow_attack == 1) and (player.is_shadow_on == 0):
 			var shadow_instance = shadow_preload.instantiate()
 			shadow_instance.name = "shadow"
@@ -29,6 +36,14 @@ func _process(_delta):
 			add_child(shadow_instance)
 			move_child(shadow_instance, player.get_index() - 1)
 			player.is_shadow_on = 1
+		# mushroom 펫 소환 알고리즘
+		if (player.mushroom_pet == true) and (player.is_mushroom_pet == false):
+			var mushroom_pet_instance = mushroom_pet_preload.instantiate()
+			mushroom_pet_instance.name = "mushroom_pet"
+			mushroom_pet_instance.global_position = player.global_position
+			add_child(mushroom_pet_instance)
+			move_child(mushroom_pet_instance, player.get_index() - 1)
+			player.is_mushroom_pet = true
 
 # Fantasy Warrior
 func _on_select_warrior_pressed():

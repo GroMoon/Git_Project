@@ -14,7 +14,7 @@ var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
 # 적 특성
 var health       = 15 	# 적 체력
 var move_speed   = 80 	# 적 이동 속도
-var damage       = 5  		# 적 데미지
+var damage       = 5  	# 적 데미지
 var spawn_radius = 500  # 스폰 범위
 # 전역 변수
 var player 
@@ -30,6 +30,7 @@ var knockback_strength = 150.0  		# 넉백 세기
 func _ready():
 	# player 노드 찾기
 	player = get_parent().get_parent().get_node("player")
+	print("Enemy instance name : ", name)
 	
 func _physics_process(delta):
 	# 사망 상태에서 아무것도 처리 아지 않도록
