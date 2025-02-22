@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnr5o7s6ixul0"]
 
-[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_tg1g7"]
+[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_7e5fw"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_mvg2h"]
 
 [node name="ShadowPartner" type="Button"]
-offset_right = 470.0
+offset_right = 480.0
 offset_bottom = 136.0
 size_flags_vertical = 3
 
@@ -12,10 +12,10 @@ size_flags_vertical = 3
 texture_filter = 1
 position = Vector2(64, 64)
 scale = Vector2(6, 6)
-texture = ExtResource("1_tg1g7")
+texture = ExtResource("1_7e5fw")
 hframes = 12
 vframes = 12
-frame = 127
+frame = 106
 
 [node name="name" type="Label" parent="."]
 layout_mode = 0

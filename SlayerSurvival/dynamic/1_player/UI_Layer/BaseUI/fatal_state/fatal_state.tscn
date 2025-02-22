@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgg2aqyju7saq"]
+
+[ext_resource type="Shader" path="res://static/shader/Fatal_state.gdshader" id="1_ksnc1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2xh8t"]
+shader = ExtResource("1_ksnc1")
+shader_parameter/health = 1.0
+
+[node name="FatalState" type="ColorRect"]
+material = SubResource("ShaderMaterial_2xh8t")
+custom_minimum_size = Vector2(1200, 650)
+color = Color(1, 1, 1, 0)
