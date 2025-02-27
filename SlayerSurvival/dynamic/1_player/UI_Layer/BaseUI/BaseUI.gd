@@ -4,6 +4,7 @@ extends Control
 @onready var pause_panel = get_node("PausePanel")
 @onready var death_panel = get_node("DeathPanel")
 @onready var stopwatch   = get_node("Stopwatch")
+# 피해 입을 때 효과
 @onready var fatal_state = $FatalState
 
 var sec                 = 0.0
@@ -25,6 +26,7 @@ func _ready():
 	# print(player.death_flag)
 
 func _process(delta):
+	apply_hit_effect()
 	process_fatal_state()
 	check_pause_pressed()
 
@@ -61,9 +63,17 @@ func process_fatal_state():
 	var health_ratio = float (player.current_hp) / player.max_hp
 	if health_ratio < 0.3:  # 체력이 30% 미만일 때 효과 적용
 		var intensity = health_ratio
-		fatal_state.material.set_shader_parameter("health", intensity)
+		fatal_state.material.set_shader_parameter("fatal_flag", true)		# 플레그 ON
+		fatal_state.material.set_shader_parameter("health", intensity)		# 체력이 따라 효과 진해
 	else:
-		fatal_state.material.set_shader_parameter("health", 1.0)  # 체력이 높을 때 효과 제거
+		fatal_state.material.set_shader_parameter("fatal_flag", false)		# 플레그 OFF
+
+# hit_effect
+func apply_hit_effect() :#(value : float) -> void:
+	if player.hit_flag:
+		player.animated_sprite.material.set_shader_parameter("hit_flag", true)
+	else :
+		player.animated_sprite.material.set_shader_parameter("hit_flag", false)
 
 # 레벨 업 시 pause 관련 신호 수신 함수
 func check_level_up_pause_flag(pause_state: bool):
