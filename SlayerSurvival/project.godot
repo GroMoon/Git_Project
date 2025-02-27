@@ -17,14 +17,14 @@ boot_splash/show_image=false
 
 [autoload]
 
-Global="*res://dynamic/6_utillity/global/global.gd"
-Store="*res://dynamic/6_utillity/global/store.gd"
+Global="*res://dynamic/6_utillity/data/global.gd"
+Store="*res://dynamic/6_utillity/data/store.gd"
 
 [display]
 
 window/size/viewport_width=1200
 window/size/viewport_height=650
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
 [file_customization]

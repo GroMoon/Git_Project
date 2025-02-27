@@ -1,11 +1,12 @@
 extends Node2D
 
-@onready var player #= get_parent().get_node("FantasyWarrior")
+@onready var player
 
 var skeleton = preload("res://dynamic/2_enemy/Skeleton/skeleton.tscn")
 var mushroom = preload("res://dynamic/2_enemy/Mushroom/mushroom.tscn")
 
 func _ready():
+	# player = get_parent().get_node("player")
 	pass
 
 func _process(_delta):

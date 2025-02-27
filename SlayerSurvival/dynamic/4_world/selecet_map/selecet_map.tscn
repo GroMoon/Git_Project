@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://wispepgc6lma"]
 
-[ext_resource type="Texture2D" uid="uid://2cffmvh4g0r1" path="res://dynamic/4_world/cave/cave_title.png" id="1_836ar"]
+[ext_resource type="Texture2D" uid="uid://2cffmvh4g0r1" path="res://dynamic/4_world/Cave/cave_title.png" id="1_836ar"]
 [ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_e73c6"]
-[ext_resource type="Texture2D" uid="uid://g76gtniw78rl" path="res://dynamic/4_world/dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
+[ext_resource type="Texture2D" uid="uid://g76gtniw78rl" path="res://dynamic/4_world/Dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jbi8"]
 bg_color = Color(0.34902, 0.258824, 0.196078, 1)

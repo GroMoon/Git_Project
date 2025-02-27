@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dtljeado5ue3p"]
 
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_wlslr"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_qmq4x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dah47"]
 bg_color = Color(0, 0, 0, 0.647059)
@@ -50,7 +50,7 @@ offset_left = 144.0
 offset_top = 39.0
 offset_right = 368.0
 offset_bottom = 86.0
-theme_override_fonts/font = ExtResource("1_wlslr")
+theme_override_fonts/font = ExtResource("1_qmq4x")
 theme_override_font_sizes/font_size = 50
 text = "Pause"
 horizontal_alignment = 1
@@ -63,7 +63,7 @@ offset_top = 240.0
 offset_right = 338.0
 offset_bottom = 303.0
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
-theme_override_fonts/font = ExtResource("1_wlslr")
+theme_override_fonts/font = ExtResource("1_qmq4x")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_27n4x")
 theme_override_styles/hover = SubResource("StyleBoxFlat_cnwkc")
@@ -79,7 +79,7 @@ offset_top = 144.0
 offset_right = 338.0
 offset_bottom = 207.0
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
-theme_override_fonts/font = ExtResource("1_wlslr")
+theme_override_fonts/font = ExtResource("1_qmq4x")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_x5jpq")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yp4x5")

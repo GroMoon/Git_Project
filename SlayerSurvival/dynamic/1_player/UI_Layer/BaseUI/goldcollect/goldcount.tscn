@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://7hdonowfh837"]
+
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_cd7df"]
+[ext_resource type="Texture2D" uid="uid://bj4tkx5fjsm0a" path="res://dynamic/6_utillity/items/gold/Gold.png" id="2_db82l"]
+
+[node name="GoldCount" type="Label"]
+offset_right = 35.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("1_cd7df")
+theme_override_font_sizes/font_size = 20
+text = "000"
+
+[node name="gold" type="Sprite2D" parent="."]
+position = Vector2(-14, 12)
+scale = Vector2(0.134658, 0.112626)
+texture = ExtResource("2_db82l")

@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnr5o7s6ixul0"]
+
+[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_7e5fw"]
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_mvg2h"]
+
+[node name="ShadowPartner" type="Button"]
+offset_right = 480.0
+offset_bottom = 136.0
+size_flags_vertical = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(64, 64)
+scale = Vector2(6, 6)
+texture = ExtResource("1_7e5fw")
+hframes = 12
+vframes = 12
+frame = 106
+
+[node name="name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 251.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("2_mvg2h")
+theme_override_font_sizes/font_size = 26
+text = "쉐도우 파트너"
+
+[node name="details" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 32.0
+offset_right = 472.0
+offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("2_mvg2h")
+theme_override_font_sizes/font_size = 20
+text = "플레이어의 그림자가 나타나 플레이어와 같은 공격을 수행합니다."
+vertical_alignment = 1
+autowrap_mode = 2
