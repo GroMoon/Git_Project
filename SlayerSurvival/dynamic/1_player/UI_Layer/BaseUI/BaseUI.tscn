@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=11 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI_Layer/BaseUI/BaseUI.gd" id="1_8bwr7"]
 [ext_resource type="PackedScene" uid="uid://yqejq1wcj6a3" path="res://dynamic/1_player/UI_Layer/BaseUI/level/level.tscn" id="2_3bx10"]
+[ext_resource type="PackedScene" uid="uid://dgg2aqyju7saq" path="res://dynamic/1_player/UI_Layer/BaseUI/fatal_state/fatal_state.tscn" id="2_twlfw"]
 [ext_resource type="PackedScene" uid="uid://cibswvdy26rel" path="res://dynamic/1_player/UI_Layer/BaseUI/stopwatch/stopwatch.tscn" id="3_hws3o"]
 [ext_resource type="PackedScene" uid="uid://cswgkwsq8gfan" path="res://dynamic/1_player/UI_Layer/BaseUI/exp_bar/exp_bar.tscn" id="4_1juvo"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="5_h7s6m"]
@@ -15,6 +16,11 @@ process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_8bwr7")
+
+[node name="FatalState" parent="." instance=ExtResource("2_twlfw")]
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 650.0
 
 [node name="Level" parent="." instance=ExtResource("2_3bx10")]
 layout_mode = 0

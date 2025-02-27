@@ -1,7 +1,8 @@
-[gd_scene load_steps=65 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=67 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
 [ext_resource type="Texture2D" uid="uid://clqcemcgg54u6" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
+[ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_d66k0"]
 [ext_resource type="Texture2D" uid="uid://dkm1v05np7j2k" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
 [ext_resource type="Texture2D" uid="uid://bxef71dhesaf8" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
 [ext_resource type="Texture2D" uid="uid://iws1q7510i8m" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
@@ -10,6 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://ctjiash3djope" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_0wyd7"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5xc5b"]
+shader = ExtResource("2_d66k0")
+shader_parameter/hit_color = Color(1, 1, 1, 1)
+shader_parameter/blink_time = 0.2
+shader_parameter/hit_flag = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ypgsu"]
 atlas = ExtResource("1_isla0")
@@ -411,9 +418,10 @@ collision_layer = 2
 script = ExtResource("1_cqj1t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_5xc5b")
 scale = Vector2(1.00189, 1)
 sprite_frames = SubResource("SpriteFrames_lq7wa")
-animation = &"idle"
+animation = &"take_hit"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -453,7 +461,7 @@ shape = SubResource("RectangleShape2D_nse38")
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_0wyd7")]
 
-[node name="Health_Bar" parent="UI_Layer/BaseUI" index="3"]
+[node name="Health_Bar" parent="UI_Layer/BaseUI" index="5"]
 offset_left = 576.0
 offset_top = 358.0
 offset_right = 631.0
