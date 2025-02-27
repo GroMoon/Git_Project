@@ -95,6 +95,10 @@ func _on_menu_pressed():
 func _on_quit_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
+# 게임 오버 후 Restart 버튼 누를 때
+func _on_restart_pressed():
+	get_tree().change_scene_to_file("res://test.tscn")
+
 # 스톱워치 처리
 func process_stopwatch(time):
 	sec += time							# time은 process에서 delta 값 으로 설정
