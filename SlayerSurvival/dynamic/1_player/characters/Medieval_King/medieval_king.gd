@@ -147,12 +147,11 @@ func process_collision_enemy(damage):
 			print("현재 체력 : ", current_hp)
 			hit_flag = true
 			if (animated_sprite.is_playing()) && ((animated_sprite.animation == "attack_1")||(animated_sprite.animation == "attack_2")||(animated_sprite.animation == "attack_3")):
-				animated_sprite.modulate = Color(1,0,0)
+				print("공격 모션 실행 중으로 데미지 이펙트만 적용")
 			else:
 				animated_sprite.stop()
 				animated_sprite.speed_scale = 2.0
 				animated_sprite.play("take_hit")
-				animated_sprite.modulate = Color(1, 0, 0)	# 피해 입으면 컬러 변경(빨간색)
 				await animated_sprite.animation_finished      
 		hit_flag    = false
 
@@ -273,4 +272,3 @@ func _on_attack_timer_timeout():
 
 func _on_damage_timer_timeout():
 	damage_flag = true
-	animated_sprite.modulate = Color(1, 1, 1)        # 피해 이펙트 원상복귀

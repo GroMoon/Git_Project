@@ -4,6 +4,8 @@ extends Control
 @onready var pause_panel = get_node("PausePanel")
 @onready var death_panel = get_node("DeathPanel")
 @onready var stopwatch   = get_node("Stopwatch")
+# 피해 입을 때 효과
+@onready var fatal_state = $FatalState
 
 var sec                 = 0.0
 var minute              = 0
@@ -14,6 +16,7 @@ var death_pause_flag    = false
 var player = null
 
 func _ready():
+	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
 	pause_panel.visible = false		# PausePanel 가리기
 	death_panel.visible = false		# DeathPanel 가리기
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
@@ -23,7 +26,8 @@ func _ready():
 	# print(player.death_flag)
 
 func _process(delta):
-	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
+	apply_hit_effect()
+	process_fatal_state()
 	check_pause_pressed()
 
 	death_pause_flag = player.death_flag
@@ -54,6 +58,23 @@ func check_pause_pressed():
 	if Input.is_action_just_pressed("pause") : 
 		globl_pause_flag = !globl_pause_flag
 
+# fatal_state 효과 (빨간빛)
+func process_fatal_state():
+	var health_ratio = float (player.current_hp) / player.max_hp
+	if health_ratio < 0.3:  # 체력이 30% 미만일 때 효과 적용
+		var intensity = health_ratio
+		fatal_state.material.set_shader_parameter("fatal_flag", true)		# 플레그 ON
+		fatal_state.material.set_shader_parameter("health", intensity)		# 체력이 따라 효과 진해
+	else:
+		fatal_state.material.set_shader_parameter("fatal_flag", false)		# 플레그 OFF
+
+# hit_effect
+func apply_hit_effect() :#(value : float) -> void:
+	if player.hit_flag:
+		player.animated_sprite.material.set_shader_parameter("hit_flag", true)
+	else :
+		player.animated_sprite.material.set_shader_parameter("hit_flag", false)
+
 # 레벨 업 시 pause 관련 신호 수신 함수
 func check_level_up_pause_flag(pause_state: bool):
 	lvlup_pause_flag = pause_state
@@ -73,6 +94,10 @@ func _on_menu_pressed():
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+
+# 게임 오버 후 Restart 버튼 누를 때
+func _on_restart_pressed():
+	get_tree().change_scene_to_file("res://test.tscn")
 
 # 스톱워치 처리
 func process_stopwatch(time):
