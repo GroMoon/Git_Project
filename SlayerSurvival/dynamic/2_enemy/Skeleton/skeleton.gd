@@ -62,6 +62,7 @@ func _physics_process(delta):
 
 # 사망 처리 함수
 func die_enemy():
+	var pet_chance = randf()							# 몬스터펫 확률 (0.0~1.0 사이로 조절)
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
 	player.kill_count += 1
@@ -69,7 +70,12 @@ func die_enemy():
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
-	queue_free()										# 적 노드 삭제
+	if pet_chance <= 0.1:
+		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
+		player.mushroom_pet = true
+		queue_free()
+	else:
+		queue_free()										# 적 노드 삭제
 	
 # 아이템 드랍 함수
 func drop_item():
