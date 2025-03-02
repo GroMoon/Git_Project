@@ -19,7 +19,7 @@ const START_HP        = 50
 @export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
 # 펫 관련
-var mushroom_pet    = true
+var mushroom_pet    = false
 var is_mushroom_pet = false
 var skeleton_pet    = false
 var is_skeleton_pet = false

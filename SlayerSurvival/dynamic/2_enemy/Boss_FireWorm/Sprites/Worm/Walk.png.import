@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cn48kglflwoyo"
-path="res://.godot/imported/cave.png-af5b7b5aa8fce2363a90484ea731e48a.ctex"
+uid="uid://s8ahwjmx8kv7"
+path="res://.godot/imported/Walk.png-302737a6940026332f6115e631cd6607.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dynamic/4_world/cave/cave.png"
-dest_files=["res://.godot/imported/cave.png-af5b7b5aa8fce2363a90484ea731e48a.ctex"]
+source_file="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Worm/Walk.png"
+dest_files=["res://.godot/imported/Walk.png-302737a6940026332f6115e631cd6607.ctex"]
 
 [params]
 

@@ -1,10 +1,13 @@
 extends CharacterBody2D
 
-const ANIMATION_SPEED = 1.5		# 기본 애니메이션 속도
+const BODY_ANIMATION_SPEED   = 2.0		# 기본 body 애니메이션 속도
+const ATTACK_ANIMATION_SPEED = 1.0
 
-@onready var collision_shape    = $CollisionShape2D
-@onready var animated_sprite    = $AnimatedSprite2D
-@onready var interaction_sensor = $interaction_sensor 
+@onready var body_collision_shape   	  = $CollisionShape2D
+@onready var body_animated_sprite   	  = $AnimatedSprite2D
+@onready var attack_animated_sprite 	  = $AnimatedSprite2D2
+@onready var body_interaction_sensor      = $interaction_sensor 
+@onready var attack_interaction_sensor	  = $interaction_sensor2
 
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
@@ -12,10 +15,10 @@ var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
 #var golds = 25
 
 # 적 특성
-var health       = 15 	# 적 체력
-var move_speed   = 80 	# 적 이동 속도
-var damage       = 5  	# 적 데미지
-var spawn_radius = 500  # 스폰 범위
+var health       = 100 		# 적 체력
+var move_speed   = 80 		# 적 이동 속도
+var damage       = 10  		# 적 데미지
+var spawn_radius = 1000  	# 스폰 범위
 # 전역 변수
 var player 
 var touch_flag = false 
@@ -53,7 +56,7 @@ func _physics_process(delta):
 
 		# 애니메이션 처리
 		if (velocity.length() > 0) && (!hit_flag):
-			animated_sprite.speed_scale = ANIMATION_SPEED
+			body_animated_sprite.speed_scale = BODY_ANIMATION_SPEED
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
 
@@ -62,20 +65,14 @@ func _physics_process(delta):
 
 # 사망 처리 함수
 func die_enemy():
-	var pet_chance = randf()							# 몬스터펫 확률 (0.0~1.0 사이로 조절)
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
 	player.kill_count += 1
-	collision_shape.call_deferred("set_disabled",true)	# CollisionShape2D 비활성화
-	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
-	animated_sprite.play("death")
-	await animated_sprite.animation_finished
-	if pet_chance <= 0.1:
-		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
-		player.mushroom_pet = true
-		queue_free()
-	else:
-		queue_free()										# 적 노드 삭제
+	body_collision_shape.call_deferred("set_disabled",true)	# CollisionShape2D 비활성화
+	body_interaction_sensor.call_deferred("queue_free")		# body_interaction_sensor 삭제
+	body_animated_sprite.play("death")
+	await body_animated_sprite.animation_finished
+	queue_free()										# 적 노드 삭제
 
 # 아이템 드랍 함수
 func drop_item():
@@ -120,8 +117,8 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 			apply_knockback(area.get_parent())
 			# 데미지 모션 추가
 			hit_flag = true
-			animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
-			animated_sprite.speed_scale = 2.0
-			animated_sprite.play("take_hit")
-			await animated_sprite.animation_finished
+			body_animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
+			body_animated_sprite.speed_scale = 2.0
+			body_animated_sprite.play("take_hit")
+			await body_animated_sprite.animation_finished
 		hit_flag = false

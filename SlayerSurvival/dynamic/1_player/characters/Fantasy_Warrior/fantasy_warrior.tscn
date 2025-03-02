@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_0wyd7"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5xc5b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2o0i"]
 shader = ExtResource("2_d66k0")
 shader_parameter/hit_color = Color(1, 1, 1, 1)
 shader_parameter/blink_time = 0.2
@@ -418,7 +418,7 @@ collision_layer = 2
 script = ExtResource("1_cqj1t")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_5xc5b")
+material = SubResource("ShaderMaterial_e2o0i")
 scale = Vector2(1.00189, 1)
 sprite_frames = SubResource("SpriteFrames_lq7wa")
 animation = &"take_hit"
