@@ -5,3 +5,5 @@
 store_data.json
 player_data.json
 
+# ignore import files
+*.import
