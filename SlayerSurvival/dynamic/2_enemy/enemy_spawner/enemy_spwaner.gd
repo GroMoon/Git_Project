@@ -25,7 +25,7 @@ func _process(_delta):
 	base_ui = player.get_node("UI_Layer/BaseUI")
 	minute  = base_ui.minute
 	sec     = base_ui.sec
-	if (!boss_spawn_flag) && (minute==1):
+	if (!boss_spawn_flag) && (minute==0):
 		spawn_enemy(fire_worm, BOSS_MONSTER)
 		boss_spawn_flag = true
 	
@@ -55,7 +55,9 @@ func spawn_enemy(enemy_tscn, is_boss):
 
 # Skeleton 소환
 func _on_skeleton_timer_timeout():
-	spawn_enemy(skeleton, MONSTER)
+	# spawn_enemy(skeleton, MONSTER)
+	pass
 # Mushrrom 소환
 func _on_mushroom_timer_timeout():
-	spawn_enemy(mushroom, MONSTER)
+	# spawn_enemy(mushroom, MONSTER)
+	pass
