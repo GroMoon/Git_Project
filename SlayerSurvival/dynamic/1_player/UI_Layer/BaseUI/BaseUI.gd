@@ -23,14 +23,14 @@ func _ready():
 	# player 세팅
 	player = get_parent().get_parent()
 	# print(player)
-	# print(player.death_flag)
+	# print(player.death_flag_for_pause)
 
 func _process(delta):
 	apply_hit_effect()
 	process_fatal_state()
 	check_pause_pressed()
 
-	death_pause_flag = player.death_flag
+	death_pause_flag = player.death_flag_for_pause
 
 	if globl_pause_flag:			# esc 키 눌렀을 때
 		pause_panel.visible = true
