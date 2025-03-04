@@ -23,14 +23,13 @@ func _ready():
 	# player 세팅
 	player = get_parent().get_parent()
 	# print(player)
-	# print(player.death_flag)
+	# print(player.death_flag_for_pause)
 
 func _process(delta):
-	apply_hit_effect()
 	process_fatal_state()
 	check_pause_pressed()
 
-	death_pause_flag = player.death_flag
+	death_pause_flag = player.death_flag_for_pause
 
 	if globl_pause_flag:			# esc 키 눌렀을 때
 		pause_panel.visible = true
@@ -67,13 +66,6 @@ func process_fatal_state():
 		fatal_state.material.set_shader_parameter("health", intensity)		# 체력이 따라 효과 진해
 	else:
 		fatal_state.material.set_shader_parameter("fatal_flag", false)		# 플레그 OFF
-
-# hit_effect
-func apply_hit_effect() :#(value : float) -> void:
-	if player.hit_flag:
-		player.animated_sprite.material.set_shader_parameter("hit_flag", true)
-	else :
-		player.animated_sprite.material.set_shader_parameter("hit_flag", false)
 
 # 레벨 업 시 pause 관련 신호 수신 함수
 func check_level_up_pause_flag(pause_state: bool):

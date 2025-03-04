@@ -8,7 +8,6 @@ const START_HP        = 75
 @onready var attack_area_1    = $Attack/attack_1
 @onready var attack_area_2    = $Attack/attack_2
 @onready var attack_area_3    = $Attack/attack_3
-# @onready var attack_area_tscn = $attack/CollisionShape2D
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 
@@ -18,6 +17,12 @@ const START_HP        = 75
 @export var character_level = 1
 @export var attack_times    = 1 	# 공격 횟수(default 1)
 @export var shadow_attack   = 0		# 그림자 분신술 (default 0)
+
+# 펫 관련
+var mushroom_pet    = false
+var is_mushroom_pet = false
+var skeleton_pet    = false
+var is_skeleton_pet = false
 
 var attack_damage       = 10		# 일반 공격 데미지
 var is_attacking        = false
@@ -59,7 +64,9 @@ var current_hp = max_hp:
 
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
-var death_flag  = false 	# 데스 플래그
+var is_dead		= false
+
+var death_flag_for_pause  = false 	# 데스 플래그
 
 @onready var level_label = $UI_Layer/BaseUI/Level
 
@@ -84,6 +91,8 @@ func _ready():
 	
 
 func _physics_process(_delta):
+	if is_dead:
+		return
 	# 공격 중에 이동 처리 안 함
 	if is_attacking:
 		return
@@ -92,7 +101,9 @@ func _physics_process(_delta):
 	process_keyboard_input()
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
-
+	# hit_effect (깜빡거림) 추가
+	apply_hit_effect()
+	
 	# 애니메이션 처리
 	if !hit_flag:
 		animated_sprite.speed_scale = ANIMATION_SPEED
@@ -132,9 +143,11 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
 	if damage_flag:
-		current_hp -= damage								# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
+		current_hp -= damage
+		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
 		damage_flag = false
 		if current_hp <= 0:
+			is_dead = true
 			print("사망")
 			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
 			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
@@ -142,18 +155,20 @@ func process_collision_enemy(damage):
 			animated_sprite.speed_scale = ANIMATION_SPEED
 			animated_sprite.play("death")
 			await animated_sprite.animation_finished
-			die_character()											# FIXME : 사망 시 필요한 작업 (메인메뉴 돌아가기, 사망 모션, 사망 사운드 등) 추가 필요
+			die_character()
+			return								
 		else:
 			print("현재 체력 : ", current_hp)
 			hit_flag = true
-			if (animated_sprite.is_playing()) && ((animated_sprite.animation == "attack_1")||(animated_sprite.animation == "attack_2")||(animated_sprite.animation == "attack_3")):
-				print("공격 모션 실행 중으로 데미지 이펙트만 적용")
+			if animated_sprite.is_playing() and (animated_sprite.animation in ["attack_1", "attack_2", "attack_3"]):
+				print("공격 중이므로 피격 이펙트만 적용")
 			else:
+				print("공격 실행 중이 아니므로 히트 모션 출력력")
 				animated_sprite.stop()
-				animated_sprite.speed_scale = 2.0
+				animated_sprite.speed_scale = 1.0
 				animated_sprite.play("take_hit")
 				await animated_sprite.animation_finished      
-		hit_flag    = false
+		hit_flag = false
 
 func die_character():
 	# var death_pannel = $UI_Layer/BaseUI/DeathPanel
@@ -163,7 +178,7 @@ func die_character():
 	Global.character_data["GOLD"]["gold"] += cur_gold
 	Global.save_character_data()
 	
-	death_flag = true
+	death_flag_for_pause = true
 
 # 골드 추가
 func add_gold(gold_value):
@@ -201,8 +216,18 @@ func level_up():
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
 		area.target = self
-		
+
+# hit_effect
+func apply_hit_effect():
+	if self.hit_flag:
+		animated_sprite.material.set_shader_parameter("hit_flag", true)
+	else:
+		animated_sprite.material.set_shader_parameter("hit_flag", false)
+
 func _on_attack_timer_timeout():
+	# 사망 시 공격 모션 비활성화를 위한 조건
+	if is_dead:
+		return
 	is_attacking = true
 	# print("character position : ", global_position)
 	# print("attack collision position : ", attack_area_1.position)
