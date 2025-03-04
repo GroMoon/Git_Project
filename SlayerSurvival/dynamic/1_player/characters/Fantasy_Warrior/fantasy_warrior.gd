@@ -146,6 +146,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 func process_collision_enemy(damage):
 	if damage_flag:
 		current_hp -= damage
+		DamageVisual.show_damage(damage, self.position, Color.GOLD)
 		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
 		damage_flag = false
 		if current_hp <= 0:

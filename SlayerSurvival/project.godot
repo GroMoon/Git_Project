@@ -19,6 +19,7 @@ boot_splash/show_image=false
 
 Global="*res://dynamic/6_utillity/data/global.gd"
 Store="*res://dynamic/6_utillity/data/store.gd"
+DamageVisual="*res://dynamic/6_utillity/damage_visual/damage_visual.gd"
 
 [display]
 
