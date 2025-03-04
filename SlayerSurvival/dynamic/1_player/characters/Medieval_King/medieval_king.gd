@@ -101,7 +101,9 @@ func _physics_process(_delta):
 	process_keyboard_input()
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
-
+	# hit_effect (깜빡거림) 추가
+	apply_hit_effect()
+	
 	# 애니메이션 처리
 	if !hit_flag:
 		animated_sprite.speed_scale = ANIMATION_SPEED
@@ -214,7 +216,14 @@ func level_up():
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
 		area.target = self
-		
+
+# hit_effect
+func apply_hit_effect():
+	if self.hit_flag:
+		animated_sprite.material.set_shader_parameter("hit_flag", true)
+	else:
+		animated_sprite.material.set_shader_parameter("hit_flag", false)
+
 func _on_attack_timer_timeout():
 	# 사망 시 공격 모션 비활성화를 위한 조건
 	if is_dead:
