@@ -105,7 +105,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 5.0
+"speed": 13.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hpmep"]
@@ -161,6 +161,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2(2, 2), Vector2(2, 2)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.001, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_5q5wd"]
@@ -233,7 +245,7 @@ script = ExtResource("1_ldmgs")
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_5w88j")
 animation = &"Explosion"
-frame = 3
+frame_progress = 0.0231489
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)
