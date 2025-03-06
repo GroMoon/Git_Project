@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://dvet0y6lp4je8"]
+[gd_scene load_steps=53 format=3 uid="uid://dvet0y6lp4je8"]
 
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="1_1nnlh"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Boss_FireWorm/fireworm.gd" id="1_8xpvc"]
@@ -7,8 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://bsod0mwu1cyk0" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Worm/Get Hit.png" id="2_qrup1"]
 [ext_resource type="Texture2D" uid="uid://c2y82p6kvopfn" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Worm/Death.png" id="2_vrxr4"]
 [ext_resource type="Texture2D" uid="uid://3a72e1qour5a" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Worm/Walk.png" id="3_whhkj"]
-[ext_resource type="Texture2D" uid="uid://7bamjmcywstr" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Move.png" id="6_sueet"]
-[ext_resource type="Texture2D" uid="uid://ufc4doy26vcq" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Explosion.png" id="6_x3hxo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tf1vw"]
 atlas = ExtResource("1_du286")
@@ -332,118 +330,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iltkq"]
-atlas = ExtResource("6_x3hxo")
-region = Rect2(0, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j71o7"]
-atlas = ExtResource("6_x3hxo")
-region = Rect2(46, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3cf4f"]
-atlas = ExtResource("6_x3hxo")
-region = Rect2(92, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_87gpx"]
-atlas = ExtResource("6_x3hxo")
-region = Rect2(138, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pio1b"]
-atlas = ExtResource("6_x3hxo")
-region = Rect2(184, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7n5v"]
-atlas = ExtResource("6_x3hxo")
-region = Rect2(230, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6x5pu"]
-atlas = ExtResource("6_x3hxo")
-region = Rect2(276, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_auhl7"]
-atlas = ExtResource("6_sueet")
-region = Rect2(0, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u1qvg"]
-atlas = ExtResource("6_sueet")
-region = Rect2(46, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1ibsl"]
-atlas = ExtResource("6_sueet")
-region = Rect2(92, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3tuhs"]
-atlas = ExtResource("6_sueet")
-region = Rect2(138, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pfqme"]
-atlas = ExtResource("6_sueet")
-region = Rect2(184, 0, 46, 46)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_60rqr"]
-atlas = ExtResource("6_sueet")
-region = Rect2(230, 0, 46, 46)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_75c7p"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iltkq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j71o7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3cf4f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_87gpx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pio1b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h7n5v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6x5pu")
-}],
-"loop": true,
-"name": &"explosion",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_auhl7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u1qvg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1ibsl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3tuhs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pfqme")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_60rqr")
-}],
-"loop": true,
-"name": &"move",
-"speed": 5.0
-}]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ckbyg"]
 size = Vector2(29, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bwwux"]
 size = Vector2(36, 24.75)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_7p0rb"]
-radius = 5.09902
 
 [node name="Fireworm" type="CharacterBody2D" groups=["enemy"]]
 texture_filter = 1
@@ -457,12 +348,6 @@ sprite_frames = SubResource("SpriteFrames_mfy7m")
 animation = &"attack"
 speed_scale = 2.0
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
-position = Vector2(35, -8)
-sprite_frames = SubResource("SpriteFrames_75c7p")
-animation = &"move"
-speed_scale = 2.0
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_ckbyg")
@@ -474,15 +359,6 @@ collision_mask = 10
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 shape = SubResource("RectangleShape2D_bwwux")
 
-[node name="interaction_sensor2" parent="." instance=ExtResource("1_1nnlh")]
-scale = Vector2(1, 0.997078)
-collision_layer = 4
-collision_mask = 10
-
-[node name="CollisionShape2D" parent="interaction_sensor2" index="0"]
-position = Vector2(37, -8)
-shape = SubResource("CircleShape2D_7p0rb")
-
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
@@ -493,4 +369,3 @@ autostart = true
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 
 [editable path="interaction_sensor"]
-[editable path="interaction_sensor2"]

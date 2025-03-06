@@ -55,9 +55,9 @@ func spawn_enemy(enemy_tscn, is_boss):
 
 # Skeleton 소환
 func _on_skeleton_timer_timeout():
-	# spawn_enemy(skeleton, MONSTER)
-	pass
+	spawn_enemy(skeleton, MONSTER)
+	
 # Mushrrom 소환
 func _on_mushroom_timer_timeout():
-	# spawn_enemy(mushroom, MONSTER)
-	pass
+	spawn_enemy(mushroom, MONSTER)
+	
