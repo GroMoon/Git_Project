@@ -57,9 +57,6 @@ func _physics_process(delta):
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
 
-	if touch_flag:
-		player.process_collision_enemy(damage)
-
 # 사망 처리 함수
 func die_enemy():
 	var pet_chance = randf()							# 몬스터펫 확률 (0.0~1.0 사이로 조절)
