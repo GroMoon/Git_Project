@@ -432,7 +432,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="DamageTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.5
 autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
