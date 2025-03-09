@@ -159,17 +159,17 @@ func process_collision_enemy(damage):
 			await animated_sprite.animation_finished
 			die_character()
 			return								
-		else:
-			print("현재 체력 : ", current_hp)
-			hit_flag = true
-			if animated_sprite.is_playing() and (animated_sprite.animation in ["attack_1", "attack_2", "attack_3"]):
-				print("공격 중이므로 피격 이펙트만 적용")
-			else:
-				print("공격 실행 중이 아니므로 히트 모션 출력력")
-				animated_sprite.stop()
-				animated_sprite.speed_scale = 1.0
-				animated_sprite.play("take_hit")
-				await animated_sprite.animation_finished      
+		# else:
+		# 	print("현재 체력 : ", current_hp)
+		# 	hit_flag = true
+		# 	if animated_sprite.is_playing() and (animated_sprite.animation in ["attack_1", "attack_2", "attack_3"]):
+		# 		print("공격 중이므로 피격 이펙트만 적용")
+		# 	else:
+		# 		print("공격 실행 중이 아니므로 히트 모션 출력력")
+		# 		animated_sprite.stop()
+		# 		animated_sprite.speed_scale = 1.0
+		# 		animated_sprite.play("take_hit")
+		# 		await animated_sprite.animation_finished      
 		hit_flag = false
 
 func die_character():
