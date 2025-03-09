@@ -108,6 +108,8 @@ process_mode = 3
 
 [connection signal="pressed" from="PausePanel/Menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="PausePanel/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="DeathPanel/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="DeathPanel/Quit" to="." method="_on_quit_pressed"]
 
 [editable path="PausePanel"]
 [editable path="DeathPanel"]

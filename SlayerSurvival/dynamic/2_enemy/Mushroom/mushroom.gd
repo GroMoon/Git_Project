@@ -57,11 +57,9 @@ func _physics_process(delta):
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
 
-	if touch_flag:
-		player.process_collision_enemy(damage)
-
 # 사망 처리 함수
 func die_enemy():
+	var pet_chance = randf()							# 몬스터펫 확률 (0.0~1.0 사이로 조절)
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
 	player.kill_count += 1
@@ -69,7 +67,12 @@ func die_enemy():
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
-	queue_free()										# 적 노드 삭제
+	if pet_chance <= 0.1:
+		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
+		player.mushroom_pet = true
+		queue_free()
+	else:
+		queue_free()										# 적 노드 삭제
 
 # 아이템 드랍 함수
 func drop_item():
@@ -107,7 +110,9 @@ func _on_interaction_sensor_body_exited(_body:Node2D):
 	
 func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
-		health -= area.get_parent().attack_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
+		var take_damage = area.get_parent().attack_damage
+		health -= take_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
+		DamageVisual.show_damage(take_damage, self.position, Color.WHITE)
 		if health <= 0:
 			die_enemy()
 		else:
