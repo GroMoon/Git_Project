@@ -191,6 +191,10 @@ func add_exp(_exp_value):
 	current_exp += _exp_value
 	calculate_exp()
 
+# 체력회복(음식)
+func add_food(health_value):
+	current_hp += health_value
+
 # 경험치 계산
 func calculate_exp():
 	if character_level < 5:
