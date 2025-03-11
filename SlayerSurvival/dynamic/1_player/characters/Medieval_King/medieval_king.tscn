@@ -1,14 +1,14 @@
 [gd_scene load_steps=56 format=3 uid="uid://blv0hgymp636q"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
-[ext_resource type="Texture2D" uid="uid://c1t3r7n3v22k1" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
+[ext_resource type="Texture2D" uid="uid://daao50ra7lcqk" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ix6sp"]
-[ext_resource type="Texture2D" uid="uid://br0y6i1wapdc2" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
-[ext_resource type="Texture2D" uid="uid://br75wnn75rs1i" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
-[ext_resource type="Texture2D" uid="uid://bqc6shvwj5fs3" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
-[ext_resource type="Texture2D" uid="uid://cugcbigw5hlhd" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
-[ext_resource type="Texture2D" uid="uid://bl1phqe2lt0jr" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
-[ext_resource type="Texture2D" uid="uid://br5ryt28b3vy0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
+[ext_resource type="Texture2D" uid="uid://c5u6ewyvukvip" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
+[ext_resource type="Texture2D" uid="uid://ivhktm82s0gq" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
+[ext_resource type="Texture2D" uid="uid://diksxuhit2vx6" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
+[ext_resource type="Texture2D" uid="uid://b7ykl4pltq6sv" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
+[ext_resource type="Texture2D" uid="uid://d0odd5a36ivtu" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
+[ext_resource type="Texture2D" uid="uid://cp4wd8yux8m0t" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_l0wkq"]
 
@@ -322,9 +322,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3njei"]
-radius = 9.5
-height = 44.334
+[sub_resource type="CircleShape2D" id="CircleShape2D_iq1tq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tlxt"]
 size = Vector2(72.75, 37)
@@ -349,7 +347,7 @@ speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 23.333)
-shape = SubResource("CapsuleShape2D_3njei")
+shape = SubResource("CircleShape2D_iq1tq")
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
