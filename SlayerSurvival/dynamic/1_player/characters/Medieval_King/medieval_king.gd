@@ -82,7 +82,6 @@ func _ready():
 	# 캐릭터 특성 설정
 	max_hp = START_HP
 	current_exp = start_exp
-	self.position.y += 23
 	# 자석 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
 	magnetic_area.shape.radius = magnetic_area_scale
