@@ -216,7 +216,7 @@ func level_up():
 
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
-		area.target = self
+		area.target = $MagneticArea
 
 # hit_effect
 func apply_hit_effect():

@@ -1,14 +1,14 @@
 [gd_scene load_steps=72 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
-[ext_resource type="Texture2D" uid="uid://ck4ck780ivqcr" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
+[ext_resource type="Texture2D" uid="uid://ddrklljs12utd" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_d66k0"]
-[ext_resource type="Texture2D" uid="uid://dblie5twyv68a" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
-[ext_resource type="Texture2D" uid="uid://cfo3jceg00v0q" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
-[ext_resource type="Texture2D" uid="uid://bg238dqln5l84" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
-[ext_resource type="Texture2D" uid="uid://chsj56d8cp7y2" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
-[ext_resource type="Texture2D" uid="uid://du0te6i05taum" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
-[ext_resource type="Texture2D" uid="uid://cjfn71g67figw" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
+[ext_resource type="Texture2D" uid="uid://dy4ih5wetsvew" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
+[ext_resource type="Texture2D" uid="uid://cipvn12wkawjd" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
+[ext_resource type="Texture2D" uid="uid://ctatc5t3jmqd1" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
+[ext_resource type="Texture2D" uid="uid://hqtof8b45hmy" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
+[ext_resource type="Texture2D" uid="uid://bkctqxi6qmg2c" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
+[ext_resource type="Texture2D" uid="uid://dsmunktvswgc2" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_0wyd7"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
 
@@ -401,46 +401,6 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ura23"]
 
-[sub_resource type="Animation" id="Animation_oely4"]
-resource_name = "attack_1"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"attack_1"]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Attack/attack_1:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.3, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
 [sub_resource type="Animation" id="Animation_usqey"]
 length = 0.001
 tracks/0/type = "value"
@@ -526,6 +486,46 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_oely4"]
+resource_name = "attack_1"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_1"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Attack/attack_1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_d58tb"]
@@ -661,7 +661,6 @@ scale = Vector2(1.00189, 1)
 sprite_frames = SubResource("SpriteFrames_lq7wa")
 animation = &"attack_1"
 speed_scale = 2.0
-flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ura23")
