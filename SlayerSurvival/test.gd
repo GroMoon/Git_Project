@@ -44,6 +44,14 @@ func _process(_delta):
 			add_child(mushroom_pet_instance)
 			move_child(mushroom_pet_instance, player.get_index() - 1)
 			player.is_mushroom_pet = true
+		# skeleton 펫 소환 알고리즘
+		if (player.skeleton_pet == true) and (player.is_skeleton_pet == false):
+			var skeleton_pet_instance = skeleton_pet_preload.instantiate()
+			skeleton_pet_instance.name = "skeleton_pet"
+			skeleton_pet_instance.global_position = player.global_position
+			add_child(skeleton_pet_instance)
+			move_child(skeleton_pet_instance, player.get_index() - 1)
+			player.is_skeleton_pet = true
 
 # Fantasy Warrior
 func _on_select_warrior_pressed():
