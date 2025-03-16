@@ -7,6 +7,7 @@ const STOP_DISTANCE   = 50.0 	# 플레이어와의 거리가 해당 값 이하�
 @onready var attack_area_2    = $Attack/attack_2
 @onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
+@onready var animation_player = $AnimationPlayer
 
 # 캐릭터 특성
 @export var move_speed      = 150 * 0.8
@@ -22,9 +23,7 @@ func _ready():
 	# 그림자 처리(회색 처리)
 	animated_sprite.modulate = Color(0.3, 0.3, 0.3, 1.0)
 	# 공격 범위 초기화(off)
-	attack_area_1.set_deferred("disabled", true)
-	attack_area_2.set_deferred("disabled", true)
-	attack_area_3.set_deferred("disabled", true)
+	animation_player.play("RESET")
 
 func _physics_process(_delta):
 	# player 세팅
@@ -65,63 +64,32 @@ func _on_attack_timer_timeout():
 	animated_sprite.flip_h = not original_flip
 	animated_sprite.speed_scale = ANIMATION_SPEED
 	# print("attack timer timeout!")
+	# 방향에 따라 area 변경
+	if animated_sprite.flip_h:
+		attack_area_1.position.x = -37
+		attack_area_2.position.x = -7
+		attack_area_3.position.x = -33
+	else:
+		attack_area_1.position.x = 37
+		attack_area_2.position.x = 7
+		attack_area_3.position.x = 33
+	
 	if attack_times == 2:
-		# 공격 1
-		attack_area_1.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-37, 24)
-		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(37, 24)
-		animated_sprite.play("attack_1")
-		await animated_sprite.animation_finished
-		attack_area_1.set_deferred("disabled", true)
-		# 공격 2
-		attack_area_2.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_2.position = Vector2(-7, 25)
-		else: 							# 오른쪽 공격
-			attack_area_2.position = Vector2(7, 25)
-		animated_sprite.play("attack_2")
-		await animated_sprite.animation_finished
-		attack_area_2.set_deferred("disabled", true)
+		animation_player.play("attack_1")
+		await animation_player.animation_finished
+		animation_player.play("attack_2")
+		await animation_player.animation_finished
 	elif attack_times == 3:
-		# 공격 1
-		attack_area_1.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-37, 24)
-		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(37, 24)
-		animated_sprite.play("attack_1")
-		await animated_sprite.animation_finished
-		attack_area_1.set_deferred("disabled", true)
-		# 공격 2
-		attack_area_2.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_2.position = Vector2(-7, 25)
-		else: 							# 오른쪽 공격
-			attack_area_2.position = Vector2(7, 25)
-		animated_sprite.play("attack_2")
-		await animated_sprite.animation_finished
-		attack_area_2.set_deferred("disabled", true)
-		# 공격 3
-		attack_area_3.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_3.position = Vector2(-33, -2)
-		else: 							# 오른쪽 공격
-			attack_area_3.position = Vector2(33, -2)
-		animated_sprite.play("attack_3")
-		await animated_sprite.animation_finished
-		attack_area_3.set_deferred("disabled", true)
+		animation_player.play("attack_1")
+		await animation_player.animation_finished
+		animation_player.play("attack_2")
+		await animation_player.animation_finished
+		animation_player.play("attack_3")
+		await animation_player.animation_finished
 	else:
 		# 공격 1
-		attack_area_1.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-29, -6)
-		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(29, -6)
-		animated_sprite.play("attack_1")
-		await animated_sprite.animation_finished
-		attack_area_1.set_deferred("disabled", true)	
+		animation_player.play("attack_1")
+		await animation_player.animation_finished
 
 	is_attacking = false
 	# 타이머 재시작

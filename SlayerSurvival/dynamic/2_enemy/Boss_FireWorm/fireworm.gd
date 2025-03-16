@@ -13,7 +13,8 @@ var fireball_tscn = preload("res://dynamic/2_enemy/Boss_FireWorm/fire_ball/fire_
 
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
-var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
+var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
+var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
 #var golds = 25
 
 # 적 특성
@@ -93,6 +94,10 @@ func drop_item():
 		var new_exp = exp_img.instantiate()
 		new_exp.global_position = global_position + Vector2(10, 0)
 		get_parent().call_deferred("add_child", new_exp)
+	# 음식(체력회복)	FIXME 일단 보스몬스터를 처치하였을 때 드롭되는 것으로 설정 게임 개발 방향에 따라 추후 수정 필요
+	var new_food = food_img.instantiate()
+	new_food.global_position = global_position + Vector2(5, -5)
+	get_parent().call_deferred("add_child", new_food)
 
 # 넉백 함수
 func apply_knockback(attacker: Node2D):

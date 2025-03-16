@@ -57,9 +57,6 @@ func _physics_process(delta):
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
 
-	if touch_flag:
-		player.process_collision_enemy(damage)
-
 # 사망 처리 함수
 func die_enemy():
 	var pet_chance = randf()							# 몬스터펫 확률 (0.0~1.0 사이로 조절)
@@ -115,7 +112,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
 		var take_damage = area.get_parent().attack_damage
 		health -= take_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
-		DamageVisual.show_damage(take_damage, self.position)
+		DamageVisual.show_damage(take_damage, self.position, Color.WHITE)
 		if health <= 0:
 			# queue_free()
 			die_enemy()

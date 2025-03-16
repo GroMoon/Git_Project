@@ -24,4 +24,5 @@ func show_damage(damage: int, position: Vector2, color : Color = Color.RED):
 	tween.tween_property(label, "position:y", position.y - 30, 0.5).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(label, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_QUAD)
 	await  tween.finished
-	label.queue_free()
+	if is_instance_valid(label):
+		label.queue_free()
