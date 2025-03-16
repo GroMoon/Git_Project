@@ -52,6 +52,10 @@ func _process(_delta):
 			add_child(skeleton_pet_instance)
 			move_child(skeleton_pet_instance, player.get_index() - 1)
 			player.is_skeleton_pet = true
+	
+	#? dialogic test
+	if Input.is_action_just_pressed("interaction"):
+		Dialogic.start("res://dynamic/7_dialogic/get_monster_pet.dtl")
 
 # Fantasy Warrior
 func _on_select_warrior_pressed():

@@ -1,0 +1,6 @@
+얏호!
+Mushroom 을 동료로 만들 수 있다!
+Mushroom 을 동료로 삼겠습니까?
+- 예
+	set {mushroom_pet_diag} = true
+- 아니요

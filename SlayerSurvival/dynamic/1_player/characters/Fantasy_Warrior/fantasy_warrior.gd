@@ -118,6 +118,14 @@ func _physics_process(_delta):
 	level_label.text = "LV " + str(character_level)
 	# 그림자 분신술
 	# add_shadow(shadow_attack)
+	#? diaglogic variable test
+	mushroom_pet = Dialogic.VAR.mushroom_pet_diag
+
+# func mushroom_pet_yes():
+# 	mushroom_pet = true
+
+# func mushroom_pet_no():
+# 	mushroom_pet = false
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
