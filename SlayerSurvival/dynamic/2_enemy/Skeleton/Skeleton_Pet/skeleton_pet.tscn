@@ -1,11 +1,12 @@
-[gd_scene load_steps=34 format=3 uid="uid://p211tvyeyfmk"]
+[gd_scene load_steps=36 format=3 uid="uid://p211tvyeyfmk"]
 
-[ext_resource type="Texture2D" uid="uid://cuklqqnpbswvx" path="res://dynamic/2_enemy/Skeleton/Sprites/Attack.png" id="1_51o71"]
+[ext_resource type="Texture2D" uid="uid://cggwrkq8wcyxb" path="res://dynamic/2_enemy/Skeleton/Sprites/Attack.png" id="1_51o71"]
+[ext_resource type="Script" path="res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.gd" id="1_qoceb"]
 [ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="1_wlld7"]
-[ext_resource type="Texture2D" uid="uid://boak6xosccxvv" path="res://dynamic/2_enemy/Skeleton/Sprites/Death.png" id="2_ov84l"]
-[ext_resource type="Texture2D" uid="uid://i2e4wi2ifumh" path="res://dynamic/2_enemy/Skeleton/Sprites/Idle.png" id="3_40n4w"]
-[ext_resource type="Texture2D" uid="uid://mdyw0ikj6hxc" path="res://dynamic/2_enemy/Skeleton/Sprites/Take Hit.png" id="4_qqnoo"]
-[ext_resource type="Texture2D" uid="uid://dba8ugnlfj316" path="res://dynamic/2_enemy/Skeleton/Sprites/Walk.png" id="5_pfouh"]
+[ext_resource type="Texture2D" uid="uid://ccs0eok40sl1s" path="res://dynamic/2_enemy/Skeleton/Sprites/Death.png" id="2_ov84l"]
+[ext_resource type="Texture2D" uid="uid://b3pvls6ljrp7o" path="res://dynamic/2_enemy/Skeleton/Sprites/Idle.png" id="3_40n4w"]
+[ext_resource type="Texture2D" uid="uid://b2u0rjst6kjsh" path="res://dynamic/2_enemy/Skeleton/Sprites/Take Hit.png" id="4_qqnoo"]
+[ext_resource type="Texture2D" uid="uid://dhlnwe2a2g1ew" path="res://dynamic/2_enemy/Skeleton/Sprites/Walk.png" id="5_pfouh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ulqcr"]
 shader = ExtResource("1_wlld7")
@@ -212,17 +213,33 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5yocm"]
-height = 40.0
+height = 33.4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuphv"]
+size = Vector2(68, 46)
 
 [node name="SkeletonPet" type="CharacterBody2D"]
 texture_filter = 1
+script = ExtResource("1_qoceb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_ulqcr")
 sprite_frames = SubResource("SpriteFrames_h540v")
-animation = &"attack"
+animation = &"idle"
 speed_scale = 1.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4.3, 1.3)
 shape = SubResource("CapsuleShape2D_5yocm")
+
+[node name="Attack" type="Area2D" parent="." groups=["attack"]]
+
+[node name="attack_1" type="CollisionShape2D" parent="Attack"]
+position = Vector2(40, -6)
+shape = SubResource("RectangleShape2D_tuphv")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

@@ -5,13 +5,16 @@ const ATTACK_ANIMATION_SPEED = 2.0
 
 @onready var body_collision_shape   	  = $CollisionShape2D
 @onready var body_animated_sprite   	  = $AnimatedSprite2D
-@onready var attack_animated_sprite 	  = $AnimatedSprite2D2
+
 @onready var body_interaction_sensor      = $interaction_sensor 
-@onready var attack_collision             = $interaction_sensor2/CollisionShape2D
+
+# 파이어볼 씬
+var fireball_tscn = preload("res://dynamic/2_enemy/Boss_FireWorm/fire_ball/fire_ball.tscn")
 
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
-var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
+var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
+var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
 #var golds = 25
 
 # 적 특성
@@ -35,9 +38,6 @@ var knockback_strength = 100.0  		# 넉백 세기
 func _ready():
 	# player 노드 찾기
 	player = get_parent().get_parent().get_node("player")
-	# fire ball disable
-	attack_animated_sprite.set_deferred("visible", false)
-	attack_collision.set_deferred("disabled", true)
 	
 func _physics_process(delta):
 	# 사망 상태에서 아무것도 처리 아지 않도록
@@ -94,6 +94,10 @@ func drop_item():
 		var new_exp = exp_img.instantiate()
 		new_exp.global_position = global_position + Vector2(10, 0)
 		get_parent().call_deferred("add_child", new_exp)
+	# 음식(체력회복)	FIXME 일단 보스몬스터를 처치하였을 때 드롭되는 것으로 설정 게임 개발 방향에 따라 추후 수정 필요
+	var new_food = food_img.instantiate()
+	new_food.global_position = global_position + Vector2(5, -5)
+	get_parent().call_deferred("add_child", new_food)
 
 # 넉백 함수
 func apply_knockback(attacker: Node2D):
@@ -101,6 +105,19 @@ func apply_knockback(attacker: Node2D):
 	var direction    = (position - attacker.position).normalized()
 	knockback_vector = direction * knockback_strength
 	knockback_time   = knockback_duration
+
+# 파이어볼 인스턴스
+func fireball():
+	var fireball = fireball_tscn.instantiate()
+	# 왼쪽
+	if body_animated_sprite.flip_h:
+		fireball.global_position = self.global_position + Vector2(-120, -15)
+	# 오른쪽
+	else:
+		fireball.global_position = self.global_position + Vector2(120, -15)
+	fireball.direction = (player.global_position - fireball.global_position).normalized()
+	fireball.rotation = (player.global_position - fireball.global_position).angle()
+	get_parent().add_child(fireball)
 
 # 접촉 상태가 되었을 때
 func _on_interaction_sensor_body_entered(_body:Node2D):
@@ -135,20 +152,7 @@ func _on_attack_timer_timeout():
 	is_attacking = true
 	body_animated_sprite.play("attack")
 	await body_animated_sprite.animation_finished
-	if body_animated_sprite.flip_h:
-		attack_animated_sprite.flip_h = true
-		attack_animated_sprite.position = Vector2(-35,-8)
-		attack_animated_sprite.set_deferred("visible", true)
-		attack_animated_sprite.play("move")
-		attack_collision.position = Vector2(-37, -8)
-		attack_collision.set_deferred("disabled", false)
-	else:
-		attack_animated_sprite.flip_h = false
-		attack_animated_sprite.position = Vector2(35,-8)
-		attack_animated_sprite.set_deferred("visible", true)
-		attack_animated_sprite.play("move")
-		attack_collision.position = Vector2(37, -8)
-		attack_collision.set_deferred("disabled", false)
+	fireball()
 	is_attacking = false
 	# 타이머 재시작
 	$AttackTimer.start()

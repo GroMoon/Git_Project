@@ -25,7 +25,7 @@ func _process(_delta):
 	base_ui = player.get_node("UI_Layer/BaseUI")
 	minute  = base_ui.minute
 	sec     = base_ui.sec
-	if (!boss_spawn_flag) && (minute==0):
+	if (!boss_spawn_flag) && (minute==1):		# FIXME : test용으로 현재 보스 스폰 시간 1분
 		spawn_enemy(fire_worm, BOSS_MONSTER)
 		boss_spawn_flag = true
 	
