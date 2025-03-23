@@ -37,7 +37,7 @@ func _process(_delta):
 			move_child(shadow_instance, player.get_index() - 1)
 			player.is_shadow_on = 1
 		# mushroom 펫 소환 알고리즘
-		if (player.mushroom_pet == true) and (player.is_mushroom_pet == false):
+		if (player.mushroom_pet_on == true) and (player.is_mushroom_pet == false):
 			var mushroom_pet_instance = mushroom_pet_preload.instantiate()
 			mushroom_pet_instance.name = "mushroom_pet"
 			mushroom_pet_instance.global_position = player.global_position
@@ -45,7 +45,7 @@ func _process(_delta):
 			move_child(mushroom_pet_instance, player.get_index() - 1)
 			player.is_mushroom_pet = true
 		# skeleton 펫 소환 알고리즘
-		if (player.skeleton_pet == true) and (player.is_skeleton_pet == false):
+		if (player.skeleton_pet_on == true) and (player.is_skeleton_pet == false):
 			var skeleton_pet_instance = skeleton_pet_preload.instantiate()
 			skeleton_pet_instance.name = "skeleton_pet"
 			skeleton_pet_instance.global_position = player.global_position
@@ -53,9 +53,6 @@ func _process(_delta):
 			move_child(skeleton_pet_instance, player.get_index() - 1)
 			player.is_skeleton_pet = true
 	
-	#? dialogic test
-	if Input.is_action_just_pressed("interaction"):
-		Dialogic.start("res://dynamic/7_dialogic/get_monster_pet.dtl")
 
 # Fantasy Warrior
 func _on_select_warrior_pressed():

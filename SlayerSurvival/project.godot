@@ -26,13 +26,15 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
 directories/dch_directory={}
 directories/dtl_directory={
-"get_monster_pet": "res://dynamic/7_dialogic/get_monster_pet.dtl",
-"timeline": "res://dynamic/7_dialogic/timeline.dtl"
+"get_mushroom_pet": "res://dynamic/7_dialogic/get_mushroom_pet.dtl",
+"get_skeleton_pet": "res://dynamic/7_dialogic/get_skeleton_pet.dtl"
 }
 layout/style_list=[]
 layout/default_style="Default"
 variables={
-"mushroom_pet_diag": false
+"diag_pause_flag": false,
+"mushroom_pet_diag": false,
+"skeleton_pet_diag": false
 }
 
 [display]
