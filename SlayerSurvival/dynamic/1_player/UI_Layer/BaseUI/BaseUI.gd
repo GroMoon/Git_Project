@@ -12,6 +12,7 @@ var minute              = 0
 var globl_pause_flag    = false
 var lvlup_pause_flag    = false
 var death_pause_flag    = false
+var diag_pause_flag     = false
 
 var player = null
 
@@ -30,8 +31,9 @@ func _process(delta):
 	check_pause_pressed()
 
 	death_pause_flag = player.death_flag_for_pause
+	diag_pause_flag  = Dialogic.VAR.diag_pause_flag
 
-	if globl_pause_flag:			# esc 키 눌렀을 때
+	if globl_pause_flag:				# esc 키 눌렀을 때
 		pause_panel.visible = true
 		get_tree().paused   = true
 	elif lvlup_pause_flag: 				# 레벨 업 때
@@ -41,15 +43,18 @@ func _process(delta):
 			pause_panel.visible = true
 		else:
 			pass
-	elif death_pause_flag:			# 플레이서 사망 시
+	elif death_pause_flag:				# 플레이서 사망 시
 		pause_panel.visible = false
 		death_panel.visible = true
+		get_tree().paused   = true
+	elif diag_pause_flag:				# diag 창 뜰 시
+		pause_panel.visible = false
 		get_tree().paused   = true
 	else:
 		pause_panel.visible = false
 		get_tree().paused   = false
 		
-	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag):
+	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag):
 		process_stopwatch(delta)
 
 # esc 키(=pause)를 눌렀을 때

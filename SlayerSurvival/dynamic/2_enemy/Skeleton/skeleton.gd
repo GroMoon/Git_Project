@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const ANIMATION_SPEED = 1.2		# 기본 애니메이션 속도
+const PET_CHANCE      = 0.5		# 펫이 될 확률
 
 @onready var collision_shape    = $CollisionShape2D
 @onready var animated_sprite    = $AnimatedSprite2D
@@ -67,12 +68,14 @@ func die_enemy():
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
-	if pet_chance <= 0.1:
+	if (player.is_skeleton_pet==false)&&(pet_chance <= PET_CHANCE):
 		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
-		player.mushroom_pet = true
+		player.skeleton_pet = true		
+		Dialogic.start("res://dynamic/7_dialogic/get_skeleton_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
+		Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
 		queue_free()
 	else:
-		queue_free()										# 적 노드 삭제
+		queue_free()									# 적 노드 삭제
 	
 # 아이템 드랍 함수
 func drop_item():
