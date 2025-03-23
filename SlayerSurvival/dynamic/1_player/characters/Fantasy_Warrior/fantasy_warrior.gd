@@ -21,8 +21,10 @@ const START_HP        = 50
 
 # 펫 관련
 var mushroom_pet    = false
+var mushroom_pet_on = false
 var is_mushroom_pet = false
 var skeleton_pet    = false
+var skeleton_pet_on = false
 var is_skeleton_pet = false
 
 var attack_damage       = 5			# 일반 공격 데미지
@@ -118,6 +120,10 @@ func _physics_process(_delta):
 	level_label.text = "LV " + str(character_level)
 	# 그림자 분신술
 	# add_shadow(shadow_attack)
+	
+	#? diaglogic variable test
+	mushroom_pet_on = Dialogic.VAR.mushroom_pet_diag
+	skeleton_pet_on = Dialogic.VAR.skeleton_pet_diag
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
