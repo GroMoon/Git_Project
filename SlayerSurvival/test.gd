@@ -1,7 +1,16 @@
 extends Node2D
 
 @onready var select_character = get_node("Select_Character_Panel")
-@onready var select_map = get_node("Selecet_Map_Panel")
+@onready var select_map = get_node("Select_Map_Panel")
+
+# 캐릭터, 맵 선택 마우스 오버 관련 선언
+@onready var attack_label = $Select_Character_Panel/CharacterInfo/LabelContainer/attack
+@onready var move_label   = $Select_Character_Panel/CharacterInfo/LabelContainer/move
+@onready var helth_label  = $Select_Character_Panel/CharacterInfo/LabelContainer/health
+@onready var character_icon = $Select_Character_Panel/CharacterInfo/icon
+@onready var character_details = $Select_Character_Panel/CharacterInfo/details
+@onready var preview_map = $Select_Map_Panel/MapInfo/preview_map
+@onready var map_details = $Select_Map_Panel/MapInfo/details
 
 # 캐릭터를 인스턴스 하기 위한 선언
 var character_load
@@ -18,7 +27,7 @@ var mushroom_pet_preload
 var skeleton_pet_preload
 
 func _ready():
-	select_character.visible = true
+	select_character.visible = false
 	select_map.visible = true
 	get_tree().paused = true
 	# 펫 미리 preload
@@ -88,6 +97,8 @@ func _on_cave_button_pressed():
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
+	select_character.visible = true
+
 
 # Dungeon_B1F
 func _on_dungeon_button_pressed():
@@ -97,15 +108,37 @@ func _on_dungeon_button_pressed():
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
-
-func _on_select_king_mouse_entered():
-	$Button_sound.play()
+	select_character.visible = true
 
 func _on_select_warrior_mouse_entered():
 	$Button_sound.play()
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
+	character_details.text = "어쩌구 어쩌구"
+	attack_label.text = "■■"
+	move_label.text   = "■■■■"
+	helth_label.text  = "■■■"
+	
+func _on_select_king_mouse_entered():
+	$Button_sound.play()
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
+	character_details.text = "어쩌구 저쩌구"
+	attack_label.text = "■■■■"
+	move_label.text   = "■■"
+	helth_label.text  = "■■■■■"
 
 func _on_cave_button_mouse_entered():
+	preview_map.texture = preload("res://dynamic/4_world/Cave/cave_title.png")
+	map_details.text = "Cave 맵 설명"
 	$Button_sound.play()
 
 func _on_dungeon_button_mouse_entered():
+	preview_map.texture = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_title.png")
+	map_details.text = "Dungeon 맵 설명"
 	$Button_sound.play()
+
+# 해당 씬 재시작
+func _on_backchar_pressed():
+	get_tree().reload_current_scene()
+
+func _on_backmap_pressed():
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")

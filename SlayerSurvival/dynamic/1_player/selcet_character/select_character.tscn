@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://xya4xva0d7vj"]
+[gd_scene load_steps=11 format=3 uid="uid://xya4xva0d7vj"]
 
 [ext_resource type="StyleBox" uid="uid://clv8l34xvofwk" path="res://dynamic/1_player/selcet_character/Select_Character_Nornmal.tres" id="1_2r08d"]
 [ext_resource type="StyleBox" uid="uid://crljylwyjpvbx" path="res://dynamic/1_player/selcet_character/Select_Character_Hover.tres" id="2_d7e3u"]
-[ext_resource type="Texture2D" uid="uid://c660yefkalyia" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
-[ext_resource type="Texture2D" uid="uid://boj53gry8kwvp" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
+[ext_resource type="Texture2D" uid="uid://cvcs1cqk0o0i6" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
+[ext_resource type="Texture2D" uid="uid://bticnpq8w6ckx" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
+[ext_resource type="Texture2D" uid="uid://dmsaooe3ircuj" path="res://static/png/ui/assembly_frame_gray.png" id="5_ltlxe"]
+[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
+[ext_resource type="Texture2D" uid="uid://wb7u6f8edpb3" path="res://dynamic/1_player/selcet_character/abillity_img/cursed.png" id="7_5bveo"]
+[ext_resource type="Texture2D" uid="uid://bss7s86sithfg" path="res://dynamic/1_player/selcet_character/abillity_img/speed.webp" id="8_gqlcw"]
+[ext_resource type="Texture2D" uid="uid://cj5wfxrwji347" path="res://dynamic/1_player/selcet_character/abillity_img/Heal.png" id="9_lhsed"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
 font_size = 83
@@ -14,23 +18,98 @@ outline_color = Color(0, 0, 0, 1)
 [node name="Select_Character_Panel" type="Panel"]
 process_mode = 3
 offset_right = 1200.0
-offset_bottom = 651.0
+offset_bottom = 650.0
 rotation = -0.000645014
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="CharacterInfo" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 1200.0
+offset_bottom = 650.0
+expand_mode = 1
+
+[node name="icon" type="Sprite2D" parent="CharacterInfo"]
+position = Vector2(395.899, 306.796)
+scale = Vector2(0.3, 0.291)
+
+[node name="frame" type="Sprite2D" parent="CharacterInfo"]
+position = Vector2(396.127, 307.146)
+scale = Vector2(3.58782, 3.55791)
+texture = ExtResource("5_ltlxe")
+
+[node name="details" type="Label" parent="CharacterInfo"]
+layout_mode = 0
+offset_left = 613.427
+offset_top = 138.615
+offset_right = 1064.43
+offset_bottom = 327.615
+text = "캐릭터 설명"
+
+[node name="ImgContainer" type="VBoxContainer" parent="CharacterInfo"]
+layout_mode = 0
+offset_left = 597.427
+offset_top = 344.615
+offset_right = 637.427
+offset_bottom = 472.615
+
+[node name="attack_img" type="TextureRect" parent="CharacterInfo/ImgContainer"]
+layout_mode = 2
+texture = ExtResource("7_5bveo")
+expand_mode = 4
+
+[node name="move_img" type="TextureRect" parent="CharacterInfo/ImgContainer"]
+layout_mode = 2
+texture = ExtResource("8_gqlcw")
+expand_mode = 4
+
+[node name="health_img" type="TextureRect" parent="CharacterInfo/ImgContainer"]
+layout_mode = 2
+texture = ExtResource("9_lhsed")
+expand_mode = 4
+
+[node name="LabelContainer" type="VBoxContainer" parent="CharacterInfo"]
+layout_mode = 0
+offset_left = 653.211
+offset_top = 344.961
+offset_right = 851.211
+offset_bottom = 472.961
+
+[node name="attack" type="Label" parent="CharacterInfo/LabelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.694118, 0.643137, 0.239216, 1)
+theme_override_font_sizes/font_size = 25
+text = "■"
+
+[node name="move" type="Label" parent="CharacterInfo/LabelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.694118, 0.643137, 0.239216, 1)
+theme_override_font_sizes/font_size = 25
+text = "■"
+
+[node name="health" type="Label" parent="CharacterInfo/LabelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.694118, 0.643137, 0.239216, 1)
+theme_override_font_sizes/font_size = 25
+text = "■"
+
+[node name="CharacterButton" type="ColorRect" parent="."]
 layout_mode = 1
-offset_top = -1.0
-offset_right = 1198.0
-offset_bottom = 654.0
+offset_left = 111.68
+offset_top = 496.072
+offset_right = 1088.68
+offset_bottom = 625.072
 color = Color(0.117647, 0.145098, 0.14902, 1)
 
-[node name="select_king" type="Button" parent="ColorRect"]
+[node name="select_king" type="Button" parent="CharacterButton"]
 texture_filter = 1
 layout_mode = 1
-offset_left = 255.855
-offset_top = 225.165
-offset_right = 336.855
-offset_bottom = 306.165
+offset_left = 143.99
+offset_top = 16.0929
+offset_right = 224.99
+offset_bottom = 97.0929
 scale = Vector2(1.15, 1.15)
 theme_override_styles/normal = ExtResource("1_2r08d")
 theme_override_styles/hover = ExtResource("2_d7e3u")
@@ -38,13 +117,13 @@ icon = ExtResource("3_1yasl")
 icon_alignment = 1
 expand_icon = true
 
-[node name="select_warrior" type="Button" parent="ColorRect"]
+[node name="select_warrior" type="Button" parent="CharacterButton"]
 texture_filter = 1
 layout_mode = 1
-offset_left = 127.855
-offset_top = 225.083
-offset_right = 208.855
-offset_bottom = 306.083
+offset_left = 23.9897
+offset_top = 16.0155
+offset_right = 104.99
+offset_bottom = 97.0155
 scale = Vector2(1.15, 1.15)
 theme_override_styles/normal = ExtResource("1_2r08d")
 theme_override_styles/hover = ExtResource("2_d7e3u")
@@ -52,12 +131,66 @@ icon = ExtResource("3_llvfx")
 icon_alignment = 1
 expand_icon = true
 
+[node name="ban1" type="Button" parent="CharacterButton"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 263.99
+offset_top = 16.1703
+offset_right = 344.99
+offset_bottom = 97.1703
+scale = Vector2(1.15, 1.15)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("1_2r08d")
+theme_override_styles/hover = ExtResource("2_d7e3u")
+text = "🔒"
+icon_alignment = 1
+expand_icon = true
+
+[node name="ban2" type="Button" parent="CharacterButton"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 383.99
+offset_top = 16.2477
+offset_right = 464.99
+offset_bottom = 97.2477
+scale = Vector2(1.15, 1.15)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("1_2r08d")
+theme_override_styles/hover = ExtResource("2_d7e3u")
+text = "🔒"
+icon_alignment = 1
+expand_icon = true
+
+[node name="ban3" type="Button" parent="CharacterButton"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 503.99
+offset_top = 16.3251
+offset_right = 584.99
+offset_bottom = 97.3251
+scale = Vector2(1.15, 1.15)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("1_2r08d")
+theme_override_styles/hover = ExtResource("2_d7e3u")
+text = "🔒"
+icon_alignment = 1
+expand_icon = true
+
 [node name="select_characater" type="Label" parent="."]
 layout_mode = 0
-offset_left = 431.964
-offset_top = 56.2786
-offset_right = 822.964
-offset_bottom = 165.279
+offset_top = 20.0
+offset_right = 1200.0
+offset_bottom = 111.0
 theme_override_fonts/font = ExtResource("5_sa8dl")
 text = "캐릭터 선택"
 label_settings = SubResource("LabelSettings_b5exc")
+horizontal_alignment = 1
+
+[node name="back(char)" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1065.0
+offset_top = 35.0
+offset_right = 1115.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 25
+text = "◀️"
