@@ -61,6 +61,7 @@ offset_top = 138.0
 offset_right = 933.0
 offset_bottom = 282.0
 text = "맵 설명"
+autowrap_mode = 2
 
 [node name="preview_map" type="TextureRect" parent="MapInfo"]
 layout_mode = 0

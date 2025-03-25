@@ -44,6 +44,7 @@ offset_top = 138.615
 offset_right = 1064.43
 offset_bottom = 327.615
 text = "캐릭터 설명"
+autowrap_mode = 2
 
 [node name="ImgContainer" type="VBoxContainer" parent="CharacterInfo"]
 layout_mode = 0
