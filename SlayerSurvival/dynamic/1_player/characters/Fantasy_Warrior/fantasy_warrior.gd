@@ -89,6 +89,15 @@ func _ready():
 	magnetic_area.shape.radius = magnetic_area_scale
 	# 공격 범위 초기화(off)
 	animation_player.play("RESET")
+	# 몬스터펫 초기화
+	Dialogic.VAR.mushroom_pet_diag = false
+	Dialogic.VAR.skeleton_pet_diag = false
+	# mushroom_pet    = false
+	# mushroom_pet_on = false
+	# is_mushroom_pet = false
+	# skeleton_pet    = false
+	# skeleton_pet_on = false
+	# is_skeleton_pet = false
 
 func _physics_process(_delta):
 	# 사망 시 이동 처리 안 함
