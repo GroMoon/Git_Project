@@ -10,6 +10,7 @@ const START_HP        = 50
 @onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
+@onready var animation_player = $AnimationPlayer
 
 # 캐릭터 특성
 @export var character_name  = "fantasy_warrior"
@@ -20,8 +21,10 @@ const START_HP        = 50
 
 # 펫 관련
 var mushroom_pet    = false
+var mushroom_pet_on = false
 var is_mushroom_pet = false
 var skeleton_pet    = false
+var skeleton_pet_on = false
 var is_skeleton_pet = false
 
 var attack_damage       = 5			# 일반 공격 데미지
@@ -85,9 +88,16 @@ func _ready():
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
 	magnetic_area.shape.radius = magnetic_area_scale
 	# 공격 범위 초기화(off)
-	attack_area_1.set_deferred("disabled", true)
-	attack_area_2.set_deferred("disabled", true)
-	attack_area_3.set_deferred("disabled", true)
+	animation_player.play("RESET")
+	# 몬스터펫 초기화
+	Dialogic.VAR.mushroom_pet_diag = false
+	Dialogic.VAR.skeleton_pet_diag = false
+	# mushroom_pet    = false
+	# mushroom_pet_on = false
+	# is_mushroom_pet = false
+	# skeleton_pet    = false
+	# skeleton_pet_on = false
+	# is_skeleton_pet = false
 
 func _physics_process(_delta):
 	# 사망 시 이동 처리 안 함
@@ -119,6 +129,10 @@ func _physics_process(_delta):
 	level_label.text = "LV " + str(character_level)
 	# 그림자 분신술
 	# add_shadow(shadow_attack)
+	
+	#? diaglogic variable test
+	mushroom_pet_on = Dialogic.VAR.mushroom_pet_diag
+	skeleton_pet_on = Dialogic.VAR.skeleton_pet_diag
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO
@@ -173,9 +187,6 @@ func process_collision_enemy(damage):
 		hit_flag = false
 
 func die_character():
-	# var death_pannel = $UI_Layer/BaseUI/DeathPanel
-	# get_tree().paused = true
-	# death_pannel.visible = true
 	var cur_gold = int(gold_count)
 	Global.character_data["GOLD"]["gold"] += cur_gold
 	Global.save_character_data()
@@ -190,6 +201,10 @@ func add_gold(gold_value):
 func add_exp(_exp_value):
 	current_exp += _exp_value
 	calculate_exp()
+
+# 체력회복(음식)
+func add_food(health_value):
+	current_hp += health_value
 
 # 경험치 계산
 func calculate_exp():
@@ -211,14 +226,13 @@ func calculate_exp():
 func level_up():
 	if current_exp >= max_exp:
 		character_level += 1
-		#print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
 		get_tree().paused = true
 		emit_signal("levelup")
 
 func _on_magnetic_area_area_entered(area:Area2D):
 	if area.is_in_group("Gold") or area.is_in_group("Exp"):
-		area.target = self
+		area.target = $MagneticArea
 
 # hit_effect
 func apply_hit_effect():
@@ -232,67 +246,34 @@ func _on_attack_timer_timeout():
 	if is_dead:
 		return	
 	is_attacking = true
-	# print("character position : ", global_position)
-	# print("attack collision position : ", attack_area_1.position)
 	animated_sprite.speed_scale = ANIMATION_SPEED
 	# print("attack timer timeout!")
+	# 방향에 따라 area 변경
+	if animated_sprite.flip_h:
+		attack_area_1.position.x = -29
+		attack_area_2.position.x = -4
+		attack_area_3.position.x = -30
+	else:
+		attack_area_1.position.x = 29
+		attack_area_2.position.x = 4
+		attack_area_3.position.x = 30
+	
 	if attack_times == 2:
-		# 공격 1
-		attack_area_1.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-29, -6)
-		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(29, -6)
-		animated_sprite.play("attack_1")
-		await animated_sprite.animation_finished
-		attack_area_1.set_deferred("disabled", true)
-		# 공격 2
-		attack_area_2.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_2.position = Vector2(4, -10)
-		else: 							# 오른쪽 공격
-			attack_area_2.position = Vector2(-4, -10)
-		animated_sprite.play("attack_2")
-		await animated_sprite.animation_finished
-		attack_area_2.set_deferred("disabled", true)
+		animation_player.play("attack_1")
+		await animation_player.animation_finished
+		animation_player.play("attack_2")
+		await animation_player.animation_finished
 	elif attack_times == 3:
-		# 공격 1
-		attack_area_1.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-29, -6)
-		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(29, -6)
-		animated_sprite.play("attack_1")
-		await animated_sprite.animation_finished
-		attack_area_1.set_deferred("disabled", true)
-		# 공격 2
-		attack_area_2.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_2.position = Vector2(4, -10)
-		else: 							# 오른쪽 공격
-			attack_area_2.position = Vector2(-4, -10)
-		animated_sprite.play("attack_2")
-		await animated_sprite.animation_finished
-		attack_area_2.set_deferred("disabled", true)
-		# 공격 3
-		attack_area_3.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_3.position = Vector2(-30, -24)
-		else: 							# 오른쪽 공격
-			attack_area_3.position = Vector2(30, -24)
-		animated_sprite.play("attack_3")
-		await animated_sprite.animation_finished
-		attack_area_3.set_deferred("disabled", true)
+		animation_player.play("attack_1")
+		await animation_player.animation_finished
+		animation_player.play("attack_2")
+		await animation_player.animation_finished
+		animation_player.play("attack_3")
+		await animation_player.animation_finished
 	else:
 		# 공격 1
-		attack_area_1.set_deferred("disabled", false)
-		if animated_sprite.flip_h:		# 왼쪽 공격
-			attack_area_1.position = Vector2(-29, -6)
-		else: 							# 오른쪽 공격
-			attack_area_1.position = Vector2(29, -6)
-		animated_sprite.play("attack_1")
-		await animated_sprite.animation_finished
-		attack_area_1.set_deferred("disabled", true)	
+		animation_player.play("attack_1")
+		await animation_player.animation_finished
 
 	is_attacking = false
 	# 타이머 재시작

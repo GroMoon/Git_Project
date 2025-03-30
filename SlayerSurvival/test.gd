@@ -1,7 +1,16 @@
 extends Node2D
 
 @onready var select_character = get_node("Select_Character_Panel")
-@onready var select_map = get_node("Selecet_Map_Panel")
+@onready var select_map = get_node("Select_Map_Panel")
+
+# 캐릭터, 맵 선택 마우스 오버 관련 선언
+@onready var attack_label = $Select_Character_Panel/CharacterInfo/LabelContainer/attack
+@onready var move_label   = $Select_Character_Panel/CharacterInfo/LabelContainer/move
+@onready var helth_label  = $Select_Character_Panel/CharacterInfo/LabelContainer/health
+@onready var character_icon = $Select_Character_Panel/CharacterInfo/icon
+@onready var character_details = $Select_Character_Panel/CharacterInfo/details
+@onready var preview_map = $Select_Map_Panel/MapInfo/preview_map
+@onready var map_details = $Select_Map_Panel/MapInfo/details
 
 # 캐릭터를 인스턴스 하기 위한 선언
 var character_load
@@ -18,7 +27,7 @@ var mushroom_pet_preload
 var skeleton_pet_preload
 
 func _ready():
-	select_character.visible = true
+	select_character.visible = false
 	select_map.visible = true
 	get_tree().paused = true
 	# 펫 미리 preload
@@ -37,13 +46,22 @@ func _process(_delta):
 			move_child(shadow_instance, player.get_index() - 1)
 			player.is_shadow_on = 1
 		# mushroom 펫 소환 알고리즘
-		if (player.mushroom_pet == true) and (player.is_mushroom_pet == false):
+		if (player.mushroom_pet_on == true) and (player.is_mushroom_pet == false):
 			var mushroom_pet_instance = mushroom_pet_preload.instantiate()
 			mushroom_pet_instance.name = "mushroom_pet"
 			mushroom_pet_instance.global_position = player.global_position
 			add_child(mushroom_pet_instance)
 			move_child(mushroom_pet_instance, player.get_index() - 1)
 			player.is_mushroom_pet = true
+		# skeleton 펫 소환 알고리즘
+		if (player.skeleton_pet_on == true) and (player.is_skeleton_pet == false):
+			var skeleton_pet_instance = skeleton_pet_preload.instantiate()
+			skeleton_pet_instance.name = "skeleton_pet"
+			skeleton_pet_instance.global_position = player.global_position
+			add_child(skeleton_pet_instance)
+			move_child(skeleton_pet_instance, player.get_index() - 1)
+			player.is_skeleton_pet = true
+	
 
 # Fantasy Warrior
 func _on_select_warrior_pressed():
@@ -79,6 +97,8 @@ func _on_cave_button_pressed():
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
+	select_character.visible = true
+
 
 # Dungeon_B1F
 func _on_dungeon_button_pressed():
@@ -88,15 +108,37 @@ func _on_dungeon_button_pressed():
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
-
-func _on_select_king_mouse_entered():
-	$Button_sound.play()
+	select_character.visible = true
 
 func _on_select_warrior_mouse_entered():
 	$Button_sound.play()
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
+	character_details.text = "신비로운 과거를 품은 검객, 긴 백발 속에는 싸움의 세월이 녹아 있으며, 한 손에 쥔 검은 마치 그의 분신과도 같습니다. 그는 적들을 단칼에 베어버리는 강력한 공격력과 독보적인 전투 기술로 전장에서의 전설로 불립니다. 하지만 내면 깊은 곳에는 복수를 꿈꾸는 어둠이 자리 잡고 있습니다."
+	attack_label.text = "■■"
+	move_label.text   = "■■■■"
+	helth_label.text  = "■■■"
+	
+func _on_select_king_mouse_entered():
+	$Button_sound.play()
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
+	character_details.text = "왕관을 쓴 전사의 모습을 한 그는, 자신의 영토와 백성을 위해 싸우는 불굴의 지도자입니다. 그가 휘두르는 거대한 검은 적에게 공포를 심어주며, 중세의 전장에서 왕으로서의 강력한 존재감을 드러냅니다. 고결한 로브와 왕관은 그의 권력을 상징하며, 모든 적은 그의 분노 앞에서 무릎을 꿇게 됩니다."
+	attack_label.text = "■■■■"
+	move_label.text   = "■■"
+	helth_label.text  = "■■■■■"
 
 func _on_cave_button_mouse_entered():
+	preview_map.texture = preload("res://dynamic/4_world/Cave/cave_title.png")
+	map_details.text = "어둠 속에 반짝이는 수정들과 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
 	$Button_sound.play()
 
 func _on_dungeon_button_mouse_entered():
+	preview_map.texture = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_title.png")
+	map_details.text = "거대한 돌벽과 낡은 상자들 사이로 퍼지는 섬뜩한 분위기"
 	$Button_sound.play()
+
+# 해당 씬 재시작
+func _on_backchar_pressed():
+	get_tree().reload_current_scene()
+
+func _on_backmap_pressed():
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
