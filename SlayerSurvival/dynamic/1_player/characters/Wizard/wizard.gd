@@ -27,7 +27,7 @@ var skeleton_pet    = false
 var skeleton_pet_on = false
 var is_skeleton_pet = false
 
-var attack_damage       = 5		# 일반 공격 데미지
+var attack_damage       = 15		# 일반 공격 데미지
 var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
 var is_shadow_on        = 0
@@ -158,7 +158,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 func process_collision_enemy(damage):
 	if damage_flag:
 		current_hp -= damage
-		DamageVisual.show_damage(damage, self.position, Color.GOLD)
+		DamageVisual.show_damage(-damage, self.position)
 		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
 		damage_flag = false
 		if current_hp <= 0:
@@ -241,8 +241,22 @@ func apply_hit_effect():
 		animated_sprite.material.set_shader_parameter("hit_flag", false)
 
 func cast_lightning():
+	var target = get_closest_enemy()
 	var lightning = preload("res://dynamic/1_player/characters/Wizard/Lightning/lightning.tscn").instantiate()
+	lightning.global_position = target.global_position
 	get_parent().add_child(lightning)
+
+func get_closest_enemy():
+	var closest_enemy = null
+	var closest_distance = INF  # 무한대 값으로 초기화
+	
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		var distance = global_position.distance_to(enemy.global_position)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_enemy = enemy
+			
+	return closest_enemy
 
 func _on_attack_timer_timeout():
 	# 사망 시 공격 모션 비활성화를 위한 조건
@@ -251,7 +265,6 @@ func _on_attack_timer_timeout():
 	is_attacking = true
 	animated_sprite.speed_scale = ANIMATION_SPEED
 	# print("attack timer timeout!")
-	# 방향에 따라 area 변경
 	
 	if attack_times == 1:
 		animation_player.play("attack")

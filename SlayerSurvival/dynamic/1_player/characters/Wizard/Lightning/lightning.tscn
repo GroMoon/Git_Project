@@ -74,6 +74,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_ra6gq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_8x6a8"]
 resource_name = "lightning"
 length = 0.9
@@ -104,7 +119,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/Attack:disabled")
+tracks/2/path = NodePath("Attack/attack:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -112,21 +127,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
-}
-
-[sub_resource type="Animation" id="Animation_ra6gq"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dcrf5"]
@@ -147,7 +147,7 @@ script = ExtResource("1_bgowo")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 self_modulate = Color(0.815686, 0.0666667, 1, 1)
 texture_filter = 1
-scale = Vector2(1, 1)
+position = Vector2(-1.5921, -69.1539)
 sprite_frames = SubResource("SpriteFrames_eywrf")
 animation = &"lightning"
 
@@ -156,8 +156,11 @@ libraries = {
 "": SubResource("AnimationLibrary_dcrf5")
 }
 
-[node name="Area2D" type="Area2D" parent="." groups=["attack"]]
+[node name="Attack" type="Area2D" parent="." groups=["attack"]]
+position = Vector2(-1.5921, -69.1539)
+collision_layer = 8
+collision_mask = 4
 
-[node name="Attack" type="CollisionShape2D" parent="Area2D"]
+[node name="attack" type="CollisionShape2D" parent="Attack"]
 position = Vector2(1.62748, 68.5765)
 shape = SubResource("CircleShape2D_ton8y")

@@ -291,6 +291,21 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_1h5r2"]
 radius = 14.0357
 
+[sub_resource type="Animation" id="Animation_qgrb4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_yrxk6"]
 resource_name = "attack"
 length = 0.9
@@ -319,21 +334,6 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_qgrb4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cok54"]
 _data = {
 "RESET": SubResource("Animation_qgrb4"),
@@ -342,6 +342,7 @@ _data = {
 
 [node name="Wizard" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 2
 script = ExtResource("1_ufk14")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
