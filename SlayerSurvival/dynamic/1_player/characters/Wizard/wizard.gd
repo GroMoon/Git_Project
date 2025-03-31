@@ -13,7 +13,7 @@ const START_HP        = 40
 @onready var animation_player = $AnimationPlayer
 
 # 캐릭터 특성
-@export var character_name  = "wizzard"
+@export var character_name  = "wizard"
 @export var move_speed      = 130
 @export var character_level = 1
 @export var attack_times    = 1 	# 공격 횟수(default 1)
@@ -240,43 +240,29 @@ func apply_hit_effect():
 	else:
 		animated_sprite.material.set_shader_parameter("hit_flag", false)
 
-#func _on_attack_timer_timeout():
-	## 사망 시 공격 모션 비활성화를 위한 조건
-	#if is_dead:
-		#return
-	#is_attacking = true
-	#animated_sprite.speed_scale = ANIMATION_SPEED
-	## print("attack timer timeout!")
-	## 방향에 따라 area 변경
-	#if animated_sprite.flip_h:
-		#attack_area_1.position.x = -37
-		#attack_area_2.position.x = -7
-		#attack_area_3.position.x = -33
-	#else:
-		#attack_area_1.position.x = 37
-		#attack_area_2.position.x = 7
-		#attack_area_3.position.x = 33
-	#
-	#if attack_times == 2:
-		#animation_player.play("attack_1")
-		#await animation_player.animation_finished
-		#animation_player.play("attack_2")
-		#await animation_player.animation_finished
-	#elif attack_times == 3:
-		#animation_player.play("attack_1")
-		#await animation_player.animation_finished
-		#animation_player.play("attack_2")
-		#await animation_player.animation_finished
-		#animation_player.play("attack_3")
-		#await animation_player.animation_finished
-	#else:
-		## 공격 1
-		#animation_player.play("attack_1")
-		#await animation_player.animation_finished
-#
-	#is_attacking = false
-	## 타이머 재시작
-	#$AttackTimer.start()
+func cast_lightning():
+	var lightning = preload("res://dynamic/1_player/characters/Wizard/Lightning/lightning.tscn").instantiate()
+	get_parent().add_child(lightning)
+
+func _on_attack_timer_timeout():
+	# 사망 시 공격 모션 비활성화를 위한 조건
+	if is_dead:
+		return
+	is_attacking = true
+	animated_sprite.speed_scale = ANIMATION_SPEED
+	# print("attack timer timeout!")
+	# 방향에 따라 area 변경
+	
+	if attack_times == 1:
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		cast_lightning()
+	else:
+		pass
+
+	is_attacking = false
+	# 타이머 재시작
+	$AttackTimer.start()
 
 func _on_damage_timer_timeout():
 	damage_flag = true

@@ -29,6 +29,11 @@ func _ready():
 			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/S_combo2.tscn"), 10],
 			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/S_combo3.tscn"), 0],
 		}
+	elif character_name == "wizard":
+		character_features = {
+			# FIXME
+			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/S_combo2.tscn"), 10]
+		}
 	else:
 		print("character_name을 찾을 수 없음")
 		pass

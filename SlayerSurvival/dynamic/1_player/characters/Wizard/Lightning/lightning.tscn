@@ -1,0 +1,163 @@
+[gd_scene load_steps=17 format=3 uid="uid://cem0u2x7hlgif"]
+
+[ext_resource type="Script" path="res://dynamic/1_player/characters/Wizard/Lightning/lightning.gd" id="1_bgowo"]
+[ext_resource type="Texture2D" uid="uid://ixw6txa7bdmt" path="res://dynamic/1_player/characters/Wizard/Lightning/Lightning.png" id="1_qmylq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqyan"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(0, 0, 63, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8y8i0"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(63, 0, 63, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3oooa"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(192, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b88kg"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(256, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekepu"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(320, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0se24"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(384, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ks8rr"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(448, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cj8hc"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(512, 0, 64, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nce14"]
+atlas = ExtResource("1_qmylq")
+region = Rect2(576, 0, 64, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eywrf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqyan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y8i0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3oooa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b88kg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekepu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0se24")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ks8rr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cj8hc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nce14")
+}],
+"loop": true,
+"name": &"lightning",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_8x6a8"]
+resource_name = "lightning"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"lightning"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D/Attack:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ra6gq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dcrf5"]
+_data = {
+"RESET": SubResource("Animation_ra6gq"),
+"lightning": SubResource("Animation_8x6a8")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ton8y"]
+radius = 27.697
+
+[node name="Lightning" type="Node2D"]
+self_modulate = Color(0.858824, 0, 1, 1)
+texture_filter = 1
+scale = Vector2(1.84334, 2.33316)
+script = ExtResource("1_bgowo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0.815686, 0.0666667, 1, 1)
+texture_filter = 1
+scale = Vector2(1, 1)
+sprite_frames = SubResource("SpriteFrames_eywrf")
+animation = &"lightning"
+
+[node name="AnimatedPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dcrf5")
+}
+
+[node name="Area2D" type="Area2D" parent="." groups=["attack"]]
+
+[node name="Attack" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.62748, 68.5765)
+shape = SubResource("CircleShape2D_ton8y")
