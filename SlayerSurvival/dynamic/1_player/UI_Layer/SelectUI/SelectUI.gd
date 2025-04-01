@@ -31,8 +31,8 @@ func _ready():
 		}
 	elif character_name == "wizard":
 		character_features = {
-			# FIXME
-			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Medieval_King/S_combo2.tscn"), 10]
+			"combo2" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Wizard/S_lightning2.tscn"), 10],
+			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Wizard/S_lightning3.tscn"), 0],
 		}
 	else:
 		print("character_name을 찾을 수 없음")
@@ -92,6 +92,8 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.move_speed += 10
 		"drain_blood":
 			print("아직 구현되지 않음")
+		"increase_magnetic_area":
+			player.magnetic_area_scale += 20.0
 		
 # =============== 캐릭터 특성 ==================
 		"combo2":
@@ -104,8 +106,6 @@ func _on_upgrade_button_pressed(upgrade_key):
 		"shadow_partner":
 			player.shadow_attack = 1
 			upgrade_preload["shadow_partner"][1] = 0				# FIXME : 그림자 공격 횟수에 따라 의논 후 변경 필요
-		"increase_magnetic_area":
-			player.magnetic_area_scale += 20.0
 		_:
 			print("ERROR -> 아무것도 선택되지 않음")
 			pass

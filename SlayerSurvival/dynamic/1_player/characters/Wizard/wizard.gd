@@ -13,7 +13,7 @@ const START_HP        = 40
 @export var character_name  = "wizard"
 @export var move_speed      = 130
 @export var character_level = 1
-@export var attack_times    = 2 	# 공격 횟수(default 1)
+@export var attack_times    = 1 	# 공격 횟수(default 1)
 @export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
 # 펫 관련
@@ -184,7 +184,6 @@ func die_character():
 	var cur_gold = int(gold_count)
 	Global.character_data["GOLD"]["gold"] += cur_gold
 	Global.save_character_data()
-	
 	death_flag_for_pause = true
 
 # 골드 추가
@@ -261,11 +260,17 @@ func _on_attack_timer_timeout():
 	animated_sprite.speed_scale = ANIMATION_SPEED
 	# print("attack timer timeout!")
 	
-	if attack_times == 1:
+	if attack_times == 2:
 		animation_player.play("attack")
 		await animation_player.animation_finished
 		cast_lightning()
-	elif attack_times == 2:
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		cast_lightning()
+	elif attack_times == 3:
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		cast_lightning()
 		animation_player.play("attack")
 		await animation_player.animation_finished
 		cast_lightning()
@@ -273,7 +278,9 @@ func _on_attack_timer_timeout():
 		await animation_player.animation_finished
 		cast_lightning()
 	else:
-		pass
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		cast_lightning()
 
 	is_attacking = false
 	# 타이머 재시작

@@ -78,11 +78,17 @@ func _on_attack_timer_timeout():
 	animated_sprite.speed_scale = ANIMATION_SPEED
 	# print("attack timer timeout!")
 	
-	if attack_times == 1:
+	if attack_times == 2:
 		animation_player.play("attack")
 		await animation_player.animation_finished
 		cast_lightning()
-	elif attack_times == 2:
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		cast_lightning()
+	elif attack_times == 3:
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		cast_lightning()
 		animation_player.play("attack")
 		await animation_player.animation_finished
 		cast_lightning()
@@ -90,7 +96,9 @@ func _on_attack_timer_timeout():
 		await animation_player.animation_finished
 		cast_lightning()
 	else:
-		pass
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		cast_lightning()
 
 	is_attacking = false
 	# 타이머 재시작
