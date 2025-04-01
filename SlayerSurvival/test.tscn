@@ -20,10 +20,11 @@ process_mode = 3
 stream = ExtResource("6_a63fx")
 volume_db = -5.0
 
-[connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/select_king" to="." method="_on_select_king_mouse_entered"]
-[connection signal="pressed" from="Select_Character_Panel/CharacterButton/select_king" to="." method="_on_select_king_pressed"]
 [connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/select_warrior" to="." method="_on_select_warrior_mouse_entered"]
 [connection signal="pressed" from="Select_Character_Panel/CharacterButton/select_warrior" to="." method="_on_select_warrior_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/select_king" to="." method="_on_select_king_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/CharacterButton/select_king" to="." method="_on_select_king_pressed"]
+[connection signal="pressed" from="Select_Character_Panel/CharacterButton/wizard" to="." method="_on_wizard_pressed"]
 [connection signal="pressed" from="Select_Character_Panel/back(char)" to="." method="_on_backchar_pressed"]
 [connection signal="mouse_entered" from="Select_Map_Panel/MapButton/cave_button" to="." method="_on_cave_button_mouse_entered"]
 [connection signal="pressed" from="Select_Map_Panel/MapButton/cave_button" to="." method="_on_cave_button_pressed"]
