@@ -61,7 +61,6 @@ func _process(_delta):
 			add_child(skeleton_pet_instance)
 			move_child(skeleton_pet_instance, player.get_index() - 1)
 			player.is_skeleton_pet = true
-	
 
 # Fantasy Warrior
 func _on_select_warrior_pressed():
@@ -89,6 +88,19 @@ func _on_select_king_pressed():
 	get_tree().paused = false
 	select_character.queue_free()
 
+# Wizard
+func _on_wizard_pressed():
+	character_load = preload("res://dynamic/1_player/characters/Wizard/wizard.tscn")
+	# 그림자 결정
+	shadow_preload = preload("res://dynamic/1_player/characters/Wizard/Shadow/wizard_shadow.tscn")
+	instance_character = character_load.instantiate()
+	instance_character.name = "player"
+	# 스케일 조정
+	instance_character.scale = Vector2(0.8,0.8)
+	add_child(instance_character)
+	get_tree().paused = false
+	select_character.queue_free()
+
 # Cave
 func _on_cave_button_pressed():
 	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
@@ -98,7 +110,6 @@ func _on_cave_button_pressed():
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
 	select_character.visible = true
-
 
 # Dungeon_B1F
 func _on_dungeon_button_pressed():
@@ -126,6 +137,17 @@ func _on_select_king_mouse_entered():
 	move_label.text   = "■■"
 	helth_label.text  = "■■■■■"
 
+func _on_wizard_mouse_entered():
+	$Button_sound.play()
+	# FIXME
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
+	character_details.text = "마법사"
+	attack_label.text = "■■■■■■"
+	move_label.text   = "■■"
+	helth_label.text  = "■■■"
+	
+
+
 func _on_cave_button_mouse_entered():
 	preview_map.texture = preload("res://dynamic/4_world/Cave/cave_title.png")
 	map_details.text = "어둠 속에 반짝이는 수정들과 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
@@ -142,3 +164,5 @@ func _on_backchar_pressed():
 
 func _on_backmap_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+
+

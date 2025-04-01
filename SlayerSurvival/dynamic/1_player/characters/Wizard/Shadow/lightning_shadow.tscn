@@ -1,45 +1,45 @@
-[gd_scene load_steps=17 format=3 uid="uid://cem0u2x7hlgif"]
+[gd_scene load_steps=17 format=3 uid="uid://bcflfmcnga1vk"]
 
-[ext_resource type="Script" path="res://dynamic/1_player/characters/Wizard/Lightning/lightning.gd" id="1_bgowo"]
-[ext_resource type="Texture2D" uid="uid://cxdv1spm7hf8j" path="res://dynamic/1_player/characters/Wizard/Lightning/Lightning.png" id="1_qmylq"]
+[ext_resource type="Script" path="res://dynamic/1_player/characters/Wizard/Shadow/lightning_shadow.gd" id="1_gk8b4"]
+[ext_resource type="Texture2D" uid="uid://cxdv1spm7hf8j" path="res://dynamic/1_player/characters/Wizard/Lightning/Lightning.png" id="1_l0klk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gqyan"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(0, 0, 63, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8y8i0"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(63, 0, 63, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3oooa"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(192, 0, 64, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b88kg"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(256, 0, 64, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ekepu"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(320, 0, 64, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0se24"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(384, 0, 64, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ks8rr"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(448, 0, 64, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cj8hc"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(512, 0, 64, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nce14"]
-atlas = ExtResource("1_qmylq")
+atlas = ExtResource("1_l0klk")
 region = Rect2(576, 0, 64, 160)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_eywrf"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_8xuvb"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -135,21 +135,20 @@ _data = {
 "lightning": SubResource("Animation_8x6a8")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ton8y"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_hae5p"]
 radius = 27.697
 
-[node name="Lightning" type="Node2D"]
-self_modulate = Color(0.858824, 0, 1, 1)
-texture_filter = 1
-script = ExtResource("1_bgowo")
+[node name="LightningShadow" type="Node2D"]
+script = ExtResource("1_gk8b4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-self_modulate = Color(0.815686, 0.0666667, 1, 1)
+self_modulate = Color(0.398609, 0.00048949, 0.495932, 1)
 texture_filter = 1
 position = Vector2(0, -110)
 scale = Vector2(1, 1.6)
-sprite_frames = SubResource("SpriteFrames_eywrf")
+sprite_frames = SubResource("SpriteFrames_8xuvb")
 animation = &"lightning"
+flip_h = true
 
 [node name="AnimatedPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -163,4 +162,4 @@ collision_mask = 4
 
 [node name="attack" type="CollisionShape2D" parent="Attack"]
 position = Vector2(0, 68.576)
-shape = SubResource("CircleShape2D_ton8y")
+shape = SubResource("CircleShape2D_hae5p")
