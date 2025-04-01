@@ -1,14 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://xya4xva0d7vj"]
+[gd_scene load_steps=12 format=3 uid="uid://xya4xva0d7vj"]
 
 [ext_resource type="StyleBox" uid="uid://clv8l34xvofwk" path="res://dynamic/1_player/selcet_character/Select_Character_Nornmal.tres" id="1_2r08d"]
 [ext_resource type="StyleBox" uid="uid://crljylwyjpvbx" path="res://dynamic/1_player/selcet_character/Select_Character_Hover.tres" id="2_d7e3u"]
-[ext_resource type="Texture2D" uid="uid://cvcs1cqk0o0i6" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
-[ext_resource type="Texture2D" uid="uid://bticnpq8w6ckx" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
-[ext_resource type="Texture2D" uid="uid://dmsaooe3ircuj" path="res://static/png/ui/assembly_frame_gray.png" id="5_ltlxe"]
-[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
-[ext_resource type="Texture2D" uid="uid://wb7u6f8edpb3" path="res://dynamic/1_player/selcet_character/abillity_img/cursed.png" id="7_5bveo"]
-[ext_resource type="Texture2D" uid="uid://bss7s86sithfg" path="res://dynamic/1_player/selcet_character/abillity_img/speed.webp" id="8_gqlcw"]
-[ext_resource type="Texture2D" uid="uid://cj5wfxrwji347" path="res://dynamic/1_player/selcet_character/abillity_img/Heal.png" id="9_lhsed"]
+[ext_resource type="Texture2D" uid="uid://cuh7tekkpc20r" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
+[ext_resource type="Texture2D" uid="uid://dquoab652ofr8" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
+[ext_resource type="Texture2D" uid="uid://bkv3c5njv5mty" path="res://static/png/ui/assembly_frame_gray.png" id="5_ltlxe"]
+[ext_resource type="FontFile" uid="uid://chgtoeglgeqp" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
+[ext_resource type="Texture2D" uid="uid://ds4ejbkngfi6n" path="res://dynamic/1_player/selcet_character/abillity_img/cursed.png" id="7_5bveo"]
+[ext_resource type="Texture2D" uid="uid://huwtf4efgb0l" path="res://dynamic/1_player/selcet_character/abillity_img/speed.webp" id="8_gqlcw"]
+[ext_resource type="Texture2D" uid="uid://srbpuy6t18w7" path="res://dynamic/1_player/characters/Wizard/Sprites/Wizard.png" id="9_6fx4o"]
+[ext_resource type="Texture2D" uid="uid://cicpokgq0khnq" path="res://dynamic/1_player/selcet_character/abillity_img/Heal.png" id="9_lhsed"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
 font_size = 83
@@ -104,20 +105,6 @@ offset_right = 1088.68
 offset_bottom = 625.072
 color = Color(0.117647, 0.145098, 0.14902, 1)
 
-[node name="select_king" type="Button" parent="CharacterButton"]
-texture_filter = 1
-layout_mode = 1
-offset_left = 143.99
-offset_top = 16.0929
-offset_right = 224.99
-offset_bottom = 97.0929
-scale = Vector2(1.15, 1.15)
-theme_override_styles/normal = ExtResource("1_2r08d")
-theme_override_styles/hover = ExtResource("2_d7e3u")
-icon = ExtResource("3_1yasl")
-icon_alignment = 1
-expand_icon = true
-
 [node name="select_warrior" type="Button" parent="CharacterButton"]
 texture_filter = 1
 layout_mode = 1
@@ -132,18 +119,30 @@ icon = ExtResource("3_llvfx")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ban1" type="Button" parent="CharacterButton"]
+[node name="select_king" type="Button" parent="CharacterButton"]
 texture_filter = 1
-layout_mode = 0
+layout_mode = 1
+offset_left = 143.99
+offset_top = 16.0929
+offset_right = 224.99
+offset_bottom = 97.0929
+scale = Vector2(1.15, 1.15)
+theme_override_styles/normal = ExtResource("1_2r08d")
+theme_override_styles/hover = ExtResource("2_d7e3u")
+icon = ExtResource("3_1yasl")
+icon_alignment = 1
+expand_icon = true
+
+[node name="wizard" type="Button" parent="CharacterButton"]
+layout_mode = 1
 offset_left = 263.99
 offset_top = 16.1703
 offset_right = 344.99
 offset_bottom = 97.1703
 scale = Vector2(1.15, 1.15)
-theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = ExtResource("1_2r08d")
 theme_override_styles/hover = ExtResource("2_d7e3u")
-text = "🔒"
+icon = ExtResource("9_6fx4o")
 icon_alignment = 1
 expand_icon = true
 
