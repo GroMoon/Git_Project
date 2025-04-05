@@ -160,14 +160,12 @@ func _on_select_king_mouse_entered():
 func _on_wizard_mouse_entered():
 	$Button_sound.play()
 	# FIXME
-	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/wizard_pixelart.webp")
 	character_details.text = "마법사"
 	attack_label.text = "■■■■■■"
 	move_label.text   = "■■"
 	helth_label.text  = "■■■"
 	
-
-
 func _on_cave_button_mouse_entered():
 	preview_map.texture = preload("res://dynamic/4_world/Cave/cave_title.png")
 	map_details.text = "어둠 속에 반짝이는 수정들과 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
