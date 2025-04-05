@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://cju5tcwxacnff"]
+
+[ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="1_12atf"]
+[ext_resource type="Script" path="res://dynamic/2_enemy/FlyingEye/flyingeye.gd" id="1_q71kr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qxlil"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"take_hit",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Flyingeye" type="CharacterBody2D"]
+script = ExtResource("1_q71kr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qxlil")
+animation = &"take_hit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="interaction_sensor" parent="." instance=ExtResource("1_12atf")]
+
+[editable path="interaction_sensor"]
