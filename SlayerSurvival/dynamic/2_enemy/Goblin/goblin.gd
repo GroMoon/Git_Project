@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const ANIMATION_SPEED = 2.0		# 기본 애니메이션 속도
+const ANIMATION_SPEED = 1.6		# 기본 애니메이션 속도
 const PET_CHANCE      = 0.5		# 펫이 될 확률
 
 @onready var collision_shape    = $CollisionShape2D
@@ -13,9 +13,9 @@ var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
 #var golds = 25
 
 # 적 특성
-var health       = 8 	# 적 체력
-var move_speed   = 100 	# 적 이동 속도
-var damage       = 3  	# 적 데미지
+var health       = 10 	# 적 체력
+var move_speed   = 120 	# 적 이동 속도
+var damage       = 6  	# 적 데미지
 var spawn_radius = 700  # 스폰 범위
 # 전역 변수
 var player 
