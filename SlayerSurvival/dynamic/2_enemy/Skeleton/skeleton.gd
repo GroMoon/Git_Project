@@ -15,9 +15,9 @@ const PET_CHANCE      = 0.5		# 펫이 될 확률
 
 # 적 특성
 var health       = 10 	# 적 체력
-var move_speed   = 100 	# 적 이동 속도
-var damage       = 3  	# 적 데미지
-var spawn_radius = 300  # 스폰 범위
+var move_speed   = 75 	# 적 이동 속도
+var damage       = 5  	# 적 데미지
+var spawn_radius = 500  # 스폰 범위
 # 전역 변수
 var player 
 var touch_flag = false 
