@@ -376,6 +376,8 @@ height = 35.0
 
 [node name="Flyingeye" type="CharacterBody2D" groups=["enemy"]]
 texture_filter = 1
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_q71kr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -388,6 +390,8 @@ position = Vector2(5, 2)
 shape = SubResource("CircleShape2D_8q3xa")
 
 [node name="interaction_sensor" parent="." instance=ExtResource("1_12atf")]
+collision_layer = 4
+collision_mask = 10
 
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(5, 2)

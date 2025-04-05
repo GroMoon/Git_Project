@@ -391,6 +391,8 @@ height = 32.0
 
 [node name="Goblin" type="CharacterBody2D" groups=["enemy"]]
 texture_filter = 1
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_vuh42")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -403,6 +405,8 @@ position = Vector2(0, 9)
 shape = SubResource("CircleShape2D_wfolo")
 
 [node name="interaction_sensor" parent="." instance=ExtResource("1_poxhx")]
+collision_layer = 4
+collision_mask = 10
 
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(0, 9)
