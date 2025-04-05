@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const ANIMATION_SPEED = 1.2		# 기본 애니메이션 속도
+const ANIMATION_SPEED = 2.0		# 기본 애니메이션 속도
 const PET_CHANCE      = 0.5		# 펫이 될 확률
 
 @onready var collision_shape    = $CollisionShape2D
@@ -8,16 +8,15 @@ const PET_CHANCE      = 0.5		# 펫이 될 확률
 @onready var interaction_sensor = $interaction_sensor 
 
 # 아이템
-@onready var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
-@onready var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
-#var gold_value = 10
-
+var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
+var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
+#var golds = 25
 
 # 적 특성
-var health       = 10 	# 적 체력
-var move_speed   = 75 	# 적 이동 속도
-var damage       = 5  	# 적 데미지
-var spawn_radius = 500  # 스폰 범위
+var health       = 8 	# 적 체력
+var move_speed   = 100 	# 적 이동 속도
+var damage       = 3  	# 적 데미지
+var spawn_radius = 700  # 스폰 범위
 # 전역 변수
 var player 
 var touch_flag = false 
@@ -32,6 +31,7 @@ var knockback_strength = 150.0  		# 넉백 세기
 func _ready():
 	# player 노드 찾기
 	player = get_parent().get_parent().get_node("player")
+	# print("Enemy instance name : ", name)
 	
 func _physics_process(delta):
 	# 사망 상태에서 아무것도 처리 아지 않도록
@@ -68,26 +68,26 @@ func die_enemy():
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
-	if (player.is_skeleton_pet==false)&&(pet_chance <= PET_CHANCE):
+	if (player.is_mushroom_pet==false)&&(pet_chance <= PET_CHANCE):
 		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
-		player.skeleton_pet = true		
-		Dialogic.start("res://dynamic/7_dialogic/get_skeleton_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
-		Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
+		# player.mushroom_pet = true
+		# Dialogic.start("res://dynamic/7_dialogic/get_mushroom_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
+		# Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
 		queue_free()
 	else:
-		queue_free()									# 적 노드 삭제
-	
+		queue_free()										# 적 노드 삭제
+
 # 아이템 드랍 함수
 func drop_item():
 	# 골드
 	var gold_chance = randf()
-	if gold_chance <= 1.0:								# 드랍 확률 조정 (0.0~1.0)
+	if gold_chance <= 0.5:								# 드랍 확률 조정 (0.0~1.0)
 		var new_gold = gold_img.instantiate()
 		new_gold.global_position = global_position
 		get_parent().call_deferred("add_child", new_gold)
 	# 경험치
 	var exp_chance = randf()
-	if exp_chance <= 1.0:								# 드랍 확률 조정 (0.0~1.0)
+	if exp_chance <= 0.7:								# 드랍 확률 조정 (0.0~1.0)
 		var new_exp = exp_img.instantiate()
 		new_exp.global_position = global_position + Vector2(10, 0)
 		get_parent().call_deferred("add_child", new_exp)
@@ -117,14 +117,13 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		health -= take_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
 		DamageVisual.show_damage(take_damage, self.position, Color.WHITE)
 		if health <= 0:
-			# queue_free()
 			die_enemy()
 		else:
 			apply_knockback(area.get_parent())
 			# 데미지 모션 추가
 			hit_flag = true
-			animated_sprite.stop()
-			animated_sprite.speed_scale = 2.0					# 현재 애니메이션(walk)을 중지시킴
+			animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
+			animated_sprite.speed_scale = 2.0
 			animated_sprite.play("take_hit")
 			await animated_sprite.animation_finished
 		hit_flag = false

@@ -11,8 +11,10 @@ var sec
 var boss_spawn_flag = false # 보스 스폰 여부 플래그
 
 # 일반 몬스터
-var skeleton = preload("res://dynamic/2_enemy/Skeleton/skeleton.tscn")
-var mushroom = preload("res://dynamic/2_enemy/Mushroom/mushroom.tscn")
+var skeleton  = preload("res://dynamic/2_enemy/Skeleton/skeleton.tscn")
+var mushroom  = preload("res://dynamic/2_enemy/Mushroom/mushroom.tscn")
+var goblin    = preload("res://dynamic/2_enemy/Goblin/goblin.tscn")
+var flyingeye = preload("res://dynamic/2_enemy/FlyingEye/flyingeye.tscn")
 # 보스 몬스터
 var fire_worm = preload("res://dynamic/2_enemy/Boss_FireWorm/fireworm.tscn")
 
@@ -25,7 +27,8 @@ func _process(_delta):
 	base_ui = player.get_node("UI_Layer/BaseUI")
 	minute  = base_ui.minute
 	sec     = base_ui.sec
-	if (!boss_spawn_flag) && (minute==1):		# FIXME : test용으로 현재 보스 스폰 시간 1분
+	#! FIXME : 맵에 따른 보스몬스터 소환 알고리즘 추가 필요
+	if (!boss_spawn_flag) && (minute==1):		#! FIXME : test용으로 현재 보스 스폰 시간 1분 
 		spawn_enemy(fire_worm, BOSS_MONSTER)
 		boss_spawn_flag = true
 	
@@ -61,3 +64,10 @@ func _on_skeleton_timer_timeout():
 func _on_mushroom_timer_timeout():
 	spawn_enemy(mushroom, MONSTER)
 	
+# FlyingEye 소환
+func _on_flying_eye_timer_timeout():
+	spawn_enemy(flyingeye, MONSTER)
+
+# Goblin 소환
+func _on_goblin_timer_timeout():
+	spawn_enemy(goblin, MONSTER)
