@@ -21,8 +21,10 @@ const START_HP        = 75
 
 # 펫 관련
 var mushroom_pet    = false
+var mushroom_pet_on = false
 var is_mushroom_pet = false
 var skeleton_pet    = false
+var skeleton_pet_on = false
 var is_skeleton_pet = false
 
 var attack_damage       = 10		# 일반 공격 데미지
@@ -87,6 +89,15 @@ func _ready():
 	magnetic_area.shape.radius = magnetic_area_scale
 	# 공격 범위 초기화(off)
 	animation_player.play("RESET")
+	# 몬스터펫 초기화
+	Dialogic.VAR.mushroom_pet_diag = false
+	Dialogic.VAR.skeleton_pet_diag = false
+	# mushroom_pet    = false
+	# mushroom_pet_on = false
+	# is_mushroom_pet = false
+	# skeleton_pet    = false
+	# skeleton_pet_on = false
+	# is_skeleton_pet = false
 	
 
 func _physics_process(_delta):
@@ -116,6 +127,10 @@ func _physics_process(_delta):
 	gold_label.text = str(gold_count)
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
+
+	#? diaglogic variable test
+	mushroom_pet_on = Dialogic.VAR.mushroom_pet_diag
+	skeleton_pet_on = Dialogic.VAR.skeleton_pet_diag
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO

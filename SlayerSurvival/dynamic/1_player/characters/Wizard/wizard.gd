@@ -2,21 +2,18 @@ extends CharacterBody2D
 
 signal levelup
 
-const ANIMATION_SPEED = 2.0
-const START_HP        = 50
+const ANIMATION_SPEED = 1.5
+const START_HP        = 40
 
-@onready var attack_area_1    = $Attack/attack_1
-@onready var attack_area_2    = $Attack/attack_2
-@onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 @onready var animation_player = $AnimationPlayer
 
 # 캐릭터 특성
-@export var character_name  = "fantasy_warrior"
-@export var move_speed      = 250
+@export var character_name  = "wizard"
+@export var move_speed      = 130
 @export var character_level = 1
-@export var attack_times    = 1 	# 공격 횟수 (default 1)
+@export var attack_times    = 1 	# 공격 횟수(default 1)
 @export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
 # 펫 관련
@@ -27,7 +24,7 @@ var skeleton_pet    = false
 var skeleton_pet_on = false
 var is_skeleton_pet = false
 
-var attack_damage       = 5			# 일반 공격 데미지
+var attack_damage       = 15		# 일반 공격 데미지
 var is_attacking        = false
 var magnetic_area_scale = 100.0		# 자석 범위(원 기준)
 var is_shadow_on        = 0
@@ -67,9 +64,9 @@ var current_hp = max_hp:
 
 var damage_flag = false 	# 데미지 플래그 (=무적 플래그)
 var hit_flag    = false 	# 히트 플래그
-var is_dead		= false		# 사망 플래그그
+var is_dead		= false
 
-var death_flag_for_pause  = false  # BaseUI에서 사망 시 퍼즈를 위한 플래그
+var death_flag_for_pause  = false 	# 데스 플래그
 
 @onready var level_label = $UI_Layer/BaseUI/Level
 
@@ -85,10 +82,8 @@ func _ready():
 	max_hp = START_HP
 	current_exp = start_exp
 	# 자석 범위 설정
-	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
+	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결
 	magnetic_area.shape.radius = magnetic_area_scale
-	# 공격 범위 초기화(off)
-	animation_player.play("RESET")
 	# 몬스터펫 초기화
 	Dialogic.VAR.mushroom_pet_diag = false
 	Dialogic.VAR.skeleton_pet_diag = false
@@ -98,9 +93,9 @@ func _ready():
 	# skeleton_pet    = false
 	# skeleton_pet_on = false
 	# is_skeleton_pet = false
+	
 
 func _physics_process(_delta):
-	# 사망 시 이동 처리 안 함
 	if is_dead:
 		return
 	# 공격 중에 이동 처리 안 함
@@ -121,15 +116,13 @@ func _physics_process(_delta):
 			animated_sprite.play("run")
 			animated_sprite.flip_h = velocity.x < 0
 		else:
-			animated_sprite.play("idle")
-		
+			animated_sprite.play("idle")	
+	
 	# 라벨 업데이트
 	gold_label.text = str(gold_count)
 	kill_label.text = str(kill_count)
 	level_label.text = "LV " + str(character_level)
-	# 그림자 분신술
-	# add_shadow(shadow_attack)
-	
+
 	#? diaglogic variable test
 	mushroom_pet_on = Dialogic.VAR.mushroom_pet_diag
 	skeleton_pet_on = Dialogic.VAR.skeleton_pet_diag
@@ -166,6 +159,7 @@ func process_collision_enemy(damage):
 		if current_hp <= 0:
 			is_dead = true
 			print("사망")
+			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
 			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
 			animated_sprite.stop()
 			animated_sprite.speed_scale = ANIMATION_SPEED
@@ -190,8 +184,7 @@ func die_character():
 	var cur_gold = int(gold_count)
 	Global.character_data["GOLD"]["gold"] += cur_gold
 	Global.save_character_data()
-	
-	death_flag_for_pause = true	
+	death_flag_for_pause = true
 
 # 골드 추가
 func add_gold(gold_value):
@@ -202,7 +195,7 @@ func add_exp(_exp_value):
 	current_exp += _exp_value
 	calculate_exp()
 
-# 체력회복(음식)
+# 체력 회복(음식)
 func add_food(health_value):
 	current_hp += health_value
 
@@ -226,8 +219,8 @@ func calculate_exp():
 func level_up():
 	if current_exp >= max_exp:
 		character_level += 1
+		print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
-		get_tree().paused = true
 		emit_signal("levelup")
 
 func _on_magnetic_area_area_entered(area:Area2D):
@@ -241,39 +234,53 @@ func apply_hit_effect():
 	else:
 		animated_sprite.material.set_shader_parameter("hit_flag", false)
 
+func cast_lightning():
+	var target = get_closest_enemy()
+	var lightning = preload("res://dynamic/1_player/characters/Wizard/Lightning/lightning.tscn").instantiate()
+	lightning.global_position = target.global_position
+	get_parent().add_child(lightning)
+
+func get_closest_enemy():
+	var closest_enemy = null
+	var closest_distance = 300
+	
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		var distance = global_position.distance_to(enemy.global_position)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_enemy = enemy
+			
+	return closest_enemy if closest_enemy else self
+
 func _on_attack_timer_timeout():
 	# 사망 시 공격 모션 비활성화를 위한 조건
 	if is_dead:
-		return	
+		return
 	is_attacking = true
 	animated_sprite.speed_scale = ANIMATION_SPEED
 	# print("attack timer timeout!")
-	# 방향에 따라 area 변경
-	if animated_sprite.flip_h:
-		attack_area_1.position.x = -29
-		attack_area_2.position.x = -4
-		attack_area_3.position.x = -30
-	else:
-		attack_area_1.position.x = 29
-		attack_area_2.position.x = 4
-		attack_area_3.position.x = 30
 	
 	if attack_times == 2:
-		animation_player.play("attack_1")
+		animation_player.play("attack")
 		await animation_player.animation_finished
-		animation_player.play("attack_2")
+		cast_lightning()
+		animation_player.play("attack")
 		await animation_player.animation_finished
+		cast_lightning()
 	elif attack_times == 3:
-		animation_player.play("attack_1")
+		animation_player.play("attack")
 		await animation_player.animation_finished
-		animation_player.play("attack_2")
+		cast_lightning()
+		animation_player.play("attack")
 		await animation_player.animation_finished
-		animation_player.play("attack_3")
+		cast_lightning()
+		animation_player.play("attack")
 		await animation_player.animation_finished
+		cast_lightning()
 	else:
-		# 공격 1
-		animation_player.play("attack_1")
+		animation_player.play("attack")
 		await animation_player.animation_finished
+		cast_lightning()
 
 	is_attacking = false
 	# 타이머 재시작
