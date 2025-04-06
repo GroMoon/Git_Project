@@ -25,14 +25,18 @@ var shadow_preload
 # 펫을 인스턴스 하기 위한 선언
 var mushroom_pet_preload
 var skeleton_pet_preload
+var goblin_pet_preload
+var flyingeye_pet_preload
 
 func _ready():
 	select_character.visible = false
 	select_map.visible = true
 	get_tree().paused = true
 	# 펫 미리 preload
-	mushroom_pet_preload = preload("res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.tscn")
-	skeleton_pet_preload = preload("res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.tscn")
+	mushroom_pet_preload  = preload("res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.tscn")
+	skeleton_pet_preload  = preload("res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.tscn")
+	goblin_pet_preload    = preload("res://dynamic/2_enemy/Goblin/Goblin_Pet/goblin_pet.tscn")
+	flyingeye_pet_preload = preload("res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.tscn")
 
 func _process(_delta):
 	player = get_node("player")
@@ -61,7 +65,23 @@ func _process(_delta):
 			add_child(skeleton_pet_instance)
 			move_child(skeleton_pet_instance, player.get_index() - 1)
 			player.is_skeleton_pet = true
-
+		# goblin 펫 소환 알고리즘
+		if (player.goblin_pet_on == true) and (player.is_goblin_pet == false):
+			var goblin_pet_instance = goblin_pet_preload.instantiate()
+			goblin_pet_instance.name = "goblin_pet"
+			goblin_pet_instance.global_position = player.global_position
+			add_child(goblin_pet_instance)
+			move_child(goblin_pet_instance, player.get_index() - 1)
+			player.is_goblin_pet = true
+		# flyingeye 펫 소환 알고리즘
+		if (player.flyingeye_pet_on == true) and (player.is_flyingeye_pet == false):
+			var flyingeye_pet_instance = flyingeye_pet_preload.instantiate()
+			flyingeye_pet_instance.name = "flyingeye_pet"
+			flyingeye_pet_instance.global_position = player.global_position
+			add_child(flyingeye_pet_instance)
+			move_child(flyingeye_pet_instance, player.get_index() - 1)
+			player.is_flyingeye_pet = true
+			
 # Fantasy Warrior
 func _on_select_warrior_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn")

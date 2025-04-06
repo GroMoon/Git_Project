@@ -68,11 +68,11 @@ func die_enemy():
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
-	if (player.is_mushroom_pet==false)&&(pet_chance <= PET_CHANCE):
+	if (player.is_goblin_pet==false)&&(pet_chance <= PET_CHANCE):
 		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
-		# player.mushroom_pet = true
-		# Dialogic.start("res://dynamic/7_dialogic/get_mushroom_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
-		# Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
+		player.goblin_pet = true
+		Dialogic.start("res://dynamic/7_dialogic/get_goblin_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
+		Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
 		queue_free()
 	else:
 		queue_free()										# 적 노드 삭제
