@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const STOP_DISTANCE          = 50.0 		# 플레이어와의 거리가 해당 값 이하일 땐 멈춤
-const ATTACK_DISTANCE        = 10.0			# 공격을 시작하는 거리
+const ATTACK_DISTANCE        = 15.0			# 공격을 시작하는 거리
 const ANIMATION_SPEED        = 2.5			# 기본 애니메이션 속도
 const ATTACK_ANIMATION_SPEED = 2.5 			# 공격 애니메이션 속도
 
@@ -107,9 +107,9 @@ func _on_attack_timer_timeout():
 	# 공격 1
 	attack_area.set_deferred("disabled", false)
 	if animated_sprite.flip_h:		# 왼쪽 공격
-		attack_area.position = Vector2(-11, 3)
+		attack_area.position = Vector2(-17.5, 3)
 	else: 							# 오른쪽 공격
-		attack_area.position = Vector2(11, 3)
+		attack_area.position = Vector2(17.5, 3)
 	animated_sprite.play("attack")
 	await animated_sprite.animation_finished
 	attack_area.set_deferred("disabled", true)	

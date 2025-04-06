@@ -399,6 +399,8 @@ size = Vector2(43, 28)
 
 [node name="GoblinPet" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_lh52u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -418,5 +420,7 @@ position = Vector2(44.5, 10)
 shape = SubResource("RectangleShape2D_raeu4")
 
 [node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

@@ -380,16 +380,18 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_76p06"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sgira"]
-size = Vector2(22, 28)
+size = Vector2(35, 28)
 
 [node name="FlyingeyePet" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_ijo13")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_qmn8w")
 sprite_frames = SubResource("SpriteFrames_hs0gc")
-animation = &"idle"
+animation = &"attack"
 speed_scale = 2.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -399,9 +401,10 @@ shape = SubResource("CircleShape2D_76p06")
 [node name="Attack" type="Area2D" parent="." groups=["attack"]]
 
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
-position = Vector2(11, 3)
+position = Vector2(17.5, 3)
 shape = SubResource("RectangleShape2D_sgira")
 
 [node name="AttackTimer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
