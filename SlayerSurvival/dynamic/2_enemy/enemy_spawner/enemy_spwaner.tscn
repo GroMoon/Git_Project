@@ -6,12 +6,22 @@
 script = ExtResource("1_yjod4")
 
 [node name="SkeletonTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 6.0
 autostart = true
 
 [node name="MushroomTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
 
+[node name="GoblinTimer" type="Timer" parent="."]
+wait_time = 7.0
+autostart = true
+
+[node name="FlyingEyeTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
 [connection signal="timeout" from="SkeletonTimer" to="." method="_on_skeleton_timer_timeout"]
 [connection signal="timeout" from="MushroomTimer" to="." method="_on_mushroom_timer_timeout"]
+[connection signal="timeout" from="GoblinTimer" to="." method="_on_goblin_timer_timeout"]
+[connection signal="timeout" from="FlyingEyeTimer" to="." method="_on_flying_eye_timer_timeout"]

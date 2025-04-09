@@ -20,10 +20,18 @@ const START_HP        = 50
 @export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
 # 펫 관련
-var mushroom_pet    = false
-var is_mushroom_pet = false
-var skeleton_pet    = false
-var is_skeleton_pet = false
+var mushroom_pet     = false
+var mushroom_pet_on  = false
+var is_mushroom_pet  = false
+var skeleton_pet     = false
+var skeleton_pet_on  = false
+var is_skeleton_pet  = false
+var goblin_pet       = false
+var goblin_pet_on    = false
+var is_goblin_pet    = false
+var flyingeye_pet    = false
+var flyingeye_pet_on = false
+var is_flyingeye_pet = false
 
 var attack_damage       = 5			# 일반 공격 데미지
 var is_attacking        = false
@@ -87,6 +95,11 @@ func _ready():
 	magnetic_area.shape.radius = magnetic_area_scale
 	# 공격 범위 초기화(off)
 	animation_player.play("RESET")
+	# 몬스터펫 초기화
+	Dialogic.VAR.mushroom_pet_diag  = false
+	Dialogic.VAR.skeleton_pet_diag  = false
+	Dialogic.VAR.goblin_pet_diag    = false
+	Dialogic.VAR.flyingeye_pet_diag = false
 
 func _physics_process(_delta):
 	# 사망 시 이동 처리 안 함
@@ -118,6 +131,12 @@ func _physics_process(_delta):
 	level_label.text = "LV " + str(character_level)
 	# 그림자 분신술
 	# add_shadow(shadow_attack)
+	
+	#? diaglogic variable test
+	mushroom_pet_on  = Dialogic.VAR.mushroom_pet_diag
+	skeleton_pet_on  = Dialogic.VAR.skeleton_pet_diag
+	goblin_pet_on    = Dialogic.VAR.goblin_pet_diag
+	flyingeye_pet_on = Dialogic.VAR.flyingeye_pet_diag
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO

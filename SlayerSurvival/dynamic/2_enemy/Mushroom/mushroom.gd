@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const ANIMATION_SPEED = 1.5		# 기본 애니메이션 속도
+const PET_CHANCE      = 0.5		# 펫이 될 확률
 
 @onready var collision_shape    = $CollisionShape2D
 @onready var animated_sprite    = $AnimatedSprite2D
@@ -30,7 +31,7 @@ var knockback_strength = 150.0  		# 넉백 세기
 func _ready():
 	# player 노드 찾기
 	player = get_parent().get_parent().get_node("player")
-	print("Enemy instance name : ", name)
+	# print("Enemy instance name : ", name)
 	
 func _physics_process(delta):
 	# 사망 상태에서 아무것도 처리 아지 않도록
@@ -56,6 +57,9 @@ func _physics_process(delta):
 			animated_sprite.speed_scale = ANIMATION_SPEED
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
+			
+	if touch_flag:
+		player.process_collision_enemy(damage)
 
 # 사망 처리 함수
 func die_enemy():
@@ -67,9 +71,11 @@ func die_enemy():
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
-	if pet_chance <= 0.1:
+	if (player.is_mushroom_pet==false)&&(pet_chance <= PET_CHANCE):
 		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
 		player.mushroom_pet = true
+		Dialogic.start("res://dynamic/7_dialogic/get_mushroom_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
+		Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
 		queue_free()
 	else:
 		queue_free()										# 적 노드 삭제
@@ -99,7 +105,6 @@ func apply_knockback(attacker: Node2D):
 # 접촉 상태가 되었을 때
 func _on_interaction_sensor_body_entered(_body:Node2D):
 	if _body == player and not touch_flag:
-		player.process_collision_enemy(damage)
 		touch_flag = true
 		# print(touch_flag)
 
