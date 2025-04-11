@@ -14,14 +14,14 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bplh1"]
-bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+bg_color = Color(0.709804, 0.717647, 0.827451, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0o1gf"]
-bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+bg_color = Color(0.709804, 0.717647, 0.827451, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -35,7 +35,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w73a"]
-bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+bg_color = Color(0.709804, 0.717647, 0.827451, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -49,14 +49,14 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wy5jm"]
-bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+bg_color = Color(0.709804, 0.717647, 0.827451, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7dfv"]
-bg_color = Color(0.709804, 0.717647, 0.501961, 1)
+bg_color = Color(0.709804, 0.717647, 0.827451, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
