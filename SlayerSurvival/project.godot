@@ -68,6 +68,10 @@ folder_colors={
 
 import/blender/enabled=false
 
+[gui]
+
+theme/custom_font="res://static/font/DNFBitBitTTF.ttf"
+
 [input]
 
 up={
