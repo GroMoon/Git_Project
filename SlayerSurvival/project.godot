@@ -57,7 +57,6 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 folder_colors={
 "res://dynamic/1_player/": "blue",
 "res://dynamic/2_enemy/": "red",
-"res://dynamic/3_attack/": "orange",
 "res://dynamic/4_world/": "green",
 "res://dynamic/5_title_screen/": "purple",
 "res://dynamic/6_utillity/": "gray",
@@ -67,6 +66,10 @@ folder_colors={
 [filesystem]
 
 import/blender/enabled=false
+
+[gui]
+
+theme/custom_font="res://static/font/DNFBitBitTTF.ttf"
 
 [input]
 
