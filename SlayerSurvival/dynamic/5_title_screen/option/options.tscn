@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://rewebuj5illv"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/option/options.gd" id="1_h31jj"]
-[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
+[ext_resource type="FontFile" uid="uid://b2hvss27ajx3v" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
 

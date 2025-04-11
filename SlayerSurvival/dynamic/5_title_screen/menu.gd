@@ -21,10 +21,12 @@ func _on_item_button_mouse_entered():
 func _on_setting_button_mouse_entered():
 	$Button_sound.play()
 	
-
 # STORE BUTTON
 func _on_store_button_mouse_entered():
 	$Button_sound.play()
+
+func _on_store_button_pressed():
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/store/store.tscn")
 
 # QUIT BUTTON
 func _on_quit_button_mouse_entered():
@@ -39,3 +41,5 @@ func _on_setting_button_pressed():
 	var options_instance = options.instantiate()
 	$Button_sound.play()
 	add_child(options_instance)
+
+
