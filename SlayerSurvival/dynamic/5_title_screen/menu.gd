@@ -17,10 +17,10 @@ func _on_start_button_pressed():
 func _on_item_button_mouse_entered():
 	$Button_sound.play()
 
-# SETTING BUTTON
+# OPTIONS BUTTON
 func _on_setting_button_mouse_entered():
 	$Button_sound.play()
-	print(Global.character_data)
+	
 
 # STORE BUTTON
 func _on_store_button_mouse_entered():
@@ -32,3 +32,10 @@ func _on_quit_button_mouse_entered():
 
 func _on_quit_button_pressed():
 	get_tree().quit()
+
+
+func _on_setting_button_pressed():
+	var options = preload("res://dynamic/5_title_screen/option/options.tscn")
+	var options_instance = options.instantiate()
+	$Button_sound.play()
+	add_child(options_instance)
