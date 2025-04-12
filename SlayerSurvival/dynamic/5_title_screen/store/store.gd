@@ -5,6 +5,7 @@ var gold
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.connect("purchase", Callable(self, "update_gold"))
 	update_gold()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

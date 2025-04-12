@@ -1,5 +1,7 @@
 extends Node
 
+signal purchase()
+
 const CHARACTER_DATA_PATH = "res://player_data.json"
 var character_data = {}
 

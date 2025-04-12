@@ -1,5 +1,7 @@
 extends Node
 
+signal purchase()
+
 const STORE_DATA_PATH = "res://store_data.json"
 
 var store_data = {}
