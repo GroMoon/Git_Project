@@ -51,6 +51,8 @@ func create_default_character_data():
 			"damage": 0,
 			"speed": 0,
 			"cooldown": 0,
-			"vampire": 0
+			"vampire": 0,
+			"gold_drop": 0,
+			"gem_drop": 0
 		}
 	}

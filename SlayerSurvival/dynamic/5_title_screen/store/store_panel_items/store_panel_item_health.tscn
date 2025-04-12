@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://btd4lq77160bh"]
+
+[ext_resource type="Texture2D" uid="uid://dswqosy3gf4d" path="res://dynamic/6_utillity/items/frame/frame.png" id="1_cty3b"]
+[ext_resource type="Texture2D" uid="uid://f5cn3dmcj84v" path="res://dynamic/5_title_screen/store/store_sprites/health.png" id="1_mlbc5"]
+[ext_resource type="Texture2D" uid="uid://bycgjtadpl04w" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="2_wnhh4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ua2ys"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="StorePanelItemHealth" type="Panel"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 330.0
+offset_bottom = 235.0
+color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
+
+[node name="Item_sprite" type="Sprite2D" parent="."]
+position = Vector2(64.5, 67.625)
+scale = Vector2(0.212963, 0.251683)
+texture = ExtResource("1_mlbc5")
+
+[node name="Frame_sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(63.5, 59.5)
+scale = Vector2(7.91667, 7.08333)
+texture = ExtResource("1_cty3b")
+
+[node name="TextureButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 173.0
+offset_right = 102.0
+offset_bottom = 217.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_ua2ys")
+text = "BUY"
+
+[node name="Name_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 17.0
+offset_right = 232.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 25
+text = "HEALTH"
+vertical_alignment = 1
+
+[node name="Level_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 57.0
+offset_right = 209.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 20
+text = "Level : 1"
+vertical_alignment = 1
+
+[node name="Description_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 111.0
+offset_right = 308.0
+offset_bottom = 165.0
+theme_override_font_sizes/font_size = 15
+text = "최대체력이 증가합니다"
+
+[node name="Cost" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 177.0
+offset_right = 312.0
+offset_bottom = 215.0
+
+[node name="Gold_icon" type="TextureRect" parent="Cost"]
+layout_mode = 2
+texture = ExtResource("2_wnhh4")
+
+[node name="Cost_label" type="Label" parent="Cost"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "123"

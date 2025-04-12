@@ -52,5 +52,7 @@ func create_default_store_data():
 		"STORE_ITEM_DAMAGE": {"level": "0", "max_level": 5},
 		"STORE_ITEM_SPEED": {"level": "0", "max_level": 5},
 		"STORE_ITEM_COOLDOWN": {"level": "0", "max_level": 5},
-		"STORE_ITEM_VAMPIRE": {"level": "0", "max_level": 5}
+		"STORE_ITEM_VAMPIRE": {"level": "0", "max_level": 5},
+		"STORE_ITEM_GOLD_DROP": {"level": "0", "max_level": 5},
+		"STORE_ITEM_GEM_DROP": {"level": "0", "max_level": 5}
 	}
