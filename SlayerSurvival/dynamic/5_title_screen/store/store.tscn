@@ -1,0 +1,84 @@
+[gd_scene load_steps=6 format=3 uid="uid://c1mrkkfrvqn25"]
+
+[ext_resource type="Script" path="res://dynamic/5_title_screen/store/store.gd" id="1_dvmxk"]
+[ext_resource type="Texture2D" uid="uid://bmum5oxj7utmd" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_gcuk1"]
+[ext_resource type="Texture2D" uid="uid://bycgjtadpl04w" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_yby07"]
+[ext_resource type="PackedScene" uid="uid://30do7x8lf7a1" path="res://dynamic/5_title_screen/store/store_panel.tscn" id="4_lb3ej"]
+[ext_resource type="PackedScene" uid="uid://cjk5bgnmwwbp7" path="res://dynamic/5_title_screen/store/store_panel_item_templete.tscn" id="5_c6f3d"]
+
+[node name="Store" type="Node2D"]
+script = ExtResource("1_dvmxk")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1200.0
+offset_bottom = 650.0
+texture = ExtResource("2_gcuk1")
+expand_mode = 1
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 59.0
+offset_top = 116.0
+offset_right = 1109.0
+offset_bottom = 633.0
+
+[node name="Gold" type="Node2D" parent="."]
+texture_filter = 1
+
+[node name="Gold_icon" type="TextureRect" parent="Gold"]
+offset_left = 81.0
+offset_top = 56.0
+offset_right = 145.0
+offset_bottom = 118.0
+texture = ExtResource("3_yby07")
+
+[node name="Gold_label" type="Label" parent="Gold"]
+offset_left = 155.0
+offset_top = 61.0
+offset_right = 393.0
+offset_bottom = 113.0
+theme_override_font_sizes/font_size = 40
+text = "123"
+vertical_alignment = 1
+
+[node name="StorePanel" parent="." instance=ExtResource("4_lb3ej")]
+
+[node name="ScrollContainer" parent="StorePanel" index="0"]
+offset_left = 86.0
+offset_top = 136.0
+offset_right = 1105.0
+offset_bottom = 606.0
+
+[node name="GridContainer" parent="StorePanel/ScrollContainer/VBoxContainer" index="0"]
+size_flags_vertical = 3
+columns = 3
+
+[node name="StorePanelItem" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="0" instance=ExtResource("5_c6f3d")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="StorePanelItem2" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="1" instance=ExtResource("5_c6f3d")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="StorePanelItem3" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="2" instance=ExtResource("5_c6f3d")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="StorePanelItem4" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="3" instance=ExtResource("5_c6f3d")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="StorePanelItem5" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="4" instance=ExtResource("5_c6f3d")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="StorePanelItem6" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="5" instance=ExtResource("5_c6f3d")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="StorePanelItem7" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="6" instance=ExtResource("5_c6f3d")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[editable path="StorePanel"]

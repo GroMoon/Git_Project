@@ -1,0 +1,143 @@
+[gd_scene load_steps=5 format=3 uid="uid://rewebuj5illv"]
+
+[ext_resource type="Script" path="res://dynamic/5_title_screen/option/options.gd" id="1_h31jj"]
+[ext_resource type="FontFile" uid="uid://b2hvss27ajx3v" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hljy1"]
+texture = SubResource("CanvasTexture_xivly")
+modulate_color = Color(0, 0, 0, 1)
+
+[node name="Options" type="Panel"]
+texture_filter = 1
+offset_left = 350.0
+offset_top = 70.0
+offset_right = 850.0
+offset_bottom = 570.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
+script = ExtResource("1_h31jj")
+
+[node name="option" type="Label" parent="."]
+layout_mode = 0
+offset_top = 37.0
+offset_right = 500.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("1_qv6n8")
+theme_override_font_sizes/font_size = 35
+text = "설 정"
+horizontal_alignment = 1
+
+[node name="back" type="Button" parent="."]
+layout_mode = 0
+offset_left = 437.0
+offset_top = 40.0
+offset_right = 468.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("1_qv6n8")
+text = "X"
+
+[node name="Screen" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 112.0
+offset_right = 388.0
+offset_bottom = 231.0
+
+[node name="screen_manager" type="Label" parent="Screen"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "화면 설정"
+
+[node name="resolution" type="HBoxContainer" parent="Screen"]
+layout_mode = 2
+
+[node name="resolution" type="Label" parent="Screen/resolution"]
+layout_mode = 2
+text = "해상도"
+
+[node name="resol_option" type="OptionButton" parent="Screen/resolution"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="screen_mode" type="HBoxContainer" parent="Screen"]
+layout_mode = 2
+
+[node name="screen_mode" type="Label" parent="Screen/screen_mode"]
+layout_mode = 2
+text = "화면 모드"
+
+[node name="vol_control" type="CheckBox" parent="Screen/screen_mode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "전체화면"
+
+[node name="vol_control2" type="CheckBox" parent="Screen/screen_mode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "창 모드"
+
+[node name="Volume" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 249.0
+offset_right = 386.0
+offset_bottom = 368.0
+
+[node name="volume_manager" type="Label" parent="Volume"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "사운드 설정"
+
+[node name="volume1" type="HBoxContainer" parent="Volume"]
+layout_mode = 2
+
+[node name="master_vol" type="Label" parent="Volume/volume1"]
+layout_mode = 2
+text = "전체 볼륨"
+
+[node name="button" type="Button" parent="Volume/volume1"]
+layout_mode = 2
+
+[node name="vol_control" type="HSlider" parent="Volume/volume1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="volume2" type="HBoxContainer" parent="Volume"]
+layout_mode = 2
+
+[node name="bgm_vol" type="Label" parent="Volume/volume2"]
+layout_mode = 2
+text = "배경 볼륨"
+
+[node name="button" type="Button" parent="Volume/volume2"]
+layout_mode = 2
+
+[node name="vol_control" type="HSlider" parent="Volume/volume2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="volume3" type="HBoxContainer" parent="Volume"]
+layout_mode = 2
+
+[node name="effect_vol" type="Label" parent="Volume/volume3"]
+layout_mode = 2
+text = "효과음"
+
+[node name="button" type="Button" parent="Volume/volume3"]
+layout_mode = 2
+
+[node name="vol_control" type="HSlider" parent="Volume/volume3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[connection signal="pressed" from="back" to="." method="_on_back_pressed"]

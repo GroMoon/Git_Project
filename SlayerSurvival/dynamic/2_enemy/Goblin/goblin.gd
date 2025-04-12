@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const ANIMATION_SPEED = 1.5		# 기본 애니메이션 속도
+const ANIMATION_SPEED = 1.6		# 기본 애니메이션 속도
 const PET_CHANCE      = 0.5		# 펫이 될 확률
 
 @onready var collision_shape    = $CollisionShape2D
@@ -13,10 +13,10 @@ var exp_img = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
 #var golds = 25
 
 # 적 특성
-var health       = 15 	# 적 체력
-var move_speed   = 80 	# 적 이동 속도
-var damage       = 5  	# 적 데미지
-var spawn_radius = 500  # 스폰 범위
+var health       = 10 	# 적 체력
+var move_speed   = 120 	# 적 이동 속도
+var damage       = 6  	# 적 데미지
+var spawn_radius = 700  # 스폰 범위
 # 전역 변수
 var player 
 var touch_flag = false 
@@ -57,7 +57,6 @@ func _physics_process(delta):
 			animated_sprite.speed_scale = ANIMATION_SPEED
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
-			
 	if touch_flag:
 		player.process_collision_enemy(damage)
 
@@ -71,10 +70,10 @@ func die_enemy():
 	interaction_sensor.call_deferred("queue_free")		# interaction_sensor 삭제
 	animated_sprite.play("death")
 	await animated_sprite.animation_finished
-	if (player.is_mushroom_pet==false)&&(pet_chance <= PET_CHANCE):
+	if (player.is_goblin_pet==false)&&(pet_chance <= PET_CHANCE):
 		# UI 관련 코드, 몬스터펫 업그레이드 관련 코드
-		player.mushroom_pet = true
-		Dialogic.start("res://dynamic/7_dialogic/get_mushroom_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
+		player.goblin_pet = true
+		Dialogic.start("res://dynamic/7_dialogic/get_goblin_pet.dtl").process_mode = Node.PROCESS_MODE_ALWAYS
 		Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
 		queue_free()
 	else:

@@ -17,12 +17,18 @@ const START_HP        = 40
 @export var shadow_attack   = 0		# 그림자 분신술 (default 0)
 
 # 펫 관련
-var mushroom_pet    = false
-var mushroom_pet_on = false
-var is_mushroom_pet = false
-var skeleton_pet    = false
-var skeleton_pet_on = false
-var is_skeleton_pet = false
+var mushroom_pet     = false
+var mushroom_pet_on  = false
+var is_mushroom_pet  = false
+var skeleton_pet     = false
+var skeleton_pet_on  = false
+var is_skeleton_pet  = false
+var goblin_pet       = false
+var goblin_pet_on    = false
+var is_goblin_pet    = false
+var flyingeye_pet    = false
+var flyingeye_pet_on = false
+var is_flyingeye_pet = false
 
 var attack_damage       = 15		# 일반 공격 데미지
 var is_attacking        = false
@@ -85,14 +91,10 @@ func _ready():
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결
 	magnetic_area.shape.radius = magnetic_area_scale
 	# 몬스터펫 초기화
-	Dialogic.VAR.mushroom_pet_diag = false
-	Dialogic.VAR.skeleton_pet_diag = false
-	# mushroom_pet    = false
-	# mushroom_pet_on = false
-	# is_mushroom_pet = false
-	# skeleton_pet    = false
-	# skeleton_pet_on = false
-	# is_skeleton_pet = false
+	Dialogic.VAR.mushroom_pet_diag  = false
+	Dialogic.VAR.skeleton_pet_diag  = false
+	Dialogic.VAR.goblin_pet_diag    = false
+	Dialogic.VAR.flyingeye_pet_diag = false
 	
 
 func _physics_process(_delta):
@@ -124,8 +126,10 @@ func _physics_process(_delta):
 	level_label.text = "LV " + str(character_level)
 
 	#? diaglogic variable test
-	mushroom_pet_on = Dialogic.VAR.mushroom_pet_diag
-	skeleton_pet_on = Dialogic.VAR.skeleton_pet_diag
+	mushroom_pet_on  = Dialogic.VAR.mushroom_pet_diag
+	skeleton_pet_on  = Dialogic.VAR.skeleton_pet_diag
+	goblin_pet_on    = Dialogic.VAR.goblin_pet_diag
+	flyingeye_pet_on = Dialogic.VAR.flyingeye_pet_diag
 
 func process_keyboard_input() -> bool:  # -> 반환 값
 	var direction = Vector2.ZERO

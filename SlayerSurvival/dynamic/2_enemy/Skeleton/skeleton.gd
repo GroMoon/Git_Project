@@ -15,9 +15,9 @@ const PET_CHANCE      = 0.5		# 펫이 될 확률
 
 # 적 특성
 var health       = 10 	# 적 체력
-var move_speed   = 100 	# 적 이동 속도
-var damage       = 3  	# 적 데미지
-var spawn_radius = 300  # 스폰 범위
+var move_speed   = 75 	# 적 이동 속도
+var damage       = 5  	# 적 데미지
+var spawn_radius = 500  # 스폰 범위
 # 전역 변수
 var player 
 var touch_flag = false 
@@ -57,6 +57,8 @@ func _physics_process(delta):
 			animated_sprite.speed_scale = ANIMATION_SPEED
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
+	if touch_flag:
+		player.process_collision_enemy(damage)
 
 # 사망 처리 함수
 func die_enemy():
@@ -102,7 +104,6 @@ func apply_knockback(attacker: Node2D):
 # 접촉 상태가 되었을 때
 func _on_interaction_sensor_body_entered(_body:Node2D):
 	if _body == player and not touch_flag:
-		player.process_collision_enemy(damage)
 		touch_flag = true
 		# print(touch_flag)
 

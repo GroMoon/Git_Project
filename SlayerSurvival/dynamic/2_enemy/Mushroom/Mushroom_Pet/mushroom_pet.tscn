@@ -1,12 +1,12 @@
 [gd_scene load_steps=40 format=3 uid="uid://c6ft8nxddbxd1"]
 
-[ext_resource type="Texture2D" uid="uid://buj81rauwcwfa" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_jduur"]
+[ext_resource type="Texture2D" uid="uid://cu6xrwjol2q7t" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_jduur"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.gd" id="1_wy06c"]
 [ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="2_6u0w2"]
-[ext_resource type="Texture2D" uid="uid://ddtuwghywwgg6" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="2_fd1hu"]
-[ext_resource type="Texture2D" uid="uid://xr4mbdnmsgn1" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="3_gfc2c"]
-[ext_resource type="Texture2D" uid="uid://cf1atgno87xpi" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="4_g3fev"]
-[ext_resource type="Texture2D" uid="uid://ci44sfpfat3d5" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="5_14hni"]
+[ext_resource type="Texture2D" uid="uid://damg3yfmpkn4" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="2_fd1hu"]
+[ext_resource type="Texture2D" uid="uid://6osi4o0dcpg3" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="3_gfc2c"]
+[ext_resource type="Texture2D" uid="uid://2ifc3h44ygnk" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="4_g3fev"]
+[ext_resource type="Texture2D" uid="uid://bb2udxxc4tnqv" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="5_14hni"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vlskx"]
 shader = ExtResource("2_6u0w2")
@@ -248,13 +248,14 @@ size = Vector2(43, 37)
 
 [node name="MushroomPet" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_wy06c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_vlskx")
 sprite_frames = SubResource("SpriteFrames_0rbba")
-animation = &"attack"
-frame = 7
+animation = &"idle"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -270,7 +271,7 @@ position = Vector2(21, 9)
 shape = SubResource("RectangleShape2D_x2a64")
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 autostart = true
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
