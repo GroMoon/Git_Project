@@ -8,6 +8,7 @@ const START_HP        = 40
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 @onready var animation_player = $AnimationPlayer
+@onready var damage_timer     = $DamageTimer
 
 # 캐릭터 특성
 @export var character_name  = "wizard"
@@ -155,14 +156,15 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
-	if damage_flag:
+	if !damage_flag:
 		current_hp -= damage
 		DamageVisual.show_damage(-damage, self.position)
 		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
-		damage_flag = false
+		damage_flag = true
+		damage_timer.start()
 		if current_hp <= 0:
+			$CollisionShape2D.disabled = true
 			is_dead = true
-			print("사망")
 			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
 			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
 			animated_sprite.stop()
@@ -291,4 +293,4 @@ func _on_attack_timer_timeout():
 	$AttackTimer.start()
 
 func _on_damage_timer_timeout():
-	damage_flag = true
+	damage_flag = false
