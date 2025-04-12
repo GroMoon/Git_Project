@@ -46,11 +46,11 @@ func save_store_data():
 
 func create_default_store_data():
 	store_data = {
-		"STORE_ITEM_0": {"level": "1", "max_level": 5},
-		"STORE_ITEM_1": {"level": "1", "max_level": 5},
-		"STORE_ITEM_2": {"level": "1", "max_level": 5},
-		"STORE_ITEM_3": {"level": "1", "max_level": 5},
-		"STORE_ITEM_4": {"level": "1", "max_level": 5},
-		"STORE_ITEM_9": {"level": "1", "max_level": 1},
-		"STORE_ITEM_10": {"level": "1", "max_level": 1}
+		"STORE_ITEM_HEALTH": {"level": "0", "max_level": 5},
+		"STORE_ITEM_SHIELD": {"level": "0", "max_level": 5},
+		"STORE_ITEM_RESPAWN": {"level": "0", "max_level": 2},
+		"STORE_ITEM_DAMAGE": {"level": "0", "max_level": 5},
+		"STORE_ITEM_SPEED": {"level": "0", "max_level": 5},
+		"STORE_ITEM_COOLDOWN": {"level": "0", "max_level": 5},
+		"STORE_ITEM_VAMPIRE": {"level": "0", "max_level": 5}
 	}

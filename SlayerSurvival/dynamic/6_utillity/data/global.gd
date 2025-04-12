@@ -46,11 +46,11 @@ func create_default_character_data():
 		"GOLD": {"gold": 0},
 		"CHARACTER_STORE_UPGRADES": {
 			"health": 0,
-			"shield": 0.5,
+			"shield": 0,
 			"respawn": 0,
-			"double_splash": 0,
+			"damage": 0,
 			"speed": 0,
-			"spell_cooldown": 0,
-			"spell_size": 0.05
+			"cooldown": 0,
+			"vampire": 0
 		}
 	}
