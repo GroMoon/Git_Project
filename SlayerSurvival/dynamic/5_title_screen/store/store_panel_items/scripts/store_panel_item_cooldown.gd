@@ -17,30 +17,30 @@ var item = {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# 레벨 표시
-	level_label.text = "Level: " + str(StoreData.store_data["STORE_ITEM_DAMAGE"]["level"])
+	level_label.text = "Level: " + str(StoreData.store_data["STORE_ITEM_COOLDOWN"]["level"])
 	# 레벨 별 데미지 증가 코스트 표시	
-	damage_cost(StoreData.store_data["STORE_ITEM_DAMAGE"]["level"])
+	cooldown_cost(StoreData.store_data["STORE_ITEM_COOLDOWN"]["level"])
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-func damage_upgrade(item_level):
+func cooldown_upgrade(item_level):
 	match item_level:
 		"0":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
 		"1":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
 		"2":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
 		"3":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
 		"4":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
 		"Max":
 			pass
 
-func damage_cost(item_level):
+func cooldown_cost(item_level):
 	match item_level:
 		"0":
 			cost.text = "100"
@@ -55,7 +55,7 @@ func damage_cost(item_level):
 		"Max":
 			cost.text = "Max"
 
-func damage_level():
+func cooldown_level():
 	match item["level"]:
 		"0":
 			item["level"] = "1"
@@ -70,8 +70,8 @@ func damage_level():
 		"Max":
 			pass
 
-func save_damage_data():
-	StoreData.store_data["STORE_ITEM_DAMAGE"]["level"] = item["level"]
+func save_cooldown_data():
+	StoreData.store_data["STORE_ITEM_COOLDOWN"]["level"] = item["level"]
 	StoreData.save_store_data()
 
 func _on_buy_button_pressed():
@@ -80,11 +80,11 @@ func _on_buy_button_pressed():
 		Global.character_data["GOLD"]["gold"] -= int(cost.text)
 		Global.emit_signal("purchase")
 		
-		damage_upgrade(item["level"])
-		damage_level()
+		cooldown_upgrade(item["level"])
+		cooldown_level()
 		
-		save_damage_data()
+		save_cooldown_data()
 		Global.save_character_data()
 		
 		level_label.text = "Level: " + str(item["level"])
-		damage_cost(item["level"])
+		cooldown_cost(item["level"])
