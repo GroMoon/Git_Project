@@ -18,7 +18,7 @@ boot_splash/show_image=false
 [autoload]
 
 Global="*res://dynamic/6_utillity/data/global.gd"
-Store="*res://dynamic/6_utillity/data/store.gd"
+StoreData="*res://dynamic/6_utillity/data/store_data.gd"
 DamageVisual="*res://dynamic/6_utillity/damage_visual/damage_visual.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 
