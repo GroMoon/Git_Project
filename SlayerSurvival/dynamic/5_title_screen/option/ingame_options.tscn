@@ -49,18 +49,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "화면 설정"
 
-[node name="resolution" type="HBoxContainer" parent="Screen"]
-layout_mode = 2
-
-[node name="resolution" type="Label" parent="Screen/resolution"]
-layout_mode = 2
-text = "해상도"
-
-[node name="resol_option" type="OptionButton" parent="Screen/resolution"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-
 [node name="screen_mode" type="HBoxContainer" parent="Screen"]
 layout_mode = 2
 
@@ -101,8 +89,9 @@ text = "전체 볼륨"
 
 [node name="button" type="Button" parent="Volume/volume1"]
 layout_mode = 2
+toggle_mode = true
 
-[node name="vol_control" type="HSlider" parent="Volume/volume1"]
+[node name="master_slider" type="HSlider" parent="Volume/volume1"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -118,7 +107,7 @@ text = "배경 볼륨"
 [node name="button" type="Button" parent="Volume/volume2"]
 layout_mode = 2
 
-[node name="vol_control" type="HSlider" parent="Volume/volume2"]
+[node name="bgm_sllider" type="HSlider" parent="Volume/volume2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -134,10 +123,12 @@ text = "효과음"
 [node name="button" type="Button" parent="Volume/volume3"]
 layout_mode = 2
 
-[node name="vol_control" type="HSlider" parent="Volume/volume3"]
+[node name="effect_slider" type="HSlider" parent="Volume/volume3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 50.0
 
 [connection signal="pressed" from="back" to="." method="_on_back_pressed"]
+[connection signal="toggled" from="Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
+[connection signal="toggled" from="Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]
