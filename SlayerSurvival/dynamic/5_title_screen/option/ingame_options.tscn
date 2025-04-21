@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://rewebuj5illv"]
+[gd_scene load_steps=5 format=3 uid="uid://hynl7qhfho6v"]
 
-[ext_resource type="Script" path="res://dynamic/5_title_screen/option/options.gd" id="1_h31jj"]
-[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
+[ext_resource type="Script" path="res://dynamic/5_title_screen/option/ingame_options.gd" id="1_0w4rt"]
+[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="2_rhx6r"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
 
@@ -9,40 +9,32 @@
 texture = SubResource("CanvasTexture_xivly")
 modulate_color = Color(0, 0, 0, 1)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_quehy"]
-
-[node name="Options" type="Panel"]
+[node name="IngameOptions" type="Panel"]
 texture_filter = 1
-offset_right = 1200.0
-offset_bottom = 650.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
-script = ExtResource("1_h31jj")
-
-[node name="bar" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 599.0
-offset_top = 120.0
-offset_right = 600.0
+offset_left = 350.0
+offset_top = 70.0
+offset_right = 850.0
 offset_bottom = 570.0
-texture = SubResource("CanvasTexture_quehy")
+theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
+script = ExtResource("1_0w4rt")
 
 [node name="option" type="Label" parent="."]
 layout_mode = 0
 offset_top = 37.0
-offset_right = 1200.0
+offset_right = 500.0
 offset_bottom = 76.0
-theme_override_fonts/font = ExtResource("1_qv6n8")
+theme_override_fonts/font = ExtResource("2_rhx6r")
 theme_override_font_sizes/font_size = 35
 text = "설 정"
 horizontal_alignment = 1
 
 [node name="back" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1122.0
-offset_top = 45.0
-offset_right = 1153.0
-offset_bottom = 76.0
-theme_override_fonts/font = ExtResource("1_qv6n8")
+offset_left = 437.0
+offset_top = 40.0
+offset_right = 468.0
+offset_bottom = 71.0
+theme_override_fonts/font = ExtResource("2_rhx6r")
 text = "X"
 
 [node name="Screen" type="VBoxContainer" parent="."]
@@ -110,7 +102,7 @@ text = "전체 볼륨"
 [node name="button" type="Button" parent="Volume/volume1"]
 layout_mode = 2
 
-[node name="master_slider" type="HSlider" parent="Volume/volume1"]
+[node name="vol_control" type="HSlider" parent="Volume/volume1"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -126,7 +118,7 @@ text = "배경 볼륨"
 [node name="button" type="Button" parent="Volume/volume2"]
 layout_mode = 2
 
-[node name="bgm_slider" type="HSlider" parent="Volume/volume2"]
+[node name="vol_control" type="HSlider" parent="Volume/volume2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -142,13 +134,10 @@ text = "효과음"
 [node name="button" type="Button" parent="Volume/volume3"]
 layout_mode = 2
 
-[node name="effect_slider" type="HSlider" parent="Volume/volume3"]
+[node name="vol_control" type="HSlider" parent="Volume/volume3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 50.0
 
 [connection signal="pressed" from="back" to="." method="_on_back_pressed"]
-[connection signal="item_selected" from="Screen/resolution/resol_option" to="." method="_on_resol_option_item_selected"]
-[connection signal="toggled" from="Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
-[connection signal="toggled" from="Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]

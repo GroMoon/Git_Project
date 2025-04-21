@@ -21,6 +21,7 @@ Global="*res://dynamic/6_utillity/data/global.gd"
 StoreData="*res://dynamic/6_utillity/data/store_data.gd"
 DamageVisual="*res://dynamic/6_utillity/damage_visual/damage_visual.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+OptionsManager="*res://dynamic/6_utillity/data/options_manager.gd"
 
 [dialogic]
 
