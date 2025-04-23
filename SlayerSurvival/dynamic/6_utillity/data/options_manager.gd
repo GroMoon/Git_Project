@@ -2,7 +2,11 @@ extends Node
 
 var resolution_list     = [Vector2(1280, 720), Vector2(1600, 900), Vector2(1920, 1080)]
 var current_resolution := Vector2(1280, 720)  # 기본 해상도
+
 var is_fullscreen = false # 기본 화면모드 -> 창모드
+
+var language_list = ["한국어", "English"]
+
 
 # 화면 해상도 설정
 func apply_resolution(res: Vector2):

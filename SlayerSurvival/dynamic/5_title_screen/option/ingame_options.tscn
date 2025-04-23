@@ -102,7 +102,7 @@ layout_mode = 2
 
 [node name="bgm_vol" type="Label" parent="Volume/volume2"]
 layout_mode = 2
-text = "배경 볼륨"
+text = "BGM"
 
 [node name="button" type="Button" parent="Volume/volume2"]
 layout_mode = 2
@@ -118,7 +118,7 @@ layout_mode = 2
 
 [node name="effect_vol" type="Label" parent="Volume/volume3"]
 layout_mode = 2
-text = "효과음"
+text = "SFX"
 
 [node name="button" type="Button" parent="Volume/volume3"]
 layout_mode = 2

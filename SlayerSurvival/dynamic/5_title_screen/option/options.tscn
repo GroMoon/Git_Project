@@ -49,8 +49,8 @@ text = "X"
 layout_mode = 0
 offset_left = 119.0
 offset_top = 112.0
-offset_right = 388.0
-offset_bottom = 231.0
+offset_right = 499.0
+offset_bottom = 232.0
 
 [node name="screen_manager" type="Label" parent="Screen"]
 layout_mode = 2
@@ -92,7 +92,7 @@ text = "창 모드"
 layout_mode = 0
 offset_left = 117.0
 offset_top = 249.0
-offset_right = 386.0
+offset_right = 497.0
 offset_bottom = 368.0
 
 [node name="volume_manager" type="Label" parent="Volume"]
@@ -121,7 +121,7 @@ layout_mode = 2
 
 [node name="bgm_vol" type="Label" parent="Volume/volume2"]
 layout_mode = 2
-text = "배경 볼륨"
+text = "BGM"
 
 [node name="button" type="Button" parent="Volume/volume2"]
 layout_mode = 2
@@ -137,7 +137,7 @@ layout_mode = 2
 
 [node name="effect_vol" type="Label" parent="Volume/volume3"]
 layout_mode = 2
-text = "효과음"
+text = "SFX"
 
 [node name="button" type="Button" parent="Volume/volume3"]
 layout_mode = 2
@@ -148,7 +148,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 50.0
 
+[node name="Language" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 730.0
+offset_top = 112.0
+offset_right = 1110.0
+offset_bottom = 163.0
+
+[node name="language" type="Label" parent="Language"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "언어 설정"
+
+[node name="language_option" type="OptionButton" parent="Language"]
+layout_mode = 2
+
 [connection signal="pressed" from="back" to="." method="_on_back_pressed"]
 [connection signal="item_selected" from="Screen/resolution/resol_option" to="." method="_on_resol_option_item_selected"]
 [connection signal="toggled" from="Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
 [connection signal="toggled" from="Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]
+[connection signal="item_selected" from="Language/language_option" to="." method="_on_language_option_item_selected"]
