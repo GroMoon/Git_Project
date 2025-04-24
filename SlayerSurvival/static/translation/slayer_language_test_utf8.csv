@@ -1,0 +1,76 @@
+key,ko,en
+VERSION,v 1.0.0,v 1.0.0
+Menu씬,,
+Slayer Survival,Slayer Survival,Slayer Survival
+시 작,시 작,Start
+아 이 템,아 이 템,Item
+상 점,상 점,Store
+설 정,설 정,Option
+끝 내 기,끝 내 기,Quit
+캐릭터 선택,캐릭터 선택,Character Select
+캐릭터 설명,캐릭터 설명,Information
+BaseUI씬,,
+Pause,Pause,Pause
+돌아가기,돌아가기,resume
+메인화면,메인화면,menu
+Game Over!!,Game Over!!,Game Over!!
+다시하기,다시하기,restart
+나가기,나가기,quit
+SelectUI씬,,
+Level Up!,Level Up!,Level Up!
+흡혈,흡혈,Drain
+흡혈설명,,
+데미지 증가,데미지 증가,Increase Damage
+데미지 설명,,
+자석 범위 증가,자석 범위 증가,Increase Magnet Range
+자석 범위 증가 설명,,
+최대 체력 증가,최대 체력 증가,Increase Max Health
+최대 체력 증가 설명,,
+이동 속도 증가,이동 속도 증가,Increase Movement Speed
+이동 속도 증가 설명,,
+쉐도우 파트너,쉐도우 파트너,Shadow Partner
+쉐도우 파트너 설명,,
+더블 슬레쉬,더블 슬레쉬,Double Slash
+더블 슬레쉬 설명,,
+트리플 슬레쉬,트리플 슬레쉬,Triple Slash
+트리플 슬레쉬 설명,,
+더블 라이트닝,더블 라이트닝,Double Lightning
+더블 라이트닝 설명,,
+트리플 라이트닝,트리플 라이트닝,Triple Lightning
+트리플 라이트닝,,
+Select Map씬,,
+맵 선택,맵 선택,Map Select
+맵 설명,맵 설명,Information
+Cave,Cave,Cave
+Dungeon,Dungeon,Dungeon
+Option씬,,
+설 정,설 정,Options
+화면 설정,화면 설정,Screen settings
+해상도,해상도,resolution
+화면 모드,화면 모드,screen mode
+전체화면,전체화면,full screen
+창 모드,창 모드,window screen
+사운드 설정,사운드 설정,Sound settings
+전체 볼륨,전체 볼륨,entire volume
+BGM,BGM,BGM
+SFX,SFX,SFX
+Store씬,,
+COOLDOWN,COOLDOWN,COOLDOWN
+COOLDOWN 설명,,
+DAMAGE,DAMAGE,DAMAGE
+DAMAGE 설명,,
+GEM DROP,GEM DROP,GEM DROP
+GEM DROP 설명,,
+GOLD DROP,GOLD DROP,GOLD DROP
+GOLD DROP 설명,,
+HEALTH,HEALTH,HEALTH
+HEALTH 설명,,
+RESPAWN,RESPAWN,RESPAWN
+RESPAWN 설명,,
+SHIELD,SHIELD,SHIELD
+SHIELD 설명,,
+SPEED,SPEED,SPEED
+SPEED 설명,,
+VAMPIRE,VAMPIRE,VAMPIRE
+VAMPIRE 설명,,
+test씬,,
