@@ -5,7 +5,6 @@ extends Panel
 
 func _ready():
 	update_ui()
-	pass # Replace with function body.
 
 func update_ui():
 	full_screen.disabled = false
