@@ -19,10 +19,11 @@ var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
 #var golds = 25
 
 # 적 특성
-var health       = 100 		# 적 체력
-var move_speed   = 90 		# 적 이동 속도
-var damage       = 10  		# 적 데미지
-var spawn_radius = 200  	# 스폰 범위
+var health        = 100 		# 적 체력
+var move_speed    = 90 		# 적 이동 속도
+var damage        = 10  		# 적 데미지
+var attack_damage = 30		# 공격 데미지지
+var spawn_radius  = 200  	# 스폰 범위
 # 전역 변수
 var player 
 var touch_flag   = false
@@ -145,9 +146,9 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 func _on_attack_timer_timeout():
 	is_attacking = true
 	if body_animated_sprite.flip_h:
-		attack_area.position = Vector2(-67,0)
-	else:
 		attack_area.position = Vector2(67,0)
+	else:
+		attack_area.position = Vector2(-67,0)
 	attack_area.set_deferred("disabled", false)
 	body_animated_sprite.play("attack")
 	await body_animated_sprite.animation_finished
@@ -155,3 +156,8 @@ func _on_attack_timer_timeout():
 	is_attacking = false
 	# 타이머 재시작
 	$AttackTimer.start()
+
+# 보스 공격을 맞았을 때
+func _on_attack_body_entered(body:Node2D):
+	if body == player:
+		player.process_collision_enemy(attack_damage)

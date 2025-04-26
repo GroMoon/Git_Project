@@ -402,6 +402,8 @@ shape = SubResource("CircleShape2D_desk6")
 
 [node name="interaction_sensor" parent="." instance=ExtResource("2_2817u")]
 position = Vector2(32, 24)
+collision_layer = 4
+collision_mask = 10
 
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(-32, -16)
@@ -423,5 +425,6 @@ shape = SubResource("RectangleShape2D_pf3py")
 [connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]
 [connection signal="body_exited" from="interaction_sensor" to="." method="_on_interaction_sensor_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
 
 [editable path="interaction_sensor"]
