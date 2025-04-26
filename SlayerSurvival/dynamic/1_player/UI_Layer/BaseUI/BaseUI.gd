@@ -76,6 +76,16 @@ func process_fatal_state():
 func check_level_up_pause_flag(pause_state: bool):
 	lvlup_pause_flag = pause_state
 
+# 스톱워치 처리
+func process_stopwatch(time):
+	sec += time							# time은 process에서 delta 값 으로 설정
+	if sec >= 60.0:
+		minute += 1
+		sec = 0.0
+	var minute_str = str(minute).pad_zeros(2)
+	var sec_str = str(int(sec)).pad_zeros(2)
+	stopwatch.text = minute_str + ":" + sec_str
+
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():
 	globl_pause_flag   = !globl_pause_flag
@@ -88,6 +98,12 @@ func _on_menu_pressed():
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
+# Option(설정) 버튼 누를 때
+func _on_option_pressed():
+	var ingame_options = preload("res://dynamic/5_title_screen/option/ingame_options.tscn")
+	var ingame_options_instance = ingame_options.instantiate()
+	add_child(ingame_options_instance)
+
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
@@ -95,13 +111,3 @@ func _on_quit_pressed():
 # 게임 오버 후 Restart 버튼 누를 때
 func _on_restart_pressed():
 	get_tree().change_scene_to_file("res://test.tscn")
-
-# 스톱워치 처리
-func process_stopwatch(time):
-	sec += time							# time은 process에서 delta 값 으로 설정
-	if sec >= 60.0:
-		minute += 1
-		sec = 0.0
-	var minute_str = str(minute).pad_zeros(2)
-	var sec_str = str(int(sec)).pad_zeros(2)
-	stopwatch.text = minute_str + ":" + sec_str

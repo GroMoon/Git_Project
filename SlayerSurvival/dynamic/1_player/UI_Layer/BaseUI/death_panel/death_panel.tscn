@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bmljwk5vyd15y"]
 
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
+[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjie6"]
 bg_color = Color(0.196078, 0.192157, 0.172549, 0)
@@ -49,7 +49,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
 theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
-text = "Restart"
+text = "다시하기"
 
 [node name="Quit" type="Button" parent="."]
 layout_mode = 1
@@ -65,5 +65,4 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
 theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
-text = "Quit
-"
+text = "나가기"

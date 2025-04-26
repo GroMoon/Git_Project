@@ -57,6 +57,9 @@ func _physics_process(delta):
 			animated_sprite.speed_scale = ANIMATION_SPEED
 			$AnimatedSprite2D.play("walk")
 			$AnimatedSprite2D.flip_h = velocity.x < 0
+			
+	if touch_flag:
+		player.process_collision_enemy(damage)
 
 # 사망 처리 함수
 func die_enemy():
@@ -102,7 +105,6 @@ func apply_knockback(attacker: Node2D):
 # 접촉 상태가 되었을 때
 func _on_interaction_sensor_body_entered(_body:Node2D):
 	if _body == player and not touch_flag:
-		player.process_collision_enemy(damage)
 		touch_flag = true
 		# print(touch_flag)
 

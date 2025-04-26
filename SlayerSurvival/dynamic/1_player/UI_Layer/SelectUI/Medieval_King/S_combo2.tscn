@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bouavflbr2gnq"]
 
-[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_6esdd"]
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_nfviq"]
+[ext_resource type="Texture2D" uid="uid://bwrdcgum2t25q" path="res://static/png/icon/spritesheet.png" id="1_6esdd"]
+[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="2_nfviq"]
 
 [node name="Combo2" type="Button"]
 offset_left = 40.0
@@ -27,7 +27,7 @@ offset_right = 200.0
 offset_bottom = 37.0
 theme_override_fonts/font = ExtResource("2_nfviq")
 theme_override_font_sizes/font_size = 26
-text = "콤보2 "
+text = "더블 슬레쉬"
 
 [node name="details" type="Label" parent="."]
 layout_mode = 1

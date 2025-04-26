@@ -25,14 +25,18 @@ var shadow_preload
 # 펫을 인스턴스 하기 위한 선언
 var mushroom_pet_preload
 var skeleton_pet_preload
+var goblin_pet_preload
+var flyingeye_pet_preload
 
 func _ready():
 	select_character.visible = false
 	select_map.visible = true
 	get_tree().paused = true
 	# 펫 미리 preload
-	mushroom_pet_preload = preload("res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.tscn")
-	skeleton_pet_preload = preload("res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.tscn")
+	mushroom_pet_preload  = preload("res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.tscn")
+	skeleton_pet_preload  = preload("res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.tscn")
+	goblin_pet_preload    = preload("res://dynamic/2_enemy/Goblin/Goblin_Pet/goblin_pet.tscn")
+	flyingeye_pet_preload = preload("res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.tscn")
 
 func _process(_delta):
 	player = get_node("player")
@@ -61,7 +65,23 @@ func _process(_delta):
 			add_child(skeleton_pet_instance)
 			move_child(skeleton_pet_instance, player.get_index() - 1)
 			player.is_skeleton_pet = true
-
+		# goblin 펫 소환 알고리즘
+		if (player.goblin_pet_on == true) and (player.is_goblin_pet == false):
+			var goblin_pet_instance = goblin_pet_preload.instantiate()
+			goblin_pet_instance.name = "goblin_pet"
+			goblin_pet_instance.global_position = player.global_position
+			add_child(goblin_pet_instance)
+			move_child(goblin_pet_instance, player.get_index() - 1)
+			player.is_goblin_pet = true
+		# flyingeye 펫 소환 알고리즘
+		if (player.flyingeye_pet_on == true) and (player.is_flyingeye_pet == false):
+			var flyingeye_pet_instance = flyingeye_pet_preload.instantiate()
+			flyingeye_pet_instance.name = "flyingeye_pet"
+			flyingeye_pet_instance.global_position = player.global_position
+			add_child(flyingeye_pet_instance)
+			move_child(flyingeye_pet_instance, player.get_index() - 1)
+			player.is_flyingeye_pet = true
+			
 # Fantasy Warrior
 func _on_select_warrior_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn")
@@ -140,21 +160,19 @@ func _on_select_king_mouse_entered():
 func _on_wizard_mouse_entered():
 	$Button_sound.play()
 	# FIXME
-	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/wizard_pixelart.webp")
 	character_details.text = "마법사"
 	attack_label.text = "■■■■■■"
 	move_label.text   = "■■"
 	helth_label.text  = "■■■"
 	
-
-
 func _on_cave_button_mouse_entered():
-	preview_map.texture = preload("res://dynamic/4_world/Cave/cave_title.png")
-	map_details.text = "어둠 속에 반짝이는 수정들과 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
+	preview_map.texture = preload("res://dynamic/4_world/cave/cave_illust.png")
+	map_details.text = "용암이 흐르며 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
 	$Button_sound.play()
 
 func _on_dungeon_button_mouse_entered():
-	preview_map.texture = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_title.png")
+	preview_map.texture = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F_illust.webp")
 	map_details.text = "거대한 돌벽과 낡은 상자들 사이로 퍼지는 섬뜩한 분위기"
 	$Button_sound.play()
 
