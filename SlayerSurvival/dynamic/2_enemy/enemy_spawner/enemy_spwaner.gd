@@ -7,6 +7,7 @@ var player
 var base_ui
 var minute
 var sec
+var map_name = ""
 
 var boss_spawn_flag = false # 보스 스폰 여부 플래그
 
@@ -16,10 +17,10 @@ var mushroom  = preload("res://dynamic/2_enemy/Mushroom/mushroom.tscn")
 var goblin    = preload("res://dynamic/2_enemy/Goblin/goblin.tscn")
 var flyingeye = preload("res://dynamic/2_enemy/FlyingEye/flyingeye.tscn")
 # 보스 몬스터
-var fire_worm = preload("res://dynamic/2_enemy/Boss_FireWorm/fireworm.tscn")
+var fire_worm      = preload("res://dynamic/2_enemy/Boss_FireWorm/fireworm.tscn")
+var bring_of_death = preload("res://dynamic/2_enemy/Boss_BringOfDeath/bringofdeath.tscn")
 
 func _ready():
-	# player = get_parent().get_node("player")
 	pass
 
 func _process(_delta):
@@ -27,9 +28,20 @@ func _process(_delta):
 	base_ui = player.get_node("UI_Layer/BaseUI")
 	minute  = base_ui.minute
 	sec     = base_ui.sec
-	#! FIXME : 맵에 따른 보스몬스터 소환 알고리즘 추가 필요
-	if (!boss_spawn_flag) && (minute==1):		#! FIXME : test용으로 현재 보스 스폰 시간 1분 
-		spawn_enemy(fire_worm, BOSS_MONSTER)
+	if (!boss_spawn_flag) && (minute==0):	#! FIXME : test용으로 현재 보스 스폰 시간 1분 
+		if get_parent().instance_map:
+			map_name = get_parent().instance_map.name
+		print(map_name)
+		var boss
+		# 맵에 따른 보스 선택
+		match map_name:
+			"cave":
+				boss = fire_worm
+			"dungeon_B1F":
+				boss = bring_of_death
+			_:
+				boss = bring_of_death
+		spawn_enemy(boss, BOSS_MONSTER)
 		boss_spawn_flag = true
 	
 
