@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bkni6yhkx2yhd"]
+
+[node name="PlayerInfo" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Title" type="GridContainer" parent="."]
+layout_mode = 2
+offset_right = 98.0
+offset_bottom = 40.0
+columns = 2
+
+[node name="name" type="Label" parent="Title"]
+layout_mode = 2
+text = "이름"
+horizontal_alignment = 1
+
+[node name="name_" type="Label" parent="Title"]
+layout_mode = 2
+text = ": <name>"
+
+[node name="LV" type="Label" parent="Title"]
+layout_mode = 2
+text = "LV"
+horizontal_alignment = 1
+
+[node name="LV_" type="Label" parent="Title"]
+layout_mode = 2
+text = ": <LV>"
+
+[node name="Status" type="GridContainer" parent="."]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 127.0
+offset_right = 142.0
+offset_bottom = 167.0
+columns = 2
+
+[node name="health" type="Label" parent="Status"]
+layout_mode = 2
+text = "체력"
+horizontal_alignment = 1
+
+[node name="health_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": <health>"
+
+[node name="attack" type="Label" parent="Status"]
+layout_mode = 2
+text = "공격력"
+horizontal_alignment = 1
+
+[node name="attack_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": <attack>"
+
+[node name="defense" type="Label" parent="Status"]
+layout_mode = 2
+text = "방어력"
+horizontal_alignment = 1
+
+[node name="defense_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": <defense>"
+
+[node name="move_speed" type="Label" parent="Status"]
+layout_mode = 2
+text = "이동속도"
+horizontal_alignment = 1
+
+[node name="move_speed_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": <move_speed>"
+
+[node name="attack_speed" type="Label" parent="Status"]
+layout_mode = 2
+text = "공격속도"
+horizontal_alignment = 1
+
+[node name="atteck_speed_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": <attack_speed>"
+
+[node name="Skill" type="GridContainer" parent="."]
+layout_mode = 2
+offset_left = 313.0
+offset_top = 84.0
+offset_right = 430.0
+offset_bottom = 124.0
+columns = 4
+
+[node name="Sprite2D" type="ItemList" parent="Skill"]
+layout_mode = 2
+item_count = 1
+item_0/text = ""

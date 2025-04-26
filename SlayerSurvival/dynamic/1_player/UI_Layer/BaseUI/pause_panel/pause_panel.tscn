@@ -53,14 +53,14 @@ text = "Pause"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Buttongroup" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 199.0
 offset_top = 189.0
 offset_right = 361.0
 offset_bottom = 439.0
 
-[node name="Menu" type="Button" parent="VBoxContainer"]
+[node name="Menu" type="Button" parent="Buttongroup"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
@@ -73,7 +73,7 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_v3t31")
 theme_override_styles/focus = SubResource("StyleBoxFlat_1drxb")
 text = "메인화면"
 
-[node name="Option" type="Button" parent="VBoxContainer"]
+[node name="Option" type="Button" parent="Buttongroup"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
@@ -86,7 +86,7 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_v3t31")
 theme_override_styles/focus = SubResource("StyleBoxFlat_1drxb")
 text = "설 정"
 
-[node name="Resume" type="Button" parent="VBoxContainer"]
+[node name="Resume" type="Button" parent="Buttongroup"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
