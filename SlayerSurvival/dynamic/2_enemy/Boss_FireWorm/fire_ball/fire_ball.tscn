@@ -1,8 +1,8 @@
 [gd_scene load_steps=22 format=3 uid="uid://bflcbhgisfqrb"]
 
 [ext_resource type="Script" path="res://dynamic/2_enemy/Boss_FireWorm/fire_ball/fire_ball.gd" id="1_ldmgs"]
-[ext_resource type="Texture2D" uid="uid://ufc4doy26vcq" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Explosion.png" id="1_skv4f"]
-[ext_resource type="Texture2D" uid="uid://7bamjmcywstr" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Move.png" id="2_0ia7v"]
+[ext_resource type="Texture2D" uid="uid://dpejin5pvryq2" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Explosion.png" id="1_skv4f"]
+[ext_resource type="Texture2D" uid="uid://bdqm8eg6q7aaj" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Move.png" id="2_0ia7v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kmg5d"]
 atlas = ExtResource("1_skv4f")
@@ -244,8 +244,7 @@ script = ExtResource("1_ldmgs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_5w88j")
-animation = &"Explosion"
-frame_progress = 0.0231489
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)
