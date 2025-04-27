@@ -8,6 +8,7 @@ const TAKE_HIT_ANIMATION_SPEED = 1.0
 @onready var body_animated_sprite   	  = $AnimatedSprite2D
 
 @onready var body_interaction_sensor      = $interaction_sensor 
+@onready var animation_player             = $AnimationPlayer
 
 # 공격 범위
 @onready var attack_area = $Attack/CollisionShape2D
@@ -149,10 +150,8 @@ func _on_attack_timer_timeout():
 		attack_area.position = Vector2(67,0)
 	else:
 		attack_area.position = Vector2(-67,0)
-	attack_area.set_deferred("disabled", false)
-	body_animated_sprite.play("attack")
-	await body_animated_sprite.animation_finished
-	attack_area.set_deferred("disabled", true)
+	animation_player.play("attack")
+	await animation_player.animation_finished
 	is_attacking = false
 	# 타이머 재시작
 	$AttackTimer.start()
