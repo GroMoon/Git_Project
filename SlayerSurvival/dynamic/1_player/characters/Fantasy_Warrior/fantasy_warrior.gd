@@ -1,7 +1,13 @@
 extends CharacterBase
 
 func _initialize():
-	character_name = "fantasy_warrior"
+	# 캐릭터 특성
+	character_name      = "fantasy_warrior"
+	move_speed          = 200
+	attack_damage       = 5
+	magnetic_area_scale = 100
+	animation_speed     = 2.0
+	start_hp            = 50
 
 func _ready():
 	_initialize()
@@ -16,7 +22,7 @@ func _on_attack_timer_timeout():
 	if is_dead:
 		return	
 	is_attacking = true
-	animated_sprite.speed_scale = ANIMATION_SPEED
+	animated_sprite.speed_scale = animation_speed
 	# print("attack timer timeout!")
 	# 방향에 따라 area 변경
 	if animated_sprite.flip_h:

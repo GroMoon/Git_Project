@@ -5,8 +5,6 @@ class_name CharacterBase
 signal levelup
 
 ## CONSTANT
-const ANIMATION_SPEED = 2.0
-const START_HP        = 50
 
 ## 하위 노드 상대경로
 @onready var attack_area_1    = $Attack/attack_1
@@ -25,6 +23,8 @@ const START_HP        = 50
 @export var shadow_attack       = 0					# 캐릭터 그림자 분신술
 @export var attack_damage       = 5					# 캐릭터 일반 공격 데미지
 @export var magnetic_area_scale = 100				# 캐릭터 자석 범위 
+@export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도
+@export var start_hp            = 100				# 캐릭터 시작 체력
 
 ## 펫 관련
 # mushroom
@@ -66,7 +66,7 @@ var current_exp = 0:
 
 ## 체력
 @onready var hp_bar = $UI_Layer/BaseUI/Health_Bar
-var max_hp = START_HP:
+var max_hp = start_hp:
 	set(set_value):
 		max_hp = set_value
 		hp_bar.max_value = max_hp
@@ -97,7 +97,7 @@ func _ready():
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
 	# 캐릭터 특성 설정
-	max_hp = START_HP
+	max_hp = start_hp
 	current_exp = start_exp
 	# 자석 시그널 연결 및 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
@@ -131,7 +131,7 @@ func _physics_process(_delta):
 	
 	# 애니메이션 처리
 	if !hit_flag:
-		animated_sprite.speed_scale = ANIMATION_SPEED
+		animated_sprite.speed_scale = animation_speed
 		if velocity.length() > 0:
 			animated_sprite.play("run")
 			animated_sprite.flip_h = velocity.x < 0
@@ -185,7 +185,7 @@ func process_collision_enemy(damage):
 			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
 			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
 			animated_sprite.stop()
-			animated_sprite.speed_scale = ANIMATION_SPEED
+			animated_sprite.speed_scale = animation_speed
 			animated_sprite.play("death")
 			await animated_sprite.animation_finished
 			die_character()
