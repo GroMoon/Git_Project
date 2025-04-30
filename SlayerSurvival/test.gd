@@ -125,7 +125,7 @@ func _on_wizard_pressed():
 func _on_cave_button_pressed():
 	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
 	instance_map = map_load.instantiate()
-	instance_map.name = "map"
+	instance_map.name = "cave"
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
@@ -135,7 +135,7 @@ func _on_cave_button_pressed():
 func _on_dungeon_button_pressed():
 	map_load = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.tscn")
 	instance_map = map_load.instantiate()
-	instance_map.name = "map"
+	instance_map.name = "dungeon_B1F"
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
