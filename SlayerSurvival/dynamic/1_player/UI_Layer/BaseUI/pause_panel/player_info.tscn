@@ -1,14 +1,28 @@
-[gd_scene format=3 uid="uid://bkni6yhkx2yhd"]
+[gd_scene load_steps=3 format=3 uid="uid://bkni6yhkx2yhd"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_tmfou"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_qjxph"]
 
 [node name="PlayerInfo" type="Control"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 27.0
+offset_right = 181.0
+offset_bottom = 177.0
+texture = SubResource("CanvasTexture_tmfou")
+
 [node name="Title" type="GridContainer" parent="."]
 layout_mode = 2
-offset_right = 98.0
-offset_bottom = 40.0
+offset_left = 227.0
+offset_top = 47.0
+offset_right = 325.0
+offset_bottom = 87.0
 columns = 2
 
 [node name="name" type="Label" parent="Title"]
@@ -18,7 +32,7 @@ horizontal_alignment = 1
 
 [node name="name_" type="Label" parent="Title"]
 layout_mode = 2
-text = ": <name>"
+text = ": {name}"
 
 [node name="LV" type="Label" parent="Title"]
 layout_mode = 2
@@ -27,14 +41,23 @@ horizontal_alignment = 1
 
 [node name="LV_" type="Label" parent="Title"]
 layout_mode = 2
-text = ": <LV>"
+text = ": {LV}"
+
+[node name="Status_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 189.0
+offset_right = 125.0
+offset_bottom = 216.0
+theme_override_font_sizes/font_size = 25
+text = "{name}"
 
 [node name="Status" type="GridContainer" parent="."]
 layout_mode = 2
 offset_left = 25.0
-offset_top = 127.0
-offset_right = 142.0
-offset_bottom = 167.0
+offset_top = 231.0
+offset_right = 207.0
+offset_bottom = 337.0
 columns = 2
 
 [node name="health" type="Label" parent="Status"]
@@ -44,7 +67,7 @@ horizontal_alignment = 1
 
 [node name="health_" type="Label" parent="Status"]
 layout_mode = 2
-text = ": <health>"
+text = ": {health}"
 
 [node name="attack" type="Label" parent="Status"]
 layout_mode = 2
@@ -53,7 +76,7 @@ horizontal_alignment = 1
 
 [node name="attack_" type="Label" parent="Status"]
 layout_mode = 2
-text = ": <attack>"
+text = ": {attack}"
 
 [node name="defense" type="Label" parent="Status"]
 layout_mode = 2
@@ -62,7 +85,7 @@ horizontal_alignment = 1
 
 [node name="defense_" type="Label" parent="Status"]
 layout_mode = 2
-text = ": <defense>"
+text = ": {defense}"
 
 [node name="move_speed" type="Label" parent="Status"]
 layout_mode = 2
@@ -71,7 +94,7 @@ horizontal_alignment = 1
 
 [node name="move_speed_" type="Label" parent="Status"]
 layout_mode = 2
-text = ": <move_speed>"
+text = ": {move_speed}"
 
 [node name="attack_speed" type="Label" parent="Status"]
 layout_mode = 2
@@ -80,17 +103,70 @@ horizontal_alignment = 1
 
 [node name="atteck_speed_" type="Label" parent="Status"]
 layout_mode = 2
-text = ": <attack_speed>"
+text = ": {attack_speed}"
+
+[node name="Skill_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 353.0
+offset_right = 125.0
+offset_bottom = 380.0
+theme_override_font_sizes/font_size = 25
+text = "???"
 
 [node name="Skill" type="GridContainer" parent="."]
 layout_mode = 2
-offset_left = 313.0
-offset_top = 84.0
-offset_right = 430.0
-offset_bottom = 124.0
+offset_left = 26.0
+offset_top = 391.0
+offset_right = 146.0
+offset_bottom = 431.0
+scale = Vector2(2.917, 4.25296)
 columns = 4
 
-[node name="Sprite2D" type="ItemList" parent="Skill"]
+[node name="skill_1" type="TextureRect" parent="Skill"]
 layout_mode = 2
-item_count = 1
-item_0/text = ""
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
+
+[node name="skill_2" type="TextureRect" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
+
+[node name="skill_3" type="TextureRect" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
+
+[node name="skill_4" type="TextureRect" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
+
+[node name="skill_5" type="TextureRect" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
+
+[node name="skill_6" type="TextureRect" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
+
+[node name="skill_7" type="TextureRect" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
+
+[node name="skill_8" type="TextureRect" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_qjxph")
