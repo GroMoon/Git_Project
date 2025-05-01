@@ -86,11 +86,9 @@ offset_bottom = 221.0
 [node name="Quit" parent="DeathPanel" index="2"]
 process_mode = 3
 
-[connection signal="pressed" from="PausePanel/VBoxContainer/Menu" to="." method="_on_menu_pressed"]
-[connection signal="pressed" from="PausePanel/VBoxContainer/Option" to="." method="_on_option_pressed"]
-[connection signal="pressed" from="PausePanel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="DeathPanel/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="DeathPanel/Quit" to="." method="_on_quit_pressed"]
 
 [editable path="PausePanel"]
+[editable path="PausePanel/PlayerInfo"]
 [editable path="DeathPanel"]

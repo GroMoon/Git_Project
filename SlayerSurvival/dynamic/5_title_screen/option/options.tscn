@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://rewebuj5illv"]
+[gd_scene load_steps=5 format=3 uid="uid://rewebuj5illv"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/option/options.gd" id="1_h31jj"]
-[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
 
@@ -9,27 +9,19 @@
 texture = SubResource("CanvasTexture_xivly")
 modulate_color = Color(0, 0, 0, 1)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_quehy"]
-
 [node name="Options" type="Panel"]
 texture_filter = 1
-offset_right = 1200.0
-offset_bottom = 650.0
+offset_left = 350.0
+offset_top = 30.0
+offset_right = 850.0
+offset_bottom = 630.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
 script = ExtResource("1_h31jj")
-
-[node name="bar" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 599.0
-offset_top = 120.0
-offset_right = 600.0
-offset_bottom = 570.0
-texture = SubResource("CanvasTexture_quehy")
 
 [node name="option" type="Label" parent="."]
 layout_mode = 0
 offset_top = 37.0
-offset_right = 1200.0
+offset_right = 500.0
 offset_bottom = 76.0
 theme_override_fonts/font = ExtResource("1_qv6n8")
 theme_override_font_sizes/font_size = 35
@@ -38,133 +30,137 @@ horizontal_alignment = 1
 
 [node name="back" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1122.0
-offset_top = 45.0
-offset_right = 1153.0
-offset_bottom = 76.0
+offset_left = 448.0
+offset_top = 32.0
+offset_right = 479.0
+offset_bottom = 63.0
 theme_override_fonts/font = ExtResource("1_qv6n8")
 text = "X"
 
-[node name="Screen" type="VBoxContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_left = 119.0
-offset_top = 112.0
-offset_right = 499.0
-offset_bottom = 232.0
+offset_left = 39.0
+offset_top = 111.0
+offset_right = 472.0
+offset_bottom = 536.0
+horizontal_scroll_mode = 0
 
-[node name="screen_manager" type="Label" parent="Screen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Screen" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="screen_manager" type="Label" parent="ScrollContainer/VBoxContainer/Screen"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "화면 설정"
 
-[node name="resolution" type="HBoxContainer" parent="Screen"]
+[node name="resolution" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Screen"]
 layout_mode = 2
 
-[node name="resolution" type="Label" parent="Screen/resolution"]
+[node name="resolution" type="Label" parent="ScrollContainer/VBoxContainer/Screen/resolution"]
 layout_mode = 2
 text = "해상도"
 
-[node name="resol_option" type="OptionButton" parent="Screen/resolution"]
+[node name="resol_option" type="OptionButton" parent="ScrollContainer/VBoxContainer/Screen/resolution"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="screen_mode" type="HBoxContainer" parent="Screen"]
+[node name="screen_mode" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Screen"]
 layout_mode = 2
 
-[node name="screen_mode" type="Label" parent="Screen/screen_mode"]
+[node name="screen_mode" type="Label" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
 layout_mode = 2
 text = "화면 모드"
 
-[node name="full_screen" type="CheckBox" parent="Screen/screen_mode"]
+[node name="full_screen" type="CheckBox" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "전체화면"
 
-[node name="window_screen" type="CheckBox" parent="Screen/screen_mode"]
+[node name="window_screen" type="CheckBox" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "창 모드"
 
-[node name="Volume" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 117.0
-offset_top = 249.0
-offset_right = 497.0
-offset_bottom = 368.0
+[node name="Volume" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="volume_manager" type="Label" parent="Volume"]
+[node name="volume_manager" type="Label" parent="ScrollContainer/VBoxContainer/Volume"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "사운드 설정"
 
-[node name="volume1" type="HBoxContainer" parent="Volume"]
+[node name="volume1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Volume"]
 layout_mode = 2
 
-[node name="master_vol" type="Label" parent="Volume/volume1"]
+[node name="master_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
 layout_mode = 2
 text = "전체 볼륨"
 
-[node name="button" type="Button" parent="Volume/volume1"]
+[node name="button" type="Button" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
 layout_mode = 2
 
-[node name="master_slider" type="HSlider" parent="Volume/volume1"]
+[node name="master_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 50.0
 
-[node name="volume2" type="HBoxContainer" parent="Volume"]
+[node name="volume2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Volume"]
 layout_mode = 2
 
-[node name="bgm_vol" type="Label" parent="Volume/volume2"]
+[node name="bgm_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
 layout_mode = 2
 text = "BGM"
 
-[node name="button" type="Button" parent="Volume/volume2"]
+[node name="button" type="Button" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
 layout_mode = 2
 
-[node name="bgm_slider" type="HSlider" parent="Volume/volume2"]
+[node name="bgm_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 50.0
 
-[node name="volume3" type="HBoxContainer" parent="Volume"]
+[node name="volume3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Volume"]
 layout_mode = 2
 
-[node name="effect_vol" type="Label" parent="Volume/volume3"]
+[node name="effect_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
 layout_mode = 2
 text = "SFX"
 
-[node name="button" type="Button" parent="Volume/volume3"]
+[node name="button" type="Button" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
 layout_mode = 2
 
-[node name="effect_slider" type="HSlider" parent="Volume/volume3"]
+[node name="effect_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 value = 50.0
 
-[node name="Language" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 730.0
-offset_top = 112.0
-offset_right = 1110.0
-offset_bottom = 163.0
+[node name="Language" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="language" type="Label" parent="Language"]
+[node name="language" type="Label" parent="ScrollContainer/VBoxContainer/Language"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "언어 설정"
 
-[node name="language_option" type="OptionButton" parent="Language"]
+[node name="language_option" type="OptionButton" parent="ScrollContainer/VBoxContainer/Language"]
 layout_mode = 2
 
 [connection signal="pressed" from="back" to="." method="_on_back_pressed"]
-[connection signal="item_selected" from="Screen/resolution/resol_option" to="." method="_on_resol_option_item_selected"]
-[connection signal="toggled" from="Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
-[connection signal="toggled" from="Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]
-[connection signal="item_selected" from="Language/language_option" to="." method="_on_language_option_item_selected"]
+[connection signal="item_selected" from="ScrollContainer/VBoxContainer/Screen/resolution/resol_option" to="." method="_on_resol_option_item_selected"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]
+[connection signal="item_selected" from="ScrollContainer/VBoxContainer/Language/language_option" to="." method="_on_language_option_item_selected"]

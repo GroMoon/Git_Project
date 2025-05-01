@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmljwk5vyd15y"]
+[gd_scene load_steps=8 format=3 uid="uid://bmljwk5vyd15y"]
 
-[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
+[ext_resource type="PackedScene" uid="uid://v1kjq5qubjvw" path="res://dynamic/1_player/UI_Layer/BaseUI/final_reesult/final_result.tscn" id="2_bq0od"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjie6"]
 bg_color = Color(0.196078, 0.192157, 0.172549, 0)
@@ -18,10 +19,10 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="DeathPanel" type="Panel"]
-offset_left = 377.0
-offset_top = 78.0
-offset_right = 866.0
-offset_bottom = 480.0
+offset_left = 350.0
+offset_top = 20.0
+offset_right = 850.0
+offset_bottom = 620.0
 
 [node name="Gameover" type="Label" parent="."]
 layout_mode = 0
@@ -35,12 +36,21 @@ text = "Game Over!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="FinalResult" parent="." instance=ExtResource("2_bq0od")]
+layout_mode = 1
+
+[node name="VBoxContainer" parent="FinalResult" index="0"]
+offset_left = 124.0
+offset_top = 155.0
+offset_right = 378.0
+offset_bottom = 426.0
+
 [node name="Restart" type="Button" parent="."]
 layout_mode = 1
-offset_left = 167.0
-offset_top = 178.0
-offset_right = 329.0
-offset_bottom = 241.0
+offset_left = 52.0
+offset_top = 500.0
+offset_right = 214.0
+offset_bottom = 563.0
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_7ngny")
 theme_override_font_sizes/font_size = 35
@@ -53,10 +63,10 @@ text = "다시하기"
 
 [node name="Quit" type="Button" parent="."]
 layout_mode = 1
-offset_left = 167.0
-offset_top = 266.0
-offset_right = 329.0
-offset_bottom = 329.0
+offset_left = 286.0
+offset_top = 500.0
+offset_right = 448.0
+offset_bottom = 563.0
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_7ngny")
 theme_override_font_sizes/font_size = 35
@@ -66,3 +76,5 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
 theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
 text = "나가기"
+
+[editable path="FinalResult"]
