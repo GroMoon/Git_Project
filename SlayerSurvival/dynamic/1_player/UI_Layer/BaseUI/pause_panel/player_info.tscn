@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bkni6yhkx2yhd"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_tmfou"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eew0b"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_qjxph"]
 
@@ -9,13 +9,14 @@ texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Title_img" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 27.0
 offset_right = 181.0
 offset_bottom = 177.0
-texture = SubResource("CanvasTexture_tmfou")
+texture = SubResource("CompressedTexture2D_eew0b")
+expand_mode = 1
 
 [node name="Title" type="GridContainer" parent="."]
 layout_mode = 2
