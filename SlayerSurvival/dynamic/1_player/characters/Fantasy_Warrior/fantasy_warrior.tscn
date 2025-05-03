@@ -714,17 +714,11 @@ disabled = true
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_0wyd7")]
 
-[node name="BaseUI" parent="UI_Layer" index="0"]
-visible = false
-
 [node name="Health_Bar" parent="UI_Layer/BaseUI" index="4"]
 offset_left = 576.0
 offset_top = 358.0
 offset_right = 631.0
 offset_bottom = 361.0
-
-[node name="SelectUI" parent="UI_Layer" index="1"]
-visible = false
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 
@@ -732,6 +726,8 @@ visible = false
 [editable path="UI_Layer"]
 [editable path="UI_Layer/BaseUI"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
+[editable path="UI_Layer/BaseUI/PausePanel/PlayerInfo"]
 [editable path="UI_Layer/BaseUI/DeathPanel"]
+[editable path="UI_Layer/BaseUI/DeathPanel/FinalResult"]
 [editable path="UI_Layer/SelectUI"]
 [editable path="UI_Layer/SelectUI/select_panel"]
