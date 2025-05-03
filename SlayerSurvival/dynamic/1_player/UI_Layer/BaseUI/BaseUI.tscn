@@ -71,24 +71,25 @@ layout_mode = 0
 
 [node name="DeathPanel" parent="." instance=ExtResource("7_4nwpg")]
 layout_mode = 0
-offset_left = 360.0
-offset_top = 108.0
-offset_right = 849.0
-offset_bottom = 495.0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 350.0
+offset_top = 30.0
+offset_right = 850.0
+offset_bottom = 630.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="Restart" parent="DeathPanel" index="1"]
-layout_mode = 0
-offset_left = 166.0
-offset_top = 158.0
-offset_right = 328.0
-offset_bottom = 221.0
-
-[node name="Quit" parent="DeathPanel" index="2"]
-process_mode = 3
-
+[connection signal="pressed" from="PausePanel/Buttongroup/Menu" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="PausePanel/Buttongroup/Option" to="." method="_on_option_pressed"]
+[connection signal="pressed" from="PausePanel/Buttongroup/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="DeathPanel/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="DeathPanel/Quit" to="." method="_on_quit_pressed"]
 
 [editable path="PausePanel"]
 [editable path="PausePanel/PlayerInfo"]
 [editable path="DeathPanel"]
+[editable path="DeathPanel/FinalResult"]

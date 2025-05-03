@@ -6,6 +6,14 @@ extends Control
 @onready var stopwatch   = get_node("Stopwatch")
 # 피해 입을 때 효과
 @onready var fatal_state = $FatalState
+# 퍼즈 시 플레이어 정보
+@onready var name_label = $PausePanel/PlayerInfo/Title/name_
+@onready var LV_labe = $PausePanel/PlayerInfo/Title/LV_
+@onready var health_label = $PausePanel/PlayerInfo/Status/health_
+@onready var attack_label = $PausePanel/PlayerInfo/Status/attack_
+@onready var defense_label = $PausePanel/PlayerInfo/Status/defense_
+@onready var attack_speed_label = $PausePanel/PlayerInfo/Status/atteck_speed_
+
 
 var sec                 = 0.0
 var minute              = 0

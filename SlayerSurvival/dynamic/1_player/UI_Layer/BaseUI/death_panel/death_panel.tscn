@@ -19,16 +19,22 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="DeathPanel" type="Panel"]
-offset_left = 350.0
-offset_top = 20.0
-offset_right = 850.0
-offset_bottom = 620.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -300.0
+offset_right = 250.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Gameover" type="Label" parent="."]
 layout_mode = 0
-offset_left = 95.0
 offset_top = 47.0
-offset_right = 391.0
+offset_right = 500.0
 offset_bottom = 101.0
 theme_override_fonts/font = ExtResource("1_7ngny")
 theme_override_font_sizes/font_size = 50
@@ -38,6 +44,11 @@ vertical_alignment = 1
 
 [node name="FinalResult" parent="." instance=ExtResource("2_bq0od")]
 layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="VBoxContainer" parent="FinalResult" index="0"]
 offset_left = 124.0
