@@ -28,7 +28,7 @@ func _process(_delta):
 	base_ui = player.get_node("UI_Layer/BaseUI")
 	minute  = base_ui.minute
 	sec     = base_ui.sec
-	if (!boss_spawn_flag) && (minute==0):	#! FIXME : test용으로 현재 보스 스폰 시간 1분 
+	if (!boss_spawn_flag) && (minute==10):	#! FIXME : test용으로 현재 보스 스폰 시간 1분 
 		if get_parent().instance_map:
 			map_name = get_parent().instance_map.name
 		print(map_name)
