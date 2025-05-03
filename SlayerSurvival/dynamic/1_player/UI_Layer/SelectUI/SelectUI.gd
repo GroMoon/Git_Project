@@ -107,7 +107,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.attack_times = 3
 			upgrade_preload["combo3"][1] = 0
 		"shadow_partner":
-			player.shadow_attack = 1
+			player.shadow_attack = true
 			upgrade_preload["shadow_partner"][1] = 0				# FIXME : 그림자 공격 횟수에 따라 의논 후 변경 필요
 		_:
 			print("ERROR -> 아무것도 선택되지 않음")
