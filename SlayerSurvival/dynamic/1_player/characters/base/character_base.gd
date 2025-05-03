@@ -98,6 +98,7 @@ func _ready():
 	global_position = viewport_size / 2
 	# 캐릭터 특성 설정
 	max_hp = start_hp
+	current_hp = start_hp
 	current_exp = start_exp
 	# 자석 시그널 연결 및 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결

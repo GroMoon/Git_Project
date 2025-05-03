@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://hynl7qhfho6v"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/option/ingame_options.gd" id="1_0w4rt"]
-[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="2_rhx6r"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="2_rhx6r"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
 
@@ -11,10 +11,10 @@ modulate_color = Color(0, 0, 0, 1)
 
 [node name="IngameOptions" type="Panel"]
 texture_filter = 1
-offset_left = 350.0
-offset_top = 70.0
-offset_right = 850.0
-offset_bottom = 570.0
+offset_left = 387.0
+offset_top = 66.0
+offset_right = 887.0
+offset_bottom = 566.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
 script = ExtResource("1_0w4rt")
 
