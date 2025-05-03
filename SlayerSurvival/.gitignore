@@ -7,3 +7,4 @@ player_data.json
 
 # ignore import files
 *.import
+*.translation
