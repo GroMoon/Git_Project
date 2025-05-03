@@ -20,7 +20,7 @@ signal levelup
 @export var move_speed          = 200				# 캐릭터 이동속도
 @export var character_level     = 1					# 캐릭터 레벨
 @export var attack_times        = 1					# 캐릭터 공격 콤보
-@export var shadow_attack       = 0					# 캐릭터 그림자 분신술
+@export var shadow_attack       = false				# 캐릭터 그림자 분신술
 @export var attack_damage       = 5					# 캐릭터 일반 공격 데미지
 @export var magnetic_area_scale = 100				# 캐릭터 자석 범위 
 @export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도

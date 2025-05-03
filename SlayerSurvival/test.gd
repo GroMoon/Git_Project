@@ -42,13 +42,13 @@ func _process(_delta):
 	player = get_node("player")
 	if player:
 		# 그림자 소환 알고리즘
-		if (player.shadow_attack == 1) and (player.is_shadow_on == 0):
+		if (player.shadow_attack == true) and (player.is_shadow_on == false):
 			var shadow_instance = shadow_preload.instantiate()
 			shadow_instance.name = "shadow"
 			shadow_instance.global_position = player.global_position
 			add_child(shadow_instance)
 			move_child(shadow_instance, player.get_index() - 1)
-			player.is_shadow_on = 1
+			player.is_shadow_on = true
 		# mushroom 펫 소환 알고리즘
 		if (player.mushroom_pet_on == true) and (player.is_mushroom_pet == false):
 			var mushroom_pet_instance = mushroom_pet_preload.instantiate()
