@@ -7,6 +7,17 @@ extends Control
 # 피해 입을 때 효과
 @onready var fatal_state = $FatalState
 
+# 퍼즈 시 플레이어 정보
+@onready var character_img      = $PausePanel/PlayerInfo/Title_img
+@onready var status_label       = $PausePanel/PlayerInfo/Status_label
+@onready var name_label         = $PausePanel/PlayerInfo/Title/name_
+@onready var LV_label           = $PausePanel/PlayerInfo/Title/LV_
+@onready var health_label       = $PausePanel/PlayerInfo/Status/health_
+@onready var attack_label       = $PausePanel/PlayerInfo/Status/attack_
+@onready var defense_label      = $PausePanel/PlayerInfo/Status/defense_
+@onready var move_speed_label   = $PausePanel/PlayerInfo/Status/move_speed_
+@onready var attack_speed_label = $PausePanel/PlayerInfo/Status/atteck_speed_
+
 var sec                 = 0.0
 var minute              = 0
 var globl_pause_flag    = false
@@ -61,6 +72,7 @@ func _process(delta):
 func check_pause_pressed():
 	if Input.is_action_just_pressed("pause") : 
 		globl_pause_flag = !globl_pause_flag
+		update_info()
 
 # fatal_state 효과 (빨간빛)
 func process_fatal_state():
@@ -76,6 +88,33 @@ func process_fatal_state():
 func check_level_up_pause_flag(pause_state: bool):
 	lvlup_pause_flag = pause_state
 
+# 스톱워치 처리
+func process_stopwatch(time):
+	sec += time							# time은 process에서 delta 값 으로 설정
+	if sec >= 60.0:
+		minute += 1
+		sec = 0.0
+	var minute_str = str(minute).pad_zeros(2)
+	var sec_str = str(int(sec)).pad_zeros(2)
+	stopwatch.text = minute_str + ":" + sec_str
+
+# 정보 업데이트
+func update_info():
+	status_label.text       = player.character_name
+	name_label.text         = ": " + player.character_name
+	LV_label.text           = ": " + str(int(player.character_level))
+	health_label.text       = ": " + str(int(player.current_hp)) + " / " + str(int(player.max_hp))
+	attack_label.text       = ": " + str(int(player.attack_damage))
+	defense_label.text      = ": " + "미개발"
+	move_speed_label.text   = ": " + str(int(player.move_speed))
+	attack_speed_label.text = ": " + str(float(player.animation_speed))
+	if player.character_name == "fantasy_warrior":
+		character_img.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
+	elif player.character_name == "medieval_king":
+		pass
+	elif player.character_name == "wizard":
+		character_img.texture = preload("res://dynamic/1_player/selcet_character/character_img/wizard_pixelart.webp")
+
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():
 	globl_pause_flag   = !globl_pause_flag
@@ -88,6 +127,12 @@ func _on_menu_pressed():
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
+# Option(설정) 버튼 누를 때
+func _on_option_pressed():
+	var ingame_options = preload("res://dynamic/5_title_screen/option/ingame_options.tscn")
+	var ingame_options_instance = ingame_options.instantiate()
+	add_child(ingame_options_instance)
+
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
@@ -95,13 +140,3 @@ func _on_quit_pressed():
 # 게임 오버 후 Restart 버튼 누를 때
 func _on_restart_pressed():
 	get_tree().change_scene_to_file("res://test.tscn")
-
-# 스톱워치 처리
-func process_stopwatch(time):
-	sec += time							# time은 process에서 delta 값 으로 설정
-	if sec >= 60.0:
-		minute += 1
-		sec = 0.0
-	var minute_str = str(minute).pad_zeros(2)
-	var sec_str = str(int(sec)).pad_zeros(2)
-	stopwatch.text = minute_str + ":" + sec_str

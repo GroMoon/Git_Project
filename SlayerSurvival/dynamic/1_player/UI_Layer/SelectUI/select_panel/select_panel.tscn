@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://j7kkv4b3ad6n"]
 
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_s3hhe"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_s3hhe"]
 
 [node name="select_panel" type="Panel"]
 process_mode = 3
-offset_left = 364.0
-offset_top = 107.0
-offset_right = 900.0
-offset_bottom = 619.0
+offset_left = 349.0
+offset_top = 96.0
+offset_right = 885.0
+offset_bottom = 608.0
 scale = Vector2(0.887454, 0.951006)
 
 [node name="label" type="Label" parent="."]

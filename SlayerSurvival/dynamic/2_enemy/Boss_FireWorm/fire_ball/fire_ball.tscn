@@ -244,8 +244,7 @@ script = ExtResource("1_ldmgs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_5w88j")
-animation = &"Explosion"
-frame_progress = 0.0231489
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)
@@ -262,7 +261,7 @@ libraries = {
 }
 
 [node name="ExplosionTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 1.3
 autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -16,7 +16,7 @@ var upgrade_preload = {
 var player
 var character_features
 
-func _ready():
+func _init_after_parent_ready():
 	player = get_parent().get_parent()
 	var character_name = player.character_name
 	if character_name == "fantasy_warrior":
@@ -41,6 +41,9 @@ func _ready():
 		upgrade_preload[key] = character_features[key]
 	selectUI_panel.visible = false
 	player.connect("levelup", Callable(self, "create_upgrade_selection"))
+
+func _ready():
+	call_deferred("_init_after_parent_ready")
 
 func _process(_delta):
 	pass
@@ -104,7 +107,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.attack_times = 3
 			upgrade_preload["combo3"][1] = 0
 		"shadow_partner":
-			player.shadow_attack = 1
+			player.shadow_attack = true
 			upgrade_preload["shadow_partner"][1] = 0				# FIXME : 그림자 공격 횟수에 따라 의논 후 변경 필요
 		_:
 			print("ERROR -> 아무것도 선택되지 않음")

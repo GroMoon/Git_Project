@@ -42,13 +42,13 @@ func _process(_delta):
 	player = get_node("player")
 	if player:
 		# 그림자 소환 알고리즘
-		if (player.shadow_attack == 1) and (player.is_shadow_on == 0):
+		if (player.shadow_attack == true) and (player.is_shadow_on == false):
 			var shadow_instance = shadow_preload.instantiate()
 			shadow_instance.name = "shadow"
 			shadow_instance.global_position = player.global_position
 			add_child(shadow_instance)
 			move_child(shadow_instance, player.get_index() - 1)
-			player.is_shadow_on = 1
+			player.is_shadow_on = true
 		# mushroom 펫 소환 알고리즘
 		if (player.mushroom_pet_on == true) and (player.is_mushroom_pet == false):
 			var mushroom_pet_instance = mushroom_pet_preload.instantiate()
@@ -125,7 +125,7 @@ func _on_wizard_pressed():
 func _on_cave_button_pressed():
 	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
 	instance_map = map_load.instantiate()
-	instance_map.name = "map"
+	instance_map.name = "cave"
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
@@ -135,7 +135,7 @@ func _on_cave_button_pressed():
 func _on_dungeon_button_pressed():
 	map_load = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.tscn")
 	instance_map = map_load.instantiate()
-	instance_map.name = "map"
+	instance_map.name = "dungeon_B1F"
 	add_child(instance_map)
 	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
 	select_map.queue_free()
@@ -167,12 +167,12 @@ func _on_wizard_mouse_entered():
 	helth_label.text  = "■■■"
 	
 func _on_cave_button_mouse_entered():
-	preview_map.texture = preload("res://dynamic/4_world/Cave/cave_title.png")
-	map_details.text = "어둠 속에 반짝이는 수정들과 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
+	preview_map.texture = preload("res://dynamic/4_world/cave/cave_illust.png")
+	map_details.text = "용암이 흐르며 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
 	$Button_sound.play()
 
 func _on_dungeon_button_mouse_entered():
-	preview_map.texture = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_title.png")
+	preview_map.texture = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F_illust.webp")
 	map_details.text = "거대한 돌벽과 낡은 상자들 사이로 퍼지는 섬뜩한 분위기"
 	$Button_sound.play()
 

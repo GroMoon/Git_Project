@@ -1,10 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1mrkkfrvqn25"]
+[gd_scene load_steps=15 format=3 uid="uid://c1mrkkfrvqn25"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store.gd" id="1_dvmxk"]
 [ext_resource type="Texture2D" uid="uid://bmum5oxj7utmd" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_gcuk1"]
 [ext_resource type="Texture2D" uid="uid://bycgjtadpl04w" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_yby07"]
 [ext_resource type="PackedScene" uid="uid://30do7x8lf7a1" path="res://dynamic/5_title_screen/store/store_panel.tscn" id="4_lb3ej"]
-[ext_resource type="PackedScene" uid="uid://cjk5bgnmwwbp7" path="res://dynamic/5_title_screen/store/store_panel_item_templete.tscn" id="5_c6f3d"]
+[ext_resource type="PackedScene" uid="uid://dvpog2451e8ft" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_damage.tscn" id="5_urp71"]
+[ext_resource type="PackedScene" uid="uid://5i6i62ngyen7" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_shield.tscn" id="6_jyfe8"]
+[ext_resource type="PackedScene" uid="uid://bgygee146j0wy" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_speed.tscn" id="7_cwle4"]
+[ext_resource type="PackedScene" uid="uid://cpnyxlgkyhi80" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_cooldown.tscn" id="8_hv1bp"]
+[ext_resource type="PackedScene" uid="uid://br2t0d6mvvy0r" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_gemdrop.tscn" id="9_baiaw"]
+[ext_resource type="PackedScene" uid="uid://cvkhha1oibrnn" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_golddrop.tscn" id="10_rmpc0"]
+[ext_resource type="PackedScene" uid="uid://btd4lq77160bh" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_health.tscn" id="11_dmblr"]
+[ext_resource type="PackedScene" uid="uid://kpyeaei01jcl" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_vampire.tscn" id="12_dihfo"]
+[ext_resource type="PackedScene" uid="uid://b82fhwwnvs4q7" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_respawn.tscn" id="13_bsvky"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mnub"]
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Store" type="Node2D"]
 script = ExtResource("1_dvmxk")
@@ -53,32 +68,51 @@ offset_bottom = 606.0
 size_flags_vertical = 3
 columns = 3
 
-[node name="StorePanelItem" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="0" instance=ExtResource("5_c6f3d")]
+[node name="StorePanelItemDamage" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="0" instance=ExtResource("5_urp71")]
 custom_minimum_size = Vector2(330, 235)
 layout_mode = 2
 
-[node name="StorePanelItem2" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="1" instance=ExtResource("5_c6f3d")]
+[node name="StorePanelItemShield" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="1" instance=ExtResource("6_jyfe8")]
 custom_minimum_size = Vector2(330, 235)
 layout_mode = 2
 
-[node name="StorePanelItem3" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="2" instance=ExtResource("5_c6f3d")]
+[node name="StorePanelItemSpeed" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="2" instance=ExtResource("7_cwle4")]
 custom_minimum_size = Vector2(330, 235)
 layout_mode = 2
 
-[node name="StorePanelItem4" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="3" instance=ExtResource("5_c6f3d")]
+[node name="StorePanelItemCooldown" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="3" instance=ExtResource("8_hv1bp")]
 custom_minimum_size = Vector2(330, 235)
 layout_mode = 2
 
-[node name="StorePanelItem5" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="4" instance=ExtResource("5_c6f3d")]
+[node name="StorePanelItemGemdrop" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="4" instance=ExtResource("9_baiaw")]
 custom_minimum_size = Vector2(330, 235)
 layout_mode = 2
 
-[node name="StorePanelItem6" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="5" instance=ExtResource("5_c6f3d")]
+[node name="StorePanelItemGolddrop" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="5" instance=ExtResource("10_rmpc0")]
 custom_minimum_size = Vector2(330, 235)
 layout_mode = 2
 
-[node name="StorePanelItem7" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="6" instance=ExtResource("5_c6f3d")]
+[node name="StorePanelItemHealth" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="6" instance=ExtResource("11_dmblr")]
 custom_minimum_size = Vector2(330, 235)
 layout_mode = 2
+
+[node name="StorePanelItemVampire" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="7" instance=ExtResource("12_dihfo")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="StorePanelItemRespawn" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="8" instance=ExtResource("13_bsvky")]
+custom_minimum_size = Vector2(330, 235)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 977.0
+offset_top = 49.0
+offset_right = 1100.0
+offset_bottom = 105.0
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_3mnub")
+text = "BACK"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 
 [editable path="StorePanel"]
