@@ -94,7 +94,17 @@ func _on_upgrade_button_pressed(upgrade_key):
 		"increase_moving_speed":
 			player.move_speed += 10
 		"drain_blood":
-			print("아직 구현되지 않음")
+			player.drain_level += 1
+			match player.drain_level:
+				1:
+					player.drain_percent = 0.03
+					upgrade_preload["drain_blood"][1] = 10
+				2:
+					player.drain_percent = 0.06
+					upgrade_preload["drain_blood"][1] = 5 
+				3:
+					player.drain_percent = 0.10
+					upgrade_preload["drain_blood"][1] = 0 
 		"increase_magnetic_area":
 			player.magnetic_area_scale += 20.0
 		

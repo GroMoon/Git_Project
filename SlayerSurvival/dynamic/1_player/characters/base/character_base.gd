@@ -52,6 +52,11 @@ var damage_flag          = false		# 캐릭터 무적 플래그
 var hit_flag             = false		# 캐릭터 히트 플래그 
 var death_flag_for_pause = false		# BaseUI에서 사망 시 퍼즈를 위한 플래그 
 
+## 능력 레벨 관리
+# 흡혈
+var drain_level   = 0
+var drain_percent = 0.0
+
 ## 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
 var start_exp = 0
@@ -236,6 +241,19 @@ func level_up():
 		print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
 		emit_signal("levelup")
+
+# 흡혈 능력
+func apply_health(source):
+	# 흡혈 레벨이 0이거나 주체가 자신이 아니라면 무시
+	if drain_level == 0 || source != self:
+		return
+	print(1)
+	var heal = drain_percent * attack_damage
+	if heal < 1:
+		heal = 1
+	current_hp += heal
+	current_hp = clamp(current_hp, 0, max_hp)
+	DamageVisual.show_damage(heal, self.position, Color.GREEN)
 
 # hit_effect
 func apply_hit_effect():
