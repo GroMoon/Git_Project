@@ -20,6 +20,9 @@ func _ready():
 	level_label.text = "Level: " + str(StoreData.store_data["STORE_ITEM_HEALTH"]["level"])
 	# 레벨 별 데미지 증가 코스트 표시	
 	health_cost(StoreData.store_data["STORE_ITEM_HEALTH"]["level"])
+	
+	# Connect to store reset signal
+	get_parent().get_parent().get_parent().get_parent().get_parent().connect("reset_store", Callable(self, "_on_reset_store"))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -92,3 +95,8 @@ func _on_buy_button_pressed():
 		
 		level_label.text = "Level: " + str(item["level"])
 		health_cost(item["level"])
+
+func _on_reset_store():
+	item["level"] = "0"
+	level_label.text = "Level: " + str(item["level"])
+	health_cost(item["level"])
