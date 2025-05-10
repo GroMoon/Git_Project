@@ -1,13 +1,13 @@
 [gd_scene load_steps=59 format=3 uid="uid://bf7tbaxu88faq"]
 
-[ext_resource type="Texture2D" uid="uid://d4js15sysdsvn" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="1_02prn"]
+[ext_resource type="Texture2D" uid="uid://d1fu4lc0qknc2" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="1_02prn"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.gd" id="1_ijo13"]
 [ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="2_jjutc"]
-[ext_resource type="Texture2D" uid="uid://dhjqexhenioqg" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="2_stoxg"]
-[ext_resource type="Texture2D" uid="uid://wtads1jljil4" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="3_l73bh"]
-[ext_resource type="Texture2D" uid="uid://dgewfd0y1i13i" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="4_pkjwn"]
-[ext_resource type="Texture2D" uid="uid://if8epasiyvmn" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="5_pw3jv"]
-[ext_resource type="Texture2D" uid="uid://br1oa5w4014f1" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="6_7vfvr"]
+[ext_resource type="Texture2D" uid="uid://1jd1ukbodpn6" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="2_stoxg"]
+[ext_resource type="Texture2D" uid="uid://c5gog0yixen" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="3_l73bh"]
+[ext_resource type="Texture2D" uid="uid://din82x34wuw4f" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="4_pkjwn"]
+[ext_resource type="Texture2D" uid="uid://bcgirnf2hawnp" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="5_pw3jv"]
+[ext_resource type="Texture2D" uid="uid://dfcd5wp3nsxat" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="6_7vfvr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmn8w"]
 shader = ExtResource("2_jjutc")
@@ -256,6 +256,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tjf6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ks77q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6fxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjf6q")
 }],
 "loop": false,
 "name": &"attack_2",
@@ -380,7 +389,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_76p06"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sgira"]
-size = Vector2(35, 28)
+size = Vector2(72, 64)
 
 [node name="FlyingeyePet" type="CharacterBody2D"]
 texture_filter = 1
@@ -391,7 +400,7 @@ script = ExtResource("1_ijo13")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_qmn8w")
 sprite_frames = SubResource("SpriteFrames_hs0gc")
-animation = &"attack"
+animation = &"attack_2"
 speed_scale = 2.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -401,7 +410,7 @@ shape = SubResource("CircleShape2D_76p06")
 [node name="Attack" type="Area2D" parent="." groups=["attack"]]
 
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
-position = Vector2(17.5, 3)
+position = Vector2(11, -2)
 shape = SubResource("RectangleShape2D_sgira")
 
 [node name="AttackTimer" type="Timer" parent="."]

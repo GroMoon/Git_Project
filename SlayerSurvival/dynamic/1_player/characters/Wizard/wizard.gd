@@ -21,9 +21,10 @@ func _physics_process(_delta):
 
 func cast_lightning():
 	var target = get_closest_enemy()
-	var ligtning_instance = lightning.instantiate()
-	ligtning_instance.global_position = target.global_position
-	get_parent().add_child(ligtning_instance)
+	var lightning_instance = lightning.instantiate()
+	lightning_instance.name = "player_lightning"
+	lightning_instance.global_position = target.global_position
+	get_parent().add_child(lightning_instance)
 
 func get_closest_enemy():
 	var closest_enemy = null
