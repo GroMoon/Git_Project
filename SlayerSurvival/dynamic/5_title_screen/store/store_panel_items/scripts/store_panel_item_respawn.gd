@@ -37,9 +37,9 @@ func respawn_upgrade(item_level):
 func respawn_cost(item_level):
 	match item_level:
 		"0":
-			cost.text = "100"
+			cost.text = "10000"
 		"1":
-			cost.text = "200"
+			cost.text = "20000"
 		"Max":
 			cost.text = "Max"
 
@@ -59,8 +59,12 @@ func save_respawn_data():
 func _on_buy_button_pressed():
 	if Global.character_data["GOLD"]["gold"] >= int(cost.text):
 		
-		Global.character_data["GOLD"]["gold"] -= int(cost.text)
+		var purchase_amount = int(cost.text)
+		Global.character_data["GOLD"]["gold"] -= purchase_amount
 		Global.emit_signal("purchase")
+		
+		# 구매 금액 누적
+		StoreData.store_data["STORE_ITEM_RESPAWN"]["used_gold"] += purchase_amount
 		
 		respawn_upgrade(item["level"])
 		respawn_level()

@@ -19,3 +19,6 @@ func update_gold():
 func _on_back_button_pressed():
 	#! FIXME : 데이터 저장 코드 필요
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+
+func _on_reset_button_pressed():
+	pass # Replace with function body.

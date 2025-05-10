@@ -77,8 +77,12 @@ func save_gemdrop_data():
 func _on_buy_button_pressed():
 	if Global.character_data["GOLD"]["gold"] >= int(cost.text):
 		
-		Global.character_data["GOLD"]["gold"] -= int(cost.text)
+		var purchase_amount = int(cost.text)
+		Global.character_data["GOLD"]["gold"] -= purchase_amount
 		Global.emit_signal("purchase")
+		
+		# 구매 금액 누적
+		StoreData.store_data["STORE_ITEM_GEM_DROP"]["used_gold"] += purchase_amount
 		
 		gemdrop_upgrade(item["level"])
 		gemdrop_level()
