@@ -7,9 +7,6 @@ signal levelup
 ## CONSTANT
 
 ## 하위 노드 상대경로
-@onready var attack_area_1    = $Attack/attack_1
-@onready var attack_area_2    = $Attack/attack_2
-@onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 @onready var animation_player = $AnimationPlayer

@@ -20,6 +20,9 @@ func _ready():
 	level_label.text = "Level: " + str(StoreData.store_data["STORE_ITEM_COOLDOWN"]["level"])
 	# 레벨 별 데미지 증가 코스트 표시	
 	cooldown_cost(StoreData.store_data["STORE_ITEM_COOLDOWN"]["level"])
+	
+	# Connect to store reset signal
+	get_parent().get_parent().get_parent().get_parent().connect("reset_store", Callable(self, "_on_reset_store"))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -43,15 +46,15 @@ func cooldown_upgrade(item_level):
 func cooldown_cost(item_level):
 	match item_level:
 		"0":
-			cost.text = "100"
+			cost.text = "1000"
 		"1":
-			cost.text = "200"
+			cost.text = "2000"
 		"2":
-			cost.text = "300"
+			cost.text = "3000"
 		"3":
-			cost.text = "400"
+			cost.text = "4000"
 		"4":
-			cost.text = "500"
+			cost.text = "5000"
 		"Max":
 			cost.text = "Max"
 
@@ -77,8 +80,12 @@ func save_cooldown_data():
 func _on_buy_button_pressed():
 	if Global.character_data["GOLD"]["gold"] >= int(cost.text):
 		
-		Global.character_data["GOLD"]["gold"] -= int(cost.text)
+		var purchase_amount = int(cost.text)
+		Global.character_data["GOLD"]["gold"] -= purchase_amount
 		Global.emit_signal("purchase")
+		
+		# 구매 금액 누적
+		StoreData.store_data["STORE_ITEM_COOLDOWN"]["used_gold"] += purchase_amount
 		
 		cooldown_upgrade(item["level"])
 		cooldown_level()
@@ -88,3 +95,8 @@ func _on_buy_button_pressed():
 		
 		level_label.text = "Level: " + str(item["level"])
 		cooldown_cost(item["level"])
+
+func _on_reset_store():
+	item["level"] = "0"
+	level_label.text = "Level: " + str(item["level"])
+	cooldown_cost(item["level"])
