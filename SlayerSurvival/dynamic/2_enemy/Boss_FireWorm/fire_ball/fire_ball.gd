@@ -8,28 +8,26 @@ var fire_ball_damage = 20
 var explosion_damage = 15
 var player
 
-var target_explode = false
-var target = Vector2.ZERO		# FIXME 타겟 폭발
+var target_explode = true
+var target = Vector2.ZERO
 
 func _ready():
 	player = get_parent().get_parent().get_node("player")
 	animation_player.play("Idle")
-	
-	target = player.global_position			# FIXME 타겟 폭발
+	target = player.global_position
 
 func _process(delta):
 	position += direction * fire_ball_speed * delta
 	if target_explode:
 		explode_2()
 
-func explode():
-	fire_ball_damage = explosion_damage
-	animation_player.play("Explosion")			# 폭발 애니메이션
-	fire_ball_speed = 0								# 이동 정지
-	await animation_player.animation_finished
-	queue_free()
+#func explode():
+	#fire_ball_damage = explosion_damage
+	#animation_player.play("Explosion")				# 폭발 애니메이션
+	#fire_ball_speed = 0								# 이동 정지
+	#await animation_player.animation_finished
+	#queue_free()
 
-# FIXME 타겟 폭발
 func explode_2():
 	# 목표 위치에 도달했는지 확인
 	if position.distance_to(target) < 1.0:
@@ -44,11 +42,12 @@ func _on_body_entered(body):
 	if target_explode:
 		explode_2()			# FIXME 타겟 폭발
 	else:
-		explode()
-	
-func _on_explosion_timer_timeout():
-	if target_explode == false:
-		explode()
-	else:
-		print("버전 1이므로 타이머 돌지 않음")
+		#explode()
 		pass
+	
+#func _on_explosion_timer_timeout():
+	#if target_explode == false:
+		#explode()
+	#else:
+		#print("버전 1이므로 타이머 돌지 않음")
+		#pass

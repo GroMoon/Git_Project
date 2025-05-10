@@ -1,11 +1,11 @@
 [gd_scene load_steps=50 format=3 uid="uid://cunx7il7pbat2"]
 
-[ext_resource type="Texture2D" uid="uid://b44d57w2jh3t4" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
+[ext_resource type="Texture2D" uid="uid://dy16dr003um6t" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Wizard/wizard.gd" id="1_ufk14"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ahco5"]
-[ext_resource type="Texture2D" uid="uid://cwoqfouasawiq" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
-[ext_resource type="Texture2D" uid="uid://cxumjtcldh2m6" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
-[ext_resource type="Texture2D" uid="uid://b3pmd3y10o0i5" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
+[ext_resource type="Texture2D" uid="uid://ct4ng7vrpq3cl" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
+[ext_resource type="Texture2D" uid="uid://bp8r7ifdjo1im" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
+[ext_resource type="Texture2D" uid="uid://bwjoinecdt2vt" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="4_482t6"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="6_rq62j"]
 
@@ -393,16 +393,14 @@ offset_top = 363.0
 offset_right = 628.0
 offset_bottom = 366.0
 
-[node name="PausePanel" parent="UI_Layer/BaseUI" index="7"]
-visible = false
-
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]
 
 [editable path="MagneticArea"]
 [editable path="UI_Layer"]
 [editable path="UI_Layer/BaseUI"]
 [editable path="UI_Layer/BaseUI/PausePanel"]
+[editable path="UI_Layer/BaseUI/PausePanel/PlayerInfo"]
 [editable path="UI_Layer/BaseUI/DeathPanel"]
+[editable path="UI_Layer/BaseUI/DeathPanel/FinalResult"]
 [editable path="UI_Layer/SelectUI"]
 [editable path="UI_Layer/SelectUI/select_panel"]

@@ -1,9 +1,9 @@
 extends Panel
 
-@onready var resol_option    = $Screen/resolution/resol_option
-@onready var full_screen     = $Screen/screen_mode/full_screen
-@onready var window_screen   = $Screen/screen_mode/window_screen
-@onready var language_option = $Language/language_option
+@onready var resol_option    = $ScrollContainer/VBoxContainer/Screen/resolution/resol_option
+@onready var full_screen     = $ScrollContainer/VBoxContainer/Screen/screen_mode/full_screen
+@onready var window_screen   = $ScrollContainer/VBoxContainer/Screen/screen_mode/window_screen
+@onready var language_option = $ScrollContainer/VBoxContainer/Language/language_option
 
 func _ready():
 	update_ui()

@@ -1,14 +1,14 @@
 [gd_scene load_steps=61 format=3 uid="uid://dl5aj2li23jsw"]
 
-[ext_resource type="Texture2D" uid="uid://dr8avhj3wwml4" path="res://dynamic/2_enemy/Goblin/Sprites/Attack.png" id="1_msh8x"]
+[ext_resource type="Texture2D" uid="uid://bqyb6hforxnns" path="res://dynamic/2_enemy/Goblin/Sprites/Attack.png" id="1_msh8x"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="1_poxhx"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Goblin/goblin.gd" id="1_vuh42"]
-[ext_resource type="Texture2D" uid="uid://de3oovv0robo8" path="res://dynamic/2_enemy/Goblin/Sprites/Attack2.png" id="2_6c5qo"]
-[ext_resource type="Texture2D" uid="uid://ea0ug6fgxyfi" path="res://dynamic/2_enemy/Goblin/Sprites/Attack3.png" id="3_ebyef"]
-[ext_resource type="Texture2D" uid="uid://dmfs5cfyqww06" path="res://dynamic/2_enemy/Goblin/Sprites/Death.png" id="4_hquuu"]
-[ext_resource type="Texture2D" uid="uid://ssi4g2uk15aj" path="res://dynamic/2_enemy/Goblin/Sprites/Idle.png" id="5_ucvo3"]
-[ext_resource type="Texture2D" uid="uid://phjemqo6qd1e" path="res://dynamic/2_enemy/Goblin/Sprites/Take Hit.png" id="6_nj1r5"]
-[ext_resource type="Texture2D" uid="uid://nttu2xkack7d" path="res://dynamic/2_enemy/Goblin/Sprites/Run.png" id="7_almy2"]
+[ext_resource type="Texture2D" uid="uid://diihv07fy20qn" path="res://dynamic/2_enemy/Goblin/Sprites/Attack2.png" id="2_6c5qo"]
+[ext_resource type="Texture2D" uid="uid://dx7iqrd4dbq5u" path="res://dynamic/2_enemy/Goblin/Sprites/Attack3.png" id="3_ebyef"]
+[ext_resource type="Texture2D" uid="uid://blw348idawudd" path="res://dynamic/2_enemy/Goblin/Sprites/Death.png" id="4_hquuu"]
+[ext_resource type="Texture2D" uid="uid://8isthciwap20" path="res://dynamic/2_enemy/Goblin/Sprites/Idle.png" id="5_ucvo3"]
+[ext_resource type="Texture2D" uid="uid://b0yis5oi7cwmo" path="res://dynamic/2_enemy/Goblin/Sprites/Take Hit.png" id="6_nj1r5"]
+[ext_resource type="Texture2D" uid="uid://xkosba6bpivl" path="res://dynamic/2_enemy/Goblin/Sprites/Run.png" id="7_almy2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dyopk"]
 atlas = ExtResource("1_msh8x")
@@ -411,9 +411,5 @@ collision_mask = 10
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(0, 9)
 shape = SubResource("CapsuleShape2D_evgvj")
-
-[connection signal="area_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_area_entered"]
-[connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]
-[connection signal="body_exited" from="interaction_sensor" to="." method="_on_interaction_sensor_body_exited"]
 
 [editable path="interaction_sensor"]

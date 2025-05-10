@@ -1,11 +1,11 @@
 [gd_scene load_steps=35 format=3 uid="uid://co82p48pjfk8i"]
 
-[ext_resource type="Texture2D" uid="uid://cbmfxqw6ci7v6" path="res://dynamic/2_enemy/Skeleton/Sprites/Idle.png" id="1_ffs70"]
-[ext_resource type="Texture2D" uid="uid://dfnx6t8n0ya88" path="res://dynamic/2_enemy/Skeleton/Sprites/Attack.png" id="1_hgcjo"]
+[ext_resource type="Texture2D" uid="uid://rgkmn1nay648" path="res://dynamic/2_enemy/Skeleton/Sprites/Idle.png" id="1_ffs70"]
+[ext_resource type="Texture2D" uid="uid://cw8a42ulgk3ip" path="res://dynamic/2_enemy/Skeleton/Sprites/Attack.png" id="1_hgcjo"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Skeleton/skeleton.gd" id="1_pivpp"]
-[ext_resource type="Texture2D" uid="uid://hlojnnx7vx0c" path="res://dynamic/2_enemy/Skeleton/Sprites/Walk.png" id="2_okriw"]
-[ext_resource type="Texture2D" uid="uid://ce4eoryacqrtn" path="res://dynamic/2_enemy/Skeleton/Sprites/Death.png" id="2_smsli"]
-[ext_resource type="Texture2D" uid="uid://vs387yfdscdj" path="res://dynamic/2_enemy/Skeleton/Sprites/Take Hit.png" id="4_qve1s"]
+[ext_resource type="Texture2D" uid="uid://dqm2yf8ni8n2w" path="res://dynamic/2_enemy/Skeleton/Sprites/Walk.png" id="2_okriw"]
+[ext_resource type="Texture2D" uid="uid://bkwtrfitsyjgr" path="res://dynamic/2_enemy/Skeleton/Sprites/Death.png" id="2_smsli"]
+[ext_resource type="Texture2D" uid="uid://c6bhxbjqjxf3w" path="res://dynamic/2_enemy/Skeleton/Sprites/Take Hit.png" id="4_qve1s"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="6_pt0v8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rs6s6"]
@@ -234,9 +234,5 @@ collision_mask = 10
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(4.3, 1.3)
 shape = SubResource("CapsuleShape2D_qdga4")
-
-[connection signal="area_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_area_entered"]
-[connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]
-[connection signal="body_exited" from="interaction_sensor" to="." method="_on_interaction_sensor_body_exited"]
 
 [editable path="interaction_sensor"]

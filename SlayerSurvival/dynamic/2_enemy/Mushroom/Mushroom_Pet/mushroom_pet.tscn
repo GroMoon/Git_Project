@@ -1,12 +1,12 @@
 [gd_scene load_steps=40 format=3 uid="uid://c6ft8nxddbxd1"]
 
-[ext_resource type="Texture2D" uid="uid://cu6xrwjol2q7t" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_jduur"]
+[ext_resource type="Texture2D" uid="uid://7hd4y2opd6ks" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_jduur"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.gd" id="1_wy06c"]
 [ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="2_6u0w2"]
-[ext_resource type="Texture2D" uid="uid://damg3yfmpkn4" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="2_fd1hu"]
-[ext_resource type="Texture2D" uid="uid://6osi4o0dcpg3" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="3_gfc2c"]
-[ext_resource type="Texture2D" uid="uid://2ifc3h44ygnk" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="4_g3fev"]
-[ext_resource type="Texture2D" uid="uid://bb2udxxc4tnqv" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="5_14hni"]
+[ext_resource type="Texture2D" uid="uid://fspt0rq61a7j" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="2_fd1hu"]
+[ext_resource type="Texture2D" uid="uid://c1wyvttdgpwrj" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="3_gfc2c"]
+[ext_resource type="Texture2D" uid="uid://cjhm0lgtmhyd1" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="4_g3fev"]
+[ext_resource type="Texture2D" uid="uid://dqbteegyd0y26" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="5_14hni"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vlskx"]
 shader = ExtResource("2_6u0w2")
@@ -244,7 +244,7 @@ animations = [{
 radius = 7.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2a64"]
-size = Vector2(43, 37)
+size = Vector2(64, 34)
 
 [node name="MushroomPet" type="CharacterBody2D"]
 texture_filter = 1
@@ -255,7 +255,7 @@ script = ExtResource("1_wy06c")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_vlskx")
 sprite_frames = SubResource("SpriteFrames_0rbba")
-animation = &"idle"
+animation = &"attack"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -267,7 +267,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
-position = Vector2(21, 9)
+position = Vector2(34, 10)
 shape = SubResource("RectangleShape2D_x2a64")
 
 [node name="AttackTimer" type="Timer" parent="."]
