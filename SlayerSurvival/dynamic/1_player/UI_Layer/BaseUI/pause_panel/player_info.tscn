@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkni6yhkx2yhd"]
+[gd_scene load_steps=2 format=3 uid="uid://bkni6yhkx2yhd"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eew0b"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_qjxph"]
 
 [node name="PlayerInfo" type="Control"]
 texture_filter = 1
@@ -17,6 +15,23 @@ offset_right = 181.0
 offset_bottom = 177.0
 texture = SubResource("CompressedTexture2D_eew0b")
 expand_mode = 1
+
+[node name="revive" type="Label" parent="."]
+layout_mode = 2
+offset_left = 226.0
+offset_top = 135.0
+offset_right = 252.0
+offset_bottom = 153.0
+text = "부활"
+horizontal_alignment = 1
+
+[node name="revive_" type="Label" parent="."]
+layout_mode = 2
+offset_left = 256.0
+offset_top = 135.0
+offset_right = 319.0
+offset_bottom = 153.0
+text = ": ?"
 
 [node name="Title" type="GridContainer" parent="."]
 layout_mode = 2
@@ -113,61 +128,142 @@ offset_top = 353.0
 offset_right = 125.0
 offset_bottom = 380.0
 theme_override_font_sizes/font_size = 25
-text = "???"
+text = "스 킬"
 
 [node name="Skill" type="GridContainer" parent="."]
-layout_mode = 2
-offset_left = 26.0
-offset_top = 391.0
-offset_right = 146.0
-offset_bottom = 431.0
-scale = Vector2(2.917, 4.25296)
+layout_mode = 0
+offset_left = 31.0
+offset_top = 394.0
+offset_right = 361.0
+offset_bottom = 557.0
 columns = 4
 
-[node name="skill_1" type="TextureRect" parent="Skill"]
+[node name="combo" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = "콤보 LV"
+horizontal_alignment = 1
 
-[node name="skill_2" type="TextureRect" parent="Skill"]
+[node name="combo_" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = ": {?}"
 
-[node name="skill_3" type="TextureRect" parent="Skill"]
+[node name="damage" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = "데미지 LV"
+horizontal_alignment = 1
 
-[node name="skill_4" type="TextureRect" parent="Skill"]
+[node name="damage_" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = ": {?}"
 
-[node name="skill_5" type="TextureRect" parent="Skill"]
+[node name="defense" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = "방어력 LV"
+horizontal_alignment = 1
 
-[node name="skill_6" type="TextureRect" parent="Skill"]
+[node name="defense_" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = ": {?}"
 
-[node name="skill_7" type="TextureRect" parent="Skill"]
+[node name="max_hp" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = "최대 체력 LV"
+horizontal_alignment = 1
 
-[node name="skill_8" type="TextureRect" parent="Skill"]
+[node name="max_hp_" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = SubResource("CanvasTexture_qjxph")
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="move_speed" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "이동 속도 LV"
+horizontal_alignment = 1
+
+[node name="move_speed_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="drain" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "흡혈 LV"
+horizontal_alignment = 1
+
+[node name="drain_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="magnetic" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "자석 범위 LV"
+horizontal_alignment = 1
+
+[node name="magnetic_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="attack_speed" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "공격 속도 LV"
+horizontal_alignment = 1
+
+[node name="attack_speed_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="shadow" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "그림자 LV"
+horizontal_alignment = 1
+
+[node name="shadow_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="NNN" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "??? LV"
+horizontal_alignment = 1
+
+[node name="NNN_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"

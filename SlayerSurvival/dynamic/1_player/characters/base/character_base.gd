@@ -7,9 +7,6 @@ signal levelup
 ## CONSTANT
 
 ## 하위 노드 상대경로
-@onready var attack_area_1    = $Attack/attack_1
-@onready var attack_area_2    = $Attack/attack_2
-@onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 @onready var animation_player = $AnimationPlayer
@@ -25,6 +22,7 @@ signal levelup
 @export var magnetic_area_scale = 100				# 캐릭터 자석 범위 
 @export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도
 @export var start_hp            = 100				# 캐릭터 시작 체력
+@export var drain_percent       = 0.0				# 캐릭터 흡혈 퍼센트
 
 ## 펫 관련
 # mushroom
@@ -53,9 +51,17 @@ var hit_flag             = false		# 캐릭터 히트 플래그
 var death_flag_for_pause = false		# BaseUI에서 사망 시 퍼즈를 위한 플래그 
 
 ## 능력 레벨 관리
-# 흡혈
-var drain_level   = 0
-var drain_percent = 0.0
+var attack_times_level   = 0	# 캐릭터 고유 특성
+var max_hp_level         = 0	# 최대 체력 증가
+var damage_level         = 0	# 데미지 증가
+var move_speed_level     = 0	# 이동 속도 증가
+var drain_level          = 0	# 흡혈
+var shadow_partner_level = 0	# 그림자 분신
+var magnetic_area_level  = 0	# 자석 범위
+# var 방어력
+# var 공격 속도
+# var 부활
+# var 쿨타임
 
 ## 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar

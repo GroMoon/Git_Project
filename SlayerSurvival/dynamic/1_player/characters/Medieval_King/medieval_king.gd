@@ -1,5 +1,9 @@
 extends CharacterBase
 
+@onready var attack_area_1    = $Attack/attack_1
+@onready var attack_area_2    = $Attack/attack_2
+@onready var attack_area_3    = $Attack/attack_3
+
 func _initialize():
 	# 캐릭터 특성
 	character_name      = "medieval_king"
