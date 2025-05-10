@@ -51,13 +51,13 @@ var hit_flag             = false		# 캐릭터 히트 플래그
 var death_flag_for_pause = false		# BaseUI에서 사망 시 퍼즈를 위한 플래그 
 
 ## 능력 레벨 관리
-var attack_times_level           = 0	# 캐릭터 고유 특성
-var increase_max_hp_level        = 0	# 최대 체력 증가
-var increase_damage_level        = 0	# 데미지 증가
-var move_speed_level             = 0	# 이동 속도 증가
-var drain_level                  = 0	# 흡혈
-var shadow_partner_level         = 0	# 그림자 분신
-var increase_magnetic_area_level = 0	# 자석 범위
+var attack_times_level   = 0	# 캐릭터 고유 특성
+var max_hp_level         = 0	# 최대 체력 증가
+var damage_level         = 0	# 데미지 증가
+var move_speed_level     = 0	# 이동 속도 증가
+var drain_level          = 0	# 흡혈
+var shadow_partner_level = 0	# 그림자 분신
+var magnetic_area_level  = 0	# 자석 범위
 # var 방어력
 # var 공격 속도
 # var 부활
