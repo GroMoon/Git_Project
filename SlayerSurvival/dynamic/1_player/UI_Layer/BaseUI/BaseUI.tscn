@@ -69,6 +69,10 @@ scale = Vector2(0.998853, 1)
 process_mode = 3
 layout_mode = 0
 
+[node name="Skill" parent="PausePanel/PlayerInfo" index="7"]
+offset_left = 28.0
+offset_right = 358.0
+
 [node name="DeathPanel" parent="." instance=ExtResource("7_4nwpg")]
 layout_mode = 0
 anchors_preset = 0

@@ -99,8 +99,8 @@ func select_random_upgrades(count: int) -> Array:
 func _on_upgrade_button_pressed(upgrade_key):
 	match upgrade_key:
 		"increase_max_hp":
-			player.increase_max_hp_level += 1
-			match player.increase_max_hp_level:
+			player.max_hp_level += 1
+			match player.max_hp_level:
 				1:
 					player.max_hp += 10
 					upgrade_preload["increase_max_hp"][1] = 40
@@ -119,8 +119,8 @@ func _on_upgrade_button_pressed(upgrade_key):
 					print("체력증가 최대 레벨 도달")
 
 		"increase_damage":
-			player.increase_damage_level += 1
-			match player.increase_damage_level:
+			player.damage_level += 1
+			match player.damage_level:
 				1:
 					player.attack_damage += 5
 					upgrade_preload["increase_damage"][1] = 40
@@ -173,8 +173,8 @@ func _on_upgrade_button_pressed(upgrade_key):
 					print("흡혈 최대 레벨 도달")
 
 		"increase_magnetic_area":
-			player.increase_magnetic_area_level += 1
-			match player.increase_magnetic_area_level:
+			player.magnetic_area_level += 1
+			match player.magnetic_area_level:
 				1:
 					player.magnetic_area_scale += 20.0
 					upgrade_preload["increase_magnetic_area"][1] = 40
@@ -203,10 +203,12 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["shadow_partner"][1] = 0
 # =============== 캐릭터 특성 ==================
 		"combo2":
+			player.attack_times_level += 1
 			player.attack_times = 2
 			upgrade_preload["combo2"][1] = 0
 			upgrade_preload["combo3"][1] = 5
 		"combo3":
+			player.attack_times_level += 1
 			player.attack_times = 3
 			upgrade_preload["combo3"][1] = 0
 
