@@ -5,6 +5,9 @@ signal pause
 @onready var selectUI_panel = $select_panel
 @onready var upgrade_container = $select_panel/upgrade_container
 
+var player
+var character_features
+
 var upgrade_preload = {
 	"increase_max_hp" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_max_hp.tscn"), 50],
 	"increase_damage" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_damage.tscn"), 50],
@@ -13,8 +16,6 @@ var upgrade_preload = {
 	"shadow_partner" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_shadow_partner.tscn"), 15],
 	"increase_magnetic_area" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_magnetic_area.tscn"), 50]
 }
-var player
-var character_features
 
 func _init_after_parent_ready():
 	player = get_parent().get_parent()
@@ -65,13 +66,20 @@ func select_random_upgrades(count: int) -> Array:
 	var total_weight = 0
 	var weighted_keys = []
 	var selected = []
+
 	# 전체 가중치 저장 및 최신화된 keys 및 weight를 weighted_keys에 추가
 	for key in upgrade_preload.keys():
 		var weight = upgrade_preload[key][1]
-		total_weight += weight
-		weighted_keys.append({ "key": key, "weight": weight })
+		if weight > 0:  # 가중치가 0보다 큰 것만 선택 대상으로 추가
+			total_weight += weight
+			weighted_keys.append({ "key": key, "weight": weight })
+
 	# count 만큼 가중치에 의해 계산된 랜덤을 선택
 	for i in range(count):
+		if weighted_keys.size() == 0:
+			selected.append("food")  # 더 이상 선택할 업그레이드가 없으면 food 추가
+			continue
+
 		var random_value = randi() % total_weight
 		for item in weighted_keys:
 			random_value -= item["weight"]
@@ -80,39 +88,137 @@ func select_random_upgrades(count: int) -> Array:
 				total_weight -= item["weight"]
 				weighted_keys.erase(item)
 				break
+
+	# 부족한 만큼 food로 채움
+	while selected.size() < count:
+		selected.append("food")
+
 	return selected
 
 # 업그레이드 적용
 func _on_upgrade_button_pressed(upgrade_key):
 	match upgrade_key:
 		"increase_max_hp":
-			player.max_hp += 10
-			print("최대 체력 증가",player.max_hp)
+			player.max_hp_level += 1
+			match player.max_hp_level:
+				1:
+					player.max_hp += 10
+					upgrade_preload["increase_max_hp"][1] = 40
+				2:
+					player.max_hp += 10
+					upgrade_preload["increase_max_hp"][1] = 30
+				3:
+					player.max_hp += 10
+					upgrade_preload["increase_max_hp"][1] = 20
+				4:
+					player.max_hp += 10
+					upgrade_preload["increase_max_hp"][1] = 10
+				5:
+					player.max_hp += 20
+					upgrade_preload["increase_max_hp"][1] = 0
+					print("체력증가 최대 레벨 도달")
+
 		"increase_damage":
-			player.attack_damage += 5
-			print("현재 공격력 : ", player.attack_damage)
+			player.damage_level += 1
+			match player.damage_level:
+				1:
+					player.attack_damage += 5
+					upgrade_preload["increase_damage"][1] = 40
+				2:
+					player.attack_damage += 5
+					upgrade_preload["increase_damage"][1] = 30
+				3:
+					player.attack_damage += 5
+					upgrade_preload["increase_damage"][1] = 20
+				4:
+					player.attack_damage += 5
+					upgrade_preload["increase_damage"][1] = 10
+				5:
+					player.attack_damage += 10
+					upgrade_preload["increase_damage"][1] = 0
+					print("공격력 증가 최대 레벨 도달")
+
 		"increase_moving_speed":
-			player.move_speed += 10
+			player.move_speed_level += 1
+			match player.move_speed_level:
+				1:
+					player.move_speed += 10
+					upgrade_preload["increase_moving_speed"][1] = 40
+				2:
+					player.move_speed += 10
+					upgrade_preload["increase_moving_speed"][1] = 30
+				3:
+					player.move_speed += 10
+					upgrade_preload["increase_moving_speed"][1] = 20
+				4:
+					player.move_speed += 10
+					upgrade_preload["increase_moving_speed"][1] = 10
+				5:
+					player.move_speed += 20
+					upgrade_preload["increase_moving_speed"][1] = 0
+					print("이동속도 증가 최대 레벨 도달")
+
 		"drain_blood":
-			print("아직 구현되지 않음")
+			player.drain_level += 1
+			match player.drain_level:
+				1:
+					player.drain_percent = 0.03
+					upgrade_preload["drain_blood"][1] = 10
+				2:
+					player.drain_percent = 0.06
+					upgrade_preload["drain_blood"][1] = 5 
+				3:
+					player.drain_percent = 0.10
+					upgrade_preload["drain_blood"][1] = 0 
+					print("흡혈 최대 레벨 도달")
+
 		"increase_magnetic_area":
-			player.magnetic_area_scale += 20.0
-		
+			player.magnetic_area_level += 1
+			match player.magnetic_area_level:
+				1:
+					player.magnetic_area_scale += 20.0
+					upgrade_preload["increase_magnetic_area"][1] = 40
+				2:
+					player.magnetic_area_scale += 20.0
+					upgrade_preload["increase_magnetic_area"][1] = 30
+				3:
+					player.magnetic_area_scale += 20.0
+					upgrade_preload["increase_magnetic_area"][1] = 20
+				4:
+					player.magnetic_area_scale += 20.0
+					upgrade_preload["increase_magnetic_area"][1] = 10
+				5:
+					player.magnetic_area_scale += 40.0
+					upgrade_preload["increase_magnetic_area"][1] = 0
+					print("자석 범위 증가 최대 레벨 도달")
+		"shadow_partner":
+			player.shadow_partner_level += 1
+			match player.shadow_partner_level:
+				1:
+					player.shadow_attack = true
+					upgrade_preload["shadow_partner"][1] = 10
+				2:
+					upgrade_preload["shadow_partner"][1] = 5
+				3:
+					upgrade_preload["shadow_partner"][1] = 0
 # =============== 캐릭터 특성 ==================
 		"combo2":
+			player.attack_times_level += 1
 			player.attack_times = 2
 			upgrade_preload["combo2"][1] = 0
 			upgrade_preload["combo3"][1] = 5
 		"combo3":
+			player.attack_times_level += 1
 			player.attack_times = 3
 			upgrade_preload["combo3"][1] = 0
-		"shadow_partner":
-			player.shadow_attack = 1
-			upgrade_preload["shadow_partner"][1] = 0				# FIXME : 그림자 공격 횟수에 따라 의논 후 변경 필요
+
+# =============== 음식 ==================
+		"food":
+			player.current_hp += 10
 		_:
 			print("ERROR -> 아무것도 선택되지 않음")
 			pass
-	
+
 	# 업그레이드 버튼 초기화 (count 갯수의 선택 창들을 모두 제거)
 	for child in upgrade_container.get_children():
 		child.queue_free()

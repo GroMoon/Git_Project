@@ -4,8 +4,35 @@ extends Control
 @onready var pause_panel = get_node("PausePanel")
 @onready var death_panel = get_node("DeathPanel")
 @onready var stopwatch   = get_node("Stopwatch")
+
 # 피해 입을 때 효과
 @onready var fatal_state = $FatalState
+
+# 부활 정보
+@onready var revive = $PausePanel/PlayerInfo/revive_
+
+# 퍼즈 시 플레이어 정보
+@onready var character_img      = $PausePanel/PlayerInfo/Title_img
+@onready var status_label       = $PausePanel/PlayerInfo/Status_label
+@onready var name_label         = $PausePanel/PlayerInfo/Title/name_
+@onready var LV_label           = $PausePanel/PlayerInfo/Title/LV_
+@onready var health_label       = $PausePanel/PlayerInfo/Status/health_
+@onready var attack_label       = $PausePanel/PlayerInfo/Status/attack_
+@onready var defense_label      = $PausePanel/PlayerInfo/Status/defense_
+@onready var move_speed_label   = $PausePanel/PlayerInfo/Status/move_speed_
+@onready var attack_speed_label = $PausePanel/PlayerInfo/Status/atteck_speed_
+
+# 스킬 레벨 정보
+@onready var combo_level        = $PausePanel/PlayerInfo/Skill/combo_
+@onready var damage_level       = $PausePanel/PlayerInfo/Skill/damage_
+@onready var defense_level      = $PausePanel/PlayerInfo/Skill/defense_
+@onready var max_hp_level       = $PausePanel/PlayerInfo/Skill/max_hp_
+@onready var move_speed_level   = $PausePanel/PlayerInfo/Skill/move_speed_
+@onready var drain_level        = $PausePanel/PlayerInfo/Skill/drain_
+@onready var magnetic_level     = $PausePanel/PlayerInfo/Skill/magnetic_
+@onready var attack_speed_level = $PausePanel/PlayerInfo/Skill/attack_speed_
+@onready var shadow_level       = $PausePanel/PlayerInfo/Skill/shadow_
+#@onready var 
 
 var sec                 = 0.0
 var minute              = 0
@@ -61,6 +88,7 @@ func _process(delta):
 func check_pause_pressed():
 	if Input.is_action_just_pressed("pause") : 
 		globl_pause_flag = !globl_pause_flag
+		update_info()
 
 # fatal_state 효과 (빨간빛)
 func process_fatal_state():
@@ -85,6 +113,36 @@ func process_stopwatch(time):
 	var minute_str = str(minute).pad_zeros(2)
 	var sec_str = str(int(sec)).pad_zeros(2)
 	stopwatch.text = minute_str + ":" + sec_str
+
+# 정보 업데이트
+func update_info():
+	# 스테이터스
+	status_label.text       = player.character_name
+	name_label.text         = ": " + player.character_name
+	LV_label.text           = ": " + str(player.character_level)
+	health_label.text       = ": " + str(player.current_hp) + " / " + str(player.max_hp)
+	attack_label.text       = ": " + str(player.attack_damage)
+	defense_label.text      = ": " + "미개발"
+	move_speed_label.text   = ": " + str(player.move_speed)
+	attack_speed_label.text = ": " + str(float(player.animation_speed))
+	if player.character_name == "fantasy_warrior":
+		character_img.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
+	elif player.character_name == "medieval_king":
+		pass
+	elif player.character_name == "wizard":
+		character_img.texture = preload("res://dynamic/1_player/selcet_character/character_img/wizard_pixelart.webp")
+		
+	# 스킬 레벨
+	combo_level.text        = ": " + str(player.attack_times_level)
+	damage_level.text       = ": " + str(player.damage_level)
+	# defense_level.text    = ": " + str(player.)
+	max_hp_level.text       = ": " + str(player.max_hp_level)
+	move_speed_level.text   = ": " + str(player.move_speed_level)
+	drain_level.text        = ": " + str(player.drain_level)
+	magnetic_level.text     = ": " + str(player.magnetic_area_level)
+	# attack_speed_level.text = ": " + str(player.)
+	shadow_level.text       = ": " + str(player.shadow_partner_level)
+	
 
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():

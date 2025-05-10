@@ -1,7 +1,7 @@
-[gd_scene load_steps=56 format=3 uid="uid://d36u7wdm8j7ae"]
+[gd_scene load_steps=59 format=3 uid="uid://d36u7wdm8j7ae"]
 
 [ext_resource type="Script" path="res://dynamic/2_enemy/Boss_BringOfDeath/bringofdeath.gd" id="1_1621c"]
-[ext_resource type="Texture2D" uid="uid://pv4qs8cagmmf" path="res://dynamic/2_enemy/Boss_BringOfDeath/Sprites/Bringer-of-Death-SpritSheet.png" id="1_mypxp"]
+[ext_resource type="Texture2D" uid="uid://m3b1383boy86" path="res://dynamic/2_enemy/Boss_BringOfDeath/Sprites/Bringer-of-Death-SpritSheet.png" id="1_mypxp"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="2_2817u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_81j5u"]
@@ -376,6 +376,79 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_desk6"]
 radius = 16.0
 
+[sub_resource type="Animation" id="Animation_vui7o"]
+resource_name = "attack"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Attack/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_q665a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k0uxn"]
+_data = {
+"RESET": SubResource("Animation_q665a"),
+"attack": SubResource("Animation_vui7o")
+}
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2geu0"]
 radius = 20.0
 height = 48.0
@@ -392,13 +465,18 @@ script = ExtResource("1_1621c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xi22b")
-animation = &"idle"
+animation = &"attack"
 speed_scale = 1.75
 offset = Vector2(-35, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_desk6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_k0uxn")
+}
 
 [node name="interaction_sensor" parent="." instance=ExtResource("2_2817u")]
 position = Vector2(32, 24)
@@ -418,8 +496,9 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
-position = Vector2(-67, 0)
+position = Vector2(-80, 0)
 shape = SubResource("RectangleShape2D_pf3py")
+disabled = true
 
 [connection signal="area_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_area_entered"]
 [connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]

@@ -1,0 +1,269 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkni6yhkx2yhd"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eew0b"]
+
+[node name="PlayerInfo" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Title_img" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 27.0
+offset_right = 181.0
+offset_bottom = 177.0
+texture = SubResource("CompressedTexture2D_eew0b")
+expand_mode = 1
+
+[node name="revive" type="Label" parent="."]
+layout_mode = 2
+offset_left = 226.0
+offset_top = 135.0
+offset_right = 252.0
+offset_bottom = 153.0
+text = "부활"
+horizontal_alignment = 1
+
+[node name="revive_" type="Label" parent="."]
+layout_mode = 2
+offset_left = 256.0
+offset_top = 135.0
+offset_right = 319.0
+offset_bottom = 153.0
+text = ": ?"
+
+[node name="Title" type="GridContainer" parent="."]
+layout_mode = 2
+offset_left = 227.0
+offset_top = 47.0
+offset_right = 325.0
+offset_bottom = 87.0
+columns = 2
+
+[node name="name" type="Label" parent="Title"]
+layout_mode = 2
+text = "이름"
+horizontal_alignment = 1
+
+[node name="name_" type="Label" parent="Title"]
+layout_mode = 2
+text = ": {name}"
+
+[node name="LV" type="Label" parent="Title"]
+layout_mode = 2
+text = "LV"
+horizontal_alignment = 1
+
+[node name="LV_" type="Label" parent="Title"]
+layout_mode = 2
+text = ": {LV}"
+
+[node name="Status_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 189.0
+offset_right = 125.0
+offset_bottom = 216.0
+theme_override_font_sizes/font_size = 25
+text = "{name}"
+
+[node name="Status" type="GridContainer" parent="."]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 231.0
+offset_right = 207.0
+offset_bottom = 337.0
+columns = 2
+
+[node name="health" type="Label" parent="Status"]
+layout_mode = 2
+text = "체력"
+horizontal_alignment = 1
+
+[node name="health_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": {health}"
+
+[node name="attack" type="Label" parent="Status"]
+layout_mode = 2
+text = "공격력"
+horizontal_alignment = 1
+
+[node name="attack_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": {attack}"
+
+[node name="defense" type="Label" parent="Status"]
+layout_mode = 2
+text = "방어력"
+horizontal_alignment = 1
+
+[node name="defense_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": {defense}"
+
+[node name="move_speed" type="Label" parent="Status"]
+layout_mode = 2
+text = "이동속도"
+horizontal_alignment = 1
+
+[node name="move_speed_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": {move_speed}"
+
+[node name="attack_speed" type="Label" parent="Status"]
+layout_mode = 2
+text = "공격속도"
+horizontal_alignment = 1
+
+[node name="atteck_speed_" type="Label" parent="Status"]
+layout_mode = 2
+text = ": {attack_speed}"
+
+[node name="Skill_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 353.0
+offset_right = 125.0
+offset_bottom = 380.0
+theme_override_font_sizes/font_size = 25
+text = "스 킬"
+
+[node name="Skill" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 394.0
+offset_right = 361.0
+offset_bottom = 557.0
+columns = 4
+
+[node name="combo" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "콤보 LV"
+horizontal_alignment = 1
+
+[node name="combo_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="damage" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "데미지 LV"
+horizontal_alignment = 1
+
+[node name="damage_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="defense" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "방어력 LV"
+horizontal_alignment = 1
+
+[node name="defense_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="max_hp" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "최대 체력 LV"
+horizontal_alignment = 1
+
+[node name="max_hp_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="move_speed" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "이동 속도 LV"
+horizontal_alignment = 1
+
+[node name="move_speed_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="drain" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "흡혈 LV"
+horizontal_alignment = 1
+
+[node name="drain_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="magnetic" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "자석 범위 LV"
+horizontal_alignment = 1
+
+[node name="magnetic_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="attack_speed" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "공격 속도 LV"
+horizontal_alignment = 1
+
+[node name="attack_speed_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="shadow" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "그림자 LV"
+horizontal_alignment = 1
+
+[node name="shadow_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"
+
+[node name="NNN" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "??? LV"
+horizontal_alignment = 1
+
+[node name="NNN_" type="Label" parent="Skill"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = ": {?}"

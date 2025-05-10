@@ -5,13 +5,8 @@ class_name CharacterBase
 signal levelup
 
 ## CONSTANT
-const ANIMATION_SPEED = 2.0
-const START_HP        = 50
 
 ## 하위 노드 상대경로
-@onready var attack_area_1    = $Attack/attack_1
-@onready var attack_area_2    = $Attack/attack_2
-@onready var attack_area_3    = $Attack/attack_3
 @onready var animated_sprite  = $AnimatedSprite2D
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 @onready var animation_player = $AnimationPlayer
@@ -22,9 +17,12 @@ const START_HP        = 50
 @export var move_speed          = 200				# 캐릭터 이동속도
 @export var character_level     = 1					# 캐릭터 레벨
 @export var attack_times        = 1					# 캐릭터 공격 콤보
-@export var shadow_attack       = 0					# 캐릭터 그림자 분신술
+@export var shadow_attack       = false				# 캐릭터 그림자 분신술
 @export var attack_damage       = 5					# 캐릭터 일반 공격 데미지
 @export var magnetic_area_scale = 100				# 캐릭터 자석 범위 
+@export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도
+@export var start_hp            = 100				# 캐릭터 시작 체력
+@export var drain_percent       = 0.0				# 캐릭터 흡혈 퍼센트
 
 ## 펫 관련
 # mushroom
@@ -52,6 +50,19 @@ var damage_flag          = false		# 캐릭터 무적 플래그
 var hit_flag             = false		# 캐릭터 히트 플래그 
 var death_flag_for_pause = false		# BaseUI에서 사망 시 퍼즈를 위한 플래그 
 
+## 능력 레벨 관리
+var attack_times_level   = 0	# 캐릭터 고유 특성
+var max_hp_level         = 0	# 최대 체력 증가
+var damage_level         = 0	# 데미지 증가
+var move_speed_level     = 0	# 이동 속도 증가
+var drain_level          = 0	# 흡혈
+var shadow_partner_level = 0	# 그림자 분신
+var magnetic_area_level  = 0	# 자석 범위
+# var 방어력
+# var 공격 속도
+# var 부활
+# var 쿨타임
+
 ## 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
 var start_exp = 0
@@ -66,7 +77,7 @@ var current_exp = 0:
 
 ## 체력
 @onready var hp_bar = $UI_Layer/BaseUI/Health_Bar
-var max_hp = START_HP:
+var max_hp = start_hp:
 	set(set_value):
 		max_hp = set_value
 		hp_bar.max_value = max_hp
@@ -97,7 +108,8 @@ func _ready():
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
 	# 캐릭터 특성 설정
-	max_hp = START_HP
+	max_hp = start_hp
+	current_hp = start_hp
 	current_exp = start_exp
 	# 자석 시그널 연결 및 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
@@ -131,7 +143,7 @@ func _physics_process(_delta):
 	
 	# 애니메이션 처리
 	if !hit_flag:
-		animated_sprite.speed_scale = ANIMATION_SPEED
+		animated_sprite.speed_scale = animation_speed
 		if velocity.length() > 0:
 			animated_sprite.play("run")
 			animated_sprite.flip_h = velocity.x < 0
@@ -185,7 +197,7 @@ func process_collision_enemy(damage):
 			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
 			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
 			animated_sprite.stop()
-			animated_sprite.speed_scale = ANIMATION_SPEED
+			animated_sprite.speed_scale = animation_speed
 			animated_sprite.play("death")
 			await animated_sprite.animation_finished
 			die_character()
@@ -235,6 +247,19 @@ func level_up():
 		print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
 		emit_signal("levelup")
+
+# 흡혈 능력
+func apply_health(source):
+	# 흡혈 레벨이 0이거나 주체가 자신이 아니라면 무시
+	if drain_level == 0 || source != self:
+		return
+	print(1)
+	var heal = drain_percent * attack_damage
+	if heal < 1:
+		heal = 1
+	current_hp += heal
+	current_hp = clamp(current_hp, 0, max_hp)
+	DamageVisual.show_damage(heal, self.position, Color.GREEN)
 
 # hit_effect
 func apply_hit_effect():
