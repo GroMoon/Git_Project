@@ -46,15 +46,15 @@ func golddrop_upgrade(item_level):
 func golddrop_cost(item_level):
 	match item_level:
 		"0":
-			cost.text = "100"
+			cost.text = "1000"
 		"1":
-			cost.text = "200"
+			cost.text = "2000"
 		"2":
-			cost.text = "300"
+			cost.text = "3000"
 		"3":
-			cost.text = "400"
+			cost.text = "4000"
 		"4":
-			cost.text = "500"
+			cost.text = "5000"
 		"Max":
 			cost.text = "Max"
 
