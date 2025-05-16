@@ -1,14 +1,14 @@
-[gd_scene load_steps=62 format=3 uid="uid://dnncnh32lx1pq"]
+[gd_scene load_steps=65 format=3 uid="uid://dnncnh32lx1pq"]
 
-[ext_resource type="Texture2D" uid="uid://c7qwdkh1n318o" path="res://dynamic/2_enemy/Goblin/Sprites/Attack.png" id="1_eosg1"]
+[ext_resource type="Texture2D" uid="uid://c5p6c2aak3bip" path="res://dynamic/2_enemy/Goblin/Sprites/Attack.png" id="1_eosg1"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Goblin/Goblin_Pet/goblin_pet.gd" id="1_lh52u"]
-[ext_resource type="Texture2D" uid="uid://dvauqakc04j0i" path="res://dynamic/2_enemy/Goblin/Sprites/Attack2.png" id="2_a888w"]
+[ext_resource type="Texture2D" uid="uid://dactqhgqygi37" path="res://dynamic/2_enemy/Goblin/Sprites/Attack2.png" id="2_a888w"]
 [ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="2_gec5j"]
-[ext_resource type="Texture2D" uid="uid://86jxoretsgle" path="res://dynamic/2_enemy/Goblin/Sprites/Attack3.png" id="3_x725d"]
-[ext_resource type="Texture2D" uid="uid://b11sk2dm4yiqi" path="res://dynamic/2_enemy/Goblin/Sprites/Death.png" id="4_jlik6"]
-[ext_resource type="Texture2D" uid="uid://bci25b8i2cc7l" path="res://dynamic/2_enemy/Goblin/Sprites/Idle.png" id="5_xu7t7"]
-[ext_resource type="Texture2D" uid="uid://daq0qw53crs2s" path="res://dynamic/2_enemy/Goblin/Sprites/Take Hit.png" id="6_xc56y"]
-[ext_resource type="Texture2D" uid="uid://c2f5rthxbo455" path="res://dynamic/2_enemy/Goblin/Sprites/Run.png" id="7_t1y8m"]
+[ext_resource type="Texture2D" uid="uid://ic7rpebeol2c" path="res://dynamic/2_enemy/Goblin/Sprites/Attack3.png" id="3_x725d"]
+[ext_resource type="Texture2D" uid="uid://jqijgeijiq77" path="res://dynamic/2_enemy/Goblin/Sprites/Death.png" id="4_jlik6"]
+[ext_resource type="Texture2D" uid="uid://d0xe8x004rs5t" path="res://dynamic/2_enemy/Goblin/Sprites/Idle.png" id="5_xu7t7"]
+[ext_resource type="Texture2D" uid="uid://cng88vn8lgdnj" path="res://dynamic/2_enemy/Goblin/Sprites/Take Hit.png" id="6_xc56y"]
+[ext_resource type="Texture2D" uid="uid://dpqdpxsi3tgpm" path="res://dynamic/2_enemy/Goblin/Sprites/Run.png" id="7_t1y8m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cs6gu"]
 shader = ExtResource("2_gec5j")
@@ -394,6 +394,55 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vtu5w"]
 
+[sub_resource type="Animation" id="Animation_kvd0y"]
+resource_name = "attack"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_3"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 1, 2, 3, 4, 5, 6, 7, 8, 11]
+}
+
+[sub_resource type="Animation" id="Animation_56ewy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r2115"]
+_data = {
+"RESET": SubResource("Animation_56ewy"),
+"attack": SubResource("Animation_kvd0y")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_raeu4"]
 size = Vector2(43, 28)
 
@@ -406,18 +455,24 @@ script = ExtResource("1_lh52u")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_cs6gu")
 sprite_frames = SubResource("SpriteFrames_0gxls")
-animation = &"idle"
+animation = &"attack_3"
 speed_scale = 1.6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 9)
 shape = SubResource("CircleShape2D_vtu5w")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_r2115")
+}
+
 [node name="Attack" type="Area2D" parent="." groups=["attack"]]
 
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
 position = Vector2(44.5, 10)
 shape = SubResource("RectangleShape2D_raeu4")
+disabled = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0
