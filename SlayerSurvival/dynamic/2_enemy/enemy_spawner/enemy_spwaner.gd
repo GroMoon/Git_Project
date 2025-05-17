@@ -59,10 +59,15 @@ func spawn_enemy(enemy_tscn, is_boss):
 		var angle = randf() * PI * 2  # 0부터 360도 사이의 랜덤 각도
 		var distance = spawn_radius
 		var offset = Vector2(cos(angle), sin(angle)) * distance
-		
+
 		# 적의 위치를 캐릭터 위치 + 랜덤 오프셋으로 설정
-		enemy_instance.global_position = player.global_position + offset
-		
+		var spawn_pos = player.global_position + offset
+
+		# x, y가 -1550 ~ 1550 범위로 제한
+		spawn_pos.x = clamp(spawn_pos.x, -1550, 1550)
+		spawn_pos.y = clamp(spawn_pos.y, -1550, 1550)
+		enemy_instance.global_position = spawn_pos
+
 		# 씬에 적 인스턴스를 추가
 		add_child(enemy_instance)
 	else:
