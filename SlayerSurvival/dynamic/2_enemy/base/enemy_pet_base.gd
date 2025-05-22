@@ -2,8 +2,9 @@ extends CharacterBody2D
 
 class_name  EnemyPetBase
 
-@onready var animated_sprite = $AnimatedSprite2D
-@onready var attack_area     = $Attack/attack_1
+@onready var animated_sprite  = $AnimatedSprite2D
+@onready var attack_area      = $Attack/attack_1
+@onready var animation_player = $AnimationPlayer
 
 # default enemy pet characteristics
 var enemy_pet_name         = "EnemyPetBase"     # 몬스터펫 이름

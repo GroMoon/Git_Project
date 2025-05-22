@@ -42,8 +42,10 @@ func _physics_process(_delta):
 		animated_sprite.play("idle")
 		return
 
-	# 플레이어가 존재하면 플레이어를 향해 이동
 	if player:
+		# 플레이어 그림자 레벨에 따라 공격 횟수 조절
+		attack_times  = player.shadow_partner_level
+		# 플레이어가 존재하면 플레이어를 향해 이동
 		var direction = (player.position - position).normalized()
 		velocity = direction * move_speed
 		move_and_slide()

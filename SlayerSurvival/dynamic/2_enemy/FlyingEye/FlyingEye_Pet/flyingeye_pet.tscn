@@ -1,13 +1,13 @@
-[gd_scene load_steps=59 format=3 uid="uid://bf7tbaxu88faq"]
+[gd_scene load_steps=62 format=3 uid="uid://bf7tbaxu88faq"]
 
-[ext_resource type="Texture2D" uid="uid://bw8pgrs7gc3cx" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="1_02prn"]
+[ext_resource type="Texture2D" uid="uid://bihxi6m8ubnst" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="1_02prn"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.gd" id="1_ijo13"]
 [ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="2_jjutc"]
-[ext_resource type="Texture2D" uid="uid://mm0pyu4kyoow" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="2_stoxg"]
-[ext_resource type="Texture2D" uid="uid://co7is6lgpy6r6" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="3_l73bh"]
-[ext_resource type="Texture2D" uid="uid://eado6h0pggfo" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="4_pkjwn"]
-[ext_resource type="Texture2D" uid="uid://cpdj2dyodhcw0" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="5_pw3jv"]
-[ext_resource type="Texture2D" uid="uid://dj4vuyyy7jh3l" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="6_7vfvr"]
+[ext_resource type="Texture2D" uid="uid://cl1fwdtxanvcl" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="2_stoxg"]
+[ext_resource type="Texture2D" uid="uid://bawnflynx3lb" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="3_l73bh"]
+[ext_resource type="Texture2D" uid="uid://cae7dyine0svr" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="4_pkjwn"]
+[ext_resource type="Texture2D" uid="uid://dfi4g7ytgry2c" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="5_pw3jv"]
+[ext_resource type="Texture2D" uid="uid://bmjt0eoh4fnlt" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="6_7vfvr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qmn8w"]
 shader = ExtResource("2_jjutc")
@@ -388,6 +388,66 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_76p06"]
 
+[sub_resource type="Animation" id="Animation_1mfu2"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_2"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Attack/attack_1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.99),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_biy2b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_leerj"]
+_data = {
+"RESET": SubResource("Animation_biy2b"),
+"attack": SubResource("Animation_1mfu2")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sgira"]
 size = Vector2(72, 64)
 
@@ -407,6 +467,11 @@ speed_scale = 2.5
 position = Vector2(5, 2)
 shape = SubResource("CircleShape2D_76p06")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_leerj")
+}
+
 [node name="Attack" type="Area2D" parent="." groups=["attack"]]
 collision_layer = 8
 collision_mask = 4
@@ -414,6 +479,7 @@ collision_mask = 4
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
 position = Vector2(11, -2)
 shape = SubResource("RectangleShape2D_sgira")
+disabled = true
 
 [node name="AttackTimer" type="Timer" parent="."]
 autostart = true
