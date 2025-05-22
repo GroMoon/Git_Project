@@ -76,7 +76,7 @@ var current_exp = 0:
 		exp_bar.value = current_exp
 
 ## 체력
-@onready var hp_bar = $UI_Layer/BaseUI/Health_Bar
+@onready var hp_bar = $Health_Bar
 var max_hp = start_hp:
 	set(set_value):
 		max_hp = set_value

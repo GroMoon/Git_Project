@@ -1,14 +1,15 @@
-[gd_scene load_steps=61 format=3 uid="uid://blv0hgymp636q"]
+[gd_scene load_steps=62 format=3 uid="uid://blv0hgymp636q"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
-[ext_resource type="Texture2D" uid="uid://cedpqdba1dcy7" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
+[ext_resource type="Texture2D" uid="uid://dnc1ng8d2we3y" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ix6sp"]
-[ext_resource type="Texture2D" uid="uid://bcfnyk4ffs3y0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
-[ext_resource type="Texture2D" uid="uid://dif1blwamfsum" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
-[ext_resource type="Texture2D" uid="uid://bxej1ibd4hv81" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
-[ext_resource type="Texture2D" uid="uid://oi63n5at8no8" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
-[ext_resource type="Texture2D" uid="uid://cwlkb8n3wfe8m" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
-[ext_resource type="Texture2D" uid="uid://cuuh1x8a5431s" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
+[ext_resource type="Texture2D" uid="uid://coia7yegi5qou" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
+[ext_resource type="Texture2D" uid="uid://bu0ke2knmc36t" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
+[ext_resource type="Texture2D" uid="uid://ca2x88knhxnvq" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
+[ext_resource type="Texture2D" uid="uid://cpfnfcx3gk1da" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
+[ext_resource type="Texture2D" uid="uid://c3akaopqb6awi" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
+[ext_resource type="Texture2D" uid="uid://bp20phx2q8lma" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
+[ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="10_3qswq"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_l0wkq"]
 
@@ -546,6 +547,12 @@ libraries = {
 }
 speed_scale = 0.75
 
+[node name="Health_Bar" parent="." instance=ExtResource("10_3qswq")]
+offset_left = -26.0
+offset_top = 62.0
+offset_right = 29.0
+offset_bottom = 64.0
+
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
@@ -582,12 +589,6 @@ disabled = true
 position = Vector2(0, 23.33)
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_l0wkq")]
-
-[node name="Health_Bar" parent="UI_Layer/BaseUI" index="4"]
-offset_left = 577.0
-offset_top = 386.0
-offset_right = 632.0
-offset_bottom = 389.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]

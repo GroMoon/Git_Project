@@ -1,17 +1,18 @@
-[gd_scene load_steps=73 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=74 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
-[ext_resource type="Texture2D" uid="uid://bq338x76ccb1b" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
+[ext_resource type="Texture2D" uid="uid://ch23vptwdk18p" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_d66k0"]
-[ext_resource type="Texture2D" uid="uid://db1ku5e1sqr7q" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
-[ext_resource type="Texture2D" uid="uid://baqn67ry0mr7s" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
-[ext_resource type="Texture2D" uid="uid://djmek3go3cer8" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
-[ext_resource type="Texture2D" uid="uid://cqv03abeiaikx" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
-[ext_resource type="Texture2D" uid="uid://bt4iwwmsdcq62" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
-[ext_resource type="Texture2D" uid="uid://di4lo264kqlue" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
+[ext_resource type="Texture2D" uid="uid://c5k3p6flg43nf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
+[ext_resource type="Texture2D" uid="uid://1e22lbgtfta3" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
+[ext_resource type="Texture2D" uid="uid://c4s6im45v2kr" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
+[ext_resource type="Texture2D" uid="uid://b0q13cieeyhel" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
+[ext_resource type="Texture2D" uid="uid://bcx6n76ae8cmn" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
+[ext_resource type="Texture2D" uid="uid://dsobsc8nefjoj" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_0wyd7"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
-[ext_resource type="Texture2D" uid="uid://dttywfq5awojw" path="res://static/png/character_shadow/pngwing.com.png" id="10_s8xgg"]
+[ext_resource type="Texture2D" uid="uid://wtvsujvpy0ca" path="res://static/png/character_shadow/pngwing.com.png" id="10_s8xgg"]
+[ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="11_66d8d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2o0i"]
 shader = ExtResource("2_d66k0")
@@ -679,6 +680,12 @@ position = Vector2(-0.5, 20.5)
 scale = Vector2(0.0459656, 0.0233333)
 texture = ExtResource("10_s8xgg")
 
+[node name="Health_Bar" parent="." instance=ExtResource("11_66d8d")]
+offset_left = -26.5
+offset_top = 30.0
+offset_right = 28.5
+offset_bottom = 32.0
+
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
@@ -718,12 +725,6 @@ disabled = true
 [node name="MagneticArea" parent="." instance=ExtResource("10_nxneh")]
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_0wyd7")]
-
-[node name="Health_Bar" parent="UI_Layer/BaseUI" index="4"]
-offset_left = 576.0
-offset_top = 358.0
-offset_right = 631.0
-offset_bottom = 361.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 
