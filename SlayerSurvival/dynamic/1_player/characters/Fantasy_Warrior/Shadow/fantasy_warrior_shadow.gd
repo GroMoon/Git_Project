@@ -10,6 +10,7 @@ func _initialize():
 	animation_speed = 2.0
 
 func _ready():
+	_initialize()
 	super._ready()
 
 func _physics_process(delta):
