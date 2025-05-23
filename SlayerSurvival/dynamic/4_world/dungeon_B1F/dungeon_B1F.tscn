@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bj36c0yt76i4d"]
 
-[ext_resource type="Texture2D" uid="uid://dvlxtfeqhae5q" path="res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.png" id="1_gtwv4"]
+[ext_resource type="Texture2D" uid="uid://dvlxtfeqhae5q" path="res://dynamic/4_world/dungeon_B1F/dungeon_B1F.png" id="1_gtwv4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qyx40"]
 texture = ExtResource("1_gtwv4")
@@ -29,6 +29,7 @@ texture = ExtResource("1_gtwv4")
 2:1/0 = 0
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -2.0625, -8, -2.0625, 8, -8, 8)
 4:1/0 = 0
 4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:1/0/physics_layer_0/angular_velocity = 0.0

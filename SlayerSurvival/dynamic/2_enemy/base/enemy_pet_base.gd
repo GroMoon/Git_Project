@@ -83,9 +83,10 @@ func find_closest_enemy() -> Node2D:
 	var closest: Node2D = null
 	var min_dist = INF
 	for enemy in enemies:
-		if enemy is Node2D:
+		if enemy is Node2D and enemy.targeted_flag == false:
 			var d = global_position.distance_to(enemy.global_position)
 			if d < min_dist:
 				min_dist = d
 				closest = enemy
+				closest.targeted_flag = true
 	return closest
