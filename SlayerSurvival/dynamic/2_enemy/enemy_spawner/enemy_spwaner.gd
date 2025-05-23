@@ -28,7 +28,41 @@ func _process(_delta):
 	base_ui = player.get_node("UI_Layer/BaseUI")
 	minute  = base_ui.minute
 	sec     = base_ui.sec
-	if (!boss_spawn_flag) && (minute==10):	#! FIXME : test용으로 현재 보스 스폰 시간 1분 
+
+	# 몬스터 등장 구간 제어
+	# 0 <= t <= 1분: flyingeye만 소환
+	if minute == 0:
+		$FlyingEyeTimer.set_paused(false)
+		$SkeletonTimer.set_paused(true)
+		$MushroomTimer.set_paused(true)
+		$GoblinTimer.set_paused(true)
+	# 1 < t <= 5분: flyingeye와 skeleton 소환
+	elif minute > 0 and minute <= 5:
+		$FlyingEyeTimer.set_paused(false)
+		$SkeletonTimer.set_paused(false)
+		$MushroomTimer.set_paused(true)
+		$GoblinTimer.set_paused(true)
+	# 5 < t <= 8분: flyingeye, skeleton, mushroom 소환
+	elif minute > 5 and minute <= 8:
+		$FlyingEyeTimer.set_paused(false)
+		$SkeletonTimer.set_paused(false)
+		$MushroomTimer.set_paused(false)
+		$GoblinTimer.set_paused(true)
+	# 8 < t < 10분: flyingeye, skeleton, mushroom, goblin 소환
+	elif minute > 8 and minute < 10:
+		$FlyingEyeTimer.set_paused(false)
+		$SkeletonTimer.set_paused(false)
+		$MushroomTimer.set_paused(false)
+		$GoblinTimer.set_paused(false)
+	# 10분 이상: 모든 몬스터 타이머 정지 (보스만 등장)
+	elif minute >= 10:
+		$FlyingEyeTimer.set_paused(true)
+		$SkeletonTimer.set_paused(true)
+		$MushroomTimer.set_paused(true)
+		$GoblinTimer.set_paused(true)
+
+	# 보스 스폰
+	if (!boss_spawn_flag) && (minute==10):
 		if get_parent().instance_map:
 			map_name = get_parent().instance_map.name
 		print(map_name)
@@ -43,7 +77,6 @@ func _process(_delta):
 				boss = bring_of_death
 		spawn_enemy(boss, BOSS_MONSTER)
 		boss_spawn_flag = true
-	
 
 # 적을 스폰하는 함수
 func spawn_enemy(enemy_tscn, is_boss):
@@ -77,7 +110,7 @@ func spawn_enemy(enemy_tscn, is_boss):
 func _on_skeleton_timer_timeout():
 	spawn_enemy(skeleton, MONSTER)
 	
-# Mushrrom 소환
+# Mushroom 소환
 func _on_mushroom_timer_timeout():
 	spawn_enemy(mushroom, MONSTER)
 	
