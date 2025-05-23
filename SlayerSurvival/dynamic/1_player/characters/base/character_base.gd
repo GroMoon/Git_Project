@@ -104,6 +104,8 @@ var current_hp = max_hp:
 @onready var level_label = $UI_Layer/BaseUI/Level
 
 func _ready():
+	# 플레이어 데이터 동기화
+	bind_player_data()
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
@@ -125,7 +127,6 @@ func _ready():
 	Dialogic.VAR.skeleton_pet_diag  = false
 	Dialogic.VAR.goblin_pet_diag    = false
 	Dialogic.VAR.flyingeye_pet_diag = false
-
 
 func _physics_process(_delta):
 	if is_dead:
@@ -182,6 +183,17 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 	else:
 		velocity = Vector2.ZERO
 		return false
+
+func bind_player_data():
+	max_hp     = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
+	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
+	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
+	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
+	move_speed = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
+	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
+	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
+	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
+	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])
 
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
