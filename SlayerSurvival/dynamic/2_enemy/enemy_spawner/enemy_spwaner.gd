@@ -9,7 +9,12 @@ var minute
 var sec
 var map_name = ""
 
-var boss_spawn_flag = false # 보스 스폰 여부 플래그
+# 적 대량 스폰 플래그
+var has_spawned_flyingeye_mass = false
+var has_spawned_skeleton_mass  = false
+var has_spawned_mushroom_mass  = false
+# 보스 스폰 여부 플래그
+var boss_spawn_flag = false 
 
 # 일반 몬스터
 var skeleton  = preload("res://dynamic/2_enemy/Skeleton/skeleton.tscn")
@@ -33,26 +38,38 @@ func _process(_delta):
 	# 0 <= t <= 1분: flyingeye만 소환
 	if minute == 0:
 		$FlyingEyeTimer.set_paused(false)
+		$FlyingEyeTimer.wait_time = 2
 		$SkeletonTimer.set_paused(true)
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
+		# 대량 스폰 알고리즘
+		if sec > 30 and not has_spawned_flyingeye_mass:
+			for i in range(10):
+				print("flyingeye 대량 스폰")
+				spawn_enemy(flyingeye, MONSTER)
+			has_spawned_flyingeye_mass = true
 	# 1 < t <= 5분: flyingeye와 skeleton 소환
 	elif minute > 0 and minute <= 5:
 		$FlyingEyeTimer.set_paused(false)
+		$FlyingEyeTimer.wait_time = 4
 		$SkeletonTimer.set_paused(false)
+		$SkeletonTimer.wait_time = 3
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
 	# 5 < t <= 8분: flyingeye, skeleton, mushroom 소환
 	elif minute > 5 and minute <= 8:
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
+		$SkeletonTimer.wait_time = 6
 		$MushroomTimer.set_paused(false)
+		$MushroomTimer.wait_time = 4
 		$GoblinTimer.set_paused(true)
 	# 8 < t < 10분: flyingeye, skeleton, mushroom, goblin 소환
 	elif minute > 8 and minute < 10:
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
 		$MushroomTimer.set_paused(false)
+		$MushroomTimer.wait_time = 6
 		$GoblinTimer.set_paused(false)
 	# 10분 이상: 모든 몬스터 타이머 정지 (보스만 등장)
 	elif minute >= 10:
