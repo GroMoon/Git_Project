@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=10 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI_Layer/BaseUI/BaseUI.gd" id="1_8bwr7"]
 [ext_resource type="PackedScene" uid="uid://yqejq1wcj6a3" path="res://dynamic/1_player/UI_Layer/BaseUI/level/level.tscn" id="2_3bx10"]
 [ext_resource type="PackedScene" uid="uid://dgg2aqyju7saq" path="res://dynamic/1_player/UI_Layer/BaseUI/fatal_state/fatal_state.tscn" id="2_twlfw"]
 [ext_resource type="PackedScene" uid="uid://cibswvdy26rel" path="res://dynamic/1_player/UI_Layer/BaseUI/stopwatch/stopwatch.tscn" id="3_hws3o"]
 [ext_resource type="PackedScene" uid="uid://cswgkwsq8gfan" path="res://dynamic/1_player/UI_Layer/BaseUI/exp_bar/exp_bar.tscn" id="4_1juvo"]
-[ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="5_h7s6m"]
 [ext_resource type="PackedScene" uid="uid://dtljeado5ue3p" path="res://dynamic/1_player/UI_Layer/BaseUI/pause_panel/pause_panel.tscn" id="6_ldc4x"]
 [ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI_Layer/BaseUI/death_panel/death_panel.tscn" id="7_4nwpg"]
 [ext_resource type="PackedScene" uid="uid://cdqyecvpdyqhu" path="res://dynamic/1_player/UI_Layer/BaseUI/killcollect/killcount.tscn" id="8_syuyv"]
@@ -43,13 +42,6 @@ offset_top = 1.79385
 offset_right = 1199.0
 offset_bottom = 13.7938
 auto_translate = false
-
-[node name="Health_Bar" parent="." instance=ExtResource("5_h7s6m")]
-layout_mode = 0
-offset_left = 584.0
-offset_top = 408.0
-offset_right = 639.0
-offset_bottom = 411.0
 
 [node name="killcollect" type="Node2D" parent="."]
 position = Vector2(960, 16)

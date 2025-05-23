@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=74 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
 [ext_resource type="Texture2D" uid="uid://ch23vptwdk18p" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_0wyd7"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
 [ext_resource type="Texture2D" uid="uid://wtvsujvpy0ca" path="res://static/png/character_shadow/pngwing.com.png" id="10_s8xgg"]
+[ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="11_66d8d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2o0i"]
 shader = ExtResource("2_d66k0")
@@ -679,6 +680,12 @@ position = Vector2(-0.5, 20.5)
 scale = Vector2(0.0459656, 0.0233333)
 texture = ExtResource("10_s8xgg")
 
+[node name="Health_Bar" parent="." instance=ExtResource("11_66d8d")]
+offset_left = -26.5
+offset_top = 30.0
+offset_right = 28.5
+offset_bottom = 32.0
+
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
@@ -686,10 +693,15 @@ autostart = true
 [node name="DamageTimer" type="Timer" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -1615
+limit_top = -1615
+limit_right = 1615
+limit_bottom = 1625
 drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
+editor_draw_limits = true
 
 [node name="Attack" type="Area2D" parent="." groups=["attack"]]
 collision_layer = 8
@@ -713,12 +725,6 @@ disabled = true
 [node name="MagneticArea" parent="." instance=ExtResource("10_nxneh")]
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_0wyd7")]
-
-[node name="Health_Bar" parent="UI_Layer/BaseUI" index="4"]
-offset_left = 576.0
-offset_top = 358.0
-offset_right = 631.0
-offset_bottom = 361.0
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 
