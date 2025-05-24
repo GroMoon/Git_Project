@@ -162,14 +162,20 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.drain_level += 1
 			match player.drain_level:
 				1:
-					player.drain_percent = 0.03
+					player.vampire = 0.01
 					upgrade_preload["drain_blood"][1] = 10
 				2:
-					player.drain_percent = 0.06
-					upgrade_preload["drain_blood"][1] = 5 
+					player.vampire = 0.02
+					upgrade_preload["drain_blood"][1] = 8
 				3:
-					player.drain_percent = 0.10
-					upgrade_preload["drain_blood"][1] = 0 
+					player.vampire = 0.03
+					upgrade_preload["drain_blood"][1] = 6
+				4:
+					player.vampire = 0.04
+					upgrade_preload["drain_blood"][1] = 4
+				5:
+					player.vampire = 0.05
+					upgrade_preload["drain_blood"][1] = 0
 					print("흡혈 최대 레벨 도달")
 
 		"increase_magnetic_area":
