@@ -11,7 +11,7 @@ func _initialize():
 	attack_damage       = 5
 	magnetic_area_scale = 100
 	animation_speed     = 2.0
-	start_hp            = 50
+	start_hp            = 50.0
 
 func _ready():
 	_initialize()
