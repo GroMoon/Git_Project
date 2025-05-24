@@ -6,7 +6,7 @@ func _initialize():
 	# 캐릭터 특성
 	character_name      = "wizard"
 	move_speed          = 130
-	attack_damage       = 15
+	attack_damage       = 13
 	magnetic_area_scale = 100
 	animation_speed     = 1.5
 	start_hp            = 40.0

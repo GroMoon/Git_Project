@@ -8,7 +8,7 @@ func _initialize():
 	# 캐릭터 특성
 	character_name      = "fantasy_warrior"
 	move_speed          = 200
-	attack_damage       = 5
+	attack_damage       = 7
 	magnetic_area_scale = 100
 	animation_speed     = 2.0
 	start_hp            = 50.0
