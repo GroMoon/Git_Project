@@ -263,9 +263,10 @@ func level_up():
 # 흡혈 능력
 func apply_health(_source):
 	var heal = vampire * float(attack_damage)
-	current_hp += heal
-	current_hp = clamp(current_hp, 0, max_hp)
-	VampireVisual.show_vampire(heal, self.position, Color.GREEN)
+	if vampire != 0:
+		current_hp += heal
+		current_hp = clamp(current_hp, 0, max_hp)
+		VampireVisual.show_vampire(heal, self.position, Color.GREEN)
 
 # hit_effect
 func apply_hit_effect():
