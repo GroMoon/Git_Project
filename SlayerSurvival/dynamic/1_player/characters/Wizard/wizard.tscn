@@ -391,7 +391,7 @@ autostart = true
 limit_left = -1615
 limit_top = -1615
 limit_right = 1615
-limit_bottom = 1615
+limit_bottom = 1625
 editor_draw_limits = true
 
 [node name="MagneticArea" parent="." instance=ExtResource("4_482t6")]

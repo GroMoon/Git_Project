@@ -122,19 +122,19 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.damage_level += 1
 			match player.damage_level:
 				1:
-					player.attack_damage += 5
+					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 40
 				2:
-					player.attack_damage += 5
+					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 30
 				3:
-					player.attack_damage += 5
+					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 20
 				4:
-					player.attack_damage += 5
+					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 10
 				5:
-					player.attack_damage += 10
+					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 0
 					print("공격력 증가 최대 레벨 도달")
 
@@ -142,19 +142,19 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.move_speed_level += 1
 			match player.move_speed_level:
 				1:
-					player.move_speed += 10
+					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 40
 				2:
-					player.move_speed += 10
+					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 30
 				3:
-					player.move_speed += 10
+					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 20
 				4:
-					player.move_speed += 10
+					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 10
 				5:
-					player.move_speed += 20
+					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 0
 					print("이동속도 증가 최대 레벨 도달")
 
@@ -162,14 +162,20 @@ func _on_upgrade_button_pressed(upgrade_key):
 			player.drain_level += 1
 			match player.drain_level:
 				1:
-					player.drain_percent = 0.03
+					player.vampire = 0.01
 					upgrade_preload["drain_blood"][1] = 10
 				2:
-					player.drain_percent = 0.06
-					upgrade_preload["drain_blood"][1] = 5 
+					player.vampire = 0.02
+					upgrade_preload["drain_blood"][1] = 8
 				3:
-					player.drain_percent = 0.10
-					upgrade_preload["drain_blood"][1] = 0 
+					player.vampire = 0.03
+					upgrade_preload["drain_blood"][1] = 6
+				4:
+					player.vampire = 0.04
+					upgrade_preload["drain_blood"][1] = 4
+				5:
+					player.vampire = 0.05
+					upgrade_preload["drain_blood"][1] = 0
 					print("흡혈 최대 레벨 도달")
 
 		"increase_magnetic_area":

@@ -15,14 +15,15 @@ var enemy_name      = "EnemyBase"
 var health          = 15 	# 적 체력
 var move_speed      = 80 	# 적 이동 속도
 var damage          = 5  	# 적 데미지
-var spawn_radius    = 500  # 적 스폰 범위
-var animation_speed = 1.0 # 적 기본 애니메이션 속도
-var pet_chance      = 0.1 # 적 펫이 될 확률
+var spawn_radius    = 500  	# 적 스폰 범위
+var animation_speed = 1.0	# 적 기본 애니메이션 속도
+var pet_chance      = 0.1 	# 적 펫이 될 확률
 # 전역 변수
 var player 
-var touch_flag = false 
-var hit_flag   = false
-var is_dead    = false
+var touch_flag    = false
+var hit_flag      = false
+var is_dead       = false
+var targeted_flag = false	# 플레이어가 적을 목표로 설정했는지 확인하는 변수
 # 넉백 관련
 var knockback_vector   = Vector2.ZERO
 var knockback_time     = 0.0			# 넉백 유지 시간

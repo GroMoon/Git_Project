@@ -19,10 +19,10 @@ signal levelup
 @export var attack_times        = 1					# 캐릭터 공격 콤보
 @export var shadow_attack       = false				# 캐릭터 그림자 분신술
 @export var attack_damage       = 5					# 캐릭터 일반 공격 데미지
-@export var magnetic_area_scale = 100				# 캐릭터 자석 범위 
+@export var magnetic_area_scale = 100				# 캐릭터 자석 범위
 @export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도
-@export var start_hp            = 100				# 캐릭터 시작 체력
-@export var drain_percent       = 0.0				# 캐릭터 흡혈 퍼센트
+@export var start_hp            = 100.0				# 캐릭터 시작 체력
+@export var vampire             = 0.0				# 캐릭터 흡혈 퍼센트
 
 ## 펫 관련
 # mushroom
@@ -104,6 +104,8 @@ var current_hp = max_hp:
 @onready var level_label = $UI_Layer/BaseUI/Level
 
 func _ready():
+	# 플레이어 데이터 동기화
+	bind_player_data()
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
@@ -125,7 +127,6 @@ func _ready():
 	Dialogic.VAR.skeleton_pet_diag  = false
 	Dialogic.VAR.goblin_pet_diag    = false
 	Dialogic.VAR.flyingeye_pet_diag = false
-
 
 func _physics_process(_delta):
 	if is_dead:
@@ -182,6 +183,17 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 	else:
 		velocity = Vector2.ZERO
 		return false
+
+func bind_player_data():
+	max_hp     = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
+	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
+	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
+	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
+	move_speed = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
+	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
+	vampire = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
+	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
+	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])
 
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
@@ -249,17 +261,11 @@ func level_up():
 		emit_signal("levelup")
 
 # 흡혈 능력
-func apply_health(source):
-	# 흡혈 레벨이 0이거나 주체가 자신이 아니라면 무시
-	if drain_level == 0 || source != self:
-		return
-	print(1)
-	var heal = drain_percent * attack_damage
-	if heal < 1:
-		heal = 1
+func apply_health(_source):
+	var heal = vampire * float(attack_damage)
 	current_hp += heal
 	current_hp = clamp(current_hp, 0, max_hp)
-	DamageVisual.show_damage(heal, self.position, Color.GREEN)
+	VampireVisual.show_vampire(heal, self.position, Color.GREEN)
 
 # hit_effect
 func apply_hit_effect():
