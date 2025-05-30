@@ -1,11 +1,11 @@
-[gd_scene load_steps=51 format=3 uid="uid://cunx7il7pbat2"]
+[gd_scene load_steps=52 format=3 uid="uid://cunx7il7pbat2"]
 
-[ext_resource type="Texture2D" uid="uid://dy16dr003um6t" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
+[ext_resource type="Texture2D" uid="uid://b44d57w2jh3t4" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Wizard/wizard.gd" id="1_ufk14"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ahco5"]
-[ext_resource type="Texture2D" uid="uid://ct4ng7vrpq3cl" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
-[ext_resource type="Texture2D" uid="uid://bp8r7ifdjo1im" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
-[ext_resource type="Texture2D" uid="uid://bwjoinecdt2vt" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
+[ext_resource type="Texture2D" uid="uid://cwoqfouasawiq" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
+[ext_resource type="Texture2D" uid="uid://cxumjtcldh2m6" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
+[ext_resource type="Texture2D" uid="uid://b3pmd3y10o0i5" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="4_482t6"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="6_rq62j"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="7_3aouf"]
@@ -347,10 +347,39 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 4, 5, 6, 7]
 }
 
+[sub_resource type="Animation" id="Animation_gfpwj"]
+resource_name = "revive"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 5, 4, 3, 2, 1, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cok54"]
 _data = {
 "RESET": SubResource("Animation_qgrb4"),
-"attack": SubResource("Animation_yrxk6")
+"attack": SubResource("Animation_yrxk6"),
+"revive": SubResource("Animation_gfpwj")
 }
 
 [node name="Wizard" type="CharacterBody2D"]

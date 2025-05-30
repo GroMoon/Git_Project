@@ -60,8 +60,10 @@ var shadow_partner_level = 0	# 그림자 분신
 var magnetic_area_level  = 0	# 자석 범위
 # var 방어력
 # var 공격 속도
-# var 부활
+var revive_chance        = 0	# 리스폰 횟수
 # var 쿨타임
+
+var invincibility_duration = 3.0  # 초 단위 무적 시간
 
 ## 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
@@ -187,7 +189,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 func bind_player_data():
 	max_hp     = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
 	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
-	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
+	revive_chance = revive_chance + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
 	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
 	move_speed = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
 	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
@@ -203,24 +205,35 @@ func process_collision_enemy(damage):
 		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
 		damage_flag = true
 		damage_timer.start()
+		print(current_hp)
 		if current_hp <= 0:
-			$CollisionShape2D.disabled = true
-			is_dead = true
-			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
-			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
-			animated_sprite.stop()
-			animated_sprite.speed_scale = animation_speed
-			animated_sprite.play("death")
-			await animated_sprite.animation_finished
-			die_character()
-			return								    
+			if revive_chance != 0:
+				hit_flag = true
+				# 퍼즈 걸기
+				$CollisionShape2D.disabled = true
+				print(revive_chance)
+				revive_chance -= 1
+				animated_sprite.play("death")
+				await animated_sprite.animation_finished
+				await revive()
+				$CollisionShape2D.disabled = false
+				print("남은 부활 횟수 : ", revive_chance)
+			else:
+				$CollisionShape2D.disabled = true
+				is_dead = true
+				hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
+				animated_sprite.stop()
+				animated_sprite.speed_scale = animation_speed
+				animated_sprite.play("death")
+				await animated_sprite.animation_finished
+				die_character()
+				return								    
 		hit_flag = false
 
 func die_character():
 	var cur_gold = int(gold_count)
 	Global.character_data["GOLD"]["gold"] += cur_gold
 	Global.save_character_data()
-	
 	death_flag_for_pause = true
 
 # 골드 추가
@@ -263,9 +276,20 @@ func level_up():
 # 흡혈 능력
 func apply_health(_source):
 	var heal = vampire * float(attack_damage)
-	current_hp += heal
-	current_hp = clamp(current_hp, 0, max_hp)
-	VampireVisual.show_vampire(heal, self.position, Color.GREEN)
+	if vampire != 0:
+		current_hp += heal
+		current_hp = clamp(current_hp, 0, max_hp)
+		VampireVisual.show_vampire(heal, self.position, Color.GREEN)
+
+# 부활
+func revive():
+	#animated_sprite.material.set_shader_parameter("hit_flag", true)
+	animation_player.play("revive")
+	print("재생중")
+	await animation_player.animation_finished
+	await get_tree().create_timer(invincibility_duration).timeout
+	
+	current_hp = max_hp
 
 # hit_effect
 func apply_hit_effect():
