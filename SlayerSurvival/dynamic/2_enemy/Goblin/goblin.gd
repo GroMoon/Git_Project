@@ -8,7 +8,7 @@ func _initialize():
 	damage          = 8
 	spawn_radius    = 700
 	animation_speed = 1.6
-	pet_chance      = 0.9
+	pet_chance      = 0.01
 
 func _ready():
 	_initialize()
