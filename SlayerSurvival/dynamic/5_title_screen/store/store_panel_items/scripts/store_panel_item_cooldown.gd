@@ -31,15 +31,15 @@ func _process(_delta):
 func cooldown_upgrade(item_level):
 	match item_level:
 		"0":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 0.2
 		"1":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 0.2
 		"2":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 0.2
 		"3":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 0.2
 		"4":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"] += 0.2
 		"Max":
 			pass
 
