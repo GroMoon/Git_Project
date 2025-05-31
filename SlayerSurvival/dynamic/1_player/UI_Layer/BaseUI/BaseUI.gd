@@ -9,7 +9,7 @@ extends Control
 @onready var fatal_state = $FatalState
 
 # 부활 정보
-@onready var revive = $PausePanel/PlayerInfo/revive_
+@onready var respawn_label = $PausePanel/PlayerInfo/respawn_
 
 # 퍼즈 시 플레이어 정보
 @onready var character_img      = $PausePanel/PlayerInfo/Title_img
@@ -116,6 +116,7 @@ func process_stopwatch(time):
 
 # 정보 업데이트
 func update_info():
+	respawn_label           = player.respawn_times
 	# 스테이터스
 	status_label.text       = player.character_name
 	name_label.text         = ": " + player.character_name

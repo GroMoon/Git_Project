@@ -379,7 +379,7 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_qgrb4"),
 "attack": SubResource("Animation_yrxk6"),
-"revive": SubResource("Animation_gfpwj")
+"respawn": SubResource("Animation_gfpwj")
 }
 
 [node name="Wizard" type="CharacterBody2D"]
