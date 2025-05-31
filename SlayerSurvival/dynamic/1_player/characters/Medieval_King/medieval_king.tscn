@@ -573,17 +573,17 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
-position = Vector2(37, 24)
+position = Vector2(37, -1)
 shape = SubResource("RectangleShape2D_8tlxt")
 disabled = true
 
 [node name="attack_2" type="CollisionShape2D" parent="Attack"]
-position = Vector2(7, 25)
+position = Vector2(7, 0)
 shape = SubResource("RectangleShape2D_f3rbu")
 disabled = true
 
 [node name="attack_3" type="CollisionShape2D" parent="Attack"]
-position = Vector2(33, -2)
+position = Vector2(33, -27)
 shape = SubResource("RectangleShape2D_ghd4c")
 disabled = true
 
