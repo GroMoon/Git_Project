@@ -611,7 +611,7 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/path = NodePath("Attack/attack_3:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
@@ -696,7 +696,7 @@ autostart = true
 limit_left = -1615
 limit_top = -1615
 limit_right = 1615
-limit_bottom = 1615
+limit_bottom = 1625
 drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1

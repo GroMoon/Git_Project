@@ -31,15 +31,15 @@ func _process(_delta):
 func vampire_upgrade(item_level):
 	match item_level:
 		"0":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 0.01
 		"1":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 0.01
 		"2":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 0.01
 		"3":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 0.01
 		"4":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"] += 0.01
 		"Max":
 			pass
 

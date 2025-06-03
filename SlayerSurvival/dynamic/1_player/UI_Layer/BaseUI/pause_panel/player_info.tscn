@@ -16,7 +16,7 @@ offset_bottom = 177.0
 texture = SubResource("CompressedTexture2D_eew0b")
 expand_mode = 1
 
-[node name="revive" type="Label" parent="."]
+[node name="respawn" type="Label" parent="."]
 layout_mode = 2
 offset_left = 226.0
 offset_top = 135.0
@@ -25,7 +25,7 @@ offset_bottom = 153.0
 text = "부활"
 horizontal_alignment = 1
 
-[node name="revive_" type="Label" parent="."]
+[node name="respawn_" type="Label" parent="."]
 layout_mode = 2
 offset_left = 256.0
 offset_top = 135.0
