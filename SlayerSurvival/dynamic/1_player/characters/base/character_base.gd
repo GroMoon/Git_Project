@@ -87,7 +87,7 @@ var max_hp = start_hp:
 var current_hp = max_hp:
 	set(set_value):
 		current_hp = set_value
-		hp_bar.value = snappedf(current_hp, 0.01)
+		hp_bar.value = snappedf(current_hp, 0.01)	# 체력 소수점 2자리까지만 표시 
 		if current_hp > max_hp:
 			current_hp = max_hp
 
