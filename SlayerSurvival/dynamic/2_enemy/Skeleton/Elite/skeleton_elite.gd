@@ -2,12 +2,12 @@ extends EnemyBase
 
 func _initialize():
 	# 적 특성
-	enemy_name      = "flyingeye_elite"
-	health          = 210
-	move_speed      = 105
-	damage          = 9
+	enemy_name      = "skeleton_elite"
+	health          = 330
+	move_speed      = 75
+	damage          = 15
 	spawn_radius    = 500
-	animation_speed = 2.0
+	animation_speed = 1.2
 	pet_chance      = 0.0
 
 func _ready():

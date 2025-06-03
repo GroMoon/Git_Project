@@ -16,6 +16,9 @@ var has_spawned_skeleton_mass  = false
 var has_spawned_mushroom_mass  = false
 # 엘리트 스폰 여부 플래그
 var has_spawned_flyingeye_elite = false
+var has_spawned_skeleton_elite  = false
+var has_spawned_mushroom_elite  = false
+var has_spawned_goblin_elite    = false
 # 보스 스폰 여부 플래그
 var boss_spawn_flag = false 
 
@@ -26,6 +29,9 @@ var goblin    = preload("res://dynamic/2_enemy/Goblin/goblin.tscn")
 var flyingeye = preload("res://dynamic/2_enemy/FlyingEye/flyingeye.tscn")
 # 엘리트 몬스터
 var flyingeye_elite = preload("res://dynamic/2_enemy/FlyingEye/Elite/flyingeye_elite.tscn")
+var skeleton_elite  = preload("res://dynamic/2_enemy/Skeleton/Elite/skeleton_elite.tscn")
+var mushroom_elite  = preload("res://dynamic/2_enemy/Mushroom/Elite/mushroom_elite.tscn")
+var goblin_elite    = preload("res://dynamic/2_enemy/Goblin/Elite/goblin_elite.tscn")
 # 보스 몬스터
 var fire_worm      = preload("res://dynamic/2_enemy/Boss_FireWorm/fireworm.tscn")
 var bring_of_death = preload("res://dynamic/2_enemy/Boss_BringOfDeath/bringofdeath.tscn")
@@ -55,7 +61,7 @@ func _process(_delta):
 				spawn_enemy(flyingeye, MONSTER)
 			has_spawned_flyingeye_mass = true
 
-		# 엘리트 몬스터 소환
+		# flyingeye 엘리트 몬스터 소환
 		if sec > 45 and not has_spawned_flyingeye_elite:
 			spawn_enemy(flyingeye_elite, ELITE)
 			has_spawned_flyingeye_elite = true	
@@ -68,6 +74,12 @@ func _process(_delta):
 		$SkeletonTimer.wait_time = 3
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
+
+		# skeleton 엘리트 몬스터 소환
+		if minute == 3 and sec > 30 and not has_spawned_skeleton_elite:
+			spawn_enemy(skeleton_elite,ELITE)
+			has_spawned_skeleton_elite = true
+			
 	# 5 < t <= 8분: flyingeye, skeleton, mushroom 소환
 	elif minute > 5 and minute <= 8:
 		$FlyingEyeTimer.set_paused(false)
