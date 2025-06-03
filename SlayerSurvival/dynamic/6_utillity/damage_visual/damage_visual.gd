@@ -2,7 +2,7 @@ extends Node
 
 const FONT_PATH = "res://static/font/DNFBitBitTTF.ttf"
 
-func show_damage(damage: int, position: Vector2, color : Color = Color.RED):
+func show_damage(damage: float, position: Vector2, color : Color = Color.RED):
 	var label = Label.new()
 	var font = FontFile.new()
 	font = load(FONT_PATH)
