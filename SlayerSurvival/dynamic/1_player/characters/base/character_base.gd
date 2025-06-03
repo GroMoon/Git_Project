@@ -87,7 +87,7 @@ var max_hp = start_hp:
 var current_hp = max_hp:
 	set(set_value):
 		current_hp = set_value
-		hp_bar.value = current_hp
+		hp_bar.value = snappedf(current_hp, 0.01)
 		if current_hp > max_hp:
 			current_hp = max_hp
 
