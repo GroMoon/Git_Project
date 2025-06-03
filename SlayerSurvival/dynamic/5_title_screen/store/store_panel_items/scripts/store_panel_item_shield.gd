@@ -31,15 +31,15 @@ func _process(_delta):
 func shield_upgrade(item_level):
 	match item_level:
 		"0":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 0.05
 		"1":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 0.05
 		"2":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 0.05
 		"3":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 0.05
 		"4":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"] += 0.05
 		"Max":
 			pass
 
