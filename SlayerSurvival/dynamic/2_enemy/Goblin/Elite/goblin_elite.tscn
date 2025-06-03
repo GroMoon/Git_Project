@@ -1,8 +1,9 @@
-[gd_scene load_steps=62 format=3 uid="uid://bbgckra78vhgn"]
+[gd_scene load_steps=63 format=3 uid="uid://bbgckra78vhgn"]
 
 [ext_resource type="Shader" path="res://static/shader/red_outline.gdshader" id="1_s85ol"]
 [ext_resource type="Texture2D" uid="uid://bqyb6hforxnns" path="res://dynamic/2_enemy/Goblin/Sprites/Attack.png" id="1_w235i"]
 [ext_resource type="Texture2D" uid="uid://diihv07fy20qn" path="res://dynamic/2_enemy/Goblin/Sprites/Attack2.png" id="2_3wbf5"]
+[ext_resource type="Script" path="res://dynamic/2_enemy/Goblin/Elite/goblin_elite.gd" id="2_xn6gs"]
 [ext_resource type="Texture2D" uid="uid://dx7iqrd4dbq5u" path="res://dynamic/2_enemy/Goblin/Sprites/Attack3.png" id="3_i7it4"]
 [ext_resource type="Texture2D" uid="uid://blw348idawudd" path="res://dynamic/2_enemy/Goblin/Sprites/Death.png" id="4_uki6w"]
 [ext_resource type="Texture2D" uid="uid://8isthciwap20" path="res://dynamic/2_enemy/Goblin/Sprites/Idle.png" id="5_y2oaf"]
@@ -402,6 +403,7 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_fs01w")
 collision_layer = 4
 collision_mask = 7
+script = ExtResource("2_xn6gs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hm32o")
