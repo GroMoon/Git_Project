@@ -23,6 +23,7 @@ signal levelup
 @export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도
 @export var start_hp            = 100.0				# 캐릭터 시작 체력
 @export var vampire             = 0.0				# 캐릭터 흡혈 퍼센트
+@export var shield              = 0.0               # 캐릭터 방어력
 
 ## 펫 관련
 # mushroom
@@ -187,11 +188,11 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 		return false
 
 func bind_player_data():
-	max_hp     = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
-	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
+	max_hp        = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
+	shield        = shield + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
 	respawn_times = respawn_times + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
 	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
-	move_speed = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
+	move_speed    = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
 	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
 	vampire = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
 	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
@@ -200,9 +201,10 @@ func bind_player_data():
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
 	if !damage_flag:
-		current_hp -= damage
-		DamageVisual.show_damage(-damage, self.position)
-		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
+		var damage_shielded = damage*(1-shield) # 방어력에 반감된 데미지
+		current_hp -= damage_shielded
+		DamageVisual.show_damage(damage_shielded, self.position)
+		print("max_hp", hp_bar.max_value)					
 		damage_flag = true
 		damage_timer.start()
 		print(current_hp)
