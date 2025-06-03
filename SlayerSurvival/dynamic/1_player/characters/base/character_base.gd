@@ -60,7 +60,7 @@ var shadow_partner_level = 0	# 그림자 분신
 var magnetic_area_level  = 0	# 자석 범위
 # var 방어력
 # var 공격 속도
-var revive_chance        = 0	# 리스폰 횟수
+var respawn_times        = 0	# 리스폰 횟수
 # var 쿨타임
 
 var invincibility_duration = 3.0  # 초 단위 무적 시간
@@ -189,7 +189,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 func bind_player_data():
 	max_hp     = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
 	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
-	revive_chance = revive_chance + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
+	respawn_times = respawn_times + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
 	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
 	move_speed = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
 	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
@@ -207,17 +207,17 @@ func process_collision_enemy(damage):
 		damage_timer.start()
 		print(current_hp)
 		if current_hp <= 0:
-			if revive_chance != 0:
+			if respawn_times != 0:
 				hit_flag = true
 				# 퍼즈 걸기
 				$CollisionShape2D.disabled = true
-				print(revive_chance)
-				revive_chance -= 1
+				print(respawn_times)
+				respawn_times -= 1
 				animated_sprite.play("death")
 				await animated_sprite.animation_finished
-				await revive()
+				await respawn()
 				$CollisionShape2D.disabled = false
-				print("남은 부활 횟수 : ", revive_chance)
+				print("남은 부활 횟수 : ", respawn_times)
 			else:
 				$CollisionShape2D.disabled = true
 				is_dead = true
@@ -282,10 +282,9 @@ func apply_health(_source):
 		VampireVisual.show_vampire(heal, self.position, Color.GREEN)
 
 # 부활
-func revive():
+func respawn():
 	#animated_sprite.material.set_shader_parameter("hit_flag", true)
-	animation_player.play("revive")
-	print("재생중")
+	animation_player.play("respawn")
 	await animation_player.animation_finished
 	await get_tree().create_timer(invincibility_duration).timeout
 	

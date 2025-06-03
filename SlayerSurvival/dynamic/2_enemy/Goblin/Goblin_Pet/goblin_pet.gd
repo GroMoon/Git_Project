@@ -7,8 +7,8 @@ func _initialize():
 	animation_speed        = 1.5
 	attack_animation_speed = 2.5
 	move_speed             = 120
-	attack_damage          = 10
-	attack_distance        = 30 	#! FIXME : 이후 _on_attack_timer_timeout 작업 후 추가 필요 
+	attack_damage          = 30
+	attack_distance        = 30
 
 func _ready():
 	_initialize()
