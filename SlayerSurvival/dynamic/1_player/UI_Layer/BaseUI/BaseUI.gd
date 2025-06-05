@@ -23,7 +23,7 @@ extends Control
 # 스킬 레벨 정보
 @onready var combo_level        = $PausePanel/PlayerInfo/Skill/combo_
 @onready var damage_level       = $PausePanel/PlayerInfo/Skill/damage_
-@onready var shield_level      = $PausePanel/PlayerInfo/Skill/shield_
+@onready var shield_level       = $PausePanel/PlayerInfo/Skill/shield_
 @onready var max_hp_level       = $PausePanel/PlayerInfo/Skill/max_hp_
 @onready var move_speed_level   = $PausePanel/PlayerInfo/Skill/move_speed_
 @onready var drain_level        = $PausePanel/PlayerInfo/Skill/drain_
@@ -31,6 +31,12 @@ extends Control
 @onready var attack_speed_level = $PausePanel/PlayerInfo/Skill/attack_speed_
 @onready var shadow_level       = $PausePanel/PlayerInfo/Skill/shadow_
 @onready var cooldown_level     = $PausePanel/PlayerInfo/Skill/cooldown_
+
+# 게임 오버 정보
+@onready var survival_time = $DeathPanel/FinalResult/VBoxContainer/survival_time_
+@onready var kill_enemy    = $DeathPanel/FinalResult/VBoxContainer/kill_enemy_
+@onready var get_gold      = $DeathPanel/FinalResult/VBoxContainer/get_gold_
+
 
 var sec                 = 0.0
 var minute              = 0
@@ -72,12 +78,14 @@ func _process(delta):
 		pause_panel.visible = false
 		death_panel.visible = true
 		get_tree().paused   = true
+		
 	elif diag_pause_flag:				# diag 창 뜰 시
 		pause_panel.visible = false
 		get_tree().paused   = true
 	else:
 		pause_panel.visible = false
 		get_tree().paused   = false
+		update_info()
 		
 	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag):
 		process_stopwatch(delta)
@@ -142,6 +150,10 @@ func update_info():
 	cooldown_level.text     = ": " + str(player.cooldown_level)
 	shadow_level.text       = ": " + str(player.shadow_partner_level)
 	
+	# 게임 오버
+	survival_time.text = stopwatch.text
+	kill_enemy.text    = str(int(player.kill_count))
+	get_gold.text      = str(int(player.gold_count))
 
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():
