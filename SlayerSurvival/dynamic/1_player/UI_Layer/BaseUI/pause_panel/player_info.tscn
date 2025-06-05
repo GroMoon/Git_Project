@@ -94,12 +94,12 @@ horizontal_alignment = 1
 layout_mode = 2
 text = ": {attack}"
 
-[node name="defense" type="Label" parent="Status"]
+[node name="shield" type="Label" parent="Status"]
 layout_mode = 2
 text = "방어력"
 horizontal_alignment = 1
 
-[node name="defense_" type="Label" parent="Status"]
+[node name="shield_" type="Label" parent="Status"]
 layout_mode = 2
 text = ": {defense}"
 
@@ -164,14 +164,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 text = ": {?}"
 
-[node name="defense" type="Label" parent="Skill"]
+[node name="shield" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "방어력 LV"
 horizontal_alignment = 1
 
-[node name="defense_" type="Label" parent="Skill"]
+[node name="shield_" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -255,14 +255,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 text = ": {?}"
 
-[node name="NNN" type="Label" parent="Skill"]
+[node name="cooldown" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
-text = "??? LV"
+text = "쿨타임 LV"
 horizontal_alignment = 1
 
-[node name="NNN_" type="Label" parent="Skill"]
+[node name="cooldown_" type="Label" parent="Skill"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6

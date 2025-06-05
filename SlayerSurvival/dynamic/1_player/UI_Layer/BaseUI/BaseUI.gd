@@ -8,31 +8,29 @@ extends Control
 # 피해 입을 때 효과
 @onready var fatal_state = $FatalState
 
-# 부활 정보
-@onready var respawn_label = $PausePanel/PlayerInfo/respawn_
-
 # 퍼즈 시 플레이어 정보
+@onready var respawn_label      = $PausePanel/PlayerInfo/respawn_
 @onready var character_img      = $PausePanel/PlayerInfo/Title_img
 @onready var status_label       = $PausePanel/PlayerInfo/Status_label
 @onready var name_label         = $PausePanel/PlayerInfo/Title/name_
 @onready var LV_label           = $PausePanel/PlayerInfo/Title/LV_
 @onready var health_label       = $PausePanel/PlayerInfo/Status/health_
 @onready var attack_label       = $PausePanel/PlayerInfo/Status/attack_
-@onready var defense_label      = $PausePanel/PlayerInfo/Status/defense_
+@onready var shield_label       = $PausePanel/PlayerInfo/Status/shield_
 @onready var move_speed_label   = $PausePanel/PlayerInfo/Status/move_speed_
 @onready var attack_speed_label = $PausePanel/PlayerInfo/Status/atteck_speed_
 
 # 스킬 레벨 정보
 @onready var combo_level        = $PausePanel/PlayerInfo/Skill/combo_
 @onready var damage_level       = $PausePanel/PlayerInfo/Skill/damage_
-@onready var defense_level      = $PausePanel/PlayerInfo/Skill/defense_
+@onready var shield_level      = $PausePanel/PlayerInfo/Skill/shield_
 @onready var max_hp_level       = $PausePanel/PlayerInfo/Skill/max_hp_
 @onready var move_speed_level   = $PausePanel/PlayerInfo/Skill/move_speed_
 @onready var drain_level        = $PausePanel/PlayerInfo/Skill/drain_
 @onready var magnetic_level     = $PausePanel/PlayerInfo/Skill/magnetic_
 @onready var attack_speed_level = $PausePanel/PlayerInfo/Skill/attack_speed_
 @onready var shadow_level       = $PausePanel/PlayerInfo/Skill/shadow_
-#@onready var 
+@onready var cooldown_level     = $PausePanel/PlayerInfo/Skill/cooldown_
 
 var sec                 = 0.0
 var minute              = 0
@@ -116,14 +114,14 @@ func process_stopwatch(time):
 
 # 정보 업데이트
 func update_info():
-	respawn_label           = player.respawn_times
 	# 스테이터스
 	status_label.text       = player.character_name
 	name_label.text         = ": " + player.character_name
 	LV_label.text           = ": " + str(player.character_level)
+	respawn_label.text      = ": " + str(player.respawn_times)
 	health_label.text       = ": " + str(player.current_hp) + " / " + str(player.max_hp)
 	attack_label.text       = ": " + str(player.attack_damage)
-	defense_label.text      = ": " + "미개발"
+	shield_label.text       = ": " + str(float(player.shield))
 	move_speed_label.text   = ": " + str(player.move_speed)
 	attack_speed_label.text = ": " + str(float(player.animation_speed))
 	if player.character_name == "fantasy_warrior":
@@ -136,12 +134,12 @@ func update_info():
 	# 스킬 레벨
 	combo_level.text        = ": " + str(player.attack_times_level)
 	damage_level.text       = ": " + str(player.damage_level)
-	# defense_level.text    = ": " + str(player.)
+	shield_level.text       = ": " + str(player.shield_level)
 	max_hp_level.text       = ": " + str(player.max_hp_level)
 	move_speed_level.text   = ": " + str(player.move_speed_level)
 	drain_level.text        = ": " + str(player.drain_level)
 	magnetic_level.text     = ": " + str(player.magnetic_area_level)
-	# attack_speed_level.text = ": " + str(player.)
+	cooldown_level.text     = ": " + str(player.cooldown_level)
 	shadow_level.text       = ": " + str(player.shadow_partner_level)
 	
 
