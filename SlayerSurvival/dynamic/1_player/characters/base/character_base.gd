@@ -24,6 +24,8 @@ signal levelup
 @export var start_hp            = 100.0				# 캐릭터 시작 체력
 @export var vampire             = 0.0				# 캐릭터 흡혈 퍼센트
 @export var shield              = 0.0               # 캐릭터 방어력
+@export var gold_drop           = 0.0				# 캐릭터 골드(2개) 드롭 퍼센트
+@export var gem_drop            = 0.0				# 캐릭터 경험치(2개) 드롭 퍼센트
 
 ## 펫 관련
 # mushroom
@@ -194,9 +196,9 @@ func bind_player_data():
 	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
 	move_speed    = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
 	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
-	vampire = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
-	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
-	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])
+	vampire       = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
+	gold_drop     = gold_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
+	gem_drop      = gem_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])
 
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
