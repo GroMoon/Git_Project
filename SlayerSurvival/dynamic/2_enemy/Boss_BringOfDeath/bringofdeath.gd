@@ -20,17 +20,19 @@ var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
 #var golds = 25
 
 # 적 특성
-var health        = 100 		# 적 체력
-var move_speed    = 90 		# 적 이동 속도
-var damage        = 10  		# 적 데미지
-var attack_damage = 30		# 공격 데미지지
-var spawn_radius  = 200  	# 스폰 범위
+var enemy_name    = "BringOfDeath"
+var health        = 1000 			# 적 체력
+var move_speed    = 90 				# 적 이동 속도
+var damage        = 10  			# 적 데미지
+var attack_damage = 30				# 공격 데미지지
+var spawn_radius  = 200  			# 스폰 범위
 # 전역 변수
 var player 
-var touch_flag   = false
-var hit_flag     = false
-var is_dead      = false
-var is_attacking = false
+var touch_flag    = false
+var hit_flag      = false
+var is_dead       = false
+var is_attacking  = false
+var targeted_flag = false
 
 # 넉백 관련
 var knockback_vector   = Vector2.ZERO

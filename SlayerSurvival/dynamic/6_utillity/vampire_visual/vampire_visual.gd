@@ -2,12 +2,12 @@ extends Node
 
 const FONT_PATH = "res://static/font/DNFBitBitTTF.ttf"
 
-func show_damage(damage: float, position: Vector2, color : Color = Color.RED):
+func show_vampire(vampire: float, position: Vector2, color : Color = Color.RED):
 	var label = Label.new()
 	var font = FontFile.new()
 	font = load(FONT_PATH)
 	
-	label.text = str(damage)
+	label.text = str(vampire)
 	label.global_position = position
 	label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", 15)

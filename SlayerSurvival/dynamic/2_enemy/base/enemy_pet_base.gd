@@ -88,5 +88,6 @@ func find_closest_enemy() -> Node2D:
 			if d < min_dist:
 				min_dist = d
 				closest = enemy
-				closest.targeted_flag = true
+				if (enemy.enemy_name == "flyingeye") or (enemy.enemy_name == "skeleton") or (enemy.enemy_name == "mushroom") or (enemy.enemy_name == "goblin"):
+					closest.targeted_flag = true
 	return closest

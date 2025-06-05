@@ -536,9 +536,11 @@ material = SubResource("ShaderMaterial_gc6qg")
 sprite_frames = SubResource("SpriteFrames_xhjrh")
 animation = &"idle"
 speed_scale = 1.5
+centered = false
+offset = Vector2(-85, -80)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 23.333)
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_iq1tq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -549,9 +551,9 @@ speed_scale = 0.75
 
 [node name="Health_Bar" parent="." instance=ExtResource("10_3qswq")]
 offset_left = -26.0
-offset_top = 62.0
+offset_top = 38.0
 offset_right = 29.0
-offset_bottom = 64.0
+offset_bottom = 40.0
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -571,22 +573,22 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="attack_1" type="CollisionShape2D" parent="Attack"]
-position = Vector2(37, 24)
+position = Vector2(37, -1)
 shape = SubResource("RectangleShape2D_8tlxt")
 disabled = true
 
 [node name="attack_2" type="CollisionShape2D" parent="Attack"]
-position = Vector2(7, 25)
+position = Vector2(7, 0)
 shape = SubResource("RectangleShape2D_f3rbu")
 disabled = true
 
 [node name="attack_3" type="CollisionShape2D" parent="Attack"]
-position = Vector2(33, -2)
+position = Vector2(33, -27)
 shape = SubResource("RectangleShape2D_ghd4c")
 disabled = true
 
 [node name="MagneticArea" parent="." instance=ExtResource("10_b142a")]
-position = Vector2(0, 23.33)
+position = Vector2(0, -1)
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_l0wkq")]
 

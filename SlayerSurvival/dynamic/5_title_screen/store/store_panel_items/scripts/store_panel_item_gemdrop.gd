@@ -31,15 +31,15 @@ func _process(_delta):
 func gemdrop_upgrade(item_level):
 	match item_level:
 		"0":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 0.04
 		"1":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 0.04
 		"2":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 0.04
 		"3":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 0.04
 		"4":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"] += 0.04
 		"Max":
 			pass
 

@@ -5,7 +5,7 @@ func _initialize():
 	animation_speed        = 1.2
 	attack_animation_speed = 2.5
 	move_speed             = 100
-	attack_damage          = 10
+	attack_damage          = 8
 	attack_distance        = 30
 
 func _ready():

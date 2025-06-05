@@ -31,15 +31,15 @@ func _process(_delta):
 func speed_upgrade(item_level):
 	match item_level:
 		"0":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 5
 		"1":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 5
 		"2":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 5
 		"3":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 5
 		"4":
-			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 10
+			Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"] += 5
 		"Max":
 			pass
 
