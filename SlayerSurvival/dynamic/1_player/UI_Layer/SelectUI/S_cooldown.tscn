@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7aan7ggt5axa"]
+
+[ext_resource type="Texture2D" uid="uid://bwrdcgum2t25q" path="res://static/png/icon/spritesheet.png" id="1_n8y3q"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="2_4lkm2"]
+
+[node name="Cooldown" type="Button"]
+custom_minimum_size = Vector2(480, 136)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(64, 64)
+scale = Vector2(6, 6)
+texture = ExtResource("1_n8y3q")
+hframes = 12
+vframes = 12
+frame = 116
+
+[node name="name" type="Label" parent="."]
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 251.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("2_4lkm2")
+theme_override_font_sizes/font_size = 26
+text = "쿨타임 감소"
+
+[node name="details" type="Label" parent="."]
+offset_left = 120.0
+offset_top = 32.0
+offset_right = 472.0
+offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("2_4lkm2")
+theme_override_font_sizes/font_size = 20
+text = "플레이어의 공격 쿨타임을 감소시킵니다."
+vertical_alignment = 1
+autowrap_mode = 2
