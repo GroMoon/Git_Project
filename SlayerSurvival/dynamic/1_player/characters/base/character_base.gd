@@ -24,6 +24,9 @@ signal levelup
 @export var start_hp            = 100.0				# 캐릭터 시작 체력
 @export var vampire             = 0.0				# 캐릭터 흡혈 퍼센트
 @export var shield              = 0.0               # 캐릭터 방어력
+@export var cooldown            = 0.0				# 캐릭터 쿨타임(어택타이머)
+@export var gold_drop           = 0.0				# 캐릭터 골드(2개) 드롭 퍼센트
+@export var gem_drop            = 0.0				# 캐릭터 경험치(2개) 드롭 퍼센트
 
 ## 펫 관련
 # mushroom
@@ -59,10 +62,9 @@ var move_speed_level     = 0	# 이동 속도 증가
 var drain_level          = 0	# 흡혈
 var shadow_partner_level = 0	# 그림자 분신
 var magnetic_area_level  = 0	# 자석 범위
-# var 방어력
-# var 공격 속도
+var shield_level         = 0	# 방어력 TODO : 미개발
+var cooldown_level       = 0	# 쿨타임 TODO : 미개발
 var respawn_times        = 0	# 리스폰 횟수
-# var 쿨타임
 
 var invincibility_duration = 3.0  # 초 단위 무적 시간
 
@@ -87,7 +89,7 @@ var max_hp = start_hp:
 var current_hp = max_hp:
 	set(set_value):
 		current_hp = set_value
-		hp_bar.value = current_hp
+		hp_bar.value = snappedf(current_hp, 0.01)	# 체력 소수점 2자리까지만 표시 
 		if current_hp > max_hp:
 			current_hp = max_hp
 
@@ -193,10 +195,10 @@ func bind_player_data():
 	respawn_times = respawn_times + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
 	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
 	move_speed    = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
-	# a = a + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
-	vampire = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
-	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
-	# a = a + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])
+	cooldown      = cooldown + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
+	vampire       = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
+	gold_drop     = gold_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
+	gem_drop      = gem_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])
 
 # Enemy 충돌 처리
 func process_collision_enemy(damage):

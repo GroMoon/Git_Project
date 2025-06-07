@@ -2,7 +2,7 @@ extends CharacterShadowBase
 
 func _initialize():
 	move_speed      = 130 * 0.8
-	attack_damage   = 15
+	attack_damage   = 13
 	animation_speed = 1.5 
 
 func _ready():
