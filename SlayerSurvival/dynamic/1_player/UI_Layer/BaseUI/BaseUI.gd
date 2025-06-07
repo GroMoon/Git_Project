@@ -36,6 +36,7 @@ extends Control
 @onready var survival_time = $DeathPanel/FinalResult/VBoxContainer/survival_time_
 @onready var kill_enemy    = $DeathPanel/FinalResult/VBoxContainer/kill_enemy_
 @onready var get_gold      = $DeathPanel/FinalResult/VBoxContainer/get_gold_
+@onready var total_gold    = $DeathPanel/FinalResult/VBoxContainer/total_gold
 
 
 var sec                 = 0.0
@@ -78,6 +79,11 @@ func _process(delta):
 		pause_panel.visible = false
 		death_panel.visible = true
 		get_tree().paused   = true
+		# 게임 오버
+		survival_time.text = stopwatch.text
+		kill_enemy.text    = str(int(player.kill_count))
+		get_gold.text      = str(int(player.gold_count))
+		total_gold.text    = str(int(Global.character_data["GOLD"]["gold"]))
 		
 	elif diag_pause_flag:				# diag 창 뜰 시
 		pause_panel.visible = false
@@ -150,10 +156,7 @@ func update_info():
 	cooldown_level.text     = ": " + str(player.cooldown_level)
 	shadow_level.text       = ": " + str(player.shadow_partner_level)
 	
-	# 게임 오버
-	survival_time.text = stopwatch.text
-	kill_enemy.text    = str(int(player.kill_count))
-	get_gold.text      = str(int(player.gold_count))
+	
 
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():

@@ -56,15 +56,6 @@ offset_top = 155.0
 offset_right = 378.0
 offset_bottom = 426.0
 
-[node name="survival_time" parent="FinalResult/VBoxContainer" index="0"]
-text = "⏱️생존 시간"
-
-[node name="kill_enemy" parent="FinalResult/VBoxContainer" index="2"]
-text = "☠️처치한 적"
-
-[node name="get_gold" parent="FinalResult/VBoxContainer" index="4"]
-text = "💰획득한 골드"
-
 [node name="Restart" type="Button" parent="."]
 layout_mode = 1
 offset_left = 52.0
