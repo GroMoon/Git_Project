@@ -2,8 +2,9 @@ extends CharacterBody2D
 
 class_name  EnemyPetBase
 
-@onready var animated_sprite = $AnimatedSprite2D
-@onready var attack_area     = $Attack/attack_1
+@onready var animated_sprite  = $AnimatedSprite2D
+@onready var attack_area      = $Attack/attack_1
+@onready var animation_player = $AnimationPlayer
 
 # default enemy pet characteristics
 var enemy_pet_name         = "EnemyPetBase"     # 몬스터펫 이름
@@ -82,9 +83,11 @@ func find_closest_enemy() -> Node2D:
 	var closest: Node2D = null
 	var min_dist = INF
 	for enemy in enemies:
-		if enemy is Node2D:
+		if enemy is Node2D and enemy.targeted_flag == false:
 			var d = global_position.distance_to(enemy.global_position)
 			if d < min_dist:
 				min_dist = d
 				closest = enemy
+				if (enemy.enemy_name == "flyingeye") or (enemy.enemy_name == "skeleton") or (enemy.enemy_name == "mushroom") or (enemy.enemy_name == "goblin"):
+					closest.targeted_flag = true
 	return closest

@@ -6,7 +6,7 @@ class_name CharacterShadowBase
 @onready var animation_player = $AnimationPlayer
 
 # 그림자 특성
-var move_speed      = 150 * 0.8     # 그림자 이동속도
+var move_speed      = 150		    # 그림자 이동속도
 var attack_times    = 1 	        # 그림자 공격 횟수
 var attack_damage   = 10			# 그림자 공격 데미지
 var animation_speed = 1.0           # 그림자 애니메이션 속도 
@@ -42,8 +42,10 @@ func _physics_process(_delta):
 		animated_sprite.play("idle")
 		return
 
-	# 플레이어가 존재하면 플레이어를 향해 이동
 	if player:
+		# 플레이어 그림자 레벨에 따라 공격 횟수 조절
+		attack_times  = player.shadow_partner_level
+		# 플레이어가 존재하면 플레이어를 향해 이동
 		var direction = (player.position - position).normalized()
 		velocity = direction * move_speed
 		move_and_slide()

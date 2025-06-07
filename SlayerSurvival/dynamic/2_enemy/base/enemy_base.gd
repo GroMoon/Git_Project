@@ -9,20 +9,23 @@ class_name EnemyBase
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
 var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
+var double_gold_drop
+var double_gem_drop
 
 # 적 특성 (default)
 var enemy_name      = "EnemyBase"
 var health          = 15 	# 적 체력
 var move_speed      = 80 	# 적 이동 속도
 var damage          = 5  	# 적 데미지
-var spawn_radius    = 500  # 적 스폰 범위
-var animation_speed = 1.0 # 적 기본 애니메이션 속도
-var pet_chance      = 0.1 # 적 펫이 될 확률
+var spawn_radius    = 500  	# 적 스폰 범위
+var animation_speed = 1.0	# 적 기본 애니메이션 속도
+var pet_chance      = 0.1 	# 적 펫이 될 확률
 # 전역 변수
 var player 
-var touch_flag = false 
-var hit_flag   = false
-var is_dead    = false
+var touch_flag    = false
+var hit_flag      = false
+var is_dead       = false
+var targeted_flag = false	# 플레이어가 적을 목표로 설정했는지 확인하는 변수
 # 넉백 관련
 var knockback_vector   = Vector2.ZERO
 var knockback_time     = 0.0			# 넉백 유지 시간
@@ -33,10 +36,13 @@ var knockback_strength = 150.0  		# 넉백 세기
 func _ready():
 	# player 노드 찾기
 	player = get_parent().get_parent().get_node("player")
-    # 시그널 연결
+	# 시그널 연결
 	interaction_sensor.connect("area_entered", Callable(self, "_on_interaction_sensor_area_entered"))
 	interaction_sensor.connect("body_entered", Callable(self, "_on_interaction_sensor_body_entered"))
 	interaction_sensor.connect("body_exited" , Callable(self, "_on_interaction_sensor_body_exited"))
+	# 드롭 확률 연결
+	double_gold_drop = player.gold_drop
+	double_gem_drop  = player.gem_drop
 
 func _physics_process(delta):
 	# 사망 상태에서 아무것도 처리 아지 않도록
@@ -113,16 +119,26 @@ func drop_item():
 	# 골드
 	var gold_chance = randf()
 	if gold_chance <= 0.5:								# 드랍 확률 조정 (0.0~1.0)
-		var new_gold = gold_img.instantiate()
-		new_gold.global_position = global_position
-		get_parent().call_deferred("add_child", new_gold)
+		spawn_gold()
+		if randf() <= double_gold_drop:
+			spawn_gold()
 	# 경험치
-	var exp_chance = randf()
-	if exp_chance <= 0.7:								# 드랍 확률 조정 (0.0~1.0)
-		var new_exp = exp_img.instantiate()
-		new_exp.global_position = global_position + Vector2(10, 0)
-		get_parent().call_deferred("add_child", new_exp)
+	var gem_chance = randf()
+	if gem_chance <= 0.7:								# 드랍 확률 조정 (0.0~1.0)
+		spawn_gem()
+		if randf() <= double_gem_drop:
+			spawn_gem()
 
+func spawn_gold():
+	var new_gold = gold_img.instantiate()
+	new_gold.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
+	get_parent().call_deferred("add_child", new_gold)
+	
+func spawn_gem():
+	var new_exp = exp_img.instantiate()
+	new_exp.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
+	get_parent().call_deferred("add_child", new_exp)
+	
 # 넉백 함수
 func apply_knockback(attacker: Node2D):
 	# 방향 : (적의 위치 - 공격자=플레이어 위치)

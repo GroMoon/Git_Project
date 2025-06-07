@@ -1,134 +1,135 @@
-[gd_scene load_steps=43 format=3 uid="uid://c6ft8nxddbxd1"]
+[gd_scene load_steps=41 format=3 uid="uid://cf4dyjq15r71w"]
 
-[ext_resource type="Texture2D" uid="uid://cwfcmpxoe7fj7" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="1_jduur"]
-[ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.gd" id="1_wy06c"]
-[ext_resource type="Shader" path="res://static/shader/green_outline.gdshader" id="2_6u0w2"]
-[ext_resource type="Texture2D" uid="uid://dkunkww3mya26" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="2_fd1hu"]
-[ext_resource type="Texture2D" uid="uid://cgiln108jgtw8" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="3_gfc2c"]
-[ext_resource type="Texture2D" uid="uid://bgtsjboapdpxd" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="4_g3fev"]
-[ext_resource type="Texture2D" uid="uid://ddo7j5mpeaeu5" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="5_14hni"]
+[ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/Elite/mushroom_elite.gd" id="1_fy5w4"]
+[ext_resource type="Shader" path="res://static/shader/red_outline.gdshader" id="2_65qn0"]
+[ext_resource type="Texture2D" uid="uid://np74nl75kc6i" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="3_1fgvr"]
+[ext_resource type="Texture2D" uid="uid://c2r10gkup2xi6" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="4_dy3wb"]
+[ext_resource type="Texture2D" uid="uid://brat3xqd5l4vc" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="5_l4ft2"]
+[ext_resource type="Texture2D" uid="uid://q2vcvo83lhr8" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="6_qy1xy"]
+[ext_resource type="Texture2D" uid="uid://dou747306vt78" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="7_w3brg"]
+[ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="8_hd5vy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vlskx"]
-shader = ExtResource("2_6u0w2")
-shader_parameter/color = Vector4(0.5, 1, 0.5, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ycxux"]
+shader = ExtResource("2_65qn0")
+shader_parameter/color = Vector4(1, 0, 0, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 0
 shader_parameter/inside = false
 shader_parameter/add_margins = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_awska"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ybglx"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lp55f"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k5jx5"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ffreu"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(600, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r4s3x"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(750, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e1vnt"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(900, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qtrlh"]
-atlas = ExtResource("1_jduur")
+atlas = ExtResource("3_1fgvr")
 region = Rect2(1050, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t3cbj"]
-atlas = ExtResource("2_fd1hu")
+atlas = ExtResource("4_dy3wb")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5yugq"]
-atlas = ExtResource("2_fd1hu")
+atlas = ExtResource("4_dy3wb")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7rx2f"]
-atlas = ExtResource("2_fd1hu")
+atlas = ExtResource("4_dy3wb")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o21f5"]
-atlas = ExtResource("2_fd1hu")
+atlas = ExtResource("4_dy3wb")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0phow"]
-atlas = ExtResource("3_gfc2c")
+atlas = ExtResource("5_l4ft2")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5jn5y"]
-atlas = ExtResource("3_gfc2c")
+atlas = ExtResource("5_l4ft2")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dri4"]
-atlas = ExtResource("3_gfc2c")
+atlas = ExtResource("5_l4ft2")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o7ibq"]
-atlas = ExtResource("3_gfc2c")
+atlas = ExtResource("5_l4ft2")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wj72u"]
-atlas = ExtResource("4_g3fev")
+atlas = ExtResource("6_qy1xy")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ri2jf"]
-atlas = ExtResource("4_g3fev")
+atlas = ExtResource("6_qy1xy")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i2glr"]
-atlas = ExtResource("4_g3fev")
+atlas = ExtResource("6_qy1xy")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jnvei"]
-atlas = ExtResource("4_g3fev")
+atlas = ExtResource("6_qy1xy")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mslik"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(0, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g8iiq"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(150, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7dlu"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(300, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nf0n8"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(450, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pqnt7"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(600, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fq3gj"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(750, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mq63"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(900, 0, 150, 150)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2gx5p"]
-atlas = ExtResource("5_14hni")
+atlas = ExtResource("7_w3brg")
 region = Rect2(1050, 0, 150, 150)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_0rbba"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_sysc3"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -240,105 +241,34 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lhlln"]
-radius = 7.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_y7xw2"]
 
-[sub_resource type="Animation" id="Animation_s8sgg"]
-resource_name = "attack"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"attack"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Attack/attack_1:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rcd34"]
+radius = 9.0
+height = 35.0
 
-[sub_resource type="Animation" id="Animation_61kgg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7hfdh"]
-_data = {
-"RESET": SubResource("Animation_61kgg"),
-"attack": SubResource("Animation_s8sgg")
-}
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2a64"]
-size = Vector2(64, 34)
-
-[node name="MushroomPet" type="CharacterBody2D"]
-texture_filter = 1
-collision_layer = 0
-collision_mask = 0
-script = ExtResource("1_wy06c")
+[node name="MushroomElite" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_fy5w4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_vlskx")
-sprite_frames = SubResource("SpriteFrames_0rbba")
+texture_filter = 1
+material = SubResource("ShaderMaterial_ycxux")
+sprite_frames = SubResource("SpriteFrames_sysc3")
 animation = &"attack"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 7)
-shape = SubResource("CapsuleShape2D_lhlln")
+shape = SubResource("CircleShape2D_y7xw2")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_7hfdh")
-}
+[node name="interaction_sensor" parent="." instance=ExtResource("8_hd5vy")]
+collision_layer = 4
+collision_mask = 10
 
-[node name="Attack" type="Area2D" parent="." groups=["attack"]]
-collision_layer = 8
-collision_mask = 4
+[node name="CollisionShape2D" parent="interaction_sensor" index="0"]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_rcd34")
 
-[node name="attack_1" type="CollisionShape2D" parent="Attack"]
-position = Vector2(34, 10)
-shape = SubResource("RectangleShape2D_x2a64")
-disabled = true
-
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
-
-[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[editable path="interaction_sensor"]

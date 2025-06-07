@@ -19,10 +19,14 @@ signal levelup
 @export var attack_times        = 1					# 캐릭터 공격 콤보
 @export var shadow_attack       = false				# 캐릭터 그림자 분신술
 @export var attack_damage       = 5					# 캐릭터 일반 공격 데미지
-@export var magnetic_area_scale = 100				# 캐릭터 자석 범위 
+@export var magnetic_area_scale = 100				# 캐릭터 자석 범위
 @export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도
-@export var start_hp            = 100				# 캐릭터 시작 체력
-@export var drain_percent       = 0.0				# 캐릭터 흡혈 퍼센트
+@export var start_hp            = 100.0				# 캐릭터 시작 체력
+@export var vampire             = 0.0				# 캐릭터 흡혈 퍼센트
+@export var shield              = 0.0               # 캐릭터 방어력
+@export var cooldown            = 0.0				# 캐릭터 쿨타임(어택타이머)
+@export var gold_drop           = 0.0				# 캐릭터 골드(2개) 드롭 퍼센트
+@export var gem_drop            = 0.0				# 캐릭터 경험치(2개) 드롭 퍼센트
 
 ## 펫 관련
 # mushroom
@@ -58,10 +62,11 @@ var move_speed_level     = 0	# 이동 속도 증가
 var drain_level          = 0	# 흡혈
 var shadow_partner_level = 0	# 그림자 분신
 var magnetic_area_level  = 0	# 자석 범위
-# var 방어력
-# var 공격 속도
-# var 부활
-# var 쿨타임
+var shield_level         = 0	# 방어력 TODO : 미개발
+var cooldown_level       = 0	# 쿨타임 TODO : 미개발
+var respawn_times        = 0	# 리스폰 횟수
+
+var invincibility_duration = 3.0  # 초 단위 무적 시간
 
 ## 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
@@ -76,7 +81,7 @@ var current_exp = 0:
 		exp_bar.value = current_exp
 
 ## 체력
-@onready var hp_bar = $UI_Layer/BaseUI/Health_Bar
+@onready var hp_bar = $Health_Bar
 var max_hp = start_hp:
 	set(set_value):
 		max_hp = set_value
@@ -84,7 +89,7 @@ var max_hp = start_hp:
 var current_hp = max_hp:
 	set(set_value):
 		current_hp = set_value
-		hp_bar.value = current_hp
+		hp_bar.value = snappedf(current_hp, 0.01)	# 체력 소수점 2자리까지만 표시 
 		if current_hp > max_hp:
 			current_hp = max_hp
 
@@ -104,6 +109,8 @@ var current_hp = max_hp:
 @onready var level_label = $UI_Layer/BaseUI/Level
 
 func _ready():
+	# 플레이어 데이터 동기화
+	bind_player_data()
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
@@ -125,7 +132,6 @@ func _ready():
 	Dialogic.VAR.skeleton_pet_diag  = false
 	Dialogic.VAR.goblin_pet_diag    = false
 	Dialogic.VAR.flyingeye_pet_diag = false
-
 
 func _physics_process(_delta):
 	if is_dead:
@@ -183,32 +189,55 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 		velocity = Vector2.ZERO
 		return false
 
+func bind_player_data():
+	max_hp        = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
+	shield        = shield + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
+	respawn_times = respawn_times + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
+	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
+	move_speed    = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
+	cooldown      = cooldown + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
+	vampire       = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
+	gold_drop     = gold_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
+	gem_drop      = gem_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])
+
 # Enemy 충돌 처리
 func process_collision_enemy(damage):
 	if !damage_flag:
-		current_hp -= damage
-		DamageVisual.show_damage(-damage, self.position)
-		print("max_hp", hp_bar.max_value)					# FIXME : 현재 데미지 꺼놓은 상태 아래 FIXME 작업 완료 후 주석 제거 필요
+		var damage_shielded = damage*(1-shield) # 방어력에 반감된 데미지
+		current_hp -= damage_shielded
+		DamageVisual.show_damage(damage_shielded, self.position)
+		print("max_hp", hp_bar.max_value)					
 		damage_flag = true
 		damage_timer.start()
+		print(current_hp)
 		if current_hp <= 0:
-			$CollisionShape2D.disabled = true
-			is_dead = true
-			# [CHARACTER-019] [DEV] 캐릭터 사망 애니메이션 적용
-			hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
-			animated_sprite.stop()
-			animated_sprite.speed_scale = animation_speed
-			animated_sprite.play("death")
-			await animated_sprite.animation_finished
-			die_character()
-			return								    
+			if respawn_times != 0:
+				hit_flag = true
+				# 퍼즈 걸기
+				$CollisionShape2D.disabled = true
+				print(respawn_times)
+				respawn_times -= 1
+				animated_sprite.play("death")
+				await animated_sprite.animation_finished
+				await respawn()
+				$CollisionShape2D.disabled = false
+				print("남은 부활 횟수 : ", respawn_times)
+			else:
+				$CollisionShape2D.disabled = true
+				is_dead = true
+				hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
+				animated_sprite.stop()
+				animated_sprite.speed_scale = animation_speed
+				animated_sprite.play("death")
+				await animated_sprite.animation_finished
+				die_character()
+				return								    
 		hit_flag = false
 
 func die_character():
 	var cur_gold = int(gold_count)
 	Global.character_data["GOLD"]["gold"] += cur_gold
 	Global.save_character_data()
-	
 	death_flag_for_pause = true
 
 # 골드 추가
@@ -249,17 +278,21 @@ func level_up():
 		emit_signal("levelup")
 
 # 흡혈 능력
-func apply_health(source):
-	# 흡혈 레벨이 0이거나 주체가 자신이 아니라면 무시
-	if drain_level == 0 || source != self:
-		return
-	print(1)
-	var heal = drain_percent * attack_damage
-	if heal < 1:
-		heal = 1
-	current_hp += heal
-	current_hp = clamp(current_hp, 0, max_hp)
-	DamageVisual.show_damage(heal, self.position, Color.GREEN)
+func apply_health(_source):
+	var heal = vampire * float(attack_damage)
+	if vampire != 0:
+		current_hp += heal
+		current_hp = clamp(current_hp, 0, max_hp)
+		VampireVisual.show_vampire(heal, self.position, Color.GREEN)
+
+# 부활
+func respawn():
+	#animated_sprite.material.set_shader_parameter("hit_flag", true)
+	animation_player.play("respawn")
+	await animation_player.animation_finished
+	await get_tree().create_timer(invincibility_duration).timeout
+	
+	current_hp = max_hp
 
 # hit_effect
 func apply_hit_effect():
