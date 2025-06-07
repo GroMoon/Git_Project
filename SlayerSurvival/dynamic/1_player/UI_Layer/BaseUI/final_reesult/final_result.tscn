@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://v1kjq5qubjvw"]
+[gd_scene load_steps=2 format=3 uid="uid://v1kjq5qubjvw"]
+
+[ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="1_wn03s"]
 
 [node name="FinalResult" type="Control"]
 layout_mode = 3
@@ -13,46 +15,49 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="survival_time" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "살아남은 시간"
+text = "⏱️생존 시간"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="VBoxContainer"]
+[node name="survival_time_" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "time"
+theme_override_font_sizes/font_size = 25
+text = "00:00"
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "죽인 적"
-horizontal_alignment = 1
-
-[node name="Label4" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "a"
-horizontal_alignment = 1
-
-[node name="Label5" type="Label" parent="VBoxContainer"]
+[node name="kill_enemy" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-text = "정보 B"
+text = "☠️처치한 적"
 horizontal_alignment = 1
 
-[node name="Label6" type="Label" parent="VBoxContainer"]
+[node name="kill_enemy_" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "b"
+theme_override_font_sizes/font_size = 21
+text = "0"
 horizontal_alignment = 1
 
-[node name="Label7" type="Label" parent="VBoxContainer"]
+[node name="get_gold" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
-text = "정보 C"
+text = "💰획득한 골드"
 horizontal_alignment = 1
 
-[node name="Label8" type="Label" parent="VBoxContainer"]
+[node name="get_gold_" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "c"
+theme_override_font_sizes/font_size = 21
+text = "0"
 horizontal_alignment = 1
+
+[node name="total_gold" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0"
+horizontal_alignment = 2
+
+[node name="gold_png" type="Sprite2D" parent="VBoxContainer"]
+position = Vector2(159, 248)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_wn03s")
