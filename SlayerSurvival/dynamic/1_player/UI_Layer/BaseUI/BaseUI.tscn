@@ -29,11 +29,12 @@ offset_bottom = 37.0
 
 [node name="Stopwatch" parent="." instance=ExtResource("3_hws3o")]
 layout_mode = 0
-offset_left = 560.0
+offset_left = 0.0
 offset_top = 25.0
-offset_right = 659.0
+offset_right = 1200.0
 offset_bottom = 64.0
 scale = Vector2(0.991197, 1.04129)
+horizontal_alignment = 1
 
 [node name="Exp_Bar" parent="." instance=ExtResource("4_1juvo")]
 layout_mode = 0
