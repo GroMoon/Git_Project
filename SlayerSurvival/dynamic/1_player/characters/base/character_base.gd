@@ -11,6 +11,7 @@ signal levelup
 @onready var magnetic_area    = $MagneticArea/CollisionShape2D
 @onready var animation_player = $AnimationPlayer
 @onready var damage_timer     = $DamageTimer
+@onready var attack_timer     = $AttackTimer
 
 ## 기본 파라미터
 @export var character_name      = "CharacterBase"	# 캐릭터 이름
@@ -24,9 +25,11 @@ signal levelup
 @export var start_hp            = 100.0				# 캐릭터 시작 체력
 @export var vampire             = 0.0				# 캐릭터 흡혈 퍼센트
 @export var shield              = 0.0               # 캐릭터 방어력
-@export var cooldown            = 0.0				# 캐릭터 쿨타임(어택타이머)
+@export var attack_wait_time    = 4.0  				# 기본 공격 쿨타임
+@export var cooldown            = 0.0				# 캐릭터 쿨타임 감소값(어택타이머)
 @export var gold_drop           = 0.0				# 캐릭터 골드(2개) 드롭 퍼센트
 @export var gem_drop            = 0.0				# 캐릭터 경험치(2개) 드롭 퍼센트
+
 
 ## 펫 관련
 # mushroom
@@ -62,7 +65,7 @@ var move_speed_level     = 0	# 이동 속도 증가
 var drain_level          = 0	# 흡혈
 var shadow_partner_level = 0	# 그림자 분신
 var magnetic_area_level  = 0	# 자석 범위
-var shield_level         = 0	# 방어력 TODO : 미개발
+var shield_level         = 0	# 방어력
 var cooldown_level       = 0	# 쿨타임 TODO : 미개발
 var respawn_times        = 0	# 리스폰 횟수
 
@@ -99,11 +102,11 @@ var current_hp = max_hp:
 
 ## 적 처치
 @onready var kill_label = get_node("UI_Layer/BaseUI/killcollect/KillCount")
-@export var kill_count = 0
+@export var kill_count  = 0
 
 ## 업그레이드 
 @onready var upgrade_container = $UI_Layer/SelectUI/select_panel/upgrade_container
-@onready var select_panel = $UI_Layer/SelectUI/select_panel
+@onready var select_panel      = $UI_Layer/SelectUI/select_panel
 
 ## 레벨
 @onready var level_label = $UI_Layer/BaseUI/Level
@@ -146,7 +149,6 @@ func _physics_process(_delta):
 	move_and_slide()
 	# hit_effect (깜빡거림) 추가
 	apply_hit_effect()
-	
 	# 애니메이션 처리
 	if !hit_flag:
 		animated_sprite.speed_scale = animation_speed
@@ -195,7 +197,7 @@ func bind_player_data():
 	respawn_times = respawn_times + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
 	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
 	move_speed    = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
-	cooldown      = cooldown + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
+	cooldown      = cooldown + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["cooldown"])
 	vampire       = vampire + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["vampire"])
 	gold_drop     = gold_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gold_drop"])
 	gem_drop      = gem_drop + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["gem_drop"])

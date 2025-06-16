@@ -207,8 +207,8 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["shield"][1] = 0
 
 		"cooldown":
-			player.cooldwown_level += 1
-			player.cooldown -= 0.02
+			player.cooldown_level += 1
+			player.cooldown += 0.02
 			match player.cooldown_level:
 				1:
 					upgrade_preload["cooldown"][1] = 40
