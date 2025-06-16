@@ -193,7 +193,7 @@ func process_keyboard_input() -> bool:  # -> 반환 값
 
 func bind_player_data():
 	max_hp        = max_hp + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["health"])
-	shield        = shield + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
+	shield        = shield + float(Global.character_data["CHARACTER_STORE_UPGRADES"]["shield"])
 	respawn_times = respawn_times + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["respawn"])
 	attack_damage = attack_damage + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["damage"])
 	move_speed    = move_speed + int(Global.character_data["CHARACTER_STORE_UPGRADES"]["speed"])
