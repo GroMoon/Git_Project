@@ -22,6 +22,7 @@ func _physics_process(_delta):
 
 
 func _on_attack_timer_timeout():
+	attack_timer.wait_time = attack_wait_time - cooldown
 	# 사망 시 공격 모션 비활성화를 위한 조건
 	if is_dead:
 		return	

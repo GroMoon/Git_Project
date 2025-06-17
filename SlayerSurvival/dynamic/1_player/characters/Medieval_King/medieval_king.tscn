@@ -1,14 +1,14 @@
-[gd_scene load_steps=62 format=3 uid="uid://blv0hgymp636q"]
+[gd_scene load_steps=63 format=3 uid="uid://blv0hgymp636q"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
-[ext_resource type="Texture2D" uid="uid://dnc1ng8d2we3y" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
+[ext_resource type="Texture2D" uid="uid://tamcavw2rjam" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ix6sp"]
-[ext_resource type="Texture2D" uid="uid://coia7yegi5qou" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
-[ext_resource type="Texture2D" uid="uid://bu0ke2knmc36t" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
-[ext_resource type="Texture2D" uid="uid://ca2x88knhxnvq" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
-[ext_resource type="Texture2D" uid="uid://cpfnfcx3gk1da" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
-[ext_resource type="Texture2D" uid="uid://c3akaopqb6awi" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
-[ext_resource type="Texture2D" uid="uid://bp20phx2q8lma" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
+[ext_resource type="Texture2D" uid="uid://yrhixdpnf3nb" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
+[ext_resource type="Texture2D" uid="uid://bje32w834yc4t" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
+[ext_resource type="Texture2D" uid="uid://vht4iwv4scax" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
+[ext_resource type="Texture2D" uid="uid://bksdlvusrvihw" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
+[ext_resource type="Texture2D" uid="uid://pvkp7qkf1u8v" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
+[ext_resource type="Texture2D" uid="uid://rlgnrrctuhqe" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="10_3qswq"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_l0wkq"]
@@ -508,12 +508,41 @@ tracks/2/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_rtw2n"]
+resource_name = "respawn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 4, 3, 2, 1, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hr1vn"]
 _data = {
 "RESET": SubResource("Animation_iyvrw"),
 "attack_1": SubResource("Animation_yb248"),
 "attack_2": SubResource("Animation_4g71h"),
-"attack_3": SubResource("Animation_ll12f")
+"attack_3": SubResource("Animation_ll12f"),
+"respawn": SubResource("Animation_rtw2n")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tlxt"]
@@ -544,6 +573,7 @@ position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_iq1tq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_hr1vn")
 }
@@ -591,6 +621,15 @@ disabled = true
 position = Vector2(0, -1)
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_l0wkq")]
+
+[node name="select_panel" parent="UI_Layer/SelectUI" index="0"]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_damage_timer_timeout"]

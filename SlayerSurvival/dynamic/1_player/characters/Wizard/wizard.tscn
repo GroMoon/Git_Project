@@ -400,6 +400,7 @@ offset = Vector2(-110, -95)
 shape = SubResource("CircleShape2D_1h5r2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_cok54")
 }
@@ -426,6 +427,15 @@ editor_draw_limits = true
 [node name="MagneticArea" parent="." instance=ExtResource("4_482t6")]
 
 [node name="UI_Layer" parent="." instance=ExtResource("6_rq62j")]
+
+[node name="select_panel" parent="UI_Layer/SelectUI" index="0"]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 
