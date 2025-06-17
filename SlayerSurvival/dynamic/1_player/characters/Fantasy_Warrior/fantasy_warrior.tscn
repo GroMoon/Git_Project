@@ -1,17 +1,17 @@
-[gd_scene load_steps=74 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=75 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
-[ext_resource type="Texture2D" uid="uid://ch23vptwdk18p" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
+[ext_resource type="Texture2D" uid="uid://b4hn4pimtemuf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_d66k0"]
-[ext_resource type="Texture2D" uid="uid://c5k3p6flg43nf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
-[ext_resource type="Texture2D" uid="uid://1e22lbgtfta3" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
-[ext_resource type="Texture2D" uid="uid://c4s6im45v2kr" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
-[ext_resource type="Texture2D" uid="uid://b0q13cieeyhel" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
-[ext_resource type="Texture2D" uid="uid://bcx6n76ae8cmn" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
-[ext_resource type="Texture2D" uid="uid://dsobsc8nefjoj" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
+[ext_resource type="Texture2D" uid="uid://dyg8uou3pfdge" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
+[ext_resource type="Texture2D" uid="uid://douobm6mqh4gk" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
+[ext_resource type="Texture2D" uid="uid://cacviey86ujmc" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
+[ext_resource type="Texture2D" uid="uid://d3xtg7bj6t5ft" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
+[ext_resource type="Texture2D" uid="uid://dwfndd6k8mpcy" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
+[ext_resource type="Texture2D" uid="uid://cc26s1q0lc8ur" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_0wyd7"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
-[ext_resource type="Texture2D" uid="uid://wtvsujvpy0ca" path="res://static/png/character_shadow/pngwing.com.png" id="10_s8xgg"]
+[ext_resource type="Texture2D" uid="uid://cymeab5ca0b1m" path="res://static/png/character_shadow/pngwing.com.png" id="10_s8xgg"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="11_66d8d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2o0i"]
@@ -634,12 +634,41 @@ tracks/3/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_t11jl"]
+resource_name = "respawn"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 5, 4, 3, 2, 1, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5aqwf"]
 _data = {
 "RESET": SubResource("Animation_usqey"),
 "attack_1": SubResource("Animation_oely4"),
 "attack_2": SubResource("Animation_d58tb"),
-"attack_3": SubResource("Animation_olmoq")
+"attack_3": SubResource("Animation_olmoq"),
+"respawn": SubResource("Animation_t11jl")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ixcod"]
@@ -668,6 +697,7 @@ speed_scale = 2.0
 shape = SubResource("CircleShape2D_ura23")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_5aqwf")
 }
@@ -725,6 +755,15 @@ disabled = true
 [node name="MagneticArea" parent="." instance=ExtResource("10_nxneh")]
 
 [node name="UI_Layer" parent="." instance=ExtResource("10_0wyd7")]
+
+[node name="select_panel" parent="UI_Layer/SelectUI" index="0"]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 

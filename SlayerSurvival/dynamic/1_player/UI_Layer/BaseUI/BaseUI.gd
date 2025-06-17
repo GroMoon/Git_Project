@@ -45,6 +45,7 @@ var globl_pause_flag    = false
 var lvlup_pause_flag    = false
 var death_pause_flag    = false
 var diag_pause_flag     = false
+var respawn_pause_flag  = false
 
 var player = null
 
@@ -88,12 +89,14 @@ func _process(delta):
 	elif diag_pause_flag:				# diag 창 뜰 시
 		pause_panel.visible = false
 		get_tree().paused   = true
+	elif respawn_pause_flag:				# 부활 퍼즈
+		get_tree().paused   = true
 	else:
 		pause_panel.visible = false
 		get_tree().paused   = false
 		update_info()
 		
-	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag):
+	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag)&&(!respawn_pause_flag):
 		process_stopwatch(delta)
 
 # esc 키(=pause)를 눌렀을 때
@@ -141,7 +144,7 @@ func update_info():
 	if player.character_name == "fantasy_warrior":
 		character_img.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
 	elif player.character_name == "medieval_king":
-		pass
+		character_img.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
 	elif player.character_name == "wizard":
 		character_img.texture = preload("res://dynamic/1_player/selcet_character/character_img/wizard_pixelart.webp")
 		
