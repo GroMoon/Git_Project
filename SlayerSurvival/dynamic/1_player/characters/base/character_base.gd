@@ -12,6 +12,7 @@ signal levelup
 @onready var animation_player = $AnimationPlayer
 @onready var damage_timer     = $DamageTimer
 @onready var attack_timer     = $AttackTimer
+@onready var baseui = $UI_Layer/BaseUI
 
 ## 기본 파라미터
 @export var character_name      = "CharacterBase"	# 캐릭터 이름
@@ -69,7 +70,7 @@ var shield_level         = 0	# 방어력
 var cooldown_level       = 0	# 쿨타임 TODO : 미개발
 var respawn_times        = 0	# 리스폰 횟수
 
-var invincibility_duration = 3.0  # 초 단위 무적 시간
+var invincibility_duration = 2.0  # 초 단위 무적 시간
 
 ## 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
@@ -289,12 +290,13 @@ func apply_health(_source):
 
 # 부활
 func respawn():
-	#animated_sprite.material.set_shader_parameter("hit_flag", true)
+	animated_sprite.material.set_shader_parameter("hit_flag", true)
+	baseui.respawn_pause_flag = true
 	animation_player.play("respawn")
 	await animation_player.animation_finished
 	await get_tree().create_timer(invincibility_duration).timeout
-	
-	current_hp = max_hp
+	current_hp = max_hp * 0.5
+	baseui.respawn_pause_flag = false
 
 # hit_effect
 func apply_hit_effect():
