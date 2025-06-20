@@ -9,6 +9,7 @@ class_name EnemyBase
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
 var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
+var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
 var double_gold_drop
 var double_gem_drop
 
@@ -26,6 +27,7 @@ var touch_flag    = false
 var hit_flag      = false
 var is_dead       = false
 var targeted_flag = false	# 플레이어가 적을 목표로 설정했는지 확인하는 변수
+var is_elite      = false	# 적 특성 중 엘리트 여부
 # 넉백 관련
 var knockback_vector   = Vector2.ZERO
 var knockback_time     = 0.0			# 넉백 유지 시간
@@ -128,6 +130,9 @@ func drop_item():
 		spawn_gem()
 		if randf() <= double_gem_drop:
 			spawn_gem()
+	# 음식(체력회복)
+	if is_elite:
+		spawn_food()
 
 func spawn_gold():
 	var new_gold = gold_img.instantiate()
@@ -138,7 +143,11 @@ func spawn_gem():
 	var new_exp = exp_img.instantiate()
 	new_exp.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
 	get_parent().call_deferred("add_child", new_exp)
-	
+
+func spawn_food():
+	var new_food = food_img.instantiate()
+	new_food.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
+	get_parent().call_deferred("add_child", new_food)
 # 넉백 함수
 func apply_knockback(attacker: Node2D):
 	# 방향 : (적의 위치 - 공격자=플레이어 위치)

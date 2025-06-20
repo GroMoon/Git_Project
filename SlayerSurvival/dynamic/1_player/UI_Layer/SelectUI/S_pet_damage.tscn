@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmjmb3yig6s0e"]
+
+[ext_resource type="Texture2D" uid="uid://bwrdcgum2t25q" path="res://static/png/icon/spritesheet.png" id="1_8kdnw"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="2_d0rgl"]
+
+[node name="SPetDamage" type="Button"]
+texture_filter = 1
+offset_right = 480.0
+offset_bottom = 136.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(64, 64)
+scale = Vector2(6, 6)
+texture = ExtResource("1_8kdnw")
+hframes = 12
+vframes = 12
+frame = 137
+
+[node name="name" type="Label" parent="."]
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 251.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("2_d0rgl")
+theme_override_font_sizes/font_size = 26
+text = "몬스터펫 강화"
+
+[node name="details" type="Label" parent="."]
+offset_left = 120.0
+offset_top = 32.0
+offset_right = 472.0
+offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("2_d0rgl")
+theme_override_font_sizes/font_size = 20
+text = "몬스터펫의 공격력을 증가시킵니다."
+vertical_alignment = 1
+autowrap_mode = 2

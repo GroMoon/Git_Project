@@ -388,6 +388,21 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_76p06"]
 
+[sub_resource type="Animation" id="Animation_biy2b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_1mfu2"]
 resource_name = "attack"
 tracks/0/type = "value"
@@ -427,21 +442,6 @@ tracks/2/keys = {
 "values": [true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_biy2b"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_leerj"]
 _data = {
 "RESET": SubResource("Animation_biy2b"),
@@ -451,7 +451,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sgira"]
 size = Vector2(72, 64)
 
-[node name="FlyingeyePet" type="CharacterBody2D"]
+[node name="FlyingeyePet" type="CharacterBody2D" groups=["Monster_Pet"]]
 texture_filter = 1
 collision_layer = 0
 collision_mask = 0
