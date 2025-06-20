@@ -306,7 +306,7 @@ func apply_hit_effect():
 		animated_sprite.material.set_shader_parameter("hit_flag", false)
 
 func _on_magnetic_area_area_entered(area:Area2D):
-	if area.is_in_group("Gold") or area.is_in_group("Exp"):
+	if area.is_in_group("Gold") or area.is_in_group("Exp") or area.is_in_group("Food"):
 		area.target = $MagneticArea
 
 func _on_damage_timer_timeout():

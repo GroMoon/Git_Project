@@ -16,7 +16,8 @@ var upgrade_preload = {
 	"shadow_partner" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_shadow_partner.tscn"), 15],
 	"increase_magnetic_area" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_magnetic_area.tscn"), 50],
 	"shield" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_shield.tscn"), 50],
-	"cooldown" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_cooldown.tscn"), 50]
+	"cooldown" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_cooldown.tscn"), 50],
+	"monster_pet" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_monster_pet.tscn"), 0]
 }
 
 func _init_after_parent_ready():
