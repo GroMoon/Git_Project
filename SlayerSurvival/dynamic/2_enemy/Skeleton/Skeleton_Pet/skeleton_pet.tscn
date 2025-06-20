@@ -215,6 +215,21 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5yocm"]
 height = 33.4
 
+[sub_resource type="Animation" id="Animation_trpwo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_7qg6n"]
 resource_name = "attack"
 length = 0.8
@@ -255,21 +270,6 @@ tracks/2/keys = {
 "values": [true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_trpwo"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m88h7"]
 _data = {
 "RESET": SubResource("Animation_trpwo"),
@@ -279,7 +279,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tuphv"]
 size = Vector2(120, 48)
 
-[node name="SkeletonPet" type="CharacterBody2D"]
+[node name="SkeletonPet" type="CharacterBody2D" groups=["MonsterPet"]]
 texture_filter = 1
 collision_layer = 0
 collision_mask = 0
