@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_e73c6"]
 [ext_resource type="Texture2D" uid="uid://b3krm66jrdpp3" path="res://dynamic/4_world/cave/cave_title_final.png" id="2_5idkw"]
 [ext_resource type="Texture2D" uid="uid://b4ao07ur34p1m" path="res://static/png/ui/assembly_frame_gray.png" id="2_stlme"]
-[ext_resource type="Texture2D" uid="uid://dnyibrfhb0nf6" path="res://dynamic/4_world/Dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
+[ext_resource type="Texture2D" uid="uid://dnyibrfhb0nf6" path="res://dynamic/4_world/dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0akgj"]
 bg_color = Color(0.113725, 0.113725, 0.113725, 1)
@@ -113,6 +113,7 @@ theme_override_fonts/font = ExtResource("1_e73c6")
 text = "Cave"
 
 [node name="dungeon_button" type="Button" parent="MapButton"]
+modulate = Color(0.611765, 0.611765, 0.611765, 1)
 layout_mode = 1
 offset_left = 269.145
 offset_top = 24.0
