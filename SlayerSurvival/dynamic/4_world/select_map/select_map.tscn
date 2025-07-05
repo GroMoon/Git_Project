@@ -1,9 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://wispepgc6lma"]
+[gd_scene load_steps=11 format=3 uid="uid://wispepgc6lma"]
 
-[ext_resource type="Texture2D" uid="uid://corgtoair3ude" path="res://dynamic/4_world/Cave/cave_title.png" id="1_836ar"]
-[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_e73c6"]
-[ext_resource type="Texture2D" uid="uid://dmsaooe3ircuj" path="res://static/png/ui/assembly_frame_gray.png" id="2_stlme"]
-[ext_resource type="Texture2D" uid="uid://cuvfglnyrojye" path="res://dynamic/4_world/Dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_e73c6"]
+[ext_resource type="Texture2D" uid="uid://b3krm66jrdpp3" path="res://dynamic/4_world/cave/cave_title_final.png" id="2_5idkw"]
+[ext_resource type="Texture2D" uid="uid://b4ao07ur34p1m" path="res://static/png/ui/assembly_frame_gray.png" id="2_stlme"]
+[ext_resource type="Texture2D" uid="uid://dnyibrfhb0nf6" path="res://dynamic/4_world/dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0akgj"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jbi8"]
 bg_color = Color(0.34902, 0.258824, 0.196078, 1)
@@ -48,6 +51,7 @@ font_size = 83
 process_mode = 3
 offset_right = 1200.0
 offset_bottom = 650.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0akgj")
 
 [node name="MapInfo" type="TextureRect" parent="."]
 layout_mode = 0
@@ -95,7 +99,7 @@ offset_bottom = 106.083
 scale = Vector2(1.15, 1.15)
 theme_override_styles/normal = SubResource("StyleBoxFlat_8jbi8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_s4dbt")
-icon = ExtResource("1_836ar")
+icon = ExtResource("2_5idkw")
 icon_alignment = 1
 expand_icon = true
 
@@ -109,6 +113,7 @@ theme_override_fonts/font = ExtResource("1_e73c6")
 text = "Cave"
 
 [node name="dungeon_button" type="Button" parent="MapButton"]
+modulate = Color(0.611765, 0.611765, 0.611765, 1)
 layout_mode = 1
 offset_left = 269.145
 offset_top = 24.0
@@ -132,6 +137,7 @@ text = "Dungeon"
 horizontal_alignment = 1
 
 [node name="button" type="Button" parent="MapButton"]
+layout_mode = 0
 offset_left = 458.0
 offset_top = 24.0
 offset_right = 539.0
@@ -154,6 +160,7 @@ text = "???"
 horizontal_alignment = 1
 
 [node name="button2" type="Button" parent="MapButton"]
+layout_mode = 0
 offset_left = 650.0
 offset_top = 24.0
 offset_right = 731.0

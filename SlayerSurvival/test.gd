@@ -37,6 +37,8 @@ func _ready():
 	skeleton_pet_preload  = preload("res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.tscn")
 	goblin_pet_preload    = preload("res://dynamic/2_enemy/Goblin/Goblin_Pet/goblin_pet.tscn")
 	flyingeye_pet_preload = preload("res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.tscn")
+	# 맵 프리로드 변수 초기화
+	map_load = null
 
 func _process(_delta):
 	player = get_node("player")
@@ -81,7 +83,19 @@ func _process(_delta):
 			add_child(flyingeye_pet_instance)
 			move_child(flyingeye_pet_instance, player.get_index() - 1)
 			player.is_flyingeye_pet = true
-			
+
+# Cave
+func _on_cave_button_pressed():
+	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
+	select_map.queue_free()
+	select_character.visible = true
+
+# Dungeon_B1F
+func _on_dungeon_button_pressed():
+	map_load = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.tscn")
+	select_map.queue_free()
+	select_character.visible = true
+
 # Fantasy Warrior
 func _on_select_warrior_pressed():
 	character_load = preload("res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.tscn")
@@ -91,6 +105,12 @@ func _on_select_warrior_pressed():
 	instance_character.name = "player"
 	# 스케일 조정
 	instance_character.scale = Vector2(1,1)
+	# 맵 인스턴스가 있으면 추가
+	if map_load:
+		instance_map = map_load.instantiate()
+		instance_map.name = map_load.resource_path.get_file().get_basename()
+		add_child(instance_map)
+		move_child(instance_map, 0)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_character.queue_free()
@@ -104,6 +124,12 @@ func _on_select_king_pressed():
 	instance_character.name = "player"
 	# 스케일 조정
 	instance_character.scale = Vector2(1,1)
+	# 맵 인스턴스가 있으면 추가
+	if map_load:
+		instance_map = map_load.instantiate()
+		instance_map.name = map_load.resource_path.get_file().get_basename()
+		add_child(instance_map)
+		move_child(instance_map, 0)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_character.queue_free()
@@ -117,29 +143,15 @@ func _on_wizard_pressed():
 	instance_character.name = "player"
 	# 스케일 조정
 	instance_character.scale = Vector2(0.8,0.8)
+	# 맵 인스턴스가 있으면 추가
+	if map_load:
+		instance_map = map_load.instantiate()
+		instance_map.name = map_load.resource_path.get_file().get_basename()
+		add_child(instance_map)
+		move_child(instance_map, 0)
 	add_child(instance_character)
 	get_tree().paused = false
 	select_character.queue_free()
-
-# Cave
-func _on_cave_button_pressed():
-	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
-	instance_map = map_load.instantiate()
-	instance_map.name = "cave"
-	add_child(instance_map)
-	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
-	select_map.queue_free()
-	select_character.visible = true
-
-# Dungeon_B1F
-func _on_dungeon_button_pressed():
-	map_load = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.tscn")
-	instance_map = map_load.instantiate()
-	instance_map.name = "dungeon_B1F"
-	add_child(instance_map)
-	move_child(instance_map, 0)				# map 레이어를 가장 뒤로 보냄
-	select_map.queue_free()
-	select_character.visible = true
 
 func _on_select_warrior_mouse_entered():
 	$Button_sound.play()
