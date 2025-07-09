@@ -14,7 +14,10 @@ var upgrade_preload = {
 	"increase_moving_speed" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_moving_speed.tscn"), 50],
 	"drain_blood" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_drain_blood.tscn"), 20],
 	"shadow_partner" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_shadow_partner.tscn"), 15],
-	"increase_magnetic_area" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_magnetic_area.tscn"), 50]
+	"increase_magnetic_area" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_increase_magnetic_area.tscn"), 50],
+	"shield" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_shield.tscn"), 50],
+	"cooldown" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_cooldown.tscn"), 50],
+	"pet_damage" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/S_pet_damage.tscn"), 0]
 }
 
 func _init_after_parent_ready():
@@ -100,103 +103,84 @@ func _on_upgrade_button_pressed(upgrade_key):
 	match upgrade_key:
 		"increase_max_hp":
 			player.max_hp_level += 1
+			player.max_hp += 10
 			match player.max_hp_level:
 				1:
-					player.max_hp += 10
 					upgrade_preload["increase_max_hp"][1] = 40
 				2:
-					player.max_hp += 10
 					upgrade_preload["increase_max_hp"][1] = 30
 				3:
-					player.max_hp += 10
 					upgrade_preload["increase_max_hp"][1] = 20
 				4:
-					player.max_hp += 10
 					upgrade_preload["increase_max_hp"][1] = 10
 				5:
-					player.max_hp += 20
 					upgrade_preload["increase_max_hp"][1] = 0
 					print("체력증가 최대 레벨 도달")
 
 		"increase_damage":
 			player.damage_level += 1
+			player.attack_damage += 3
 			match player.damage_level:
 				1:
-					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 40
 				2:
-					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 30
 				3:
-					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 20
 				4:
-					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 10
 				5:
-					player.attack_damage += 3
 					upgrade_preload["increase_damage"][1] = 0
 					print("공격력 증가 최대 레벨 도달")
 
 		"increase_moving_speed":
 			player.move_speed_level += 1
+			player.move_speed += 5
 			match player.move_speed_level:
 				1:
-					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 40
 				2:
-					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 30
 				3:
-					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 20
 				4:
-					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 10
 				5:
-					player.move_speed += 5
 					upgrade_preload["increase_moving_speed"][1] = 0
 					print("이동속도 증가 최대 레벨 도달")
 
 		"drain_blood":
 			player.drain_level += 1
+			player.vampire += 0.01
 			match player.drain_level:
 				1:
-					player.vampire = 0.01
 					upgrade_preload["drain_blood"][1] = 10
 				2:
-					player.vampire = 0.02
 					upgrade_preload["drain_blood"][1] = 8
 				3:
-					player.vampire = 0.03
 					upgrade_preload["drain_blood"][1] = 6
 				4:
-					player.vampire = 0.04
 					upgrade_preload["drain_blood"][1] = 4
 				5:
-					player.vampire = 0.05
 					upgrade_preload["drain_blood"][1] = 0
 					print("흡혈 최대 레벨 도달")
 
 		"increase_magnetic_area":
 			player.magnetic_area_level += 1
+			player.magnetic_area_scale += 20.0
 			match player.magnetic_area_level:
 				1:
-					player.magnetic_area_scale += 20.0
 					upgrade_preload["increase_magnetic_area"][1] = 40
 				2:
-					player.magnetic_area_scale += 20.0
 					upgrade_preload["increase_magnetic_area"][1] = 30
 				3:
-					player.magnetic_area_scale += 20.0
 					upgrade_preload["increase_magnetic_area"][1] = 20
 				4:
-					player.magnetic_area_scale += 20.0
 					upgrade_preload["increase_magnetic_area"][1] = 10
 				5:
-					player.magnetic_area_scale += 40.0
 					upgrade_preload["increase_magnetic_area"][1] = 0
 					print("자석 범위 증가 최대 레벨 도달")
+
 		"shadow_partner":
 			player.shadow_partner_level += 1
 			match player.shadow_partner_level:
@@ -207,6 +191,36 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["shadow_partner"][1] = 5
 				3:
 					upgrade_preload["shadow_partner"][1] = 0
+
+		"shield":
+			player.shield_level += 1
+			player.shield += 0.05
+			match player.shield_level:
+				1:
+					upgrade_preload["shield"][1] = 40
+				2:
+					upgrade_preload["shield"][1] = 30
+				3:
+					upgrade_preload["shield"][1] = 20
+				4:
+					upgrade_preload["shield"][1] = 10
+				5:
+					upgrade_preload["shield"][1] = 0
+
+		"cooldown":
+			player.cooldown_level += 1
+			player.cooldown += 0.2
+			match player.cooldown_level:
+				1:
+					upgrade_preload["cooldown"][1] = 40
+				2:
+					upgrade_preload["cooldown"][1] = 30
+				3:
+					upgrade_preload["cooldown"][1] = 20
+				4:
+					upgrade_preload["cooldown"][1] = 10
+				5:
+					upgrade_preload["cooldown"][1] = 0
 # =============== 캐릭터 특성 ==================
 		"combo2":
 			player.attack_times_level += 1

@@ -136,7 +136,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		DamageVisual.show_damage(take_damage, self.position)
 		if health <= 0:
 			die_enemy()
-		else:
+		if !is_attacking:
 			apply_knockback(area.get_parent())
 			# 데미지 모션 추가
 			hit_flag = true
