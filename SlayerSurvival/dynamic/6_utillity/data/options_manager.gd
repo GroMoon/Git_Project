@@ -12,14 +12,16 @@ var language_list = ["한국어", "English"]
 func apply_resolution(res: Vector2):
 	current_resolution = res
 	DisplayServer.window_set_size(res)
+	# EXCLUSIVE_FULLSCREEN 모드일 경우 재적용
+	if is_fullscreen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	print("해상도 변경: ", res)
 
 # 화면 모드 설정
 func apply_screen_mode(fullscreen: bool):
-	# 화면 모드 변경 -> 전체화면
+	is_fullscreen = fullscreen
 	if fullscreen:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	# 화면 모드 변경 -> 창화면
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	is_fullscreen = fullscreen
+		DisplayServer.window_set_size(current_resolution)

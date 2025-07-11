@@ -4,6 +4,7 @@ extends Panel
 @onready var full_screen     = $ScrollContainer/VBoxContainer/Screen/screen_mode/full_screen
 @onready var window_screen   = $ScrollContainer/VBoxContainer/Screen/screen_mode/window_screen
 @onready var language_option = $ScrollContainer/VBoxContainer/Language/language_option
+@onready var resolution_box  = $ScrollContainer/VBoxContainer/Screen/resolution/resol_option
 
 func _ready():
 	update_ui()
@@ -30,6 +31,11 @@ func set_current_resolution():
 		resol_option.select(index)
 
 func update_ui():
+	if OptionsManager.is_fullscreen:
+		resolution_box.disabled = true
+	else:
+		resolution_box.disabled = false
+	
 	full_screen.disabled = false
 	window_screen.disabled = false
 
