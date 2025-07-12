@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://kpyeaei01jcl"]
 
-[ext_resource type="Texture2D" uid="uid://cddj4joqbb62e" path="res://dynamic/5_title_screen/store/store_sprites/vampire.png" id="1_3ngvt"]
+[ext_resource type="Texture2D" uid="uid://db8f0asqkh1eb" path="res://dynamic/5_title_screen/store/store_sprites/vampire.png" id="1_3ngvt"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_vampire.gd" id="1_cwv58"]
-[ext_resource type="Texture2D" uid="uid://dswqosy3gf4d" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_7r6rp"]
-[ext_resource type="Texture2D" uid="uid://bycgjtadpl04w" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_berue"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_7r6rp"]
+[ext_resource type="Texture2D" uid="uid://bafux122vt7bk" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_berue"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mb48a"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -22,8 +22,8 @@ offset_bottom = 235.0
 color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
 
 [node name="Item_sprite" type="Sprite2D" parent="."]
-position = Vector2(63.5, 64)
-scale = Vector2(0.162338, 0.15261)
+position = Vector2(63.5, 61)
+scale = Vector2(0.065, 0.061)
 texture = ExtResource("1_3ngvt")
 
 [node name="Frame_sprite" type="Sprite2D" parent="."]

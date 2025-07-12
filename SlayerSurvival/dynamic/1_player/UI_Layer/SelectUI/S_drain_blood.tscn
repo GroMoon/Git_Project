@@ -11,8 +11,8 @@ size_flags_vertical = 3
 
 [node name="Image_Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(60.365, 71)
-scale = Vector2(0.17158, 0.168675)
+position = Vector2(60.365, 66)
+scale = Vector2(0.065, 0.064)
 texture = ExtResource("1_cqac0")
 
 [node name="Frame_Sprite" type="Sprite2D" parent="."]
