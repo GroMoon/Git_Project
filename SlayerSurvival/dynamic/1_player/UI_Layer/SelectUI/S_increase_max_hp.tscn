@@ -35,7 +35,7 @@ autowrap_mode = 2
 
 [node name="Image_Sprite" type="Sprite2D" parent="."]
 position = Vector2(61, 65)
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_ig3hn")
 
 [node name="Frame_Sprite" type="Sprite2D" parent="."]
