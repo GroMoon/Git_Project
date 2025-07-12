@@ -1,21 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cerw8i00egrym"]
+[gd_scene load_steps=4 format=3 uid="uid://cerw8i00egrym"]
 
-[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_mje4d"]
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_h7yd2"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_h7yd2"]
+[ext_resource type="Texture2D" uid="uid://bchq815j6vla5" path="res://dynamic/5_title_screen/store/store_sprites/speed.png" id="2_kf82i"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_42cld"]
 
 [node name="IncreaseMovingSpeed" type="Button"]
 offset_right = 470.0
 offset_bottom = 136.0
 size_flags_vertical = 3
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(64, 64)
-scale = Vector2(6, 6)
-texture = ExtResource("1_mje4d")
-hframes = 12
-vframes = 12
-frame = 114
 
 [node name="name" type="Label" parent="."]
 layout_mode = 0
@@ -38,3 +30,14 @@ theme_override_font_sizes/font_size = 20
 text = "플레이어의 이동속도가 +5 증가합니다."
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Image_Sprite" type="Sprite2D" parent="."]
+position = Vector2(61, 62)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_kf82i")
+
+[node name="Frame_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 65)
+scale = Vector2(8.25017, 8.25)
+texture = ExtResource("3_42cld")

@@ -1,21 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cg1881gab5gd6"]
+[gd_scene load_steps=4 format=3 uid="uid://cg1881gab5gd6"]
 
-[ext_resource type="Texture2D" uid="uid://bwrdcgum2t25q" path="res://static/png/icon/spritesheet.png" id="1_d8453"]
-[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="2_l2dwv"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_l2dwv"]
+[ext_resource type="Texture2D" uid="uid://de44j20ymg2f" path="res://dynamic/5_title_screen/store/store_sprites/shield.png" id="2_svabn"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_5dnc4"]
 
 [node name="Shield" type="Button"]
 custom_minimum_size = Vector2(480, 136)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(64, 64)
-scale = Vector2(6, 6)
-texture = ExtResource("1_d8453")
-hframes = 12
-vframes = 12
-frame = 115
-
 [node name="name" type="Label" parent="."]
+layout_mode = 0
 offset_left = 120.0
 offset_top = 8.0
 offset_right = 251.0
@@ -25,6 +18,7 @@ theme_override_font_sizes/font_size = 26
 text = "실드"
 
 [node name="details" type="Label" parent="."]
+layout_mode = 0
 offset_left = 120.0
 offset_top = 32.0
 offset_right = 472.0
@@ -34,3 +28,14 @@ theme_override_font_sizes/font_size = 20
 text = "플레이어의 방어력을 증가시킵니다."
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Image_Sprite" type="Sprite2D" parent="."]
+position = Vector2(60, 65)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("2_svabn")
+
+[node name="Frame_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 65)
+scale = Vector2(8.25017, 8.25)
+texture = ExtResource("3_5dnc4")

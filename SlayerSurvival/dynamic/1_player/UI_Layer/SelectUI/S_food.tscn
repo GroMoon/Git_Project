@@ -1,21 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmcm6hvehvmc1"]
+[gd_scene load_steps=4 format=3 uid="uid://dmcm6hvehvmc1"]
 
-[ext_resource type="Texture2D" uid="uid://bwrdcgum2t25q" path="res://static/png/icon/spritesheet.png" id="1_yr1iw"]
-[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="2_ka0uq"]
+[ext_resource type="Texture2D" uid="uid://3g4obiteuo0q" path="res://dynamic/5_title_screen/store/store_sprites/hp_up.png" id="2_0vmrq"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_ka0uq"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_ea37h"]
 
-[node name="DrainBlood" type="Button"]
+[node name="Food" type="Button"]
 offset_right = 470.0
 offset_bottom = 136.0
 size_flags_vertical = 3
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(64, 64)
-scale = Vector2(6, 6)
-texture = ExtResource("1_yr1iw")
-hframes = 12
-vframes = 12
-frame = 99
 
 [node name="name" type="Label" parent="."]
 layout_mode = 0
@@ -38,3 +30,15 @@ theme_override_font_sizes/font_size = 20
 text = "현재 체력을 ? 회복합니다."
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Image_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 64)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_0vmrq")
+
+[node name="Frame_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 65)
+scale = Vector2(8.25017, 8.25)
+texture = ExtResource("3_ea37h")
