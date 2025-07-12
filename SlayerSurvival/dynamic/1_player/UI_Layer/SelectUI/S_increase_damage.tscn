@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dluplinrf3xo3"]
+[gd_scene load_steps=4 format=3 uid="uid://dluplinrf3xo3"]
 
-[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_qm5fn"]
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_wewlt"]
+[ext_resource type="Texture2D" uid="uid://bqw4vicdcc4kr" path="res://dynamic/5_title_screen/store/store_sprites/damage.png" id="1_slo12"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_skm4t"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_wewlt"]
 
 [node name="IncreaseDamage" type="Button"]
 offset_left = 72.0
@@ -10,14 +11,17 @@ offset_right = 542.0
 offset_bottom = 168.0
 size_flags_vertical = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Image_Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(64, 64)
-scale = Vector2(6, 6)
-texture = ExtResource("1_qm5fn")
-hframes = 12
-vframes = 12
-frame = 103
+position = Vector2(60.365, 66)
+scale = Vector2(0.3, 0.295)
+texture = ExtResource("1_slo12")
+
+[node name="Frame_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 65)
+scale = Vector2(8.25017, 8.25)
+texture = ExtResource("2_skm4t")
 
 [node name="name" type="Label" parent="."]
 layout_mode = 0

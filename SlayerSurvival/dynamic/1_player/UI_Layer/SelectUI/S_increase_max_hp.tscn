@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://6s7fphrpcg7t"]
+[gd_scene load_steps=4 format=3 uid="uid://6s7fphrpcg7t"]
 
-[ext_resource type="Texture2D" uid="uid://doabpqcvflnug" path="res://static/png/icon/spritesheet.png" id="1_30ai3"]
-[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="2_hqktd"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_hqktd"]
+[ext_resource type="Texture2D" uid="uid://c1141m0epddbu" path="res://dynamic/5_title_screen/store/store_sprites/health.png" id="2_ig3hn"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_b36sv"]
 
 [node name="IncreaseMaxHp" type="Button"]
 offset_left = 48.0
@@ -9,15 +10,6 @@ offset_top = 16.0
 offset_right = 518.0
 offset_bottom = 152.0
 size_flags_vertical = 3
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(64, 64)
-scale = Vector2(6, 6)
-texture = ExtResource("1_30ai3")
-hframes = 12
-vframes = 12
-frame = 108
 
 [node name="name" type="Label" parent="."]
 layout_mode = 0
@@ -40,3 +32,14 @@ theme_override_font_sizes/font_size = 20
 text = "플레이어의 최대 체력이 +10 증가합니다."
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Image_Sprite" type="Sprite2D" parent="."]
+position = Vector2(61, 65)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_ig3hn")
+
+[node name="Frame_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 65)
+scale = Vector2(8.25017, 8.25)
+texture = ExtResource("3_b36sv")
