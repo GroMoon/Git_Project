@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://hynl7qhfho6v"]
+[gd_scene load_steps=7 format=3 uid="uid://hynl7qhfho6v"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/option/ingame_options.gd" id="1_0w4rt"]
 [ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="2_rhx6r"]
+[ext_resource type="Texture2D" uid="uid://c8kwsmvat0ihw" path="res://static/png/sound/loud_w.png" id="3_x61ll"]
+[ext_resource type="Texture2D" uid="uid://dredaimtmw6sc" path="res://static/png/sound/mute_w.png" id="4_gv2om"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
 
@@ -84,12 +86,19 @@ text = "사운드 설정"
 layout_mode = 2
 
 [node name="master_vol" type="Label" parent="Volume/volume1"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "전체 볼륨"
+horizontal_alignment = 1
 
-[node name="button" type="Button" parent="Volume/volume1"]
+[node name="master_toggle" type="TextureButton" parent="Volume/volume1"]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 toggle_mode = true
+texture_normal = ExtResource("3_x61ll")
+texture_pressed = ExtResource("4_gv2om")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="master_slider" type="HSlider" parent="Volume/volume1"]
 layout_mode = 2
@@ -101,13 +110,21 @@ value = 50.0
 layout_mode = 2
 
 [node name="bgm_vol" type="Label" parent="Volume/volume2"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "BGM"
+horizontal_alignment = 1
 
-[node name="button" type="Button" parent="Volume/volume2"]
+[node name="bgm_toggle" type="TextureButton" parent="Volume/volume2"]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_x61ll")
+texture_pressed = ExtResource("4_gv2om")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="bgm_sllider" type="HSlider" parent="Volume/volume2"]
+[node name="bgm_slider" type="HSlider" parent="Volume/volume2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -117,13 +134,21 @@ value = 50.0
 layout_mode = 2
 
 [node name="effect_vol" type="Label" parent="Volume/volume3"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "SFX"
+horizontal_alignment = 1
 
-[node name="button" type="Button" parent="Volume/volume3"]
+[node name="sfx_toggle" type="TextureButton" parent="Volume/volume3"]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_x61ll")
+texture_pressed = ExtResource("4_gv2om")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="effect_slider" type="HSlider" parent="Volume/volume3"]
+[node name="sfx_slider" type="HSlider" parent="Volume/volume3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -132,3 +157,9 @@ value = 50.0
 [connection signal="pressed" from="back" to="." method="_on_back_pressed"]
 [connection signal="toggled" from="Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
 [connection signal="toggled" from="Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]
+[connection signal="toggled" from="Volume/volume1/master_toggle" to="." method="_on_master_toggle_toggled"]
+[connection signal="value_changed" from="Volume/volume1/master_slider" to="." method="_on_master_slider_value_changed"]
+[connection signal="toggled" from="Volume/volume2/bgm_toggle" to="." method="_on_bgm_toggle_toggled"]
+[connection signal="value_changed" from="Volume/volume2/bgm_slider" to="." method="_on_bgm_sllider_value_changed"]
+[connection signal="toggled" from="Volume/volume3/sfx_toggle" to="." method="_on_sfx_toggle_toggled"]
+[connection signal="value_changed" from="Volume/volume3/sfx_slider" to="." method="_on_sfx_slider_value_changed"]

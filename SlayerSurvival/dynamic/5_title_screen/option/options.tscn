@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://rewebuj5illv"]
+[gd_scene load_steps=7 format=3 uid="uid://rewebuj5illv"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/option/options.gd" id="1_h31jj"]
 [ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
+[ext_resource type="Texture2D" uid="uid://c8kwsmvat0ihw" path="res://static/png/sound/loud_w.png" id="3_fsnpx"]
+[ext_resource type="Texture2D" uid="uid://dredaimtmw6sc" path="res://static/png/sound/mute_w.png" id="4_7wfac"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
 
@@ -63,8 +65,10 @@ text = "화면 설정"
 layout_mode = 2
 
 [node name="resolution" type="Label" parent="ScrollContainer/VBoxContainer/Screen/resolution"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "해상도"
+horizontal_alignment = 1
 
 [node name="resol_option" type="OptionButton" parent="ScrollContainer/VBoxContainer/Screen/resolution"]
 layout_mode = 2
@@ -75,8 +79,10 @@ size_flags_vertical = 4
 layout_mode = 2
 
 [node name="screen_mode" type="Label" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "화면 모드"
+horizontal_alignment = 1
 
 [node name="full_screen" type="CheckBox" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
 layout_mode = 2
@@ -103,11 +109,19 @@ text = "사운드 설정"
 layout_mode = 2
 
 [node name="master_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "전체 볼륨"
+horizontal_alignment = 1
 
-[node name="button" type="Button" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
+[node name="master_toggle" type="TextureButton" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_fsnpx")
+texture_pressed = ExtResource("4_7wfac")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="master_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
 layout_mode = 2
@@ -119,11 +133,19 @@ value = 50.0
 layout_mode = 2
 
 [node name="bgm_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "BGM"
+horizontal_alignment = 1
 
-[node name="button" type="Button" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
+[node name="bgm_toggle" type="TextureButton" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_fsnpx")
+texture_pressed = ExtResource("4_7wfac")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="bgm_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
 layout_mode = 2
@@ -135,13 +157,21 @@ value = 50.0
 layout_mode = 2
 
 [node name="effect_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "SFX"
+horizontal_alignment = 1
 
-[node name="button" type="Button" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
+[node name="sfx_toggle" type="TextureButton" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_fsnpx")
+texture_pressed = ExtResource("4_7wfac")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="effect_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
+[node name="sfx_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -163,4 +193,7 @@ layout_mode = 2
 [connection signal="item_selected" from="ScrollContainer/VBoxContainer/Screen/resolution/resol_option" to="." method="_on_resol_option_item_selected"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Volume/volume1/master_slider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Volume/volume2/bgm_slider" to="." method="_on_bgm_slider_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Volume/volume3/sfx_slider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="item_selected" from="ScrollContainer/VBoxContainer/Language/language_option" to="." method="_on_language_option_item_selected"]
