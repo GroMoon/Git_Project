@@ -53,9 +53,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_dah47")
 
 [node name="Pause" type="Label" parent="."]
 layout_mode = 0
-offset_top = 50.0
+offset_top = 55.0
 offset_right = 816.0
-offset_bottom = 120.0
+offset_bottom = 125.0
 theme_override_fonts/font = ExtResource("1_qmq4x")
 theme_override_font_sizes/font_size = 50
 text = "Game  Paused"
