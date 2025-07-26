@@ -7,7 +7,11 @@
 bg_color = Color(0, 0, 0, 0.647059)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27n4x"]
-bg_color = Color(0.196078, 0.192157, 0.172549, 0)
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cnwkc"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -22,7 +26,11 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5jpq"]
-bg_color = Color(1, 1, 1, 0)
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yp4x5"]
 bg_color = Color(0.388235, 0.388235, 0.388235, 0)
@@ -50,19 +58,16 @@ offset_right = 689.0
 offset_bottom = 100.0
 theme_override_fonts/font = ExtResource("1_qmq4x")
 theme_override_font_sizes/font_size = 50
-text = "Pause"
+text = "Game  Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Buttongroup" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 267.0
-offset_top = 197.0
-offset_right = 429.0
-offset_bottom = 447.0
-
-[node name="Menu" type="Button" parent="Buttongroup"]
+[node name="Menu" type="Button" parent="."]
 layout_mode = 2
+offset_left = 145.0
+offset_top = 200.0
+offset_right = 545.0
+offset_bottom = 300.0
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_qmq4x")
@@ -74,8 +79,12 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_v3t31")
 theme_override_styles/focus = SubResource("StyleBoxFlat_1drxb")
 text = "메인화면"
 
-[node name="Option" type="Button" parent="Buttongroup"]
+[node name="Option" type="Button" parent="."]
 layout_mode = 2
+offset_left = 145.0
+offset_top = 325.0
+offset_right = 545.0
+offset_bottom = 425.0
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_qmq4x")
@@ -85,10 +94,14 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_cnwkc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_mu1mo")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_v3t31")
 theme_override_styles/focus = SubResource("StyleBoxFlat_1drxb")
-text = "설 정"
+text = "설        정"
 
-[node name="Resume" type="Button" parent="Buttongroup"]
+[node name="Resume" type="Button" parent="."]
 layout_mode = 2
+offset_left = 145.0
+offset_top = 450.0
+offset_right = 545.0
+offset_bottom = 550.0
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_qmq4x")
@@ -105,54 +118,3 @@ offset_left = 678.0
 offset_top = 32.0
 offset_right = 678.0
 offset_bottom = 32.0
-
-[node name="health" parent="PlayerInfo/Status" index="0"]
-horizontal_alignment = 0
-
-[node name="attack" parent="PlayerInfo/Status" index="2"]
-horizontal_alignment = 0
-
-[node name="shield" parent="PlayerInfo/Status" index="4"]
-horizontal_alignment = 0
-
-[node name="move_speed" parent="PlayerInfo/Status" index="6"]
-horizontal_alignment = 0
-
-[node name="attack_speed" parent="PlayerInfo/Status" index="8"]
-horizontal_alignment = 0
-
-[node name="Skill_label" parent="PlayerInfo" index="6"]
-offset_left = 23.0
-offset_right = 124.0
-
-[node name="combo" parent="PlayerInfo/Skill" index="0"]
-horizontal_alignment = 0
-
-[node name="damage" parent="PlayerInfo/Skill" index="2"]
-horizontal_alignment = 0
-
-[node name="shield" parent="PlayerInfo/Skill" index="4"]
-horizontal_alignment = 0
-
-[node name="max_hp" parent="PlayerInfo/Skill" index="6"]
-horizontal_alignment = 0
-
-[node name="move_speed" parent="PlayerInfo/Skill" index="8"]
-horizontal_alignment = 0
-
-[node name="drain" parent="PlayerInfo/Skill" index="10"]
-horizontal_alignment = 0
-
-[node name="magnetic" parent="PlayerInfo/Skill" index="12"]
-horizontal_alignment = 0
-
-[node name="attack_speed" parent="PlayerInfo/Skill" index="14"]
-horizontal_alignment = 0
-
-[node name="shadow" parent="PlayerInfo/Skill" index="16"]
-horizontal_alignment = 0
-
-[node name="cooldown" parent="PlayerInfo/Skill" index="18"]
-horizontal_alignment = 0
-
-[editable path="PlayerInfo"]
