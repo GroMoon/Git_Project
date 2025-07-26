@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dtljeado5ue3p"]
 
-[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_qmq4x"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_qmq4x"]
 [ext_resource type="PackedScene" uid="uid://bkni6yhkx2yhd" path="res://dynamic/1_player/UI_Layer/BaseUI/pause_panel/player_info.tscn" id="2_kj6om"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dah47"]
@@ -106,8 +106,53 @@ offset_top = 32.0
 offset_right = 678.0
 offset_bottom = 32.0
 
-[node name="Skill_label" parent="PlayerInfo" index="4"]
+[node name="health" parent="PlayerInfo/Status" index="0"]
+horizontal_alignment = 0
+
+[node name="attack" parent="PlayerInfo/Status" index="2"]
+horizontal_alignment = 0
+
+[node name="shield" parent="PlayerInfo/Status" index="4"]
+horizontal_alignment = 0
+
+[node name="move_speed" parent="PlayerInfo/Status" index="6"]
+horizontal_alignment = 0
+
+[node name="attack_speed" parent="PlayerInfo/Status" index="8"]
+horizontal_alignment = 0
+
+[node name="Skill_label" parent="PlayerInfo" index="6"]
 offset_left = 23.0
 offset_right = 124.0
+
+[node name="combo" parent="PlayerInfo/Skill" index="0"]
+horizontal_alignment = 0
+
+[node name="damage" parent="PlayerInfo/Skill" index="2"]
+horizontal_alignment = 0
+
+[node name="shield" parent="PlayerInfo/Skill" index="4"]
+horizontal_alignment = 0
+
+[node name="max_hp" parent="PlayerInfo/Skill" index="6"]
+horizontal_alignment = 0
+
+[node name="move_speed" parent="PlayerInfo/Skill" index="8"]
+horizontal_alignment = 0
+
+[node name="drain" parent="PlayerInfo/Skill" index="10"]
+horizontal_alignment = 0
+
+[node name="magnetic" parent="PlayerInfo/Skill" index="12"]
+horizontal_alignment = 0
+
+[node name="attack_speed" parent="PlayerInfo/Skill" index="14"]
+horizontal_alignment = 0
+
+[node name="shadow" parent="PlayerInfo/Skill" index="16"]
+horizontal_alignment = 0
+
+[node name="cooldown" parent="PlayerInfo/Skill" index="18"]
+horizontal_alignment = 0
 
 [editable path="PlayerInfo"]
