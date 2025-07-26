@@ -7,6 +7,12 @@ texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 600.0
+color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
 [node name="Title_img" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 31.0
@@ -79,7 +85,6 @@ columns = 2
 [node name="health" type="Label" parent="Status"]
 layout_mode = 2
 text = "체력"
-horizontal_alignment = 1
 
 [node name="health_" type="Label" parent="Status"]
 layout_mode = 2
@@ -88,7 +93,6 @@ text = ": {health}"
 [node name="attack" type="Label" parent="Status"]
 layout_mode = 2
 text = "공격력"
-horizontal_alignment = 1
 
 [node name="attack_" type="Label" parent="Status"]
 layout_mode = 2
@@ -97,7 +101,6 @@ text = ": {attack}"
 [node name="shield" type="Label" parent="Status"]
 layout_mode = 2
 text = "방어력"
-horizontal_alignment = 1
 
 [node name="shield_" type="Label" parent="Status"]
 layout_mode = 2
@@ -106,7 +109,6 @@ text = ": {defense}"
 [node name="move_speed" type="Label" parent="Status"]
 layout_mode = 2
 text = "이동속도"
-horizontal_alignment = 1
 
 [node name="move_speed_" type="Label" parent="Status"]
 layout_mode = 2
@@ -115,7 +117,6 @@ text = ": {move_speed}"
 [node name="attack_speed" type="Label" parent="Status"]
 layout_mode = 2
 text = "공격속도"
-horizontal_alignment = 1
 
 [node name="atteck_speed_" type="Label" parent="Status"]
 layout_mode = 2
@@ -143,7 +144,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "콤보 LV"
-horizontal_alignment = 1
 
 [node name="combo_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -156,7 +156,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "데미지 LV"
-horizontal_alignment = 1
 
 [node name="damage_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -169,7 +168,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "방어력 LV"
-horizontal_alignment = 1
 
 [node name="shield_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -182,7 +180,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "최대 체력 LV"
-horizontal_alignment = 1
 
 [node name="max_hp_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -195,7 +192,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "이동 속도 LV"
-horizontal_alignment = 1
 
 [node name="move_speed_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -208,7 +204,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "흡혈 LV"
-horizontal_alignment = 1
 
 [node name="drain_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -221,7 +216,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "자석 범위 LV"
-horizontal_alignment = 1
 
 [node name="magnetic_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -234,7 +228,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "공격 속도 LV"
-horizontal_alignment = 1
 
 [node name="attack_speed_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -247,7 +240,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "그림자 LV"
-horizontal_alignment = 1
 
 [node name="shadow_" type="Label" parent="Skill"]
 layout_mode = 2
@@ -260,7 +252,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "쿨타임 LV"
-horizontal_alignment = 1
 
 [node name="cooldown_" type="Label" parent="Skill"]
 layout_mode = 2
