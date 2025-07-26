@@ -32,8 +32,8 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Image_Sprite" type="Sprite2D" parent="."]
-position = Vector2(61, 62)
-scale = Vector2(0.3, 0.3)
+position = Vector2(61, 64.175)
+scale = Vector2(0.3, 0.274498)
 texture = ExtResource("2_kf82i")
 
 [node name="Frame_Sprite" type="Sprite2D" parent="."]
