@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=3 uid="uid://bx8xatwwg81lh"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/menu.gd" id="1_7txdb"]
-[ext_resource type="Texture2D" uid="uid://bmum5oxj7utmd" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_027e0"]
-[ext_resource type="FontFile" uid="uid://b2hvss27ajx3v" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
-[ext_resource type="AudioStream" uid="uid://dq00eiq1scog" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="3_k3155"]
-[ext_resource type="AudioStream" uid="uid://bjpsk303dcns7" path="res://static/audio/common/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
+[ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_027e0"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
+[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="3_k3155"]
+[ext_resource type="AudioStream" uid="uid://cbievtayo74h8" path="res://static/audio/common/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12q8x"]
 bg_color = Color(0.184314, 0.168627, 0.160784, 1)
@@ -178,13 +178,15 @@ text = "v 1.0.0 (Test)"
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_x38mp")
-volume_db = -20.0
+volume_db = -30.0
 autoplay = true
+bus = &"BGM"
 
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(900, 220)
 stream = ExtResource("3_k3155")
-volume_db = -5.0
+volume_db = -30.0
+bus = &"SFX"
 
 [connection signal="mouse_entered" from="ColorRect/Start_Button" to="." method="_on_start_button_mouse_entered"]
 [connection signal="pressed" from="ColorRect/Start_Button" to="." method="_on_start_button_pressed"]
