@@ -13,9 +13,9 @@ var master_volume = 10.0
 var bgm_volume    = 10.0
 var sfx_volume    = 10.0
 # 음소거 on/off 할 때 저장해놓을 볼륨 값
-var prev_master_volume
-var prev_bgm_volume
-var prev_sfx_volume
+var prev_master_volume = 1.0
+var prev_bgm_volume = 1.0
+var prev_sfx_volume = 1.0
 
 # 화면 해상도 설정
 func apply_resolution(res: Vector2):
@@ -60,7 +60,9 @@ func apply_volume():
 
 # 볼륨 -> db로 변경 
 func linear_to_db(linear: float) -> float:
-	return 20.0 * log(linear) / log(10.0) if linear > 0.0 else -80.0
+	if linear == null or linear <= 0.001:
+		return -80.0
+	return 20.0 * log(linear) / log(10.0)
 
 # 음소거 복원 함수
 func set_mute(bus: String, mute: bool):

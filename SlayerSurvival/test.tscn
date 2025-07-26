@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://wispepgc6lma" path="res://dynamic/4_world/select_map/select_map.tscn" id="2_n4573"]
 [ext_resource type="PackedScene" uid="uid://uii3wm1de8w0" path="res://dynamic/2_enemy/enemy_spawner/enemy_spwaner.tscn" id="4_ad5oa"]
 [ext_resource type="PackedScene" uid="uid://xya4xva0d7vj" path="res://dynamic/1_player/selcet_character/select_character.tscn" id="5_5yiak"]
-[ext_resource type="AudioStream" uid="uid://cep81mureitdt" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="6_a63fx"]
+[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="6_a63fx"]
 
 [node name="test" type="Node2D"]
 script = ExtResource("1_vhu8y")
@@ -18,7 +18,8 @@ script = ExtResource("1_vhu8y")
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 stream = ExtResource("6_a63fx")
-volume_db = -5.0
+volume_db = 10.0
+bus = &"SFX"
 
 [connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/select_warrior" to="." method="_on_select_warrior_mouse_entered"]
 [connection signal="pressed" from="Select_Character_Panel/CharacterButton/select_warrior" to="." method="_on_select_warrior_pressed"]

@@ -180,11 +180,13 @@ text = "v 1.0.0 (Test)"
 stream = ExtResource("17_x38mp")
 volume_db = -30.0
 autoplay = true
+bus = &"BGM"
 
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(900, 220)
 stream = ExtResource("3_k3155")
 volume_db = -30.0
+bus = &"SFX"
 
 [connection signal="mouse_entered" from="ColorRect/Start_Button" to="." method="_on_start_button_mouse_entered"]
 [connection signal="pressed" from="ColorRect/Start_Button" to="." method="_on_start_button_pressed"]
