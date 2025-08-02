@@ -36,7 +36,7 @@ extends Control
 @onready var survival_time = $DeathPanel/FinalResult/survival_time_
 @onready var kill_enemy    = $DeathPanel/FinalResult/kill_enemy_
 @onready var get_gold      = $DeathPanel/FinalResult/get_gold_
-@onready var total_gold    = $DeathPanel/FinalResult/total_gold_
+#@onready var total_gold    = $DeathPanel/FinalResult/total_gold_
 
 
 var sec                 = 0.0
@@ -84,7 +84,7 @@ func _process(delta):
 		survival_time.text = stopwatch.text
 		kill_enemy.text    = str(int(player.kill_count))
 		get_gold.text      = str(int(player.gold_count))
-		total_gold.text    = str(int(Global.character_data["GOLD"]["gold"]))
+		#total_gold.text    = str(int(Global.character_data["GOLD"]["gold"]))
 		
 	elif diag_pause_flag:				# diag 창 뜰 시
 		pause_panel.visible = false

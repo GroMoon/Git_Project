@@ -10,6 +10,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
 offset_right = 469.0
 offset_bottom = 283.0
 color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -72,9 +73,10 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="total_gold" type="Label" parent="."]
+layout_mode = 0
 offset_left = 84.0
 offset_top = 200.0
-offset_right = 211.0
+offset_right = 162.0
 offset_bottom = 233.0
 theme_override_font_sizes/font_size = 30
 text = "총 골드"
