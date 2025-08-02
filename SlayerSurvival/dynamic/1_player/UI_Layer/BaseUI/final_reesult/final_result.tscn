@@ -2,9 +2,10 @@
 
 [node name="FinalResult" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.391
+anchor_bottom = 0.435
+offset_right = -0.200043
+offset_bottom = 0.249969
 grow_horizontal = 2
 grow_vertical = 2
 
