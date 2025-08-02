@@ -33,10 +33,10 @@ extends Control
 @onready var cooldown_level     = $PausePanel/PlayerInfo/Skill/cooldown_
 
 # 게임 오버 정보
-@onready var survival_time = $DeathPanel/FinalResult/VBoxContainer/survival_time_
-@onready var kill_enemy    = $DeathPanel/FinalResult/VBoxContainer/kill_enemy_
-@onready var get_gold      = $DeathPanel/FinalResult/VBoxContainer/get_gold_
-@onready var total_gold    = $DeathPanel/FinalResult/VBoxContainer/total_gold
+@onready var survival_time = $DeathPanel/FinalResult/survival_time_
+@onready var kill_enemy    = $DeathPanel/FinalResult/kill_enemy_
+@onready var get_gold      = $DeathPanel/FinalResult/get_gold_
+@onready var total_gold    = $DeathPanel/FinalResult/total_gold_
 
 
 var sec                 = 0.0
