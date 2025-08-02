@@ -5,6 +5,7 @@ class_name EnemyBase
 @onready var collision_shape    = $CollisionShape2D
 @onready var animated_sprite    = $AnimatedSprite2D
 @onready var interaction_sensor = $interaction_sensor 
+@onready var death_sound        = $death_sound
 
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
@@ -77,6 +78,7 @@ func _physics_process(delta):
 
 # 사망 처리 함수
 func die_enemy():
+	death_sound.play()
 	var pet_chance_randf = randf()						# 몬스터펫 확률 (0.0~1.0 사이로 조절)
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
