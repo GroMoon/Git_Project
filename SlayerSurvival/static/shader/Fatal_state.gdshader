@@ -13,6 +13,6 @@ void fragment() {
 		float flicker = smoothstep(0.0, 1.0, wave); // 부드러운 깜빡임 효과
 		float intensity = smoothstep(border, 0.0, edge_dist) * (1.0 - health) * flicker;
 		// 최종 색상 (빨간색)
-		COLOR = vec4(1.0, 0.0, 0.0, intensity);
+		COLOR = vec4(0.6, 0.0, 0.0, intensity);
 	}
 }
