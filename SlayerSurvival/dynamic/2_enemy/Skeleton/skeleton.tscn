@@ -1,12 +1,13 @@
-[gd_scene load_steps=35 format=3 uid="uid://co82p48pjfk8i"]
+[gd_scene load_steps=36 format=3 uid="uid://co82p48pjfk8i"]
 
-[ext_resource type="Texture2D" uid="uid://rgkmn1nay648" path="res://dynamic/2_enemy/Skeleton/Sprites/Idle.png" id="1_ffs70"]
-[ext_resource type="Texture2D" uid="uid://cw8a42ulgk3ip" path="res://dynamic/2_enemy/Skeleton/Sprites/Attack.png" id="1_hgcjo"]
+[ext_resource type="Texture2D" uid="uid://uvrw61nhjkdy" path="res://dynamic/2_enemy/Skeleton/Sprites/Idle.png" id="1_ffs70"]
+[ext_resource type="Texture2D" uid="uid://bacwmq8n40y3f" path="res://dynamic/2_enemy/Skeleton/Sprites/Attack.png" id="1_hgcjo"]
 [ext_resource type="Script" path="res://dynamic/2_enemy/Skeleton/skeleton.gd" id="1_pivpp"]
-[ext_resource type="Texture2D" uid="uid://dqm2yf8ni8n2w" path="res://dynamic/2_enemy/Skeleton/Sprites/Walk.png" id="2_okriw"]
-[ext_resource type="Texture2D" uid="uid://bkwtrfitsyjgr" path="res://dynamic/2_enemy/Skeleton/Sprites/Death.png" id="2_smsli"]
-[ext_resource type="Texture2D" uid="uid://c6bhxbjqjxf3w" path="res://dynamic/2_enemy/Skeleton/Sprites/Take Hit.png" id="4_qve1s"]
+[ext_resource type="Texture2D" uid="uid://dnl7sjegxkj1a" path="res://dynamic/2_enemy/Skeleton/Sprites/Walk.png" id="2_okriw"]
+[ext_resource type="Texture2D" uid="uid://l14sctetnurx" path="res://dynamic/2_enemy/Skeleton/Sprites/Death.png" id="2_smsli"]
+[ext_resource type="Texture2D" uid="uid://dttaemxutmu3g" path="res://dynamic/2_enemy/Skeleton/Sprites/Take Hit.png" id="4_qve1s"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="6_pt0v8"]
+[ext_resource type="AudioStream" uid="uid://d3brf0ryp2wdb" path="res://static/audio/sfx/enemy/skeleton_death.wav" id="8_6pnvf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rs6s6"]
 atlas = ExtResource("1_hgcjo")
@@ -234,5 +235,10 @@ collision_mask = 10
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(4.3, 1.3)
 shape = SubResource("CapsuleShape2D_qdga4")
+
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_6pnvf")
+volume_db = 10.0
+bus = &"SFX"
 
 [editable path="interaction_sensor"]
