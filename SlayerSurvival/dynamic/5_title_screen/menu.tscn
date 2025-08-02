@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://dynamic/5_title_screen/menu.gd" id="1_7txdb"]
 [ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_027e0"]
 [ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
-[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/common/button_sounds/button_sound_1.mp3" id="3_k3155"]
-[ext_resource type="AudioStream" uid="uid://cbievtayo74h8" path="res://static/audio/common/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
+[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="3_k3155"]
+[ext_resource type="AudioStream" uid="uid://cbievtayo74h8" path="res://static/audio/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12q8x"]
 bg_color = Color(0.184314, 0.168627, 0.160784, 1)
