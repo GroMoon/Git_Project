@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://cpnyxlgkyhi80"]
 
-[ext_resource type="Texture2D" uid="uid://c361ql2f0v7nl" path="res://dynamic/5_title_screen/store/store_sprites/cooldown.webp" id="1_e8hef"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_cooldown.gd" id="1_iu2ph"]
 [ext_resource type="Texture2D" uid="uid://clt5lhsoeldk2" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_jvjh6"]
+[ext_resource type="Texture2D" uid="uid://cv7y843sltnel" path="res://dynamic/5_title_screen/store/store_sprites/cooltime_Nero_AI_Pixelate_Image_Pixel.jpg" id="2_q8j14"]
 [ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_njwfr"]
-[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_or302"]
+[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_hhgs0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ra381"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -23,9 +23,9 @@ offset_bottom = 235.0
 color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
 
 [node name="Item_sprite" type="Sprite2D" parent="."]
-position = Vector2(63.5, 58)
-scale = Vector2(0.0634766, 0.0546875)
-texture = ExtResource("1_e8hef")
+position = Vector2(63.5, 59.324)
+scale = Vector2(0.06, 0.0572734)
+texture = ExtResource("2_q8j14")
 
 [node name="Frame_sprite" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -90,6 +90,6 @@ text = "123"
 
 [node name="Coin_sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(21, 173)
-stream = ExtResource("5_or302")
+stream = ExtResource("5_hhgs0")
 
 [connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]

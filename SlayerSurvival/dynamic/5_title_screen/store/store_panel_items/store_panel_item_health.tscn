@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cokvdtlpbjvk5" path="res://dynamic/5_title_screen/store/store_sprites/health.png" id="1_mlbc5"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_health.gd" id="1_sk7q1"]
 [ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="2_wnhh4"]
-[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_bpuy1"]
+[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_3w155"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ua2ys"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -23,8 +23,8 @@ offset_bottom = 235.0
 color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
 
 [node name="Item_sprite" type="Sprite2D" parent="."]
-position = Vector2(64.5, 67.625)
-scale = Vector2(0.212963, 0.251683)
+position = Vector2(63.5, 59.903)
+scale = Vector2(0.1, 0.103267)
 texture = ExtResource("1_mlbc5")
 
 [node name="Frame_sprite" type="Sprite2D" parent="."]
@@ -90,6 +90,6 @@ text = "123"
 
 [node name="Coin_sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(21, 173)
-stream = ExtResource("5_bpuy1")
+stream = ExtResource("5_3w155")
 
 [connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]

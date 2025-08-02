@@ -7,10 +7,26 @@
 
 [node name="BaseUI" parent="." instance=ExtResource("1_gmbuo")]
 
-[node name="PausePanel" parent="BaseUI" index="7"]
-visible = true
+[node name="ColorRect" parent="BaseUI/DeathPanel/FinalResult" index="0"]
+layout_mode = 0
+
+[node name="total_gold" parent="BaseUI/DeathPanel/FinalResult" index="7"]
+layout_mode = 0
 
 [node name="SelectUI" parent="." instance=ExtResource("2_b6516")]
+
+[node name="select_panel" parent="SelectUI" index="0"]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[connection signal="pressed" from="BaseUI/PausePanel/Menu" to="BaseUI" method="_on_menu_pressed"]
+[connection signal="pressed" from="BaseUI/PausePanel/Option" to="BaseUI" method="_on_option_pressed"]
+[connection signal="pressed" from="BaseUI/PausePanel/Resume" to="BaseUI" method="_on_resume_pressed"]
 
 [editable path="BaseUI"]
 [editable path="BaseUI/PausePanel"]
