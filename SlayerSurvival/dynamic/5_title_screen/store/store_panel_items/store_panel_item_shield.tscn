@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://5i6i62ngyen7"]
+[gd_scene load_steps=7 format=3 uid="uid://5i6i62ngyen7"]
 
-[ext_resource type="Texture2D" uid="uid://bv70sntb4b4x1" path="res://dynamic/5_title_screen/store/store_sprites/shield.png" id="1_8cnx5"]
+[ext_resource type="Texture2D" uid="uid://b455mx2jxvtt4" path="res://dynamic/5_title_screen/store/store_sprites/shield.png" id="1_8cnx5"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_shield.gd" id="1_ydwsb"]
-[ext_resource type="Texture2D" uid="uid://dswqosy3gf4d" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_7803d"]
-[ext_resource type="Texture2D" uid="uid://bycgjtadpl04w" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_0feq7"]
+[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="2_5cywp"]
+[ext_resource type="Texture2D" uid="uid://clt5lhsoeldk2" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_7803d"]
+[ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_0feq7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xdke8"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -14,6 +15,10 @@ corner_radius_bottom_left = 10
 
 [node name="StorePanelItemShield" type="Panel"]
 script = ExtResource("1_ydwsb")
+
+[node name="Coin_sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(21, 173)
+stream = ExtResource("2_5cywp")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

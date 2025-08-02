@@ -95,6 +95,7 @@ func _on_buy_button_pressed():
 		
 		level_label.text = "Level: " + str(item["level"])
 		shield_cost(item["level"])
+	$Coin_sound.play()
 
 func _on_reset_store():
 	item["level"] = "0"

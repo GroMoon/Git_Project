@@ -22,7 +22,7 @@ func _ready():
 	cooldown_cost(StoreData.store_data["STORE_ITEM_COOLDOWN"]["level"])
 	
 	# Connect to store reset signal
-	get_parent().get_parent().get_parent().get_parent().connect("reset_store", Callable(self, "_on_reset_store"))
+	get_parent().get_parent().get_parent().get_parent().get_parent().connect("reset_store", Callable(self, "_on_reset_store"))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -78,6 +78,7 @@ func save_cooldown_data():
 	StoreData.save_store_data()
 
 func _on_buy_button_pressed():
+	$Coin_sound.play()
 	if Global.character_data["GOLD"]["gold"] >= int(cost.text):
 		
 		var purchase_amount = int(cost.text)

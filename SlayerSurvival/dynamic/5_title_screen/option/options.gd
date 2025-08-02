@@ -1,12 +1,22 @@
 extends Panel
 
+# 화면
 @onready var resol_option    = $ScrollContainer/VBoxContainer/Screen/resolution/resol_option
 @onready var full_screen     = $ScrollContainer/VBoxContainer/Screen/screen_mode/full_screen
 @onready var window_screen   = $ScrollContainer/VBoxContainer/Screen/screen_mode/window_screen
 @onready var language_option = $ScrollContainer/VBoxContainer/Language/language_option
+@onready var resolution_box  = $ScrollContainer/VBoxContainer/Screen/resolution/resol_option
+# 오디오
+@onready var master_volume = $ScrollContainer/VBoxContainer/Volume/volume1/master_slider
+@onready var bgm_slider    = $ScrollContainer/VBoxContainer/Volume/volume2/bgm_slider
+@onready var sfx_slider    = $ScrollContainer/VBoxContainer/Volume/volume3/sfx_slider
+@onready var master_toggle = $ScrollContainer/VBoxContainer/Volume/volume1/master_toggle
+@onready var bgm_toggle    = $ScrollContainer/VBoxContainer/Volume/volume2/bgm_toggle
+@onready var sfx_toggle    = $ScrollContainer/VBoxContainer/Volume/volume3/sfx_toggle
 
 func _ready():
 	update_ui()
+	update_sound()
 	get_resolutions_list()
 	get_language_list()
 	set_current_resolution()
@@ -30,6 +40,12 @@ func set_current_resolution():
 		resol_option.select(index)
 
 func update_ui():
+	# 스크린 설정
+	if OptionsManager.is_fullscreen:
+		resolution_box.disabled = true
+	else:
+		resolution_box.disabled = false
+	
 	full_screen.disabled = false
 	window_screen.disabled = false
 
@@ -54,12 +70,65 @@ func _on_window_screen_toggled(toggled_on):
 		OptionsManager.apply_screen_mode(false)
 		update_ui()
 
+# 언어 옵션
 func _on_language_option_item_selected(index):
 	match language_option.get_item_text(index):
 		"한국어":
 			TranslationServer.set_locale("ko")
 		"English":
 			TranslationServer.set_locale("en")
+
+func update_sound():
+	# 사운드 설정(슬라이더 값 업데이트)
+	master_volume.value = OptionsManager.master_volume
+	bgm_slider.value = OptionsManager.bgm_volume
+	sfx_slider.value = OptionsManager.sfx_volume
+
+	# mute(음소거 버튼)이 on이면 slider로 볼륨을 0으로 맞춤
+	master_toggle.button_pressed = OptionsManager.is_master_muted
+	bgm_toggle.button_pressed = OptionsManager.is_bgm_muted
+	sfx_toggle.button_pressed = OptionsManager.is_sfx_muted
+
+# 소리 옵션
+func _on_master_slider_value_changed(value):
+	OptionsManager.master_volume = value
+	if value <= 0.0:
+		OptionsManager.is_master_muted = true
+	else:
+		OptionsManager.is_master_muted = false
+	OptionsManager.apply_volume()
+	update_sound()
+
+func _on_bgm_slider_value_changed(value):
+	OptionsManager.bgm_volume = value
+	if value <= 0.0:
+		OptionsManager.is_bgm_muted = true
+	else:
+		OptionsManager.is_bgm_muted = false
+	OptionsManager.apply_volume()
+	update_sound()
+
+func _on_sfx_slider_value_changed(value):
+	OptionsManager.sfx_volume = value
+	if value <= 0.0:
+		OptionsManager.is_sfx_muted = true
+	else:
+		OptionsManager.is_sfx_muted = false
+	OptionsManager.apply_volume()
+	update_sound()
+
+# 음소거 버튼
+func _on_master_toggle_toggled(toggled_on):
+	OptionsManager.set_mute("Master", toggled_on)
+	update_sound()
+
+func _on_bgm_toggle_toggled(toggled_on):
+	OptionsManager.set_mute("BGM", toggled_on)
+	update_sound()
+
+func _on_sfx_toggle_toggled(toggled_on):
+	OptionsManager.set_mute("SFX", toggled_on)
+	update_sound()
 
 func _on_back_pressed():
 	queue_free()

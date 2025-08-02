@@ -65,6 +65,7 @@ func save_respawn_data():
 	StoreData.save_store_data()
 
 func _on_buy_button_pressed():
+	$Coin_sound.play()
 	if Global.character_data["GOLD"]["gold"] >= int(cost.text):
 		
 		var purchase_amount = int(cost.text)

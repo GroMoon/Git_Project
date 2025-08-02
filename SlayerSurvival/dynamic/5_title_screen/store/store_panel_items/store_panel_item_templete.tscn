@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cjk5bgnmwwbp7"]
 
-[ext_resource type="Texture2D" uid="uid://dswqosy3gf4d" path="res://dynamic/6_utillity/items/frame/frame.png" id="1_hi4n2"]
-[ext_resource type="Texture2D" uid="uid://bycgjtadpl04w" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="2_i51uo"]
+[ext_resource type="Texture2D" uid="uid://clt5lhsoeldk2" path="res://dynamic/6_utillity/items/frame/frame.png" id="1_hi4n2"]
+[ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="2_i51uo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dvp4y"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
