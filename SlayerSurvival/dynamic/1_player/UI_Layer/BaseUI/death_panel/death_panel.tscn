@@ -1,10 +1,14 @@
 [gd_scene load_steps=8 format=3 uid="uid://bmljwk5vyd15y"]
 
-[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
 [ext_resource type="PackedScene" uid="uid://v1kjq5qubjvw" path="res://dynamic/1_player/UI_Layer/BaseUI/final_reesult/final_result.tscn" id="2_bq0od"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjie6"]
-bg_color = Color(0.196078, 0.192157, 0.172549, 0)
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6jv2"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -47,14 +51,12 @@ layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_left = 15.0
+offset_top = 150.0
+offset_right = 15.0
+offset_bottom = 150.0
 grow_horizontal = 1
 grow_vertical = 1
-
-[node name="VBoxContainer" parent="FinalResult" index="0"]
-offset_left = 124.0
-offset_top = 155.0
-offset_right = 378.0
-offset_bottom = 426.0
 
 [node name="Restart" type="Button" parent="."]
 layout_mode = 1
@@ -64,7 +66,7 @@ offset_right = 214.0
 offset_bottom = 563.0
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_7ngny")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_pjie6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
@@ -80,12 +82,10 @@ offset_right = 448.0
 offset_bottom = 563.0
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_7ngny")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_pjie6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_u6jv2")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_nw2gc")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
 theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
 text = "나가기"
-
-[editable path="FinalResult"]

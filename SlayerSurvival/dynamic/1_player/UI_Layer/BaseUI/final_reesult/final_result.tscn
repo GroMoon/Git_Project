@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://v1kjq5qubjvw"]
-
-[ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="1_wn03s"]
+[gd_scene format=3 uid="uid://v1kjq5qubjvw"]
 
 [node name="FinalResult" type="Control"]
 layout_mode = 3
@@ -10,54 +8,82 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 469.0
+offset_bottom = 283.0
+color = Color(0.0588235, 0.0588235, 0.0588235, 1)
 
-[node name="survival_time" type="Label" parent="VBoxContainer"]
+[node name="survival_time" type="Label" parent="."]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "⏱️생존 시간"
-horizontal_alignment = 1
+offset_left = 84.0
+offset_top = 50.0
+offset_right = 211.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 30
+text = "생존 시간"
 
-[node name="survival_time_" type="Label" parent="VBoxContainer"]
+[node name="survival_time_" type="Label" parent="."]
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
+offset_left = 300.0
+offset_top = 50.0
+offset_right = 385.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 30
 text = "00:00"
 horizontal_alignment = 1
 
-[node name="kill_enemy" type="Label" parent="VBoxContainer"]
+[node name="kill_enemy" type="Label" parent="."]
 layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "☠️처치한 적"
-horizontal_alignment = 1
+offset_left = 84.0
+offset_top = 100.0
+offset_right = 211.0
+offset_bottom = 133.0
+theme_override_font_sizes/font_size = 30
+text = "처치한 적"
 
-[node name="kill_enemy_" type="Label" parent="VBoxContainer"]
+[node name="kill_enemy_" type="Label" parent="."]
 layout_mode = 2
-theme_override_font_sizes/font_size = 21
+offset_left = 300.0
+offset_top = 100.0
+offset_right = 385.0
+offset_bottom = 133.0
+theme_override_font_sizes/font_size = 30
 text = "0"
 horizontal_alignment = 1
 
-[node name="get_gold" type="Label" parent="VBoxContainer"]
+[node name="get_gold" type="Label" parent="."]
 layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "💰획득한 골드"
-horizontal_alignment = 1
+offset_left = 84.0
+offset_top = 150.0
+offset_right = 211.0
+offset_bottom = 183.0
+theme_override_font_sizes/font_size = 30
+text = "획득한 골드"
 
-[node name="get_gold_" type="Label" parent="VBoxContainer"]
+[node name="get_gold_" type="Label" parent="."]
 layout_mode = 2
-theme_override_font_sizes/font_size = 21
+offset_left = 300.0
+offset_top = 150.0
+offset_right = 385.0
+offset_bottom = 183.0
+theme_override_font_sizes/font_size = 30
 text = "0"
 horizontal_alignment = 1
 
-[node name="total_gold" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "0"
-horizontal_alignment = 2
+[node name="total_gold" type="Label" parent="."]
+offset_left = 84.0
+offset_top = 200.0
+offset_right = 211.0
+offset_bottom = 233.0
+theme_override_font_sizes/font_size = 30
+text = "총 골드"
 
-[node name="gold_png" type="Sprite2D" parent="VBoxContainer"]
-position = Vector2(159, 248)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_wn03s")
+[node name="total_gold_" type="Label" parent="."]
+layout_mode = 2
+offset_left = 300.0
+offset_top = 200.0
+offset_right = 385.0
+offset_bottom = 233.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
