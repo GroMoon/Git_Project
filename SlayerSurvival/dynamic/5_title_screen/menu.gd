@@ -1,10 +1,14 @@
 extends Node2D
 
+@onready var main_character = $MainCharacter/AnimatedSprite2D
+@onready var main_enemy     = $MainEnemy/AnimatedSprite2D
+
 func _ready():
 	pass
 
 func _process(_delta):
-	pass
+	main_character.play("idle")
+	main_enemy.play("idle")
 
 # START BUTTON
 func _on_start_button_mouse_entered():
