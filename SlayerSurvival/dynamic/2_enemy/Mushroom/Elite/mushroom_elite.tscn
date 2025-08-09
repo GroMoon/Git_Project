@@ -1,13 +1,14 @@
-[gd_scene load_steps=41 format=3 uid="uid://cf4dyjq15r71w"]
+[gd_scene load_steps=42 format=3 uid="uid://cf4dyjq15r71w"]
 
 [ext_resource type="Script" path="res://dynamic/2_enemy/Mushroom/Elite/mushroom_elite.gd" id="1_fy5w4"]
 [ext_resource type="Shader" path="res://static/shader/red_outline.gdshader" id="2_65qn0"]
-[ext_resource type="Texture2D" uid="uid://np74nl75kc6i" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="3_1fgvr"]
-[ext_resource type="Texture2D" uid="uid://c2r10gkup2xi6" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="4_dy3wb"]
-[ext_resource type="Texture2D" uid="uid://brat3xqd5l4vc" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="5_l4ft2"]
-[ext_resource type="Texture2D" uid="uid://q2vcvo83lhr8" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="6_qy1xy"]
-[ext_resource type="Texture2D" uid="uid://dou747306vt78" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="7_w3brg"]
+[ext_resource type="Texture2D" uid="uid://cwfcmpxoe7fj7" path="res://dynamic/2_enemy/Mushroom/Sprites/Attack.png" id="3_1fgvr"]
+[ext_resource type="Texture2D" uid="uid://dkunkww3mya26" path="res://dynamic/2_enemy/Mushroom/Sprites/Death.png" id="4_dy3wb"]
+[ext_resource type="Texture2D" uid="uid://cgiln108jgtw8" path="res://dynamic/2_enemy/Mushroom/Sprites/Idle.png" id="5_l4ft2"]
+[ext_resource type="Texture2D" uid="uid://bgtsjboapdpxd" path="res://dynamic/2_enemy/Mushroom/Sprites/Take Hit.png" id="6_qy1xy"]
+[ext_resource type="Texture2D" uid="uid://ddo7j5mpeaeu5" path="res://dynamic/2_enemy/Mushroom/Sprites/Run.png" id="7_w3brg"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="8_hd5vy"]
+[ext_resource type="AudioStream" uid="uid://kai5gyymhtoo" path="res://static/audio/sfx/enemy/enemy_death.mp3" id="9_nyox5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ycxux"]
 shader = ExtResource("2_65qn0")
@@ -270,5 +271,11 @@ collision_mask = 10
 [node name="CollisionShape2D" parent="interaction_sensor" index="0"]
 position = Vector2(0, 7)
 shape = SubResource("CapsuleShape2D_rcd34")
+
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.01282, 1.06122)
+stream = ExtResource("9_nyox5")
+volume_db = 10.0
+bus = &"SFX"
 
 [editable path="interaction_sensor"]
