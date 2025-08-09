@@ -1,14 +1,15 @@
-[gd_scene load_steps=60 format=3 uid="uid://nij7shkt8g3g"]
+[gd_scene load_steps=61 format=3 uid="uid://nij7shkt8g3g"]
 
 [ext_resource type="Script" path="res://dynamic/2_enemy/FlyingEye/Elite/flyingeye_elite.gd" id="1_o0hhy"]
 [ext_resource type="Shader" path="res://static/shader/red_outline.gdshader" id="1_pqu4n"]
-[ext_resource type="Texture2D" uid="uid://bw8pgrs7gc3cx" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="1_tnjsk"]
-[ext_resource type="Texture2D" uid="uid://mm0pyu4kyoow" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="2_oxh04"]
-[ext_resource type="Texture2D" uid="uid://co7is6lgpy6r6" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="3_8hmb3"]
-[ext_resource type="Texture2D" uid="uid://eado6h0pggfo" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="4_tkjk5"]
-[ext_resource type="Texture2D" uid="uid://cpdj2dyodhcw0" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="5_26dej"]
-[ext_resource type="Texture2D" uid="uid://dj4vuyyy7jh3l" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="6_yvwqi"]
+[ext_resource type="Texture2D" uid="uid://bihxi6m8ubnst" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="1_tnjsk"]
+[ext_resource type="Texture2D" uid="uid://cl1fwdtxanvcl" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="2_oxh04"]
+[ext_resource type="Texture2D" uid="uid://bawnflynx3lb" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="3_8hmb3"]
+[ext_resource type="Texture2D" uid="uid://cae7dyine0svr" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="4_tkjk5"]
+[ext_resource type="Texture2D" uid="uid://dfi4g7ytgry2c" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="5_26dej"]
+[ext_resource type="Texture2D" uid="uid://bmjt0eoh4fnlt" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="6_yvwqi"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="7_p7d8t"]
+[ext_resource type="AudioStream" uid="uid://kai5gyymhtoo" path="res://static/audio/sfx/enemy/enemy_death.mp3" id="10_4jwv1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4527m"]
 shader = ExtResource("1_pqu4n")
@@ -407,5 +408,11 @@ collision_mask = 10
 position = Vector2(5, 2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_lyfsy")
+
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.01282, 1.06122)
+stream = ExtResource("10_4jwv1")
+volume_db = 10.0
+bus = &"SFX"
 
 [editable path="interaction_sensor"]
