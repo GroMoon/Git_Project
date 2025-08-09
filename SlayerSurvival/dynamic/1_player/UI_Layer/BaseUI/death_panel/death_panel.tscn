@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmljwk5vyd15y"]
+[gd_scene load_steps=8 format=3 uid="uid://bmljwk5vyd15y"]
 
 [ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_7ngny"]
-[ext_resource type="PackedScene" uid="uid://v1kjq5qubjvw" path="res://dynamic/1_player/UI_Layer/BaseUI/final_reesult/final_result.tscn" id="2_bq0od"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gulm4"]
-bg_color = Color(0.164706, 0.164706, 0.164706, 1)
+bg_color = Color(0.164706, 0.164706, 0.164706, 0.733333)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjie6"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -82,11 +81,72 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_e4xbt")
 theme_override_styles/focus = SubResource("StyleBoxFlat_kgbvn")
 text = "나가기"
 
-[node name="FinalResult" parent="." instance=ExtResource("2_bq0od")]
-layout_mode = 1
-anchor_right = 0.938
-anchor_bottom = 0.472
+[node name="FinalResult" type="Control" parent="."]
+anchors_preset = 0
 offset_left = 15.0
-offset_top = 155.0
-offset_right = 15.0
-offset_bottom = 154.8
+offset_top = 170.0
+offset_right = 484.0
+offset_bottom = 423.0
+
+[node name="ColorRect" type="ColorRect" parent="FinalResult"]
+layout_mode = 0
+offset_right = 469.0
+offset_bottom = 253.0
+color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[node name="survival_time" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 38.5
+offset_right = 211.0
+offset_bottom = 71.5
+theme_override_font_sizes/font_size = 30
+text = "생존 시간"
+
+[node name="survival_time_" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 38.5
+offset_right = 385.0
+offset_bottom = 71.5
+theme_override_font_sizes/font_size = 30
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="kill_enemy" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 110.0
+offset_right = 211.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 30
+text = "처치한 적"
+
+[node name="kill_enemy_" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 110.0
+offset_right = 385.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+
+[node name="get_gold" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 181.5
+offset_right = 211.0
+offset_bottom = 214.5
+theme_override_font_sizes/font_size = 30
+text = "획득한 골드"
+
+[node name="get_gold_" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 181.5
+offset_right = 385.0
+offset_bottom = 214.5
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
