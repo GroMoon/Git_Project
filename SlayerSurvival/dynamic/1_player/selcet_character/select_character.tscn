@@ -2,14 +2,14 @@
 
 [ext_resource type="StyleBox" uid="uid://clv8l34xvofwk" path="res://dynamic/1_player/selcet_character/Select_Character_Nornmal.tres" id="1_2r08d"]
 [ext_resource type="StyleBox" uid="uid://crljylwyjpvbx" path="res://dynamic/1_player/selcet_character/Select_Character_Hover.tres" id="2_d7e3u"]
-[ext_resource type="Texture2D" uid="uid://cvcs1cqk0o0i6" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
-[ext_resource type="Texture2D" uid="uid://bticnpq8w6ckx" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
-[ext_resource type="Texture2D" uid="uid://dmsaooe3ircuj" path="res://static/png/ui/assembly_frame_gray.png" id="5_ltlxe"]
-[ext_resource type="FontFile" uid="uid://cmcumjvchsvsi" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
-[ext_resource type="Texture2D" uid="uid://wb7u6f8edpb3" path="res://dynamic/1_player/selcet_character/abillity_img/cursed.png" id="7_5bveo"]
-[ext_resource type="Texture2D" uid="uid://bss7s86sithfg" path="res://dynamic/1_player/selcet_character/abillity_img/speed.webp" id="8_gqlcw"]
-[ext_resource type="Texture2D" uid="uid://btpgwa7i446ok" path="res://dynamic/1_player/characters/Wizard/Sprites/Wizard.png" id="9_6fx4o"]
-[ext_resource type="Texture2D" uid="uid://cj5wfxrwji347" path="res://dynamic/1_player/selcet_character/abillity_img/Heal.png" id="9_lhsed"]
+[ext_resource type="Texture2D" uid="uid://bpmfcs3ux5bno" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
+[ext_resource type="Texture2D" uid="uid://dnafoinwyf31" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
+[ext_resource type="Texture2D" uid="uid://b4ao07ur34p1m" path="res://static/png/ui/assembly_frame_gray.png" id="5_ltlxe"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
+[ext_resource type="Texture2D" uid="uid://cgcj3iowgntaj" path="res://dynamic/1_player/selcet_character/abillity_img/cursed.png" id="7_5bveo"]
+[ext_resource type="Texture2D" uid="uid://bn2p7e0vhownc" path="res://dynamic/1_player/selcet_character/abillity_img/speed.webp" id="8_gqlcw"]
+[ext_resource type="Texture2D" uid="uid://x4hrgtylgl1k" path="res://dynamic/1_player/characters/Wizard/Sprites/Wizard.png" id="9_6fx4o"]
+[ext_resource type="Texture2D" uid="uid://deoln6tuw0om2" path="res://dynamic/1_player/selcet_character/abillity_img/Heal.png" id="9_lhsed"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
 font_size = 83
@@ -44,7 +44,9 @@ offset_left = 613.427
 offset_top = 138.615
 offset_right = 1064.43
 offset_bottom = 327.615
+theme_override_font_sizes/font_size = 25
 text = "캐릭터 설명"
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="ImgContainer" type="VBoxContainer" parent="CharacterInfo"]

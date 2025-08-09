@@ -156,7 +156,7 @@ func _on_wizard_pressed():
 func _on_select_warrior_mouse_entered():
 	$Button_sound.play()
 	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
-	character_details.text = "신비로운 과거를 품은 검객, 긴 백발 속에는 싸움의 세월이 녹아 있으며, 한 손에 쥔 검은 마치 그의 분신과도 같습니다. 그는 적들을 단칼에 베어버리는 강력한 공격력과 독보적인 전투 기술로 전장에서의 전설로 불립니다. 하지만 내면 깊은 곳에는 복수를 꿈꾸는 어둠이 자리 잡고 있습니다."
+	character_details.text = "번개의 힘이 깃든 마검을 든 전사. \n\n검을 휘두를 때마다 번개의 기운이 주변을 휘감으며, 적을 순식간에 제압합니다."
 	attack_label.text = "■■"
 	move_label.text   = "■■■■"
 	helth_label.text  = "■■■"
@@ -164,7 +164,7 @@ func _on_select_warrior_mouse_entered():
 func _on_select_king_mouse_entered():
 	$Button_sound.play()
 	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
-	character_details.text = "왕관을 쓴 전사의 모습을 한 그는, 자신의 영토와 백성을 위해 싸우는 불굴의 지도자입니다. 그가 휘두르는 거대한 검은 적에게 공포를 심어주며, 중세의 전장에서 왕으로서의 강력한 존재감을 드러냅니다. 고결한 로브와 왕관은 그의 권력을 상징하며, 모든 적은 그의 분노 앞에서 무릎을 꿇게 됩니다."
+	character_details.text = "무패의 신화를 써 내려간 절대 무력의 왕. \n\n강력한 롱소드의 일격은 방패마저 산산조각 내며 전장을 지배합니다."
 	attack_label.text = "■■■■"
 	move_label.text   = "■■"
 	helth_label.text  = "■■■■■"
@@ -173,7 +173,7 @@ func _on_wizard_mouse_entered():
 	$Button_sound.play()
 	# FIXME
 	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/wizard_pixelart.webp")
-	character_details.text = "마법사"
+	character_details.text = "고대의 지식을 품은 번개의 주술사. \n\n하늘로부터 벼락을 불러내어 적을 꿰뚫으며, 전장의 흐름을 단숨에 바꿉니다."
 	attack_label.text = "■■■■■■"
 	move_label.text   = "■■"
 	helth_label.text  = "■■■"
