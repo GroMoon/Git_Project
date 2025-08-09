@@ -119,39 +119,65 @@ func _process(_delta):
 		spawn_enemy(boss, BOSS)
 		boss_spawn_flag = true
 
-# 적을 스폰하는 함수
 func spawn_enemy(enemy_tscn, monster_type: int):
-	# 경로로부터 적 프리팹을 로드
 	var enemy = enemy_tscn
-	# 씬이 제대로 로드되었는지 확인
 	if enemy:
 		var enemy_instance = enemy.instantiate()
 		var spawn_radius   = enemy_instance.spawn_radius
-		
+
 		# 몬스터 타입에 따른 스케일 설정
 		match monster_type:
 			BOSS:
 				enemy_instance.scale = Vector2(3, 3)
 			ELITE:
 				enemy_instance.scale = Vector2(1.5, 1.5)
-		
-		# 캐릭터 주변 반경에서 랜덤 위치 생성
-		var angle = randf() * PI * 2  # 0부터 360도 사이의 랜덤 각도
-		var distance = spawn_radius
-		var offset = Vector2(cos(angle), sin(angle)) * distance
 
-		# 적의 위치를 캐릭터 위치 + 랜덤 오프셋으로 설정
-		var spawn_pos = player.global_position + offset
+		var spawn_pos: Vector2
+		# 재시도 횟수 설정 (10회)
+		var attempts := 0
+		var max_attempts := 10
 
-		# x, y가 -1500 ~ 1500 범위로 제한
-		spawn_pos.x = clamp(spawn_pos.x, -1500, 1500)
-		spawn_pos.y = clamp(spawn_pos.y, -1500, 1500)
+		# 최대 10번 시도해서 충돌 없는 위치 찾기
+		while attempts < max_attempts:
+			attempts += 1
+			# 캐릭터 주변 반경에서 랜덤 위치 생성
+			var angle = randf() * PI * 2	# 0부터 360도 사이의 랜덤 각도
+			var distance = spawn_radius
+			var offset = Vector2(cos(angle), sin(angle)) * distance
+
+			# 적의 위치를 캐릭터 위치 + 랜덤 오프셋으로 설정
+			spawn_pos = player.global_position + offset
+			
+			spawn_pos.x = clamp(spawn_pos.x, -1500, 1500)
+			spawn_pos.y = clamp(spawn_pos.y, -1500, 1500)
+
+			# 스폰 충돌 검사 함수 실행
+			if is_spawn_position_clear(spawn_pos, enemy_instance):
+				break
+
+		# 최종 위치 적용 후 씬에 추가
 		enemy_instance.global_position = spawn_pos
-
-		# 씬에 적 인스턴스를 추가
 		add_child(enemy_instance)
+	# 씬 로드 실패시 오류
 	else:
 		print("Error: Failed to load enemy scene.")
+
+
+# 스폰 위치 충돌 검사 함수
+func is_spawn_position_clear(position: Vector2, enemy_instance: Node2D) -> bool:
+	var shape = enemy_instance.get_node_or_null("CollisionShape2D")		# enemy 노드의 콜리젼 모양 가져오기
+	var query_shape = shape.shape										# shape.shape -> Shape2D의 리소스
+	var query = PhysicsShapeQueryParameters2D.new()						# 검사용 query 생성
+	query.shape = query_shape											# query 기준 -> 생성된 enemy의 Shape2D 리소스
+	query.transform = Transform2D.IDENTITY.translated(position)			# query의 포지션을 생성된 enemy위치로 이동
+	# 필요한 충돌 레이어만 마스크로 설정
+	query.collision_mask = 1 											# cave의 경우 layer 1번인 (lava), dungeon의 경우 레이어 1번이 없음  
+	#print("충돌검사")
+
+	var space_state = get_world_2d().direct_space_state					# 2D World 받아오며 객체 확인
+	var result = space_state.intersect_shape(query, 1)					# 가져온 Shape2D 리소스와 충돌하는 갯수(인자 1개) 확인 / 0개면 스폰 1이면 재시도
+
+	return result.is_empty()
 
 # Skeleton 소환
 func _on_skeleton_timer_timeout():
