@@ -180,12 +180,12 @@ func _on_wizard_mouse_entered():
 	
 func _on_cave_button_mouse_entered():
 	preview_map.texture = preload("res://dynamic/4_world/cave/cave_illust.png")
-	map_details.text = "용암이 흐르며 습한 공기가 느껴지는 공간... \n바닥의 구멍을 조심하세요!"
+	map_details.text = "끝없이 끓어오르는 용암 속에서 열기를 견뎌야 합니다. \n\n깊은 어둠 속, 불길한 기척과 함께 거대한 화염의 괴물이 기다리고 있습니다… 파이어볼을 조심하세요."
 	$Button_sound.play()
 
 func _on_dungeon_button_mouse_entered():
 	preview_map.texture = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F_illust.webp")
-	map_details.text = "거대한 돌벽과 낡은 상자들 사이로 퍼지는 섬뜩한 분위기"
+	map_details.text = "빛 한 줄기 들지 않는 습한 지하 감옥, 사방에서 쇠사슬이 울립니다. \n\n그 안에는 거대한 칼날을 든 죽음의 집행자가 기다리고 있습니다… 한 번 휘두르면 피할 틈조차 없을지도 모릅니다."
 	$Button_sound.play()
 
 # 해당 씬 재시작
