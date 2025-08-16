@@ -46,10 +46,10 @@ func _process(_delta):
 	sec     = base_ui.sec
 
 	# 몬스터 등장 구간 제어
-	# 0 <= t <= 1분: flyingeye만 소환
+	# 0 ~ 1분: flyingeye만 소환
 	if minute == 0:
 		$FlyingEyeTimer.set_paused(false)
-		$FlyingEyeTimer.wait_time = 2
+		$FlyingEyeTimer.wait_time = 1.6
 		$SkeletonTimer.set_paused(true)
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
@@ -69,9 +69,9 @@ func _process(_delta):
 	# 1 ~ 5분: flyingeye와 skeleton 소환
 	elif minute >= 1 and minute <= 5:
 		$FlyingEyeTimer.set_paused(false)
-		$FlyingEyeTimer.wait_time = 4
+		$FlyingEyeTimer.wait_time = 3.3
 		$SkeletonTimer.set_paused(false)
-		$SkeletonTimer.wait_time = 3
+		$SkeletonTimer.wait_time = 2.5
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
 
@@ -84,9 +84,9 @@ func _process(_delta):
 	elif minute >= 5 and minute <= 8:
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
-		$SkeletonTimer.wait_time = 6
+		$SkeletonTimer.wait_time = 5
 		$MushroomTimer.set_paused(false)
-		$MushroomTimer.wait_time = 4
+		$MushroomTimer.wait_time = 3.3
 		$GoblinTimer.set_paused(true)
 
 		# mushroom 엘리트 몬스터 소환
@@ -99,7 +99,7 @@ func _process(_delta):
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
 		$MushroomTimer.set_paused(false)
-		$MushroomTimer.wait_time = 6
+		$MushroomTimer.wait_time = 5
 		$GoblinTimer.set_paused(false)
 	# 10분 이상: 모든 몬스터 타이머 정지 (보스만 등장)
 	elif minute >= 10:
