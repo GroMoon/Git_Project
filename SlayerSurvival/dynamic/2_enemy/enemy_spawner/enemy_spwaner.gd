@@ -75,6 +75,13 @@ func _process(_delta):
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
 
+		# 대량 스폰 알고리즘
+		if minute == 2 and sec > 30 and not has_spawned_skeleton_mass:
+			for i in range(10):
+				print("skeleton 대량 스폰")
+				spawn_enemy(skeleton, MONSTER)
+			has_spawned_skeleton_mass = true
+
 		# skeleton 엘리트 몬스터 소환
 		if minute == 3 and sec > 30 and not has_spawned_skeleton_elite:
 			spawn_enemy(skeleton_elite,ELITE)
@@ -88,6 +95,13 @@ func _process(_delta):
 		$MushroomTimer.set_paused(false)
 		$MushroomTimer.wait_time = 3.3
 		$GoblinTimer.set_paused(true)
+
+		# 대량 스폰 알고리즘
+		if minute == 5 and sec > 30 and not has_spawned_mushroom_mass:
+			for i in range(10):
+				print("mushroom 대량 스폰")
+				spawn_enemy(mushroom, MONSTER)
+			has_spawned_mushroom_mass = true
 
 		# mushroom 엘리트 몬스터 소환
 		if minute == 6 and sec > 30 and not has_spawned_mushroom_elite:
