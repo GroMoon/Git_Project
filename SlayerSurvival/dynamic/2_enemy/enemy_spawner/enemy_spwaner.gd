@@ -66,8 +66,8 @@ func _process(_delta):
 			spawn_enemy(flyingeye_elite, ELITE)
 			has_spawned_flyingeye_elite = true	
 
-	# 1 < t <= 5분: flyingeye와 skeleton 소환
-	elif minute > 0 and minute <= 5:
+	# 1 ~ 5분: flyingeye와 skeleton 소환
+	elif minute >= 1 and minute <= 5:
 		$FlyingEyeTimer.set_paused(false)
 		$FlyingEyeTimer.wait_time = 4
 		$SkeletonTimer.set_paused(false)
@@ -80,16 +80,22 @@ func _process(_delta):
 			spawn_enemy(skeleton_elite,ELITE)
 			has_spawned_skeleton_elite = true
 			
-	# 5 < t <= 8분: flyingeye, skeleton, mushroom 소환
-	elif minute > 5 and minute <= 8:
+	# 5 ~ 8분: flyingeye, skeleton, mushroom 소환
+	elif minute >= 5 and minute <= 8:
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
 		$SkeletonTimer.wait_time = 6
 		$MushroomTimer.set_paused(false)
 		$MushroomTimer.wait_time = 4
 		$GoblinTimer.set_paused(true)
-	# 8 < t < 10분: flyingeye, skeleton, mushroom, goblin 소환
-	elif minute > 8 and minute < 10:
+
+		# mushroom 엘리트 몬스터 소환
+		if minute == 6 and sec > 30 and not has_spawned_mushroom_elite:
+			spawn_enemy(mushroom_elite,ELITE)
+			has_spawned_mushroom_elite = true
+
+	# 8 ~ 10분: flyingeye, skeleton, mushroom, goblin 소환
+	elif minute >= 8 and minute < 10:
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
 		$MushroomTimer.set_paused(false)
