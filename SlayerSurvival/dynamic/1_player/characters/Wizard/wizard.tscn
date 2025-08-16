@@ -1,14 +1,15 @@
-[gd_scene load_steps=52 format=3 uid="uid://cunx7il7pbat2"]
+[gd_scene load_steps=53 format=3 uid="uid://cunx7il7pbat2"]
 
-[ext_resource type="Texture2D" uid="uid://b44d57w2jh3t4" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
+[ext_resource type="Texture2D" uid="uid://dieytbandiyr6" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Wizard/wizard.gd" id="1_ufk14"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ahco5"]
-[ext_resource type="Texture2D" uid="uid://cwoqfouasawiq" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
-[ext_resource type="Texture2D" uid="uid://cxumjtcldh2m6" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
-[ext_resource type="Texture2D" uid="uid://b3pmd3y10o0i5" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
+[ext_resource type="Texture2D" uid="uid://cae6nm8hs7f3s" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
+[ext_resource type="Texture2D" uid="uid://bhnb86xhb4h2p" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
+[ext_resource type="Texture2D" uid="uid://bq54v8oa85b5x" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="4_482t6"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="6_rq62j"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="7_3aouf"]
+[ext_resource type="Texture2D" uid="uid://dttywfq5awojw" path="res://static/png/character_shadow/pngwing.com.png" id="10_wb55a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hhjdo"]
 shader = ExtResource("2_ahco5")
@@ -428,14 +429,13 @@ editor_draw_limits = true
 
 [node name="UI_Layer" parent="." instance=ExtResource("6_rq62j")]
 
-[node name="select_panel" parent="UI_Layer/SelectUI" index="0"]
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.784314)
+self_modulate = Color(1, 1, 1, 0.588235)
+show_behind_parent = true
+position = Vector2(-2.14484, 36.25)
+scale = Vector2(0.0704828, 0.0275)
+texture = ExtResource("10_wb55a")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 
@@ -445,6 +445,5 @@ grow_vertical = 1
 [editable path="UI_Layer/BaseUI/PausePanel"]
 [editable path="UI_Layer/BaseUI/PausePanel/PlayerInfo"]
 [editable path="UI_Layer/BaseUI/DeathPanel"]
-[editable path="UI_Layer/BaseUI/DeathPanel/FinalResult"]
 [editable path="UI_Layer/SelectUI"]
 [editable path="UI_Layer/SelectUI/select_panel"]
