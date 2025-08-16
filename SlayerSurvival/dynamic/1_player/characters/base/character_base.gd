@@ -258,18 +258,23 @@ func add_food(health_value):
 
 # 경험치 계산
 func calculate_exp():
-	if character_level < 5:
+	if character_level >= 30:
+		max_exp = 0  # 30 이상은 레벨업 없음(원하는 정책으로 변경 가능)
+	elif character_level < 5:          # 1~4
 		max_exp = character_level * 20
-	elif character_level < 10:
+	elif character_level < 10:         # 5~9
 		max_exp = character_level * 24
-	elif character_level < 15:
+	elif character_level < 15:         # 10~14
 		max_exp = character_level * 27
-	elif character_level < 20:
+	elif character_level < 19:         # 15~18
 		max_exp = character_level * 30
-	elif character_level < 25:
-		max_exp = character_level * 32
-	else:
-		max_exp = character_level * 34
+	else:                              # 19~29 (고정값)
+		max_exp = 124
+
+	# 총합 정합성 맞추기 위한 미세 조정: Lv5만 -4exp (120 -> 116)
+	if character_level == 5:
+		max_exp -= 4
+
 	level_up()
 
 # 레벨 업
