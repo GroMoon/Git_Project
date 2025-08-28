@@ -46,10 +46,10 @@ func _process(_delta):
 	sec     = base_ui.sec
 
 	# 몬스터 등장 구간 제어
-	# 0 <= t <= 1분: flyingeye만 소환
+	# 0 ~ 1분: flyingeye만 소환
 	if minute == 0:
 		$FlyingEyeTimer.set_paused(false)
-		$FlyingEyeTimer.wait_time = 2
+		$FlyingEyeTimer.wait_time = 1.2
 		$SkeletonTimer.set_paused(true)
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
@@ -66,34 +66,54 @@ func _process(_delta):
 			spawn_enemy(flyingeye_elite, ELITE)
 			has_spawned_flyingeye_elite = true	
 
-	# 1 < t <= 5분: flyingeye와 skeleton 소환
-	elif minute > 0 and minute <= 5:
+	# 1 ~ 5분: flyingeye와 skeleton 소환
+	elif minute >= 1 and minute <= 5:
 		$FlyingEyeTimer.set_paused(false)
-		$FlyingEyeTimer.wait_time = 4
+		$FlyingEyeTimer.wait_time = 2.4
 		$SkeletonTimer.set_paused(false)
-		$SkeletonTimer.wait_time = 3
+		$SkeletonTimer.wait_time = 2
 		$MushroomTimer.set_paused(true)
 		$GoblinTimer.set_paused(true)
+
+		# 대량 스폰 알고리즘
+		if minute == 2 and sec > 30 and not has_spawned_skeleton_mass:
+			for i in range(10):
+				print("skeleton 대량 스폰")
+				spawn_enemy(skeleton, MONSTER)
+			has_spawned_skeleton_mass = true
 
 		# skeleton 엘리트 몬스터 소환
 		if minute == 3 and sec > 30 and not has_spawned_skeleton_elite:
 			spawn_enemy(skeleton_elite,ELITE)
 			has_spawned_skeleton_elite = true
 			
-	# 5 < t <= 8분: flyingeye, skeleton, mushroom 소환
-	elif minute > 5 and minute <= 8:
+	# 5 ~ 8분: flyingeye, skeleton, mushroom 소환
+	elif minute >= 5 and minute <= 8:
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
-		$SkeletonTimer.wait_time = 6
+		$SkeletonTimer.wait_time = 3.6
 		$MushroomTimer.set_paused(false)
-		$MushroomTimer.wait_time = 4
+		$MushroomTimer.wait_time = 2.5
 		$GoblinTimer.set_paused(true)
-	# 8 < t < 10분: flyingeye, skeleton, mushroom, goblin 소환
-	elif minute > 8 and minute < 10:
+
+		# 대량 스폰 알고리즘
+		if minute == 5 and sec > 30 and not has_spawned_mushroom_mass:
+			for i in range(10):
+				print("mushroom 대량 스폰")
+				spawn_enemy(mushroom, MONSTER)
+			has_spawned_mushroom_mass = true
+
+		# mushroom 엘리트 몬스터 소환
+		if minute == 6 and sec > 30 and not has_spawned_mushroom_elite:
+			spawn_enemy(mushroom_elite,ELITE)
+			has_spawned_mushroom_elite = true
+
+	# 8 ~ 10분: flyingeye, skeleton, mushroom, goblin 소환
+	elif minute >= 8 and minute < 10:
 		$FlyingEyeTimer.set_paused(false)
 		$SkeletonTimer.set_paused(false)
 		$MushroomTimer.set_paused(false)
-		$MushroomTimer.wait_time = 6
+		$MushroomTimer.wait_time = 3.6
 		$GoblinTimer.set_paused(false)
 	# 10분 이상: 모든 몬스터 타이머 정지 (보스만 등장)
 	elif minute >= 10:
