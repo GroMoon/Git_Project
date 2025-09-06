@@ -49,6 +49,7 @@ func _physics_process(_delta):
 		var direction = (player.position - position).normalized()
 		velocity = direction * move_speed
 		move_and_slide()
+		attack_damage = player.attack_damage
 
 	# 애니메이션 처리
 	if !hit_flag:
