@@ -32,6 +32,15 @@ func _ready():
 	select_character.visible = false
 	select_map.visible = true
 	get_tree().paused = true
+	# 맵 디폴트 설정
+	preview_map.texture = preload("res://dynamic/4_world/cave/cave_illust.png")
+	map_details.text = "끝없이 끓어오르는 용암 속에서 열기를 견뎌야 합니다. \n\n깊은 어둠 속, 불길한 기척과 함께 거대한 화염의 괴물이 기다리고 있습니다… 파이어볼을 조심하세요."
+	# 캐릭터 디폴트 설정
+	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
+	character_details.text = "번개의 힘이 깃든 마검을 든 전사. \n\n검을 휘두를 때마다 번개의 기운이 주변을 휘감으며, 적을 순식간에 제압합니다."
+	attack_label.text = "■■"
+	move_label.text   = "■■■■"
+	helth_label.text  = "■■■"
 	# 펫 미리 preload
 	mushroom_pet_preload  = preload("res://dynamic/2_enemy/Mushroom/Mushroom_Pet/mushroom_pet.tscn")
 	skeleton_pet_preload  = preload("res://dynamic/2_enemy/Skeleton/Skeleton_Pet/skeleton_pet.tscn")
