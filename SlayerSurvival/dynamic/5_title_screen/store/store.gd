@@ -7,6 +7,8 @@ var gold
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# 게임 일시정지 해제 (test 씬에서 일시정지된 상태를 해제)
+	get_tree().paused = false
 	Global.connect("purchase", Callable(self, "update_gold"))
 	update_gold()
 
