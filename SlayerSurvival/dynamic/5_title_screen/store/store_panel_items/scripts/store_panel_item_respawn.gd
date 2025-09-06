@@ -16,6 +16,8 @@ var item = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# StoreData에서 현재 레벨을 item에 동기화
+	item["level"] = StoreData.store_data["STORE_ITEM_RESPAWN"]["level"]
 	# 레벨 표시
 	level_label.text = "Level: " + str(StoreData.store_data["STORE_ITEM_RESPAWN"]["level"])
 	# 레벨 별 데미지 증가 코스트 표시	
