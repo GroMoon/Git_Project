@@ -214,6 +214,7 @@ func log_game_over_data():
 	var log_data = []
 	log_data.append("=== GAME OVER LOG - " + current_time + " ===")
 	log_data.append("플레이한 캐릭터: " + get_character_display_name(player.character_name))
+	log_data.append("플레이한 맵: " + get_current_map_name())
 	log_data.append("플레이 시간: " + stopwatch.text + " (" + str(total_seconds) + "초)")
 	log_data.append("플레이어 레벨: " + str(player.character_level))
 	log_data.append("처치한 적 수: " + str(int(player.kill_count)))
@@ -317,3 +318,17 @@ func get_character_display_name(character_name: String) -> String:
 			return "wizard"
 		_:
 			return character_name
+
+# 현재 맵 이름 가져오기
+func get_current_map_name() -> String:
+	# 현재 씬에서 맵 노드를 찾기
+	var map_node = get_tree().current_scene.get_node_or_null("cave")
+	if map_node:
+		return "cave"
+	
+	map_node = get_tree().current_scene.get_node_or_null("dungeon_B1F")
+	if map_node:
+		return "dungeon_B1F"
+	
+	# 맵 노드를 찾지 못한 경우 기본값 반환
+	return "unknown_map"
