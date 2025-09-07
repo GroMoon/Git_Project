@@ -86,6 +86,8 @@ func _process(delta):
 		get_gold.text      = str(int(player.gold_count))
 		#total_gold.text    = str(int(Global.character_data["GOLD"]["gold"]))
 		
+		
+		
 	elif diag_pause_flag:				# diag 창 뜰 시
 		pause_panel.visible = false
 		get_tree().paused   = true
@@ -181,8 +183,137 @@ func _on_option_pressed():
 
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():
+	# 게임 오버 로깅
+	log_game_over_data()
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 게임 오버 후 Restart 버튼 누를 때
 func _on_restart_pressed():
 	get_tree().change_scene_to_file("res://test.tscn")
+
+# 게임 오버 데이터 로깅
+func log_game_over_data():
+	var log_file = FileAccess.open("res://log.txt", FileAccess.READ_WRITE)
+	if not log_file:
+		# 파일이 없으면 새로 생성
+		log_file = FileAccess.open("res://log.txt", FileAccess.WRITE_READ)
+		if not log_file:
+			print("Error: Cannot create log.txt file")
+			return
+	
+	# 파일 끝으로 이동
+	log_file.seek_end()
+	
+	# 현재 시간
+	var current_time = Time.get_datetime_string_from_system()
+	
+	# 플레이 시간 (초 단위)
+	var total_seconds = minute * 60 + int(sec)
+	
+	# 로그 데이터 구성
+	var log_data = []
+	log_data.append("=== GAME OVER LOG - " + current_time + " ===")
+	log_data.append("플레이한 캐릭터: " + get_character_display_name(player.character_name))
+	log_data.append("플레이 시간: " + stopwatch.text + " (" + str(total_seconds) + "초)")
+	log_data.append("플레이어 레벨: " + str(player.character_level))
+	log_data.append("처치한 적 수: " + str(int(player.kill_count)))
+	log_data.append("획득한 골드: " + str(int(player.gold_count)))
+	log_data.append("총 보유 골드: " + str(int(Global.character_data["GOLD"]["gold"])))
+	log_data.append("")
+	log_data.append("=== 플레이어 업그레이드 현황 ===")
+	log_data.append("체력 증가 레벨: " + str(player.max_hp_level))
+	log_data.append("공격력 증가 레벨: " + str(player.damage_level))
+	log_data.append("이동속도 증가 레벨: " + str(player.move_speed_level))
+	log_data.append("흡혈 레벨: " + str(player.drain_level))
+	log_data.append("자석 범위 레벨: " + str(player.magnetic_area_level))
+	log_data.append("방어력 레벨: " + str(player.shield_level))
+	log_data.append("쿨타임 레벨: " + str(player.cooldown_level))
+	log_data.append("그림자 분신 레벨: " + str(player.shadow_partner_level))
+	log_data.append("연타 레벨: " + str(player.attack_times_level))
+	# log_data.append("")
+	# log_data.append("=== 상점 데이터 ===")
+	
+	# # StoreData에서 상점 정보 가져오기
+	# var store_data = StoreData.store_data
+	# for item_key in store_data:
+	# 	var item_data = store_data[item_key]
+	# 	var item_name = get_store_item_name(item_key)
+	# 	log_data.append(item_name + " 레벨: " + str(item_data["level"]) + " (사용 골드: " + str(item_data["used_gold"]) + ")")
+	
+	log_data.append("")
+	log_data.append("=== 플레이어 데이터 ===")
+	var character_upgrades = Global.character_data["CHARACTER_STORE_UPGRADES"]
+	for upgrade_key in character_upgrades:
+		var upgrade_name = get_character_upgrade_name(upgrade_key)
+		log_data.append(upgrade_name + ": " + str(character_upgrades[upgrade_key]))
+	
+	log_data.append("")
+	log_data.append("==========================================")
+	log_data.append("")
+	
+	# 로그 파일에 쓰기
+	for line in log_data:
+		log_file.store_line(line)
+	
+	log_file.close()
+	print("게임 오버 로그가 log.txt에 저장되었습니다.")
+
+# 상점 아이템 이름 변환
+func get_store_item_name(item_key: String) -> String:
+	match item_key:
+		"STORE_ITEM_HEALTH":
+			return "체력 증가"
+		"STORE_ITEM_SHIELD":
+			return "방어력"
+		"STORE_ITEM_RESPAWN":
+			return "부활 횟수"
+		"STORE_ITEM_DAMAGE":
+			return "공격력"
+		"STORE_ITEM_SPEED":
+			return "이동속도"
+		"STORE_ITEM_COOLDOWN":
+			return "쿨타임"
+		"STORE_ITEM_VAMPIRE":
+			return "흡혈"
+		"STORE_ITEM_GOLD_DROP":
+			return "골드 드롭"
+		"STORE_ITEM_GEM_DROP":
+			return "젬 드롭"
+		_:
+			return item_key
+
+# 캐릭터 업그레이드 이름 변환
+func get_character_upgrade_name(upgrade_key: String) -> String:
+	match upgrade_key:
+		"health":
+			return "체력"
+		"shield":
+			return "방어력"
+		"respawn":
+			return "부활 횟수"
+		"damage":
+			return "공격력"
+		"speed":
+			return "이동속도"
+		"cooldown":
+			return "쿨타임"
+		"vampire":
+			return "흡혈"
+		"gold_drop":
+			return "골드 드롭"
+		"gem_drop":
+			return "젬 드롭"
+		_:
+			return upgrade_key
+
+# 캐릭터 표시 이름 변환
+func get_character_display_name(character_name: String) -> String:
+	match character_name:
+		"fantasy_warrior":
+			return "fantasy_warrior"
+		"medieval_king":
+			return "medieval_king"
+		"wizard":
+			return "wizard"
+		_:
+			return character_name
