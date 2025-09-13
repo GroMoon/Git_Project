@@ -1,15 +1,16 @@
-[gd_scene load_steps=53 format=3 uid="uid://cunx7il7pbat2"]
+[gd_scene load_steps=54 format=3 uid="uid://cunx7il7pbat2"]
 
-[ext_resource type="Texture2D" uid="uid://dieytbandiyr6" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
+[ext_resource type="Texture2D" uid="uid://b44d57w2jh3t4" path="res://dynamic/1_player/characters/Wizard/Sprites/Idle.png" id="1_sskgg"]
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Wizard/wizard.gd" id="1_ufk14"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ahco5"]
-[ext_resource type="Texture2D" uid="uid://cae6nm8hs7f3s" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
-[ext_resource type="Texture2D" uid="uid://bhnb86xhb4h2p" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
-[ext_resource type="Texture2D" uid="uid://bq54v8oa85b5x" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
+[ext_resource type="Texture2D" uid="uid://cwoqfouasawiq" path="res://dynamic/1_player/characters/Wizard/Sprites/Death.png" id="2_qpb8m"]
+[ext_resource type="Texture2D" uid="uid://cxumjtcldh2m6" path="res://dynamic/1_player/characters/Wizard/Sprites/Run.png" id="3_u6cyj"]
+[ext_resource type="Texture2D" uid="uid://b3pmd3y10o0i5" path="res://dynamic/1_player/characters/Wizard/Sprites/Attack1.png" id="3_uxpma"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="4_482t6"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="6_rq62j"]
+[ext_resource type="AudioStream" uid="uid://dmlpbew7fesyw" path="res://static/audio/sfx/weapon/wizard/wizard_1.mp3" id="7_2a7b4"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="7_3aouf"]
-[ext_resource type="Texture2D" uid="uid://dttywfq5awojw" path="res://static/png/character_shadow/pngwing.com.png" id="10_wb55a"]
+[ext_resource type="Texture2D" uid="uid://cymeab5ca0b1m" path="res://static/png/character_shadow/pngwing.com.png" id="10_wb55a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hhjdo"]
 shader = ExtResource("2_ahco5")
@@ -319,6 +320,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("attack_1:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_2a7b4")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_1:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_yrxk6"]
 resource_name = "attack"
@@ -346,6 +371,30 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 4, 5, 6, 7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("attack_1:stream")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_2a7b4")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_1:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_gfpwj"]
@@ -405,6 +454,12 @@ process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_cok54")
 }
+
+[node name="attack_1" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("7_2a7b4")
+volume_db = -30.0
+bus = &"SFX"
 
 [node name="Health_Bar" parent="." instance=ExtResource("7_3aouf")]
 offset_left = -28.0
