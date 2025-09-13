@@ -8,3 +8,6 @@ player_data.json
 # ignore import files
 *.import
 *.translation
+
+# ignore log files
+log.txt
