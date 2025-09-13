@@ -1,18 +1,21 @@
-[gd_scene load_steps=75 format=3 uid="uid://dgaohd3soufg8"]
+[gd_scene load_steps=78 format=3 uid="uid://dgaohd3soufg8"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Fantasy_Warrior/fantasy_warrior.gd" id="1_cqj1t"]
-[ext_resource type="Texture2D" uid="uid://bq338x76ccb1b" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
+[ext_resource type="Texture2D" uid="uid://b4hn4pimtemuf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="1_isla0"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_d66k0"]
-[ext_resource type="Texture2D" uid="uid://db1ku5e1sqr7q" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
-[ext_resource type="Texture2D" uid="uid://baqn67ry0mr7s" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
-[ext_resource type="Texture2D" uid="uid://djmek3go3cer8" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
-[ext_resource type="Texture2D" uid="uid://cqv03abeiaikx" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
-[ext_resource type="Texture2D" uid="uid://bt4iwwmsdcq62" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
-[ext_resource type="Texture2D" uid="uid://di4lo264kqlue" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
+[ext_resource type="Texture2D" uid="uid://dyg8uou3pfdge" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="2_u6fg7"]
+[ext_resource type="Texture2D" uid="uid://douobm6mqh4gk" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="3_q0jc1"]
+[ext_resource type="Texture2D" uid="uid://cacviey86ujmc" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="4_7ddf5"]
+[ext_resource type="Texture2D" uid="uid://d3xtg7bj6t5ft" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="5_jsn1x"]
+[ext_resource type="Texture2D" uid="uid://dwfndd6k8mpcy" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="6_ub3y5"]
+[ext_resource type="Texture2D" uid="uid://cc26s1q0lc8ur" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="8_dqamd"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_0wyd7"]
+[ext_resource type="AudioStream" uid="uid://opw0w68u3vn" path="res://static/audio/sfx/weapon/warrior/warrior_1.mp3" id="10_nsya2"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_nxneh"]
-[ext_resource type="Texture2D" uid="uid://dttywfq5awojw" path="res://static/png/character_shadow/pngwing.com.png" id="10_s8xgg"]
+[ext_resource type="Texture2D" uid="uid://cymeab5ca0b1m" path="res://static/png/character_shadow/pngwing.com.png" id="10_s8xgg"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="11_66d8d"]
+[ext_resource type="AudioStream" uid="uid://dim251wvguk1r" path="res://static/audio/sfx/weapon/warrior/warrior_3.mp3" id="11_75kcs"]
+[ext_resource type="AudioStream" uid="uid://civ61pfwm3edg" path="res://static/audio/sfx/weapon/warrior/warrior_2.mp3" id="12_66eut"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e2o0i"]
 shader = ExtResource("2_d66k0")
@@ -529,6 +532,30 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_1:stream")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_nsya2")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_1:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_d58tb"]
 resource_name = "attack_2"
@@ -581,6 +608,30 @@ tracks/3/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_2:stream")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_66eut")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("attack_2:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_olmoq"]
 resource_name = "attack_3"
@@ -632,6 +683,30 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_3:stream")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_75kcs")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("attack_3:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_t11jl"]
@@ -701,6 +776,27 @@ process_mode = 3
 libraries = {
 "": SubResource("AnimationLibrary_5aqwf")
 }
+
+[node name="attack_3" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("11_75kcs")
+volume_db = -30.0
+bus = &"SFX"
+
+[node name="attack_2" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("12_66eut")
+volume_db = -30.0
+bus = &"SFX"
+
+[node name="attack_1" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("10_nsya2")
+volume_db = -30.0
+bus = &"SFX"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.784314)

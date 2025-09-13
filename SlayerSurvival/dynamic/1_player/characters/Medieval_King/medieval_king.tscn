@@ -1,18 +1,21 @@
-[gd_scene load_steps=64 format=3 uid="uid://blv0hgymp636q"]
+[gd_scene load_steps=67 format=3 uid="uid://blv0hgymp636q"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/characters/Medieval_King/medieval_king.gd" id="1_go0kx"]
-[ext_resource type="Texture2D" uid="uid://cedpqdba1dcy7" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
+[ext_resource type="Texture2D" uid="uid://tamcavw2rjam" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack1.png" id="1_xk6qn"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="2_ix6sp"]
-[ext_resource type="Texture2D" uid="uid://bcfnyk4ffs3y0" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
-[ext_resource type="Texture2D" uid="uid://dif1blwamfsum" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
-[ext_resource type="Texture2D" uid="uid://bxej1ibd4hv81" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
-[ext_resource type="Texture2D" uid="uid://oi63n5at8no8" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
-[ext_resource type="Texture2D" uid="uid://cwlkb8n3wfe8m" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
-[ext_resource type="Texture2D" uid="uid://cuuh1x8a5431s" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
+[ext_resource type="Texture2D" uid="uid://yrhixdpnf3nb" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack2.png" id="2_s3lbo"]
+[ext_resource type="Texture2D" uid="uid://bje32w834yc4t" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Attack3.png" id="3_k2hvj"]
+[ext_resource type="Texture2D" uid="uid://vht4iwv4scax" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Death.png" id="4_0mln5"]
+[ext_resource type="Texture2D" uid="uid://bksdlvusrvihw" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Idle.png" id="5_jabdf"]
+[ext_resource type="Texture2D" uid="uid://pvkp7qkf1u8v" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Run.png" id="6_bamps"]
+[ext_resource type="Texture2D" uid="uid://rlgnrrctuhqe" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Take Hit.png" id="7_aqs6b"]
 [ext_resource type="PackedScene" uid="uid://fwq7tlftneu8" path="res://dynamic/1_player/UI_Layer/BaseUI/health_bar/health_bar.tscn" id="10_3qswq"]
 [ext_resource type="PackedScene" uid="uid://c7whanwt2hu16" path="res://dynamic/6_utillity/magnetic_area/magnetic_area.tscn" id="10_b142a"]
 [ext_resource type="PackedScene" uid="uid://6uhmdvchlrp4" path="res://dynamic/1_player/UI_Layer/UI_Layer.tscn" id="10_l0wkq"]
-[ext_resource type="Texture2D" uid="uid://dttywfq5awojw" path="res://static/png/character_shadow/pngwing.com.png" id="11_dqp62"]
+[ext_resource type="AudioStream" uid="uid://u4fgxbn2e71b" path="res://static/audio/sfx/weapon/king/king_1.mp3" id="10_nqr7e"]
+[ext_resource type="AudioStream" uid="uid://bhgdoumjvle5" path="res://static/audio/sfx/weapon/king/king_3.mp3" id="11_0exr1"]
+[ext_resource type="Texture2D" uid="uid://cymeab5ca0b1m" path="res://static/png/character_shadow/pngwing.com.png" id="11_dqp62"]
+[ext_resource type="AudioStream" uid="uid://owjgyog2c5ad" path="res://static/audio/sfx/weapon/king/king_2.mp3" id="12_rs7sx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gc6qg"]
 shader = ExtResource("2_ix6sp")
@@ -388,6 +391,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("attack_3:stream")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_0exr1")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("attack_3:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_yb248"]
 resource_name = "attack_1"
@@ -427,6 +454,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_1:stream")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_nqr7e")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_1:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_4g71h"]
@@ -468,6 +519,30 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_2:stream")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_rs7sx")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_2:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ll12f"]
 resource_name = "attack_3"
@@ -507,6 +582,30 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_3:stream")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_0exr1")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_3:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.15),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_rtw2n"]
@@ -579,6 +678,24 @@ libraries = {
 "": SubResource("AnimationLibrary_hr1vn")
 }
 speed_scale = 0.75
+
+[node name="attack_3" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("11_0exr1")
+volume_db = -30.0
+bus = &"SFX"
+
+[node name="attack_2" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("12_rs7sx")
+volume_db = -30.0
+bus = &"SFX"
+
+[node name="attack_1" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("10_nqr7e")
+volume_db = -30.0
+bus = &"SFX"
 
 [node name="Health_Bar" parent="." instance=ExtResource("10_3qswq")]
 offset_left = -26.0
