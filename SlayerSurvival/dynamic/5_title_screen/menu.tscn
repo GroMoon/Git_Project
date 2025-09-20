@@ -1,25 +1,25 @@
 [gd_scene load_steps=129 format=3 uid="uid://bx8xatwwg81lh"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/menu.gd" id="1_7txdb"]
-[ext_resource type="Texture2D" uid="uid://yn0n31seqpnv" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_027e0"]
-[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
-[ext_resource type="AudioStream" uid="uid://bvcsv07rb0ime" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="3_k3155"]
+[ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_027e0"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
+[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="3_k3155"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="6_6wm0u"]
-[ext_resource type="Texture2D" uid="uid://ch23vptwdk18p" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="7_75dph"]
-[ext_resource type="Texture2D" uid="uid://c5k3p6flg43nf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="8_218rh"]
-[ext_resource type="Texture2D" uid="uid://1e22lbgtfta3" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="9_innex"]
-[ext_resource type="Texture2D" uid="uid://c4s6im45v2kr" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="10_t2uyu"]
-[ext_resource type="Texture2D" uid="uid://b0q13cieeyhel" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="11_um7xl"]
-[ext_resource type="Texture2D" uid="uid://bcx6n76ae8cmn" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="12_8qp7o"]
-[ext_resource type="Texture2D" uid="uid://dsobsc8nefjoj" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="13_nv00b"]
-[ext_resource type="Texture2D" uid="uid://wtvsujvpy0ca" path="res://static/png/character_shadow/pngwing.com.png" id="14_dtodr"]
-[ext_resource type="Texture2D" uid="uid://bw8pgrs7gc3cx" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="15_nhhkp"]
-[ext_resource type="Texture2D" uid="uid://mm0pyu4kyoow" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="16_gqq5t"]
-[ext_resource type="Texture2D" uid="uid://co7is6lgpy6r6" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="17_4jq4k"]
-[ext_resource type="AudioStream" uid="uid://cfce5oynbiii2" path="res://static/audio/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
-[ext_resource type="Texture2D" uid="uid://eado6h0pggfo" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="18_rxm8j"]
-[ext_resource type="Texture2D" uid="uid://cpdj2dyodhcw0" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="19_va0al"]
-[ext_resource type="Texture2D" uid="uid://dj4vuyyy7jh3l" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="20_cbvjo"]
+[ext_resource type="Texture2D" uid="uid://b4hn4pimtemuf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="7_75dph"]
+[ext_resource type="Texture2D" uid="uid://dyg8uou3pfdge" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="8_218rh"]
+[ext_resource type="Texture2D" uid="uid://douobm6mqh4gk" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack3.png" id="9_innex"]
+[ext_resource type="Texture2D" uid="uid://cacviey86ujmc" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Death.png" id="10_t2uyu"]
+[ext_resource type="Texture2D" uid="uid://d3xtg7bj6t5ft" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Idle.png" id="11_um7xl"]
+[ext_resource type="Texture2D" uid="uid://dwfndd6k8mpcy" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Run.png" id="12_8qp7o"]
+[ext_resource type="Texture2D" uid="uid://cc26s1q0lc8ur" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Take hit.png" id="13_nv00b"]
+[ext_resource type="Texture2D" uid="uid://cymeab5ca0b1m" path="res://static/png/character_shadow/pngwing.com.png" id="14_dtodr"]
+[ext_resource type="Texture2D" uid="uid://bihxi6m8ubnst" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="15_nhhkp"]
+[ext_resource type="Texture2D" uid="uid://cl1fwdtxanvcl" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="16_gqq5t"]
+[ext_resource type="Texture2D" uid="uid://bawnflynx3lb" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="17_4jq4k"]
+[ext_resource type="AudioStream" uid="uid://cbievtayo74h8" path="res://static/audio/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
+[ext_resource type="Texture2D" uid="uid://cae7dyine0svr" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="18_rxm8j"]
+[ext_resource type="Texture2D" uid="uid://dfi4g7ytgry2c" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="19_va0al"]
+[ext_resource type="Texture2D" uid="uid://bmjt0eoh4fnlt" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="20_cbvjo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12q8x"]
 bg_color = Color(0.184314, 0.168627, 0.160784, 1)
@@ -943,14 +943,12 @@ text = "v 1.0.0 (Test)"
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("17_x38mp")
-volume_db = -30.0
 autoplay = true
 bus = &"BGM"
 
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(900, 220)
 stream = ExtResource("3_k3155")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="MainCharacter" type="CharacterBody2D" parent="."]

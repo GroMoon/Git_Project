@@ -42,7 +42,6 @@ bus = &"BGM"
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 stream = ExtResource("6_a63fx")
-volume_db = 10.0
 bus = &"SFX"
 
 [connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/select_warrior" to="." method="_on_select_warrior_mouse_entered"]
