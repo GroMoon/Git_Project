@@ -75,6 +75,7 @@ func _on_full_screen_toggled(toggled_on):
 
 func _on_window_screen_toggled(toggled_on):
 	if toggled_on:
+		# 새로운 시스템: 전체화면 이전 상태로 복원
 		OptionsManager.apply_window_windowed_mode()
 		# UI 업데이트를 위해 약간의 지연 후 실행
 		await get_tree().process_frame

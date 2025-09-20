@@ -16,14 +16,25 @@ var sfx_volume    = 0.3
 # 윈도우 모드 버그 해결
 var current_window_mode
 var window_mode_saved
+var was_maximized = false
+
+# 전체화면 이전 윈도우 상태 기억
+var pre_fullscreen_window_mode = DisplayServer.WINDOW_MODE_WINDOWED
+var pre_fullscreen_resolution = Vector2(1280, 720)
 
 func _ready():
 	apply_volume()
 
 func _process(_delta):
 	current_window_mode = DisplayServer.window_get_mode()
-	# if current_window_mode != window_mode_saved:
-	# 	window_mode_saved = current_window_mode
+	if current_window_mode != window_mode_saved:
+		# 이전 모드가 최대화였는지 확인하고 플래그 설정
+		if window_mode_saved == DisplayServer.WINDOW_MODE_MAXIMIZED:
+			was_maximized = true
+		# 창모드로 전환할 때는 최대화 상태 리셋
+		elif current_window_mode == DisplayServer.WINDOW_MODE_WINDOWED:
+			was_maximized = false
+		window_mode_saved = current_window_mode
 
 # 화면 해상도 설정
 func apply_resolution(res: Vector2):
@@ -35,30 +46,46 @@ func apply_resolution(res: Vector2):
 	print("해상도 변경: ", res)
 
 # 화면 모드 설정
-func apply_screen_mode(fullscreen: bool):
-	is_fullscreen = fullscreen
-	if fullscreen:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		DisplayServer.window_set_size(current_resolution)
+# func apply_screen_mode(fullscreen: bool):
+# 	is_fullscreen = fullscreen
+# 	if fullscreen:
+# 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+# 	else:
+# 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+# 		DisplayServer.window_set_size(current_resolution)
 
 func apply_window_fullscreen_mode():
+	# 전체화면으로 전환하기 전에 현재 상태를 기억
+	pre_fullscreen_window_mode = DisplayServer.window_get_mode()
+	pre_fullscreen_resolution = DisplayServer.window_get_size()
+	
 	is_fullscreen = true
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	current_window_mode = DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
-	print("전체화면 모드로 변경")
+	print("전체화면 모드로 변경 - 이전 상태: ", pre_fullscreen_window_mode, " 해상도: ", pre_fullscreen_resolution)
 
 func apply_window_windowed_mode():
 	is_fullscreen = false
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	DisplayServer.window_set_size(current_resolution)
-	current_window_mode = DisplayServer.WINDOW_MODE_WINDOWED
-	print("창 모드로 변경")
+	
+	# 전체화면 이전 상태로 복원
+	if pre_fullscreen_window_mode == DisplayServer.WINDOW_MODE_MAXIMIZED:
+		# 이전이 최대화였다면 최대화로 복원
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+		current_window_mode = DisplayServer.WINDOW_MODE_MAXIMIZED
+		print("최대화 모드로 복원")
+	else:
+		# 이전이 일반 창모드였다면 일반 창모드로 복원
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_size(pre_fullscreen_resolution)
+		current_resolution = pre_fullscreen_resolution
+		current_window_mode = DisplayServer.WINDOW_MODE_WINDOWED
+		print("일반 창모드로 복원 - 해상도: ", pre_fullscreen_resolution)
 
 func apply_window_maximized_mode():
 	is_fullscreen = false
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+	was_maximized = false
+	print("최대화 모드로 변경")
 	# DisplayServer.window_set_size(current_resolution)
 
 # 소리 설정
