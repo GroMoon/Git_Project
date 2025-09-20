@@ -1,10 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://x8kdkwfnwtg4"]
+[gd_scene load_steps=9 format=3 uid="uid://x8kdkwfnwtg4"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_vhu8y"]
 [ext_resource type="PackedScene" uid="uid://wispepgc6lma" path="res://dynamic/4_world/select_map/select_map.tscn" id="2_n4573"]
 [ext_resource type="PackedScene" uid="uid://uii3wm1de8w0" path="res://dynamic/2_enemy/enemy_spawner/enemy_spwaner.tscn" id="4_ad5oa"]
 [ext_resource type="PackedScene" uid="uid://xya4xva0d7vj" path="res://dynamic/1_player/selcet_character/select_character.tscn" id="5_5yiak"]
-[ext_resource type="AudioStream" uid="uid://bvcsv07rb0ime" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="6_a63fx"]
+[ext_resource type="AudioStream" uid="uid://cbievtayo74h8" path="res://static/audio/bgm/game_bgm_1(retro).mp3" id="5_6bgkd"]
+[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="6_a63fx"]
+[ext_resource type="AudioStream" uid="uid://dm8m8jtu6sgqd" path="res://static/audio/sfx/game_over/game_over_1.wav" id="6_dmu2g"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b23io"]
+streams_count = 2
+stream_0/stream = ExtResource("5_6bgkd")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("6_dmu2g")
+stream_1/weight = 1.0
 
 [node name="test" type="Node2D"]
 script = ExtResource("1_vhu8y")
@@ -25,6 +34,11 @@ offset_left = 2.73915
 offset_right = 77.7392
 text = "LaveCave"
 
+[node name="Bgm" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = SubResource("AudioStreamRandomizer_b23io")
+bus = &"BGM"
+
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 stream = ExtResource("6_a63fx")
@@ -43,6 +57,7 @@ bus = &"SFX"
 [connection signal="mouse_entered" from="Select_Map_Panel/MapButton/dungeon_button" to="." method="_on_dungeon_button_mouse_entered"]
 [connection signal="pressed" from="Select_Map_Panel/MapButton/dungeon_button" to="." method="_on_dungeon_button_pressed"]
 [connection signal="pressed" from="Select_Map_Panel/back(map)" to="." method="_on_backmap_pressed"]
+[connection signal="finished" from="Bgm" to="." method="_on_bgm_finished"]
 
 [editable path="EnemySpwaner"]
 [editable path="Select_Character_Panel"]
