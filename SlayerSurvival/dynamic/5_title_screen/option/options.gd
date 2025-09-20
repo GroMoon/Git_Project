@@ -40,20 +40,26 @@ func set_current_resolution():
 		resol_option.select(index)
 
 func update_ui():
-	# 스크린 설정
-	if OptionsManager.is_fullscreen:
+	# 현재 윈도우 모드 확인
+	# var current_mode = DisplayServer.window_get_mode()
+	var current_mode = OptionsManager.current_window_mode
+	var is_fullscreen_mode = (current_mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	
+	# 해상도 설정 활성화/비활성화
+	if is_fullscreen_mode:
 		resolution_box.disabled = true
 	else:
 		resolution_box.disabled = false
 	
-	full_screen.disabled = false
-	window_screen.disabled = false
-
-	full_screen.button_pressed = OptionsManager.is_fullscreen
-	window_screen.button_pressed = !OptionsManager.is_fullscreen
-
-	full_screen.disabled = OptionsManager.is_fullscreen
-	window_screen.disabled = !OptionsManager.is_fullscreen
+	# 체크박스 상태 업데이트
+	full_screen.button_pressed = is_fullscreen_mode
+	window_screen.button_pressed = !is_fullscreen_mode
+	
+	# 체크박스 비활성화 상태 업데이트
+	full_screen.disabled = is_fullscreen_mode
+	window_screen.disabled = !is_fullscreen_mode
+	
+	
 
 # 해상도 적용 시그널 연결
 func _on_resol_option_item_selected(index):
@@ -61,13 +67,17 @@ func _on_resol_option_item_selected(index):
 	OptionsManager.apply_resolution(res)
 
 func _on_full_screen_toggled(toggled_on):
-	if toggled_on and !OptionsManager.is_fullscreen:
-		OptionsManager.apply_screen_mode(true)
+	if toggled_on:
+		OptionsManager.apply_window_fullscreen_mode()
+		# UI 업데이트를 위해 약간의 지연 후 실행
+		await get_tree().process_frame
 		update_ui()
 
 func _on_window_screen_toggled(toggled_on):
-	if toggled_on and OptionsManager.is_fullscreen:
-		OptionsManager.apply_screen_mode(false)
+	if toggled_on:
+		OptionsManager.apply_window_windowed_mode()
+		# UI 업데이트를 위해 약간의 지연 후 실행
+		await get_tree().process_frame
 		update_ui()
 
 # 언어 옵션

@@ -13,8 +13,17 @@ var master_volume = 0.3
 var bgm_volume    = 0.3
 var sfx_volume    = 0.3
 
+# 윈도우 모드 버그 해결
+var current_window_mode
+var window_mode_saved
+
 func _ready():
 	apply_volume()
+
+func _process(_delta):
+	current_window_mode = DisplayServer.window_get_mode()
+	# if current_window_mode != window_mode_saved:
+	# 	window_mode_saved = current_window_mode
 
 # 화면 해상도 설정
 func apply_resolution(res: Vector2):
@@ -33,6 +42,24 @@ func apply_screen_mode(fullscreen: bool):
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		DisplayServer.window_set_size(current_resolution)
+
+func apply_window_fullscreen_mode():
+	is_fullscreen = true
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	current_window_mode = DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
+	print("전체화면 모드로 변경")
+
+func apply_window_windowed_mode():
+	is_fullscreen = false
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_size(current_resolution)
+	current_window_mode = DisplayServer.WINDOW_MODE_WINDOWED
+	print("창 모드로 변경")
+
+func apply_window_maximized_mode():
+	is_fullscreen = false
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+	# DisplayServer.window_set_size(current_resolution)
 
 # 소리 설정
 func apply_volume():
