@@ -4,7 +4,7 @@ var language_list = ["한국어", "English"]
 
 var resolution_list     = [Vector2(1280, 720), Vector2(1600, 900), Vector2(1920, 1080)]
 var current_resolution := Vector2(1280, 720)  # 기본 해상도
-var is_fullscreen = false # 기본 화면모드 -> 창모드
+var is_fullscreen = true # 기본 화면모드 -> 전체화면
 
 var is_master_muted = false
 var is_bgm_muted    = false
