@@ -543,19 +543,16 @@ speed_scale = 0.75
 [node name="attack_3" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 stream = ExtResource("9_v15oq")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="attack_2" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 stream = ExtResource("10_lk2oi")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="attack_1" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 stream = ExtResource("11_q4bsy")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="AttackTimer" type="Timer" parent="."]

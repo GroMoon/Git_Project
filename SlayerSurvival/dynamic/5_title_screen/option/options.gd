@@ -80,9 +80,9 @@ func _on_language_option_item_selected(index):
 
 func update_sound():
 	# 사운드 설정(슬라이더 값 업데이트)
-	master_volume.value = OptionsManager.master_volume
-	bgm_slider.value = OptionsManager.bgm_volume
-	sfx_slider.value = OptionsManager.sfx_volume
+	master_volume.value = OptionsManager.master_volume * 100.0
+	bgm_slider.value    = OptionsManager.bgm_volume * 100.0
+	sfx_slider.value    = OptionsManager.sfx_volume * 100.0
 
 	# mute(음소거 버튼)이 on이면 slider로 볼륨을 0으로 맞춤
 	master_toggle.button_pressed = OptionsManager.is_master_muted
@@ -91,30 +91,18 @@ func update_sound():
 
 # 소리 옵션
 func _on_master_slider_value_changed(value):
-	OptionsManager.master_volume = value
-	if value <= 0.0:
-		OptionsManager.is_master_muted = true
-	else:
-		OptionsManager.is_master_muted = false
-	OptionsManager.apply_volume()
+	var linear_volume = value / 100.0 
+	OptionsManager.set_volume("Master", linear_volume)
 	update_sound()
 
 func _on_bgm_slider_value_changed(value):
-	OptionsManager.bgm_volume = value
-	if value <= 0.0:
-		OptionsManager.is_bgm_muted = true
-	else:
-		OptionsManager.is_bgm_muted = false
-	OptionsManager.apply_volume()
+	var linear_volume = value / 100.0
+	OptionsManager.set_volume("BGM", linear_volume)
 	update_sound()
 
 func _on_sfx_slider_value_changed(value):
-	OptionsManager.sfx_volume = value
-	if value <= 0.0:
-		OptionsManager.is_sfx_muted = true
-	else:
-		OptionsManager.is_sfx_muted = false
-	OptionsManager.apply_volume()
+	var linear_volume = value / 100.0
+	OptionsManager.set_volume("SFX", linear_volume)
 	update_sound()
 
 # 음소거 버튼

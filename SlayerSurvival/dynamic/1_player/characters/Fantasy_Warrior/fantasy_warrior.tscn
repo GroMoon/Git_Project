@@ -781,21 +781,18 @@ libraries = {
 process_mode = 3
 scale = Vector2(0.5, 0.5)
 stream = ExtResource("11_75kcs")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="attack_2" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 scale = Vector2(0.5, 0.5)
 stream = ExtResource("12_66eut")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="attack_1" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 scale = Vector2(0.5, 0.5)
 stream = ExtResource("10_nsya2")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

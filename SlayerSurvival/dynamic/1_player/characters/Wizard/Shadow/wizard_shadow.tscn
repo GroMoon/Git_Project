@@ -415,9 +415,7 @@ libraries = {
 
 [node name="attack_1" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
-scale = Vector2(1, 1)
 stream = ExtResource("6_3tpkt")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="AttackTimer" type="Timer" parent="."]

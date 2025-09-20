@@ -265,7 +265,6 @@ shape = SubResource("CapsuleShape2D_3src1")
 
 [node name="death_sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_ccphh")
-volume_db = 10.0
 bus = &"SFX"
 
 [editable path="interaction_sensor"]

@@ -458,7 +458,6 @@ libraries = {
 [node name="attack_1" type="AudioStreamPlayer2D" parent="."]
 process_mode = 3
 stream = ExtResource("7_2a7b4")
-volume_db = -30.0
 bus = &"SFX"
 
 [node name="Health_Bar" parent="." instance=ExtResource("7_3aouf")]
