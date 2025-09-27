@@ -4,7 +4,17 @@ extends Node2D
 @onready var main_enemy     = $MainEnemy/AnimatedSprite2D
 
 func _ready():
-	pass
+	# 시작 시 창 크기를 1920x1080으로 설정
+	DisplayServer.window_set_size(Vector2i(1920, 1080))
+	
+	# 창을 화면 중앙에 위치시키기
+	var screen_size = DisplayServer.screen_get_size()
+	var window_size = Vector2i(1920, 1080)
+	var center_position = Vector2i(
+		(screen_size.x - window_size.x) / 2,
+		(screen_size.y - window_size.y) / 2
+	)
+	DisplayServer.window_set_position(center_position)
 
 func _process(_delta):
 	main_character.play("idle")
