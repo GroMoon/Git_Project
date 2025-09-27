@@ -3,7 +3,7 @@ extends Node
 var language_list = ["한국어", "English"]
 
 var resolution_list     = [Vector2(1280, 720), Vector2(1600, 900), Vector2(1920, 1080)]
-var current_resolution := Vector2(1280, 720)  # 기본 해상도
+var current_resolution := Vector2(1920, 1080)  # 기본 해상도
 var is_fullscreen = true # 기본 화면모드 -> 전체화면
 
 var is_master_muted = false
@@ -20,7 +20,7 @@ var was_maximized = false
 
 # 전체화면 이전 윈도우 상태 기억
 var pre_fullscreen_window_mode = DisplayServer.WINDOW_MODE_WINDOWED
-var pre_fullscreen_resolution = Vector2(1280, 720)
+var pre_fullscreen_resolution = Vector2(1920, 1080)
 
 func _ready():
 	apply_volume()
