@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_027e0"]
 [ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
 [ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="3_k3155"]
+[ext_resource type="AudioStream" uid="uid://b512bfk8oe3yu" path="res://static/audio/bgm/太古の文明発見した時.mp3" id="4_uu5rw"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="6_6wm0u"]
 [ext_resource type="Texture2D" uid="uid://b4hn4pimtemuf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="7_75dph"]
 [ext_resource type="Texture2D" uid="uid://dyg8uou3pfdge" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="8_218rh"]
@@ -16,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://bihxi6m8ubnst" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack.png" id="15_nhhkp"]
 [ext_resource type="Texture2D" uid="uid://cl1fwdtxanvcl" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack2.png" id="16_gqq5t"]
 [ext_resource type="Texture2D" uid="uid://bawnflynx3lb" path="res://dynamic/2_enemy/FlyingEye/Sprites/Attack3.png" id="17_4jq4k"]
-[ext_resource type="AudioStream" uid="uid://cbievtayo74h8" path="res://static/audio/bgm/game_bgm_1(retro).mp3" id="17_x38mp"]
 [ext_resource type="Texture2D" uid="uid://cae7dyine0svr" path="res://dynamic/2_enemy/FlyingEye/Sprites/Death.png" id="18_rxm8j"]
 [ext_resource type="Texture2D" uid="uid://dfi4g7ytgry2c" path="res://dynamic/2_enemy/FlyingEye/Sprites/Flight.png" id="19_va0al"]
 [ext_resource type="Texture2D" uid="uid://bmjt0eoh4fnlt" path="res://dynamic/2_enemy/FlyingEye/Sprites/Take Hit.png" id="20_cbvjo"]
@@ -942,7 +942,7 @@ theme_override_font_sizes/font_size = 20
 text = "v 1.0.0 (Test)"
 
 [node name="bgm" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("17_x38mp")
+stream = ExtResource("4_uu5rw")
 autoplay = true
 bus = &"BGM"
 
