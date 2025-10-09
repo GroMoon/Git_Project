@@ -45,17 +45,18 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="PausePanel" type="Panel"]
-offset_right = 1200.0
-offset_bottom = 650.0
+offset_right = 1280.0
+offset_bottom = 720.0
 tooltip_text = "
 "
 theme_override_styles/panel = SubResource("StyleBoxFlat_dah47")
 
 [node name="Pause" type="Label" parent="."]
 layout_mode = 0
-offset_top = 55.0
-offset_right = 816.0
-offset_bottom = 125.0
+offset_left = 31.0
+offset_top = 89.0
+offset_right = 847.0
+offset_bottom = 159.0
 theme_override_fonts/font = ExtResource("1_qmq4x")
 theme_override_font_sizes/font_size = 50
 text = "Game  Paused"
@@ -64,10 +65,10 @@ vertical_alignment = 1
 
 [node name="Menu" type="Button" parent="."]
 layout_mode = 2
-offset_left = 108.0
-offset_top = 200.0
-offset_right = 708.0
-offset_bottom = 280.0
+offset_left = 139.0
+offset_top = 234.0
+offset_right = 739.0
+offset_bottom = 314.0
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_qmq4x")
@@ -81,10 +82,10 @@ text = "메인화면"
 
 [node name="Option" type="Button" parent="."]
 layout_mode = 2
-offset_left = 108.0
-offset_top = 325.0
-offset_right = 708.0
-offset_bottom = 405.0
+offset_left = 139.0
+offset_top = 359.0
+offset_right = 739.0
+offset_bottom = 439.0
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_qmq4x")
@@ -98,10 +99,10 @@ text = "설        정"
 
 [node name="Resume" type="Button" parent="."]
 layout_mode = 2
-offset_left = 108.0
-offset_top = 450.0
-offset_right = 708.0
-offset_bottom = 530.0
+offset_left = 139.0
+offset_top = 484.0
+offset_right = 739.0
+offset_bottom = 564.0
 size_flags_vertical = 3
 theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
 theme_override_fonts/font = ExtResource("1_qmq4x")
@@ -114,7 +115,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_xlvts")
 text = "돌아가기"
 
 [node name="PlayerInfo" parent="." instance=ExtResource("2_kj6om")]
-offset_left = 814.0
-offset_top = 26.0
-offset_right = 814.0
-offset_bottom = 26.0
+offset_left = 845.0
+offset_top = 60.0
+offset_right = 845.0
+offset_bottom = 60.0

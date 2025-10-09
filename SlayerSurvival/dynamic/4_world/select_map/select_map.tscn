@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://wispepgc6lma"]
 
-[ext_resource type="FontFile" uid="uid://dvg2jaku4fsfy" path="res://static/font/DNFBitBitTTF.ttf" id="1_e73c6"]
-[ext_resource type="Texture2D" uid="uid://ciul3uegvloj4" path="res://dynamic/4_world/cave/cave_title_final.png" id="2_5idkw"]
-[ext_resource type="Texture2D" uid="uid://cb1h5gr4bga0" path="res://static/png/ui/assembly_frame_gray.png" id="2_stlme"]
-[ext_resource type="Texture2D" uid="uid://kmlv368ipum3" path="res://dynamic/4_world/dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_e73c6"]
+[ext_resource type="Texture2D" uid="uid://b3krm66jrdpp3" path="res://dynamic/4_world/cave/cave_title_final.png" id="2_5idkw"]
+[ext_resource type="Texture2D" uid="uid://b4ao07ur34p1m" path="res://static/png/ui/assembly_frame_gray.png" id="2_stlme"]
+[ext_resource type="Texture2D" uid="uid://dnyibrfhb0nf6" path="res://dynamic/4_world/dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0akgj"]
 bg_color = Color(0.113725, 0.113725, 0.113725, 1)
@@ -49,45 +49,45 @@ font_size = 83
 
 [node name="Select_Map_Panel" type="Panel"]
 process_mode = 3
-offset_right = 1200.0
-offset_bottom = 650.0
+offset_right = 1280.0
+offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_0akgj")
 
 [node name="MapInfo" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 1200.0
-offset_bottom = 650.0
+offset_right = 1280.0
+offset_bottom = 720.0
 
 [node name="details" type="Label" parent="MapInfo"]
 layout_mode = 0
-offset_left = 607.0
-offset_top = 138.0
-offset_right = 933.0
-offset_bottom = 282.0
+offset_left = 666.0
+offset_top = 177.0
+offset_right = 992.0
+offset_bottom = 321.0
 text = "맵 설명"
 autowrap_mode = 2
 
 [node name="preview_map" type="TextureRect" parent="MapInfo"]
 layout_mode = 0
-offset_left = 205.0
-offset_top = 150.0
-offset_right = 393.0
-offset_bottom = 335.0
+offset_left = 264.0
+offset_top = 189.0
+offset_right = 452.0
+offset_bottom = 374.0
 scale = Vector2(1.82843, 1.2402)
 expand_mode = 1
 stretch_mode = 6
 
 [node name="frame" type="Sprite2D" parent="MapInfo"]
-position = Vector2(377.671, 266.183)
+position = Vector2(436.671, 305.183)
 scale = Vector2(3.97232, 2.70452)
 texture = ExtResource("2_stlme")
 
 [node name="MapButton" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 182.0
-offset_top = 448.0
-offset_right = 1016.0
-offset_bottom = 604.0
+offset_left = 244.0
+offset_top = 487.0
+offset_right = 1078.0
+offset_bottom = 643.0
 color = Color(0.117647, 0.145098, 0.14902, 1)
 
 [node name="cave_button" type="Button" parent="MapButton"]
@@ -183,9 +183,10 @@ horizontal_alignment = 1
 
 [node name="select_map" type="Label" parent="."]
 layout_mode = 0
-offset_top = 20.0
-offset_right = 1200.0
-offset_bottom = 111.0
+offset_left = 33.0
+offset_top = 40.0
+offset_right = 1233.0
+offset_bottom = 131.0
 theme_override_fonts/font = ExtResource("1_e73c6")
 text = "맵 선택"
 label_settings = SubResource("LabelSettings_h8m1t")
@@ -193,9 +194,9 @@ horizontal_alignment = 1
 
 [node name="back(map)" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1065.0
-offset_top = 35.0
-offset_right = 1115.0
-offset_bottom = 85.0
+offset_left = 1098.0
+offset_top = 55.0
+offset_right = 1148.0
+offset_bottom = 105.0
 theme_override_font_sizes/font_size = 25
 text = "◀️"
