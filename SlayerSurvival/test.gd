@@ -12,9 +12,6 @@ extends Node2D
 @onready var preview_map = $Select_Map_Panel/MapInfo/preview_map
 @onready var map_details = $Select_Map_Panel/MapInfo/details
 
-# 사운드 트랙 선언
-@onready var bgm_player = $Bgm
-
 # 캐릭터를 인스턴스 하기 위한 선언	
 var character_load
 var instance_character
@@ -32,6 +29,9 @@ var goblin_pet_preload
 var flyingeye_pet_preload
 
 func _ready():
+	# 오토로드(오디오) bgm 재생
+	Audiomanager.play_music_for_scene("ingame")
+
 	select_character.visible = false
 	select_map.visible = true
 	get_tree().paused = true
@@ -51,9 +51,6 @@ func _ready():
 	flyingeye_pet_preload = preload("res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.tscn")
 	# 맵 프리로드 변수 초기화
 	map_load = null
-
-	# 씬이 준비되면 첫 배경음악을 랜덤으로 재생
-	bgm_player.play()
 
 func _process(_delta):
 	player = get_node("player")
@@ -202,10 +199,6 @@ func _on_dungeon_button_mouse_entered():
 	preview_map.texture = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F_illust.webp")
 	map_details.text = "빛 한 줄기 들지 않는 습한 지하 감옥, 사방에서 쇠사슬이 울립니다. \n\n그 안에는 거대한 칼날을 든 죽음의 집행자가 기다리고 있습니다… 한 번 휘두르면 피할 틈조차 없을지도 모릅니다."
 	$Button_sound.play()
-
-# 사운드 트랙 재생
-func _on_bgm_finished():
-	bgm_player.play()
 
 # 해당 씬 재시작
 func _on_backchar_pressed():

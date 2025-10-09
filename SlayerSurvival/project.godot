@@ -23,6 +23,7 @@ DamageVisual="*res://dynamic/6_utillity/damage_visual/damage_visual.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 OptionsManager="*res://dynamic/6_utillity/data/options_manager.gd"
 VampireVisual="*res://dynamic/6_utillity/vampire_visual/vampire_visual.gd"
+Audiomanager="*res://static/audio/audiomanager.tscn"
 
 [dialogic]
 

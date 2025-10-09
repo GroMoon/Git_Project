@@ -4,6 +4,8 @@ extends Node2D
 @onready var main_enemy     = $MainEnemy/AnimatedSprite2D
 
 func _ready():
+	# 오토로드(오디오) bgm 재생
+	Audiomanager.play_music_for_scene("menu")
 	# 시작 시 창 크기를 1920x1080으로 설정
 	DisplayServer.window_set_size(Vector2i(1920, 1080))
 	
