@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://j7kkv4b3ad6n"]
 
-[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_s3hhe"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="1_s3hhe"]
 
 [node name="select_panel" type="Panel"]
 process_mode = 3

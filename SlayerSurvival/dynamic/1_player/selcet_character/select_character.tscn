@@ -18,32 +18,32 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Select_Character_Panel" type="Panel"]
 process_mode = 3
-offset_right = 1280.0
-offset_bottom = 720.0
+offset_right = 1200.0
+offset_bottom = 650.0
 rotation = -0.000645014
 
 [node name="CharacterInfo" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
+offset_right = 1200.0
+offset_bottom = 650.0
 expand_mode = 1
 
 [node name="icon" type="Sprite2D" parent="CharacterInfo"]
-position = Vector2(413.876, 342.808)
+position = Vector2(395.899, 306.796)
 scale = Vector2(0.3, 0.291)
 
 [node name="frame" type="Sprite2D" parent="CharacterInfo"]
-position = Vector2(372.103, 345.13)
+position = Vector2(396.127, 307.146)
 scale = Vector2(3.58782, 3.55791)
 texture = ExtResource("5_ltlxe")
 
 [node name="details" type="Label" parent="CharacterInfo"]
 layout_mode = 0
-offset_left = 631.404
-offset_top = 174.627
-offset_right = 1082.41
-offset_bottom = 363.627
+offset_left = 613.427
+offset_top = 138.615
+offset_right = 1064.43
+offset_bottom = 327.615
 theme_override_font_sizes/font_size = 25
 text = "캐릭터 설명"
 vertical_alignment = 1
@@ -51,10 +51,10 @@ autowrap_mode = 2
 
 [node name="ImgContainer" type="VBoxContainer" parent="CharacterInfo"]
 layout_mode = 0
-offset_left = 615.404
-offset_top = 380.627
-offset_right = 655.404
-offset_bottom = 508.627
+offset_left = 597.427
+offset_top = 344.615
+offset_right = 637.427
+offset_bottom = 472.615
 
 [node name="attack_img" type="TextureRect" parent="CharacterInfo/ImgContainer"]
 layout_mode = 2
@@ -73,10 +73,10 @@ expand_mode = 4
 
 [node name="LabelContainer" type="VBoxContainer" parent="CharacterInfo"]
 layout_mode = 0
-offset_left = 671.188
-offset_top = 380.973
-offset_right = 869.188
-offset_bottom = 508.973
+offset_left = 653.211
+offset_top = 344.961
+offset_right = 851.211
+offset_bottom = 472.961
 
 [node name="attack" type="Label" parent="CharacterInfo/LabelContainer"]
 layout_mode = 2
@@ -101,10 +101,10 @@ text = "■"
 
 [node name="CharacterButton" type="ColorRect" parent="."]
 layout_mode = 1
-offset_left = 174.655
-offset_top = 534.113
-offset_right = 1151.66
-offset_bottom = 663.113
+offset_left = 111.68
+offset_top = 496.072
+offset_right = 1088.68
+offset_bottom = 625.072
 color = Color(0.117647, 0.145098, 0.14902, 1)
 
 [node name="select_warrior" type="Button" parent="CharacterButton"]
@@ -180,10 +180,9 @@ expand_icon = true
 
 [node name="select_characater" type="Label" parent="."]
 layout_mode = 0
-offset_left = 33.0
-offset_top = 40.0
-offset_right = 1233.0
-offset_bottom = 131.0
+offset_top = 20.0
+offset_right = 1200.0
+offset_bottom = 111.0
 theme_override_fonts/font = ExtResource("5_sa8dl")
 text = "캐릭터 선택"
 label_settings = SubResource("LabelSettings_b5exc")
@@ -191,9 +190,9 @@ horizontal_alignment = 1
 
 [node name="back(char)" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1098.0
-offset_top = 55.0
-offset_right = 1148.0
-offset_bottom = 105.0
+offset_left = 1065.0
+offset_top = 35.0
+offset_right = 1115.0
+offset_bottom = 85.0
 theme_override_font_sizes/font_size = 25
 text = "◀️"
