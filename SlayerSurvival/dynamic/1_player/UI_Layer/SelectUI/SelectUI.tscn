@@ -11,9 +11,16 @@ script = ExtResource("1_86iio")
 [node name="select_panel" parent="." instance=ExtResource("1_ge36q")]
 z_index = 1
 layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
 offset_left = 372.0
 offset_top = 103.0
 offset_right = 908.0
 offset_bottom = 615.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [editable path="select_panel"]
