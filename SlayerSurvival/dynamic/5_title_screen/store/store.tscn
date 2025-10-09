@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c1mrkkfrvqn25"]
+[gd_scene load_steps=16 format=3 uid="uid://c1mrkkfrvqn25"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store.gd" id="1_dvmxk"]
 [ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_gcuk1"]
@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://kpyeaei01jcl" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_vampire.tscn" id="12_dihfo"]
 [ext_resource type="PackedScene" uid="uid://b82fhwwnvs4q7" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_respawn.tscn" id="13_bsvky"]
 [ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="14_hqoac"]
-[ext_resource type="AudioStream" uid="uid://b512bfk8oe3yu" path="res://static/audio/bgm/太古の文明発見した時.mp3" id="15_kwa4y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mnub"]
 bg_color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
@@ -129,11 +128,6 @@ text = "RESET"
 stream = ExtResource("14_hqoac")
 volume_db = 10.0
 bus = &"SFX"
-
-[node name="bgm" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_kwa4y")
-autoplay = true
-bus = &"BGM"
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="ResetButton" to="." method="_on_reset_button_pressed"]

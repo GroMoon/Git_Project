@@ -1,10 +1,9 @@
-[gd_scene load_steps=129 format=3 uid="uid://bx8xatwwg81lh"]
+[gd_scene load_steps=128 format=3 uid="uid://bx8xatwwg81lh"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/menu.gd" id="1_7txdb"]
 [ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_027e0"]
 [ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="3_3dttr"]
 [ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="3_k3155"]
-[ext_resource type="AudioStream" uid="uid://b512bfk8oe3yu" path="res://static/audio/bgm/太古の文明発見した時.mp3" id="4_uu5rw"]
 [ext_resource type="Shader" path="res://static/shader/hit_effect.gdshader" id="6_6wm0u"]
 [ext_resource type="Texture2D" uid="uid://b4hn4pimtemuf" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack1.png" id="7_75dph"]
 [ext_resource type="Texture2D" uid="uid://dyg8uou3pfdge" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Attack2.png" id="8_218rh"]
@@ -940,11 +939,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_3dttr")
 theme_override_font_sizes/font_size = 20
 text = "v 1.0.0 (Test)"
-
-[node name="bgm" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_uu5rw")
-autoplay = true
-bus = &"BGM"
 
 [node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(900, 220)
