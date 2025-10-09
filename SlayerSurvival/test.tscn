@@ -4,12 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://wispepgc6lma" path="res://dynamic/4_world/select_map/select_map.tscn" id="2_n4573"]
 [ext_resource type="PackedScene" uid="uid://uii3wm1de8w0" path="res://dynamic/2_enemy/enemy_spawner/enemy_spwaner.tscn" id="4_ad5oa"]
 [ext_resource type="PackedScene" uid="uid://xya4xva0d7vj" path="res://dynamic/1_player/selcet_character/select_character.tscn" id="5_5yiak"]
-[ext_resource type="AudioStream" uid="uid://bvghei5r6rthq" path="res://static/audio/bgm/bgm-001.mp3" id="5_tveje"]
-[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="6_a63fx"]
-[ext_resource type="AudioStream" uid="uid://sikmg57i6t3v" path="res://static/audio/bgm/bgm-002.mp3" id="6_kpfxg"]
-[ext_resource type="AudioStream" uid="uid://dca6hwgrboffr" path="res://static/audio/bgm/bgm-003.mp3" id="7_q3i7n"]
-[ext_resource type="AudioStream" uid="uid://t51dl55tno4g" path="res://static/audio/bgm/bgm-004.mp3" id="8_pdldq"]
-[ext_resource type="AudioStream" uid="uid://d2ku8npwerjux" path="res://static/audio/bgm/bgm-005.mp3" id="9_xvf8x"]
+[ext_resource type="AudioStream" uid="uid://dj1jc560p324r" path="res://static/audio/bgm/bgm-001.mp3" id="5_tveje"]
+[ext_resource type="AudioStream" uid="uid://bvcsv07rb0ime" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="6_a63fx"]
+[ext_resource type="AudioStream" uid="uid://dchqmddukg46y" path="res://static/audio/bgm/bgm-002.mp3" id="6_kpfxg"]
+[ext_resource type="AudioStream" uid="uid://c1t46f1m1x77n" path="res://static/audio/bgm/bgm-003.mp3" id="7_q3i7n"]
+[ext_resource type="AudioStream" uid="uid://2i7typgt4e0m" path="res://static/audio/bgm/bgm-004.mp3" id="8_pdldq"]
+[ext_resource type="AudioStream" uid="uid://qeuxxvisp0ol" path="res://static/audio/bgm/bgm-005.mp3" id="9_xvf8x"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b23io"]
 streams_count = 5
