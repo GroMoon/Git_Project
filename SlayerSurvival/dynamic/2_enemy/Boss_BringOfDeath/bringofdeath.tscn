@@ -1,8 +1,10 @@
-[gd_scene load_steps=59 format=3 uid="uid://d36u7wdm8j7ae"]
+[gd_scene load_steps=61 format=3 uid="uid://d36u7wdm8j7ae"]
 
 [ext_resource type="Script" path="res://dynamic/2_enemy/Boss_BringOfDeath/bringofdeath.gd" id="1_1621c"]
-[ext_resource type="Texture2D" uid="uid://pv4qs8cagmmf" path="res://dynamic/2_enemy/Boss_BringOfDeath/Sprites/Bringer-of-Death-SpritSheet.png" id="1_mypxp"]
+[ext_resource type="Texture2D" uid="uid://m3b1383boy86" path="res://dynamic/2_enemy/Boss_BringOfDeath/Sprites/Bringer-of-Death-SpritSheet.png" id="1_mypxp"]
 [ext_resource type="PackedScene" uid="uid://dbrnapriu7vw3" path="res://dynamic/6_utillity/interaction_sensor/interaction_sensor.tscn" id="2_2817u"]
+[ext_resource type="AudioStream" uid="uid://df80edwf6mp52" path="res://static/audio/sfx/enemy/bringofdeath/bringofdeath_attack.wav" id="3_xqjhl"]
+[ext_resource type="AudioStream" uid="uid://37yb72477ueo" path="res://static/audio/sfx/enemy/bringofdeath/bringofdeath_death.mp3" id="5_38x7r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_81j5u"]
 atlas = ExtResource("1_mypxp")
@@ -442,6 +444,30 @@ tracks/2/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("attack_sound:stream")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_xqjhl")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("attack_sound:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k0uxn"]
 _data = {
@@ -499,6 +525,19 @@ collision_mask = 2
 position = Vector2(-56.5, 0)
 shape = SubResource("RectangleShape2D_pf3py")
 disabled = true
+
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+scale = Vector2(1.01282, 1.06122)
+stream = ExtResource("5_38x7r")
+bus = &"SFX"
+
+[node name="attack_sound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+process_physics_priority = 8840
+scale = Vector2(1.01282, 1.06122)
+stream = ExtResource("3_xqjhl")
+bus = &"SFX"
 
 [connection signal="area_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_area_entered"]
 [connection signal="body_entered" from="interaction_sensor" to="." method="_on_interaction_sensor_body_entered"]

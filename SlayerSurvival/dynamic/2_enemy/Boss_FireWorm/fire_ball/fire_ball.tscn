@@ -1,8 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://bflcbhgisfqrb"]
+[gd_scene load_steps=24 format=3 uid="uid://bflcbhgisfqrb"]
 
 [ext_resource type="Script" path="res://dynamic/2_enemy/Boss_FireWorm/fire_ball/fire_ball.gd" id="1_ldmgs"]
 [ext_resource type="Texture2D" uid="uid://ufc4doy26vcq" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Explosion.png" id="1_skv4f"]
 [ext_resource type="Texture2D" uid="uid://7bamjmcywstr" path="res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Move.png" id="2_0ia7v"]
+[ext_resource type="AudioStream" uid="uid://k7v23bvgrytp" path="res://static/audio/sfx/enemy/firewarm/fire_ball.mp3" id="4_0ou0o"]
+[ext_resource type="AudioStream" uid="uid://bcga4yl1ki5ta" path="res://static/audio/sfx/enemy/firewarm/explosion.wav" id="5_ctqqt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kmg5d"]
 atlas = ExtResource("1_skv4f")
@@ -174,6 +176,30 @@ tracks/4/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../explosion:stream")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_ctqqt")]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../explosion:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_5q5wd"]
 resource_name = "Idle"
@@ -244,7 +270,8 @@ script = ExtResource("1_ldmgs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_5w88j")
-animation = &"Idle"
+animation = &"Explosion"
+frame = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)
@@ -253,6 +280,9 @@ debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(3, 3)
+stream = ExtResource("4_0ou0o")
+autoplay = true
+bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite2D")
@@ -263,6 +293,11 @@ libraries = {
 [node name="ExplosionTimer" type="Timer" parent="."]
 wait_time = 1.3
 autostart = true
+
+[node name="explosion" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(3, 3)
+stream = ExtResource("5_ctqqt")
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="ExplosionTimer" to="." method="_on_explosion_timer_timeout"]

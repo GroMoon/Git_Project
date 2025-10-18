@@ -8,6 +8,8 @@ const ATTACK_ANIMATION_SPEED = 2.0
 
 @onready var body_interaction_sensor      = $interaction_sensor 
 
+@onready var death_sound  = $death_sound
+
 # 파이어볼 씬
 var fireball_tscn = preload("res://dynamic/2_enemy/Boss_FireWorm/fire_ball/fire_ball.tscn")
 
@@ -76,11 +78,15 @@ func die_enemy():
 	is_dead = true 										# 사망 상태 활성화
 	drop_item()
 	player.kill_count += 1
+	$AttackTimer.stop()
 	body_collision_shape.call_deferred("set_disabled",true)	# CollisionShape2D 비활성화
 	body_interaction_sensor.call_deferred("queue_free")		# body_interaction_sensor 삭제
 	body_animated_sprite.play("death")
+	death_sound.play()
 	await body_animated_sprite.animation_finished
-	queue_free()										# 적 노드 삭제
+	body_animated_sprite.hide()							# 사운드 유지를 위해 노드 숨기기
+	await death_sound.finished
+	queue_free()									# 적 노드 삭제
 
 # 아이템 드랍 함수
 func drop_item():
@@ -140,6 +146,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		DamageVisual.show_damage(take_damage, self.position)
 		if health <= 0:
 			die_enemy()
+			return
 		else:
 			apply_knockback(area.get_parent())
 			# 데미지 모션 추가
