@@ -13,6 +13,10 @@ const TAKE_HIT_ANIMATION_SPEED = 1.0
 # 공격 범위
 @onready var attack_area = $Attack/CollisionShape2D
 
+# 사운드(공격, 사망)
+@onready var attack_sound = $attack_sound
+@onready var death_sound  = $death_sound
+
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
 var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
@@ -82,14 +86,18 @@ func _physics_process(delta):
 
 # 사망 처리 함수
 func die_enemy():
-	is_dead = true 										# 사망 상태 활성화
+	is_dead = true
 	drop_item()
 	player.kill_count += 1
-	body_collision_shape.call_deferred("set_disabled",true)	# CollisionShape2D 비활성화
-	body_interaction_sensor.call_deferred("queue_free")		# body_interaction_sensor 삭제
+	$AttackTimer.stop()									# 공격 타이머 정지
+	body_collision_shape.call_deferred("set_disabled",true)
+	body_interaction_sensor.call_deferred("queue_free")
 	body_animated_sprite.play("death")
+	death_sound.play()
 	await body_animated_sprite.animation_finished
-	queue_free()										# 적 노드 삭제
+	body_animated_sprite.hide()							# 사운드 유지를 위해 노드 숨기기
+	await death_sound.finished
+	queue_free()
 
 # 아이템 드랍 함수
 func drop_item():
@@ -136,6 +144,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		DamageVisual.show_damage(take_damage, self.position)
 		if health <= 0:
 			die_enemy()
+			return
 		if !is_attacking:
 			apply_knockback(area.get_parent())
 			# 데미지 모션 추가
