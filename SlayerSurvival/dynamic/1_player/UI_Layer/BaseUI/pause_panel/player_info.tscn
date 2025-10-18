@@ -22,23 +22,6 @@ offset_bottom = 177.0
 texture = SubResource("CompressedTexture2D_eew0b")
 expand_mode = 1
 
-[node name="respawn" type="Label" parent="."]
-layout_mode = 2
-offset_left = 226.0
-offset_top = 135.0
-offset_right = 252.0
-offset_bottom = 153.0
-text = "부활"
-horizontal_alignment = 1
-
-[node name="respawn_" type="Label" parent="."]
-layout_mode = 2
-offset_left = 256.0
-offset_top = 135.0
-offset_right = 319.0
-offset_bottom = 153.0
-text = ": ?"
-
 [node name="Title" type="GridContainer" parent="."]
 layout_mode = 2
 offset_left = 227.0
@@ -64,6 +47,15 @@ horizontal_alignment = 1
 [node name="LV_" type="Label" parent="Title"]
 layout_mode = 2
 text = ": {LV}"
+
+[node name="respawn" type="Label" parent="Title"]
+layout_mode = 2
+text = "부활"
+horizontal_alignment = 1
+
+[node name="respawn_" type="Label" parent="Title"]
+layout_mode = 2
+text = ": ?"
 
 [node name="Status_label" type="Label" parent="."]
 layout_mode = 0

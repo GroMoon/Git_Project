@@ -9,7 +9,7 @@ extends Control
 @onready var fatal_state = $FatalState
 
 # 퍼즈 시 플레이어 정보
-@onready var respawn_label      = $PausePanel/PlayerInfo/respawn_
+@onready var respawn_label      = $PausePanel/PlayerInfo/Title/respawn_
 @onready var character_img      = $PausePanel/PlayerInfo/Title_img
 @onready var status_label       = $PausePanel/PlayerInfo/Status_label
 @onready var name_label         = $PausePanel/PlayerInfo/Title/name_
