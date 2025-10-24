@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c1mrkkfrvqn25"]
+[gd_scene load_steps=17 format=3 uid="uid://c1mrkkfrvqn25"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store.gd" id="1_dvmxk"]
 [ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_gcuk1"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://kpyeaei01jcl" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_vampire.tscn" id="12_dihfo"]
 [ext_resource type="PackedScene" uid="uid://b82fhwwnvs4q7" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_respawn.tscn" id="13_bsvky"]
 [ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="14_hqoac"]
+[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="15_s2ow5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mnub"]
 bg_color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
@@ -129,7 +130,14 @@ stream = ExtResource("14_hqoac")
 volume_db = 10.0
 bus = &"SFX"
 
+[node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("15_s2ow5")
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="BackButton" to="." method="_on_back_button_mouse_entered"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="mouse_entered" from="ResetButton" to="." method="_on_reset_button_mouse_entered"]
 [connection signal="pressed" from="ResetButton" to="." method="_on_reset_button_pressed"]
 
 [editable path="StorePanel"]
