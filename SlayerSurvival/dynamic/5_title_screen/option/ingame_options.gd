@@ -76,5 +76,9 @@ func _on_sfx_toggle_toggled(toggled_on):
 	OptionsManager.set_mute("SFX", toggled_on)
 	update_sound()
 
+func _on_back_mouse_entered():
+	$Button_sound.play()
+
 func _on_back_pressed():
+	$Button_sound.play()
 	queue_free()

@@ -21,12 +21,14 @@ func update_gold():
 	gold_label.text = str(gold)
 
 func _on_back_button_pressed():
+	$Button_sound.play()
 	# Save store data
 	StoreData.save_store_data()
 	# Save character data
 	Global.save_character_data()
 	# Change scene to menu
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
+	
 
 func _on_reset_button_pressed():
 	# Reset gold by refunding all spent gold
@@ -48,3 +50,10 @@ func _on_reset_button_pressed():
 	
 	# Emit reset signal to update all store panels
 	emit_signal("reset_store")
+	$Button_sound.play()
+	
+func _on_reset_button_mouse_entered():
+	$Button_sound.play()
+
+func _on_back_button_mouse_entered():	
+	$Button_sound.play()
