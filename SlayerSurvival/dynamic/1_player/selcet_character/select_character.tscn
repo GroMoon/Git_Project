@@ -2,14 +2,14 @@
 
 [ext_resource type="StyleBox" uid="uid://clv8l34xvofwk" path="res://dynamic/1_player/selcet_character/Select_Character_Nornmal.tres" id="1_2r08d"]
 [ext_resource type="StyleBox" uid="uid://crljylwyjpvbx" path="res://dynamic/1_player/selcet_character/Select_Character_Hover.tres" id="2_d7e3u"]
-[ext_resource type="Texture2D" uid="uid://bpmfcs3ux5bno" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
-[ext_resource type="Texture2D" uid="uid://dnafoinwyf31" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
-[ext_resource type="Texture2D" uid="uid://b4ao07ur34p1m" path="res://static/png/ui/assembly_frame_gray.png" id="5_ltlxe"]
-[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
-[ext_resource type="Texture2D" uid="uid://cgcj3iowgntaj" path="res://dynamic/1_player/selcet_character/abillity_img/cursed.png" id="7_5bveo"]
-[ext_resource type="Texture2D" uid="uid://bn2p7e0vhownc" path="res://dynamic/1_player/selcet_character/abillity_img/speed.webp" id="8_gqlcw"]
-[ext_resource type="Texture2D" uid="uid://x4hrgtylgl1k" path="res://dynamic/1_player/characters/Wizard/Sprites/Wizard.png" id="9_6fx4o"]
-[ext_resource type="Texture2D" uid="uid://deoln6tuw0om2" path="res://dynamic/1_player/selcet_character/abillity_img/Heal.png" id="9_lhsed"]
+[ext_resource type="Texture2D" uid="uid://fnty2bw3ugxg" path="res://dynamic/1_player/characters/Medieval_King/Sprites/Medieval_King.png" id="3_1yasl"]
+[ext_resource type="Texture2D" uid="uid://bej2t2ihtiyul" path="res://dynamic/1_player/characters/Fantasy_Warrior/Sprites/Fantasy_Warrior.png" id="3_llvfx"]
+[ext_resource type="Texture2D" uid="uid://dmsaooe3ircuj" path="res://static/png/ui/assembly_frame_gray.png" id="5_ltlxe"]
+[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="5_sa8dl"]
+[ext_resource type="Texture2D" uid="uid://wb7u6f8edpb3" path="res://dynamic/1_player/selcet_character/abillity_img/cursed.png" id="7_5bveo"]
+[ext_resource type="Texture2D" uid="uid://bss7s86sithfg" path="res://dynamic/1_player/selcet_character/abillity_img/speed.webp" id="8_gqlcw"]
+[ext_resource type="Texture2D" uid="uid://btpgwa7i446ok" path="res://dynamic/1_player/characters/Wizard/Sprites/Wizard.png" id="9_6fx4o"]
+[ext_resource type="Texture2D" uid="uid://cj5wfxrwji347" path="res://dynamic/1_player/selcet_character/abillity_img/Heal.png" id="9_lhsed"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b5exc"]
 font_size = 83
@@ -30,7 +30,7 @@ offset_bottom = 720.0
 expand_mode = 1
 
 [node name="icon" type="Sprite2D" parent="CharacterInfo"]
-position = Vector2(413.876, 342.808)
+position = Vector2(372.877, 341.781)
 scale = Vector2(0.3, 0.291)
 
 [node name="frame" type="Sprite2D" parent="CharacterInfo"]
