@@ -26,33 +26,33 @@ corner_radius_bottom_left = 10
 script = ExtResource("1_dvmxk")
 
 [node name="Background" type="TextureRect" parent="."]
-offset_right = 1200.0
-offset_bottom = 650.0
+offset_right = 1280.0
+offset_bottom = 720.0
 texture = ExtResource("2_gcuk1")
 expand_mode = 1
 
 [node name="Panel" type="Panel" parent="."]
 modulate = Color(0, 0, 0, 1)
-offset_left = 59.0
-offset_top = 116.0
-offset_right = 1109.0
-offset_bottom = 633.0
+offset_left = 84.0
+offset_top = 119.0
+offset_right = 1204.0
+offset_bottom = 692.0
 
 [node name="Gold" type="Node2D" parent="."]
 texture_filter = 1
 
 [node name="Gold_icon" type="TextureRect" parent="Gold"]
-offset_left = 81.0
-offset_top = 56.0
-offset_right = 145.0
-offset_bottom = 118.0
+offset_left = 106.0
+offset_top = 59.0
+offset_right = 170.0
+offset_bottom = 121.0
 texture = ExtResource("3_yby07")
 
 [node name="Gold_label" type="Label" parent="Gold"]
-offset_left = 155.0
-offset_top = 61.0
-offset_right = 393.0
-offset_bottom = 113.0
+offset_left = 180.0
+offset_top = 64.0
+offset_right = 418.0
+offset_bottom = 116.0
 theme_override_font_sizes/font_size = 40
 text = "123"
 vertical_alignment = 1
@@ -62,63 +62,63 @@ vertical_alignment = 1
 [node name="ScrollContainer" parent="StorePanel" index="0"]
 offset_left = 86.0
 offset_top = 136.0
-offset_right = 1105.0
-offset_bottom = 606.0
+offset_right = 1173.0
+offset_bottom = 657.0
 
 [node name="GridContainer" parent="StorePanel/ScrollContainer/VBoxContainer" index="0"]
 size_flags_vertical = 3
 columns = 3
 
 [node name="StorePanelItemDamage" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="0" instance=ExtResource("5_urp71")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemShield" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="1" instance=ExtResource("6_jyfe8")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemSpeed" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="2" instance=ExtResource("7_cwle4")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemCooldown" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="3" instance=ExtResource("8_hv1bp")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemGemdrop" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="4" instance=ExtResource("9_baiaw")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemGolddrop" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="5" instance=ExtResource("10_rmpc0")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemHealth" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="6" instance=ExtResource("11_dmblr")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemVampire" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="7" instance=ExtResource("12_dihfo")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="StorePanelItemRespawn" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="8" instance=ExtResource("13_bsvky")]
-custom_minimum_size = Vector2(330, 235)
+custom_minimum_size = Vector2(355, 235)
 layout_mode = 2
 
 [node name="BackButton" type="Button" parent="."]
-offset_left = 977.0
-offset_top = 49.0
-offset_right = 1100.0
-offset_bottom = 105.0
+offset_left = 1089.0
+offset_top = 51.0
+offset_right = 1212.0
+offset_bottom = 107.0
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_3mnub")
 text = "BACK"
 
 [node name="ResetButton" type="Button" parent="."]
-offset_left = 845.0
-offset_top = 49.0
-offset_right = 968.0
-offset_bottom = 105.0
+offset_left = 957.0
+offset_top = 51.0
+offset_right = 1080.0
+offset_bottom = 107.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_3mnub")
