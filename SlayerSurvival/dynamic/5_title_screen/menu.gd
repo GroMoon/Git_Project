@@ -6,17 +6,22 @@ extends Node2D
 func _ready():
 	# 오토로드(오디오) bgm 재생
 	Audiomanager.play_music_for_scene("menu")
-	# 시작 시 창 크기를 1920x1080으로 설정
-	DisplayServer.window_set_size(Vector2i(1920, 1080))
+	
+	# 사용자 모니터에 맞는 적응형 창 크기 설정
+	var adaptive_window_size = OptionsManager.get_initial_window_size()
+	DisplayServer.window_set_size(Vector2i(adaptive_window_size))
 	
 	# 창을 화면 중앙에 위치시키기
 	var screen_size = DisplayServer.screen_get_size()
-	var window_size = Vector2i(1920, 1080)
+	var window_size = Vector2i(adaptive_window_size)
 	var center_position = Vector2i(
 		(screen_size.x - window_size.x) / 2,
 		(screen_size.y - window_size.y) / 2
 	)
 	DisplayServer.window_set_position(center_position)
+	
+	print("적응형 창 크기 설정: ", adaptive_window_size)
+	print("창 위치: ", center_position)
 
 func _process(_delta):
 	main_character.play("idle")

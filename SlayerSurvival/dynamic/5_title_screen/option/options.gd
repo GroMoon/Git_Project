@@ -38,6 +38,9 @@ func set_current_resolution():
 	var index = OptionsManager.resolution_list.find(OptionsManager.current_resolution)
 	if index != -1:
 		resol_option.select(index)
+	else:
+		# 1920x1080이 기본값이므로 인덱스 2를 선택 (resolution_list의 마지막 항목)
+		resol_option.select(2)
 
 func update_ui():
 	# 현재 윈도우 모드 확인
