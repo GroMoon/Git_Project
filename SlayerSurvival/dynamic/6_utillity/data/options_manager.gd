@@ -86,4 +86,5 @@ func apply_screen_mode(fullscreen: bool):
 		print("전체화면 모드로 변경")
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_size(Vector2i(1280, 720))
 		print("창모드로 변경")
