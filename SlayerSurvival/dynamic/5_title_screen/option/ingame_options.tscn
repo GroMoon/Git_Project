@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://hynl7qhfho6v"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/option/ingame_options.gd" id="1_0w4rt"]
-[ext_resource type="FontFile" uid="uid://1g3ibddi332c" path="res://static/font/DNFBitBitTTF.ttf" id="2_rhx6r"]
-[ext_resource type="Texture2D" uid="uid://c8kwsmvat0ihw" path="res://static/png/sound/loud_w.png" id="3_x61ll"]
-[ext_resource type="Texture2D" uid="uid://dredaimtmw6sc" path="res://static/png/sound/mute_w.png" id="4_gv2om"]
-[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="5_kwdxk"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_rhx6r"]
+[ext_resource type="Texture2D" uid="uid://l7dhohpeh7aw" path="res://static/png/sound/loud_w.png" id="3_x61ll"]
+[ext_resource type="Texture2D" uid="uid://bsma0cldowjnr" path="res://static/png/sound/mute_w.png" id="4_gv2om"]
+[ext_resource type="AudioStream" uid="uid://bvcsv07rb0ime" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="5_kwdxk"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
 
@@ -15,10 +15,10 @@ modulate_color = Color(0, 0, 0, 1)
 [node name="IngameOptions" type="Panel"]
 process_mode = 3
 texture_filter = 1
-offset_left = 350.0
-offset_top = 75.0
-offset_right = 850.0
-offset_bottom = 575.0
+offset_left = 360.0
+offset_top = 110.0
+offset_right = 860.0
+offset_bottom = 610.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
 script = ExtResource("1_0w4rt")
 
