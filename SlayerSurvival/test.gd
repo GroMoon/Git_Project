@@ -12,6 +12,8 @@ extends Node2D
 @onready var preview_map = $Select_Map_Panel/MapInfo/preview_map
 @onready var map_details = $Select_Map_Panel/MapInfo/details
 
+var character_details_key = ""
+var map_details_key = ""
 # 캐릭터를 인스턴스 하기 위한 선언	
 var character_load
 var instance_character
@@ -37,10 +39,12 @@ func _ready():
 	get_tree().paused = true
 	# 맵 디폴트 설정
 	preview_map.texture = preload("res://dynamic/4_world/cave/cave_illust.png")
-	map_details.text = "끝없이 끓어오르는 용암 속에서 열기를 견뎌야 합니다. \n\n깊은 어둠 속, 불길한 기척과 함께 거대한 화염의 괴물이 기다리고 있습니다… 파이어볼을 조심하세요."
+	map_details_key = "CAVE_DETAILS"
+	map_details.text = tr(map_details_key)
 	# 캐릭터 디폴트 설정
 	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
-	character_details.text = "번개의 힘이 깃든 마검을 든 전사. \n\n검을 휘두를 때마다 번개의 기운이 주변을 휘감으며, 적을 순식간에 제압합니다."
+	character_details_key = "WARRIOR_DETAILS"
+	character_details.text = tr(character_details_key)
 	attack_label.text = "■■"
 	move_label.text   = "■■■■"
 	helth_label.text  = "■■■"
@@ -168,7 +172,8 @@ func _on_wizard_pressed():
 func _on_select_warrior_mouse_entered():
 	$Button_sound.play()
 	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/fantasy_warrior_pixelart.webp")
-	character_details.text = "번개의 힘이 깃든 마검을 든 전사. \n\n검을 휘두를 때마다 번개의 기운이 주변을 휘감으며, 적을 순식간에 제압합니다."
+	character_details_key = "WARRIOR_DETAILS"
+	character_details.text = tr(character_details_key)
 	attack_label.text = "■■"
 	move_label.text   = "■■■■"
 	helth_label.text  = "■■■"
@@ -176,7 +181,8 @@ func _on_select_warrior_mouse_entered():
 func _on_select_king_mouse_entered():
 	$Button_sound.play()
 	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/medieval_king_pixelart.webp")
-	character_details.text = "무패의 신화를 써 내려간 절대 무력의 왕. \n\n강력한 롱소드의 일격은 방패마저 산산조각 내며 전장을 지배합니다."
+	character_details_key = "KING_DETAILS"
+	character_details.text = tr(character_details_key)
 	attack_label.text = "■■■■"
 	move_label.text   = "■■"
 	helth_label.text  = "■■■■■"
@@ -185,19 +191,22 @@ func _on_wizard_mouse_entered():
 	$Button_sound.play()
 	# FIXME
 	character_icon.texture = preload("res://dynamic/1_player/selcet_character/character_img/wizard_pixelart.webp")
-	character_details.text = "고대의 지식을 품은 번개의 주술사. \n\n하늘로부터 벼락을 불러내어 적을 꿰뚫으며, 전장의 흐름을 단숨에 바꿉니다."
+	character_details_key = "WIZARD_DETAILS"
+	character_details.text = tr(character_details_key)
 	attack_label.text = "■■■■■■"
 	move_label.text   = "■■"
 	helth_label.text  = "■■■"
 	
 func _on_cave_button_mouse_entered():
 	preview_map.texture = preload("res://dynamic/4_world/cave/cave_illust.png")
-	map_details.text = "끝없이 끓어오르는 용암 속에서 열기를 견뎌야 합니다. \n\n깊은 어둠 속, 불길한 기척과 함께 거대한 화염의 괴물이 기다리고 있습니다… 파이어볼을 조심하세요."
+	map_details_key = "CAVE_DETAILS"
+	map_details.text = tr(map_details_key)
 	$Button_sound.play()
 
 func _on_dungeon_button_mouse_entered():
 	preview_map.texture = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F_illust.webp")
-	map_details.text = "빛 한 줄기 들지 않는 습한 지하 감옥, 사방에서 쇠사슬이 울립니다. \n\n그 안에는 거대한 칼날을 든 죽음의 집행자가 기다리고 있습니다… 한 번 휘두르면 피할 틈조차 없을지도 모릅니다."
+	map_details_key = "DUNGEON_DETAILS"
+	map_details.text = tr(map_details_key)
 	$Button_sound.play()
 
 # 해당 씬 재시작

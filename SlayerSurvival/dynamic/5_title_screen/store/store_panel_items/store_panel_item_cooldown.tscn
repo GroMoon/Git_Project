@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://cpnyxlgkyhi80"]
 
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_cooldown.gd" id="1_iu2ph"]
-[ext_resource type="Texture2D" uid="uid://clt5lhsoeldk2" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_jvjh6"]
-[ext_resource type="Texture2D" uid="uid://cv7y843sltnel" path="res://dynamic/5_title_screen/store/store_sprites/cooltime_Nero_AI_Pixelate_Image_Pixel.jpg" id="2_q8j14"]
-[ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_njwfr"]
-[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_hhgs0"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_jvjh6"]
+[ext_resource type="Texture2D" uid="uid://c4vka8gr6668r" path="res://dynamic/5_title_screen/store/store_sprites/cooltime_Nero_AI_Pixelate_Image_Pixel.jpg" id="2_q8j14"]
+[ext_resource type="Texture2D" uid="uid://d4kl4i3p2rh3y" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_njwfr"]
+[ext_resource type="AudioStream" uid="uid://r1v6u8n6pdv3" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_hhgs0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ra381"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -70,7 +70,7 @@ offset_top = 111.0
 offset_right = 308.0
 offset_bottom = 165.0
 theme_override_font_sizes/font_size = 15
-text = "공격 쿨이 감소합니다 "
+text = "공격 쿨이 감소합니다."
 
 [node name="Cost" type="HBoxContainer" parent="."]
 layout_mode = 0

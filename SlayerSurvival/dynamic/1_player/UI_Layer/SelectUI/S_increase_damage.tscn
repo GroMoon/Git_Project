@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dluplinrf3xo3"]
 
-[ext_resource type="Texture2D" uid="uid://bqw4vicdcc4kr" path="res://dynamic/5_title_screen/store/store_sprites/damage.png" id="1_slo12"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_skm4t"]
-[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_wewlt"]
+[ext_resource type="Texture2D" uid="uid://cw5qhgpmfm5nd" path="res://dynamic/5_title_screen/store/store_sprites/damage.png" id="1_slo12"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_skm4t"]
+[ext_resource type="FontFile" uid="uid://b6fhugyk21a6r" path="res://static/font/DNFBitBitTTF.ttf" id="2_wewlt"]
 
 [node name="IncreaseDamage" type="Button"]
 offset_left = 72.0
@@ -41,6 +41,6 @@ offset_right = 456.0
 offset_bottom = 98.0
 theme_override_fonts/font = ExtResource("2_wewlt")
 theme_override_font_sizes/font_size = 20
-text = "플레이어의 데미지가 +5 증가합니다."
+text = "플레이어의 데미지가 증가합니다."
 vertical_alignment = 1
 autowrap_mode = 2

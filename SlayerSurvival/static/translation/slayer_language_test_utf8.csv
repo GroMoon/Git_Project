@@ -1,4 +1,4 @@
-key,ko,en
+﻿key,ko,en
 VERSION,v 1.0.0,v 1.0.0
 Menu씬,,
 Slayer Survival,Slayer Survival,Slayer Survival
@@ -6,9 +6,13 @@ Slayer Survival,Slayer Survival,Slayer Survival
 아 이 템,아 이 템,Item
 상 점,상 점,Store
 설 정,설 정,Option
+설        정,설        정,Option
 끝 내 기,끝 내 기,Quit
 캐릭터 선택,캐릭터 선택,Character Select
 캐릭터 설명,캐릭터 설명,Information
+WARRIOR_DETAILS,"번개의 힘이 깃든 마검을 든 전사. \n\n검을 휘두를 때마다 번개의 기운이 주변을 휘감으며, 적을 순식간에 제압합니다.","A warrior wielding a demon sword imbued with the power of lightning. \n\nEach swing of the blade unleashes a surge of lightning that engulfs the surroundings, instantly subduing enemies."
+KING_DETAILS,무패의 신화를 써 내려간 절대 무력의 왕. \n\n강력한 롱소드의 일격은 방패마저 산산조각 내며 전장을 지배합니다.,"The absolute ruler of might who wrote the myth of invincibility. \n\nA single strike from his formidable longsword shatters even shields, dominating the battlefield."
+WIZARD_DETAILS,"고대의 지식을 품은 번개의 주술사. \n\n하늘로부터 벼락을 불러내어 적을 꿰뚫으며, 전장의 흐름을 단숨에 바꿉니다.","The Lightning Sorcerer, bearing ancient knowledge. \n\nSummoning thunderbolts from the heavens to pierce through enemies, he instantly shifts the tide of battle."
 BaseUI씬,,
 Pause,Pause,Pause
 돌아가기,돌아가기,resume
@@ -18,59 +22,108 @@ Game Over!!,Game Over!!,Game Over!!
 나가기,나가기,quit
 SelectUI씬,,
 Level Up!,Level Up!,Level Up!
-흡혈,흡혈,Drain
-흡혈설명,,
+쿨타임 감소,쿨타임 감소,Cooldown Reduction
+플레이어의 공격 쿨타임을 감소시킵니다.,플레이어의 공격 쿨타임을 감소시킵니다.,Reduces the player's attack cooldown.
+흡혈,흡혈,Vamprie
+플레이어의 공격이 흡혈 효과를 얻습니다.,플레이어의 공격이 흡혈 효과를 얻습니다.,The player's attacks gain a blood-sucking effect.
 데미지 증가,데미지 증가,Increase Damage
-데미지 설명,,
+플레이어의 데미지가 증가합니다.,플레이어의 데미지가 증가합니다.,Attack damage increases.
+음식,음식,Food
+현재 체력을 회복합니다.,현재 체력을 회복합니다.,Restores your current health.
 자석 범위 증가,자석 범위 증가,Increase Magnet Range
-자석 범위 증가 설명,,
+플레이어의 아이템 획득 범위가 증가합니다.,플레이어의 아이템 획득 범위가 증가합니다.,The player's item acquisition range increases.
 최대 체력 증가,최대 체력 증가,Increase Max Health
-최대 체력 증가 설명,,
+플레이어의 최대 체력이 증가합니다.,플레이어의 최대 체력이 증가합니다.,The player's maximum health increases.
 이동 속도 증가,이동 속도 증가,Increase Movement Speed
-이동 속도 증가 설명,,
+플레이어의 이동속도가 증가합니다.,플레이어의 이동속도가 증가합니다.,The player's movement speed increases.
 쉐도우 파트너,쉐도우 파트너,Shadow Partner
-쉐도우 파트너 설명,,
+플레이어의 그림자가 나타나 플레이어와 같은 공격을 수행합니다.,플레이어의 그림자가 나타나 플레이어와 같은 공격을 수행합니다.,The player's shadow appears and performs the same attacks as the player.
+실드,실드,Shield
+플레이어의 방어력이 증가합니다.,플레이어의 방어력이 증가합니다.,The player's defense increases.
 더블 슬레쉬,더블 슬레쉬,Double Slash
-더블 슬레쉬 설명,,
+플레이어의 공격이  2회 콤보 공격을 합니다.,플레이어의 공격이  2회 콤보 공격을 합니다.,The player's attack performs a 2-hit combo attack.
 트리플 슬레쉬,트리플 슬레쉬,Triple Slash
-트리플 슬레쉬 설명,,
+플레이어의 공격이  3회 콤보 공격을 합니다.,플레이어의 공격이  3회 콤보 공격을 합니다.,The player's attack performs a 3-hit combo attack.
 더블 라이트닝,더블 라이트닝,Double Lightning
-더블 라이트닝 설명,,
+Wizard의 라이트닝 공격이  2회 공격을 합니다.,Wizard의 라이트닝 공격이  2회 공격을 합니다.,The Wizard's Lightning Attack strikes twice.
 트리플 라이트닝,트리플 라이트닝,Triple Lightning
-트리플 라이트닝,,
+Wizard의 라이트닝 공격이  3회 공격을 합니다.,Wizard의 라이트닝 공격이  3회 공격을 합니다.,The Wizard's Lightning Attack strikes three times.
 Select Map씬,,
 맵 선택,맵 선택,Map Select
 맵 설명,맵 설명,Information
 Cave,Cave,Cave
+CAVE_DETAILS,"끝없이 끓어오르는 용암 속에서 열기를 견뎌야 합니다. \n\n깊은 어둠 속, 불길한 기척과 함께 거대한 화염의 괴물이 기다리고 있습니다… 파이어볼을 조심하세요.","You must endure the heat within the endlessly boiling lava. \n\nIn the deep darkness, a monstrous creature of flame awaits, accompanied by an ominous presence... Beware the fireballs."
 Dungeon,Dungeon,Dungeon
+DUNGEON_DETAILS,"빛 한 줄기 들지 않는 습한 지하 감옥, 사방에서 쇠사슬이 울립니다. \n\n그 안에는 거대한 칼날을 든 죽음의 집행자가 기다리고 있습니다… 한 번 휘두르면 피할 틈조차 없을지도 모릅니다.","A dampy of light penetrates, chains clanging from all sides. \n\nWithin, the executioner of de underground dungeon where not a single raath waits, wielding a massive blade… Once swung, there may be no chance to evade it."
 Option씬,,
 설 정,설 정,Options
-화면 설정,화면 설정,Screen settings
+화면 설정,화면 설정,Screen
 해상도,해상도,resolution
-화면 모드,화면 모드,screen mode
-전체화면,전체화면,full screen
-창 모드,창 모드,window screen
-사운드 설정,사운드 설정,Sound settings
-전체 볼륨,전체 볼륨,entire volume
+화면 모드,화면 모드,Mode
+전체화면,전체화면,FULL
+창 모드,창 모드,WINDOW
+사운드 설정,사운드 설정,Sound
+전체 볼륨,전체 볼륨,MAIN
 BGM,BGM,BGM
 SFX,SFX,SFX
 Store씬,,
 COOLDOWN,COOLDOWN,COOLDOWN
-COOLDOWN 설명,,
+공격 쿨이 감소합니다.,공격 쿨이 감소합니다.,Attack cooldown is reduced.
 DAMAGE,DAMAGE,DAMAGE
-DAMAGE 설명,,
+공격 데미지가 증가합니다.,공격 데미지가 증가합니다.,Attack damage increases.
 GEM DROP,GEM DROP,GEM DROP
-GEM DROP 설명,,
+경험치를 더 많이 획득합니다.,경험치를 더 많이 획득합니다.,You gain more experience points.
 GOLD DROP,GOLD DROP,GOLD DROP
-GOLD DROP 설명,,
+골드를 더 많이 획득합니다.,골드를 더 많이 획득합니다.,You gain more gold.
 HEALTH,HEALTH,HEALTH
-HEALTH 설명,,
+최대 체력이 증가합니다.,최대 체력이 증가합니다.,Maximum health increases.
 RESPAWN,RESPAWN,RESPAWN
-RESPAWN 설명,,
+캐릭터가 사망 시 부활합니다.,캐릭터가 사망 시 부활합니다.,The character revives upon death.
 SHIELD,SHIELD,SHIELD
-SHIELD 설명,,
+방어력이 증가합니다. ,방어력이 증가합니다. ,Defense increases.
 SPEED,SPEED,SPEED
-SPEED 설명,,
+이동속도가 증가합니다.,이동속도가 증가합니다.,Movement speed increases.
 VAMPIRE,VAMPIRE,VAMPIRE
-VAMPIRE 설명,,
+흡혈 능력치가 증가합니다.,흡혈 능력치가 증가합니다.,Vamprie ability increases.
 test씬,,
+,,
+,,
+Pause Pannel,,
+이름,이름,NAME
+LV,LV,LV
+부활,부활,Revive
+체력,체력,HP
+공격력,공격력,AD
+방어력,방어력,DEF
+이동속도,이동속도,MOV
+공격속도,공격속도,ASPD
+스 킬,스 킬,SKILL
+콤보 LV,콤보 LV,Combo LV
+데미지 LV,데미지 LV,Damage LV
+방어력 LV,방어력 LV,Defense LV
+최대 체력 LV,최대 체력 LV,HP LV
+이동 속도 LV이동 속도 LV,,Speed LV
+흡혈 LV,흡혈 LV,Vampire LV
+자석 범위 LV,자석 범위 LV,Magnet LV
+공격 속도 LV,공격 속도 LV,Attack Speed LV
+그림자 LV,그림자 LV,Shadow LV
+쿨타임 LV,쿨타임 LV,Cooldown LV
+Death Pannel,,
+생존 시간,생존 시간,Survive Time
+처치한 적,처치한 적,Kills
+획득한 골드,획득한 골드,Gold Earned
+다시하기,다시하기,Retry
+나가기,나가기,Quit
+,,
+Dialogic,,
+얏호!,얏호!,Yay!
+FlyingEye 를 동료로 만들 수 있다!,FlyingEye 를 동료로 만들 수 있다!,You can make 'FlyingEye' your coworker!
+FlyingEye 를 동료로 삼겠습니까?,FlyingEye 를 동료로 삼겠습니까?,Do you want 'FlyingEye' as a colleague?
+Goblin 을 동료로 만들 수 있다!,Goblin 을 동료로 만들 수 있다!,You can make 'Goblin' your coworker!
+Goblin 을 동료로 삼겠습니까?,Goblin 을 동료로 삼겠습니까?,Do you want 'Goblin' as a colleague?
+Mushroom 을 동료로 만들 수 있다!,Mushroom 을 동료로 만들 수 있다!,You can make 'Mushroom' your coworker!
+Mushroom 을 동료로 삼겠습니까?,Mushroom 을 동료로 삼겠습니까?,Do you want 'Mushroom' as a colleague?
+Skeleton 을 동료로 만들 수 있다!,Skeleton 을 동료로 만들 수 있다!,You can make 'Skeleton' your coworker!
+Skeleton 을 동료로 삼겠습니까?,Skeleton 을 동료로 삼겠습니까?,Do you want 'Skeleton' as a colleague?
+예,예,Yes
+아니요,아니요,No

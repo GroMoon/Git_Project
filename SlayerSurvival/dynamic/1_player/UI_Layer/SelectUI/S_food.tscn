@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dmcm6hvehvmc1"]
 
-[ext_resource type="Texture2D" uid="uid://3g4obiteuo0q" path="res://dynamic/5_title_screen/store/store_sprites/hp_up.png" id="2_0vmrq"]
-[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_ka0uq"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_ea37h"]
+[ext_resource type="Texture2D" uid="uid://bav1cb4if65kc" path="res://dynamic/5_title_screen/store/store_sprites/hp_up.png" id="2_0vmrq"]
+[ext_resource type="FontFile" uid="uid://b6fhugyk21a6r" path="res://static/font/DNFBitBitTTF.ttf" id="2_ka0uq"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/Items/frame/frame.png" id="3_ea37h"]
 
 [node name="Food" type="Button"]
 offset_right = 470.0
@@ -27,7 +27,7 @@ offset_right = 464.0
 offset_bottom = 98.0
 theme_override_fonts/font = ExtResource("2_ka0uq")
 theme_override_font_sizes/font_size = 20
-text = "현재 체력을 ? 회복합니다."
+text = "현재 체력을 회복합니다."
 vertical_alignment = 1
 autowrap_mode = 2
 

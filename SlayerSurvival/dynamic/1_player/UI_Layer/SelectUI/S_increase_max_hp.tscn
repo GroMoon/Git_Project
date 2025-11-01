@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://6s7fphrpcg7t"]
 
-[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_hqktd"]
-[ext_resource type="Texture2D" uid="uid://c1141m0epddbu" path="res://dynamic/5_title_screen/store/store_sprites/health.png" id="2_ig3hn"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_b36sv"]
+[ext_resource type="FontFile" uid="uid://b6fhugyk21a6r" path="res://static/font/DNFBitBitTTF.ttf" id="2_hqktd"]
+[ext_resource type="Texture2D" uid="uid://dwsb7720v4f4x" path="res://dynamic/5_title_screen/store/store_sprites/health.png" id="2_ig3hn"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_b36sv"]
 
 [node name="IncreaseMaxHp" type="Button"]
 offset_left = 48.0
@@ -29,7 +29,7 @@ offset_right = 448.0
 offset_bottom = 98.0
 theme_override_fonts/font = ExtResource("2_hqktd")
 theme_override_font_sizes/font_size = 20
-text = "플레이어의 최대 체력이 +10 증가합니다."
+text = "플레이어의 최대 체력이 증가합니다."
 vertical_alignment = 1
 autowrap_mode = 2
 

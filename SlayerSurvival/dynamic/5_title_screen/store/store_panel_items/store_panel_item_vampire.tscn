@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://kpyeaei01jcl"]
 
-[ext_resource type="Texture2D" uid="uid://bpe5a1yuridia" path="res://dynamic/5_title_screen/store/store_sprites/vampire.png" id="1_3ngvt"]
+[ext_resource type="Texture2D" uid="uid://c6pu10gwvil8e" path="res://dynamic/5_title_screen/store/store_sprites/vampire.png" id="1_3ngvt"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_vampire.gd" id="1_cwv58"]
-[ext_resource type="Texture2D" uid="uid://clt5lhsoeldk2" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_7r6rp"]
-[ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_berue"]
-[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_ekrx4"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_7r6rp"]
+[ext_resource type="Texture2D" uid="uid://d4kl4i3p2rh3y" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_berue"]
+[ext_resource type="AudioStream" uid="uid://r1v6u8n6pdv3" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_ekrx4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mb48a"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
@@ -70,7 +70,7 @@ offset_top = 111.0
 offset_right = 308.0
 offset_bottom = 165.0
 theme_override_font_sizes/font_size = 15
-text = "흡혈 능력치가 증가합니다 "
+text = "흡혈 능력치가 증가합니다."
 
 [node name="Cost" type="HBoxContainer" parent="."]
 layout_mode = 0
