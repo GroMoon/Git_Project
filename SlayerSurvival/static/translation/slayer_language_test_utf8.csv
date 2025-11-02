@@ -10,9 +10,9 @@ Slayer Survival,Slayer Survival,Slayer Survival
 끝 내 기,끝 내 기,Quit
 캐릭터 선택,캐릭터 선택,Character Select
 캐릭터 설명,캐릭터 설명,Information
-WARRIOR_DETAILS,"번개의 힘이 깃든 마검을 든 전사. \n\n검을 휘두를 때마다 번개의 기운이 주변을 휘감으며, 적을 순식간에 제압합니다.","A warrior wielding a demon sword imbued with the power of lightning. \n\nEach swing of the blade unleashes a surge of lightning that engulfs the surroundings, instantly subduing enemies."
-KING_DETAILS,무패의 신화를 써 내려간 절대 무력의 왕. \n\n강력한 롱소드의 일격은 방패마저 산산조각 내며 전장을 지배합니다.,"The absolute ruler of might who wrote the myth of invincibility. \n\nA single strike from his formidable longsword shatters even shields, dominating the battlefield."
-WIZARD_DETAILS,"고대의 지식을 품은 번개의 주술사. \n\n하늘로부터 벼락을 불러내어 적을 꿰뚫으며, 전장의 흐름을 단숨에 바꿉니다.","The Lightning Sorcerer, bearing ancient knowledge. \n\nSummoning thunderbolts from the heavens to pierce through enemies, he instantly shifts the tide of battle."
+WARRIOR_DETAILS,"번개의 힘이 깃든 마검을 든 전사. \n\n검을 휘두를 때마다 번개의 기운이 주변을 휘감으며, 적을 순식간에 제압합니다.","A warrior with a lightning sword. \n\nEach swing strikes nearby enemies with lightning."
+KING_DETAILS,무패의 신화를 써 내려간 절대 무력의 왕. \n\n강력한 롱소드의 일격은 방패마저 산산조각 내며 전장을 지배합니다.,"A king undefeated in battle. \n\nHis longsword can even break shields."
+WIZARD_DETAILS,"고대의 지식을 품은 번개의 주술사. \n\n하늘로부터 벼락을 불러내어 적을 꿰뚫으며, 전장의 흐름을 단숨에 바꿉니다.","A wizard who controls lightning. \n\nHe calls down thunderbolts to hit his enemies."
 BaseUI씬,,
 Pause,Pause,Pause
 돌아가기,돌아가기,resume
@@ -22,19 +22,19 @@ Game Over!!,Game Over!!,Game Over!!
 나가기,나가기,quit
 SelectUI씬,,
 Level Up!,Level Up!,Level Up!
-쿨타임 감소,쿨타임 감소,Cooldown Reduction
+쿨타임 감소,쿨타임 감소,Cooldown
 플레이어의 공격 쿨타임을 감소시킵니다.,플레이어의 공격 쿨타임을 감소시킵니다.,Reduces the player's attack cooldown.
 흡혈,흡혈,Vamprie
 플레이어의 공격이 흡혈 효과를 얻습니다.,플레이어의 공격이 흡혈 효과를 얻습니다.,The player's attacks gain a blood-sucking effect.
-데미지 증가,데미지 증가,Increase Damage
+데미지 증가,데미지 증가,Damage
 플레이어의 데미지가 증가합니다.,플레이어의 데미지가 증가합니다.,Attack damage increases.
 음식,음식,Food
 현재 체력을 회복합니다.,현재 체력을 회복합니다.,Restores your current health.
-자석 범위 증가,자석 범위 증가,Increase Magnet Range
-플레이어의 아이템 획득 범위가 증가합니다.,플레이어의 아이템 획득 범위가 증가합니다.,The player's item acquisition range increases.
-최대 체력 증가,최대 체력 증가,Increase Max Health
+자석 범위 증가,자석 범위 증가,Magnet Range
+플레이어의 아이템 획득 범위가 증가합니다.,플레이어의 아이템 획득 범위가 증가합니다.,The player's item getting range increases.
+최대 체력 증가,최대 체력 증가,Max Health
 플레이어의 최대 체력이 증가합니다.,플레이어의 최대 체력이 증가합니다.,The player's maximum health increases.
-이동 속도 증가,이동 속도 증가,Increase Movement Speed
+이동 속도 증가,이동 속도 증가,Speed
 플레이어의 이동속도가 증가합니다.,플레이어의 이동속도가 증가합니다.,The player's movement speed increases.
 쉐도우 파트너,쉐도우 파트너,Shadow Partner
 플레이어의 그림자가 나타나 플레이어와 같은 공격을 수행합니다.,플레이어의 그림자가 나타나 플레이어와 같은 공격을 수행합니다.,The player's shadow appears and performs the same attacks as the player.
@@ -52,9 +52,9 @@ Select Map씬,,
 맵 선택,맵 선택,Map Select
 맵 설명,맵 설명,Information
 Cave,Cave,Cave
-CAVE_DETAILS,"끝없이 끓어오르는 용암 속에서 열기를 견뎌야 합니다. \n\n깊은 어둠 속, 불길한 기척과 함께 거대한 화염의 괴물이 기다리고 있습니다… 파이어볼을 조심하세요.","You must endure the heat within the endlessly boiling lava. \n\nIn the deep darkness, a monstrous creature of flame awaits, accompanied by an ominous presence... Beware the fireballs."
+CAVE_DETAILS,"뜨거운 용암과 어둠이 가득한 동굴입니다. \n\n안에는 거대한 화염 괴물이 기다리고 있으니 파이어볼을 조심하세요.","A hot, dark cave filled with lava. \n\nA giant fire monster is inside—watch out for fireballs."
 Dungeon,Dungeon,Dungeon
-DUNGEON_DETAILS,"빛 한 줄기 들지 않는 습한 지하 감옥, 사방에서 쇠사슬이 울립니다. \n\n그 안에는 거대한 칼날을 든 죽음의 집행자가 기다리고 있습니다… 한 번 휘두르면 피할 틈조차 없을지도 모릅니다.","A dampy of light penetrates, chains clanging from all sides. \n\nWithin, the executioner of de underground dungeon where not a single raath waits, wielding a massive blade… Once swung, there may be no chance to evade it."
+DUNGEON_DETAILS,"찬 기운이 감도는 지하 감옥입니다. \n\n거대한 칼날을 든 집행자를 조심하세요. 피해갈 틈이 없을 수도 있습니다.","A cold, damp dungeon. \n\nBeware the executioner and his massive blade—you might not get a chance to dodge."
 Option씬,,
 설 정,설 정,Options
 화면 설정,화면 설정,Screen
@@ -117,13 +117,13 @@ Death Pannel,,
 ,,
 Dialogic,,
 얏호!,얏호!,Yay!
-FlyingEye 를 동료로 만들 수 있다!,FlyingEye 를 동료로 만들 수 있다!,You can make 'FlyingEye' your coworker!
-FlyingEye 를 동료로 삼겠습니까?,FlyingEye 를 동료로 삼겠습니까?,Do you want 'FlyingEye' as a colleague?
-Goblin 을 동료로 만들 수 있다!,Goblin 을 동료로 만들 수 있다!,You can make 'Goblin' your coworker!
-Goblin 을 동료로 삼겠습니까?,Goblin 을 동료로 삼겠습니까?,Do you want 'Goblin' as a colleague?
-Mushroom 을 동료로 만들 수 있다!,Mushroom 을 동료로 만들 수 있다!,You can make 'Mushroom' your coworker!
-Mushroom 을 동료로 삼겠습니까?,Mushroom 을 동료로 삼겠습니까?,Do you want 'Mushroom' as a colleague?
-Skeleton 을 동료로 만들 수 있다!,Skeleton 을 동료로 만들 수 있다!,You can make 'Skeleton' your coworker!
-Skeleton 을 동료로 삼겠습니까?,Skeleton 을 동료로 삼겠습니까?,Do you want 'Skeleton' as a colleague?
+FlyingEye 를 동료로 만들 수 있다!,FlyingEye 를 동료로 만들 수 있다!,You can make 'FlyingEye' your partner!
+FlyingEye 를 동료로 삼겠습니까?,FlyingEye 를 동료로 삼겠습니까?,Do you want 'FlyingEye' as a partner?
+Goblin 을 동료로 만들 수 있다!,Goblin 을 동료로 만들 수 있다!,You can make 'Goblin' your partner!
+Goblin 을 동료로 삼겠습니까?,Goblin 을 동료로 삼겠습니까?,Do you want 'Goblin' as a partner?
+Mushroom 을 동료로 만들 수 있다!,Mushroom 을 동료로 만들 수 있다!,You can make 'Mushroom' your partner!
+Mushroom 을 동료로 삼겠습니까?,Mushroom 을 동료로 삼겠습니까?,Do you want 'Mushroom' as a partner?
+Skeleton 을 동료로 만들 수 있다!,Skeleton 을 동료로 만들 수 있다!,You can make 'Skeleton' your partner!
+Skeleton 을 동료로 삼겠습니까?,Skeleton 을 동료로 삼겠습니까?,Do you want 'Skeleton' as a partner?
 예,예,Yes
 아니요,아니요,No
