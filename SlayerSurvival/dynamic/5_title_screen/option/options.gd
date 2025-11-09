@@ -21,8 +21,6 @@ func _ready():
 
 func set_language_list():
 	var current_locale = TranslationServer.get_locale()
-
-	var text_to_find = ""
 	match current_locale:
 		"ko":
 			language_option.select(0)
