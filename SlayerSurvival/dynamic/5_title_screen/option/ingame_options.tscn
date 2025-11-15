@@ -15,9 +15,9 @@ modulate_color = Color(0, 0, 0, 1)
 [node name="IngameOptions" type="Panel"]
 process_mode = 3
 texture_filter = 1
-offset_left = 360.0
+offset_left = 390.0
 offset_top = 110.0
-offset_right = 860.0
+offset_right = 890.0
 offset_bottom = 610.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
 script = ExtResource("1_0w4rt")

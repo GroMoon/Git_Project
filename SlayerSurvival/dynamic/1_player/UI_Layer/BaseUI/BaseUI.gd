@@ -66,18 +66,21 @@ func _process(delta):
 	death_pause_flag = player.death_flag_for_pause
 	diag_pause_flag  = Dialogic.VAR.diag_pause_flag
 
-	if globl_pause_flag:				# esc 키 눌렀을 때
+	if globl_pause_flag && lvlup_pause_flag:	# 레벨업 중 esc 키 눌렀을 때
 		pause_panel.visible = true
+		select_ui.visible = false
+		get_tree().paused   = true
+	elif globl_pause_flag:				# esc 키 눌렀을 때
+		pause_panel.visible = true
+		# select_ui.visible = false
 		get_tree().paused   = true
 	elif lvlup_pause_flag: 				# 레벨 업 때
 		pause_panel.visible = false
+		select_ui.visible = true
 		get_tree().paused   = true
-		if globl_pause_flag:
-			pause_panel.visible = true
-		else:
-			pass
 	elif death_pause_flag:				# 플레이서 사망 시
 		pause_panel.visible = false
+		# select_ui.visible = false
 		death_panel.visible = true
 		get_tree().paused   = true
 		# 게임 오버
@@ -179,6 +182,7 @@ func _on_menu_pressed():
 func _on_option_pressed():
 	var ingame_options = preload("res://dynamic/5_title_screen/option/ingame_options.tscn")
 	var ingame_options_instance = ingame_options.instantiate()
+	ingame_options_instance.z_index = 3
 	add_child(ingame_options_instance)
 
 # 게임오버 후 Quit 버튼 누를 때
