@@ -13,6 +13,8 @@ const ATTACK_ANIMATION_SPEED = 2.0
 # 파이어볼 씬
 var fireball_tscn = preload("res://dynamic/2_enemy/Boss_FireWorm/fire_ball/fire_ball.tscn")
 
+# 포털
+var portal = preload("res://dynamic/4_world/portal/portal.tscn")
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
 var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
@@ -88,6 +90,12 @@ func die_enemy():
 	await death_sound.finished
 	queue_free()									# 적 노드 삭제
 
+# 포털 생성
+func spawn_portal():
+	var new_portal = portal.instantiate()
+	new_portal.global_position = global_position
+	get_parent().call_deferred("add_child", new_portal)
+
 # 아이템 드랍 함수
 func drop_item():
 	# 골드
@@ -146,6 +154,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		DamageVisual.show_damage(take_damage, self.position)
 		if health <= 0:
 			die_enemy()
+			spawn_portal()
 			return
 		else:
 			apply_knockback(area.get_parent())
@@ -158,6 +167,8 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		hit_flag = false
 
 func _on_attack_timer_timeout():
+	if is_dead:
+		return
 	is_attacking = true
 	body_animated_sprite.play("attack")
 	await body_animated_sprite.animation_finished

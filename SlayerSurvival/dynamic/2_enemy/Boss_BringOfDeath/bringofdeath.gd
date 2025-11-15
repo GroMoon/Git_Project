@@ -17,6 +17,8 @@ const TAKE_HIT_ANIMATION_SPEED = 1.0
 @onready var attack_sound = $attack_sound
 @onready var death_sound  = $death_sound
 
+# 포털
+var portal = preload("res://dynamic/4_world/portal/portal.tscn")
 # 아이템
 var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
 var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
@@ -99,6 +101,12 @@ func die_enemy():
 	await death_sound.finished
 	queue_free()
 
+# 포털 생성
+func spawn_portal():
+	var new_portal = portal.instantiate()
+	new_portal.global_position = global_position
+	get_parent().call_deferred("add_child", new_portal)
+
 # 아이템 드랍 함수
 func drop_item():
 	# 골드
@@ -144,6 +152,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		DamageVisual.show_damage(take_damage, self.position)
 		if health <= 0:
 			die_enemy()
+			spawn_portal()
 			return
 		if !is_attacking:
 			apply_knockback(area.get_parent())
