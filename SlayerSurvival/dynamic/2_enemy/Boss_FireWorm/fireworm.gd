@@ -78,6 +78,7 @@ func _physics_process(delta):
 # 사망 처리 함수
 func die_enemy():
 	is_dead = true 										# 사망 상태 활성화
+	remove_from_group("enemy")							# 죽은 보스가 enemy 그룹에서 제거되어 라이트닝 공격 대상이 되지 않도록 함
 	drop_item()
 	player.kill_count += 1
 	$AttackTimer.stop()
