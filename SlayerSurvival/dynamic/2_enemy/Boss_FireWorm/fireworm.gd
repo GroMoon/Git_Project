@@ -151,7 +151,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
 		var take_damage = area.get_parent().attack_damage
 		health -= take_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
-		DamageVisual.show_damage(take_damage, self.position)
+		DamageVisual.show_damage(take_damage, self.position, Color.WHITE)
 		if health <= 0:
 			die_enemy()
 			spawn_portal()
