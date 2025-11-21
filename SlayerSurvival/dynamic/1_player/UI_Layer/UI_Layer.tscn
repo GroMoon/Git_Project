@@ -6,6 +6,11 @@
 [node name="UI_Layer" type="CanvasLayer"]
 
 [node name="BaseUI" parent="." instance=ExtResource("1_gmbuo")]
+mouse_filter = 1
+
+[node name="PausePanel" parent="BaseUI" index="6"]
+z_index = 2
+mouse_filter = 1
 
 [node name="SelectUI" parent="." instance=ExtResource("2_b6516")]
 
