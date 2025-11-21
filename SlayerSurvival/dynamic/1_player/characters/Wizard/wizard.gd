@@ -48,8 +48,16 @@ func _on_attack_timer_timeout():
 	for i in attack_times:
 		if is_dead or !is_attacking:
 			break  # 죽었거나 공격 강제 중단 시 바로 탈출
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		animation_player.play("attack")
 		await animation_player.animation_finished
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		if is_dead or !is_attacking:
 			break 
 		cast_lightning()

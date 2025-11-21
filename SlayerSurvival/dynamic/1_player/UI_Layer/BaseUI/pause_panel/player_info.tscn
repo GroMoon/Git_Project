@@ -107,10 +107,12 @@ layout_mode = 2
 text = ": {move_speed}"
 
 [node name="attack_speed" type="Label" parent="Status"]
+visible = false
 layout_mode = 2
 text = "공격속도"
 
 [node name="atteck_speed_" type="Label" parent="Status"]
+visible = false
 layout_mode = 2
 text = ": {attack_speed}"
 
@@ -216,12 +218,14 @@ size_flags_vertical = 6
 text = ": {?}"
 
 [node name="attack_speed" type="Label" parent="Skill"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 text = "공격 속도 LV"
 
 [node name="attack_speed_" type="Label" parent="Skill"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6

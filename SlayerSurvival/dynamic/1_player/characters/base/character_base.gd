@@ -311,8 +311,47 @@ func apply_hit_effect():
 		animated_sprite.material.set_shader_parameter("hit_flag", false)
 
 func _on_magnetic_area_area_entered(area:Area2D):
-	if area.is_in_group("Gold") or area.is_in_group("Exp"):
+	if area.is_in_group("Gold") or area.is_in_group("Exp") or area.is_in_group("Food"):
 		area.target = $MagneticArea
 
 func _on_damage_timer_timeout():
 	damage_flag = false
+
+# pause가 해제될 때까지 대기하는 헬퍼 함수
+# pause 중에는 코드가 실행되지 않으므로, pause 해제 후에 확인
+func wait_for_pause_resume():
+	# pause 상태 확인
+	# BaseUI는 PAUSE_MODE_PROCESS 모드이므로 pause 중에도 실행됨
+	# 따라서 BaseUI의 pause 플래그를 확인할 수 있음
+	var is_paused = false
+	if baseui:
+		is_paused = baseui.globl_pause_flag or baseui.lvlup_pause_flag or baseui.death_pause_flag or baseui.diag_pause_flag or baseui.respawn_pause_flag
+	else:
+		is_paused = get_tree().paused
+	
+	if is_paused:
+		# pause 중에는 사망 상태 확인
+		if is_dead:
+			return false
+		# pause가 해제될 때까지 대기
+		# BaseUI는 PAUSE_MODE_PROCESS 모드이므로 pause 중에도 실행됨
+		# 따라서 BaseUI의 pause 플래그를 확인할 수 있음
+		if baseui:
+			while baseui.globl_pause_flag or baseui.lvlup_pause_flag or baseui.death_pause_flag or baseui.diag_pause_flag or baseui.respawn_pause_flag:
+				if is_dead:
+					return false
+				# pause 해제를 기다리기 위해 다음 프레임까지 대기
+				# BaseUI는 PAUSE_MODE_PROCESS 모드이므로 pause 중에도 실행됨
+				# 하지만 character_base는 pause 중에 실행되지 않으므로
+				# pause 해제 후에만 이 코드가 실행됨
+				# 따라서 BaseUI의 pause 플래그를 확인하는 것으로 충분함
+				await Engine.get_main_loop().process_frame
+		else:
+			# BaseUI가 없으면 get_tree().paused만 확인
+			while get_tree().paused:
+				if is_dead:
+					return false
+				# pause 해제를 기다리기 위해 다음 프레임까지 대기
+				# pause 중에는 코드가 실행되지 않으므로 pause 해제 후에만 실행됨
+				await Engine.get_main_loop().process_frame
+	return true

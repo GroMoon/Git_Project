@@ -40,21 +40,57 @@ func _on_attack_timer_timeout():
 		attack_area_3.position.x = 33
 	
 	if attack_times == 2:
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		animation_player.play("attack_1")
 		await animation_player.animation_finished
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		animation_player.play("attack_2")
 		await animation_player.animation_finished
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 	elif attack_times == 3:
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		animation_player.play("attack_1")
 		await animation_player.animation_finished
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		animation_player.play("attack_2")
 		await animation_player.animation_finished
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		animation_player.play("attack_3")
 		await animation_player.animation_finished
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 	else:
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 		# 공격 1
 		animation_player.play("attack_1")
 		await animation_player.animation_finished
+		# pause 해제 대기
+		if not await wait_for_pause_resume():
+			is_attacking = false
+			return
 
 	is_attacking = false
 	# 타이머 재시작

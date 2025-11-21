@@ -1,7 +1,7 @@
 set {diag_pause_flag} = true
 얏호!
-skeleton 을 동료로 만들 수 있다!
-skeleton 을 동료로 삼겠습니까?
+Skeleton 을 동료로 만들 수 있다!
+Skeleton 을 동료로 삼겠습니까?
 - 예
 	set {skeleton_pet_diag} = true
 - 아니요

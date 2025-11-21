@@ -17,7 +17,15 @@ func _ready():
 	update_ui()
 	update_sound()
 	get_language_list()
+	set_language_list()
 
+func set_language_list():
+	var current_locale = TranslationServer.get_locale()
+	match current_locale:
+		"ko":
+			language_option.select(0)
+		"en":
+			language_option.select(1)
 
 func get_language_list():
 	# 언어 버튼 생성(드롭다운)
