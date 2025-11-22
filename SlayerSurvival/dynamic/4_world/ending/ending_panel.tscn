@@ -1,0 +1,131 @@
+[gd_scene load_steps=7 format=3 uid="uid://dus3w26m832cx"]
+
+[ext_resource type="FontFile" uid="uid://b6fhugyk21a6r" path="res://static/font/DNFBitBitTTF.ttf" id="1_0ciih"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5uisb"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbcae"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ceyt"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qqqh8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ah76"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="EndingPanel" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -300.0
+offset_right = 250.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Clear" type="Label" parent="."]
+offset_top = 47.0
+offset_right = 500.0
+offset_bottom = 101.0
+theme_override_fonts/font = ExtResource("1_0ciih")
+theme_override_font_sizes/font_size = 50
+text = "Clear!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 169.0
+offset_top = 500.0
+offset_right = 331.0
+offset_bottom = 563.0
+theme_override_colors/font_hover_color = Color(0.823529, 0.823529, 0.00784314, 1)
+theme_override_fonts/font = ExtResource("1_0ciih")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_5uisb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dbcae")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ceyt")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qqqh8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6ah76")
+text = "나가기"
+
+[node name="FinalResult" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 15.0
+offset_top = 170.0
+offset_right = 484.0
+offset_bottom = 423.0
+
+[node name="ColorRect" type="ColorRect" parent="FinalResult"]
+layout_mode = 0
+offset_right = 469.0
+offset_bottom = 253.0
+color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[node name="survival_time" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 38.5
+offset_right = 211.0
+offset_bottom = 71.5
+theme_override_font_sizes/font_size = 30
+text = "생존 시간"
+
+[node name="survival_time_" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 38.5
+offset_right = 385.0
+offset_bottom = 71.5
+theme_override_font_sizes/font_size = 30
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="kill_enemy" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 110.0
+offset_right = 211.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 30
+text = "처치한 적"
+
+[node name="kill_enemy_" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 110.0
+offset_right = 385.0
+offset_bottom = 143.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+
+[node name="get_gold" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 181.5
+offset_right = 211.0
+offset_bottom = 214.5
+theme_override_font_sizes/font_size = 30
+text = "획득한 골드"
+
+[node name="get_gold_" type="Label" parent="FinalResult"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 181.5
+offset_right = 385.0
+offset_bottom = 214.5
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1

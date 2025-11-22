@@ -38,6 +38,8 @@ extends Control
 @onready var get_gold      = $DeathPanel/FinalResult/get_gold_
 #@onready var total_gold    = $DeathPanel/FinalResult/total_gold_
 
+# 엔딩 정보
+@onready var ending = $Ending
 
 var sec                 = 0.0
 var minute              = 0
@@ -46,6 +48,7 @@ var lvlup_pause_flag    = false
 var death_pause_flag    = false
 var diag_pause_flag     = false
 var respawn_pause_flag  = false
+var ending_pause_flag   = false
 
 var player = null
 
@@ -95,6 +98,10 @@ func _process(delta):
 		pause_panel.visible = false
 		get_tree().paused   = true
 	elif respawn_pause_flag:				# 부활 퍼즈
+		get_tree().paused   = true
+	elif ending_pause_flag:				# 엔딩 표시
+		pause_panel.visible = false
+		ending.visible = true
 		get_tree().paused   = true
 	else:
 		pause_panel.visible = false
@@ -194,6 +201,10 @@ func _on_quit_pressed():
 # 게임 오버 후 Restart 버튼 누를 때
 func _on_restart_pressed():
 	get_tree().change_scene_to_file("res://test.tscn")
+
+# 엔딩 후 Quit 버튼 누를 때
+func _on_ending_quit_pressed():
+	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 게임 오버 데이터 로깅
 func log_game_over_data():

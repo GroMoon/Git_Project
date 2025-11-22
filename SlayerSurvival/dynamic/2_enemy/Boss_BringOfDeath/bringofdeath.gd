@@ -107,6 +107,9 @@ func spawn_portal():
 	var new_portal = portal.instantiate()
 	new_portal.global_position = global_position
 	get_parent().call_deferred("add_child", new_portal)
+	# 보스 사망 신호를 BaseUI에 전달
+	if player and player.baseui:
+		player.baseui.ending_pause_flag = true
 
 # 아이템 드랍 함수
 func drop_item():
