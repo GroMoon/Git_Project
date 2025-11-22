@@ -89,6 +89,7 @@ func _physics_process(delta):
 # 사망 처리 함수
 func die_enemy():
 	is_dead = true
+	remove_from_group("enemy")							# 죽은 보스가 enemy 그룹에서 제거되어 라이트닝 공격 대상이 되지 않도록 함
 	drop_item()
 	player.kill_count += 1
 	$AttackTimer.stop()									# 공격 타이머 정지
@@ -149,7 +150,7 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
 		var take_damage = area.get_parent().attack_damage
 		health -= take_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
-		DamageVisual.show_damage(take_damage, self.position)
+		DamageVisual.show_damage(take_damage, self.position, Color.WHITE)
 		if health <= 0:
 			die_enemy()
 			spawn_portal()
