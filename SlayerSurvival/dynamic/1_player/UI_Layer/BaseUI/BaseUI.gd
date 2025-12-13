@@ -39,7 +39,14 @@ extends Control
 #@onready var total_gold    = $DeathPanel/FinalResult/total_gold_
 
 # 엔딩 정보
-@onready var ending = $Ending
+@onready var ending_survival_time = $EndingPanel/FinalResult/survival_time_
+@onready var ending_kill_enemy    = $EndingPanel/FinalResult/kill_enemy_
+@onready var ending_get_gold      = $EndingPanel/FinalResult/get_gold_
+@onready var ending_panel 		  = $EndingPanel
+@onready var ending_screen 		  = $Ending
+@onready var ending_scene		  = preload("res://dynamic/4_world/ending/ending.tscn")
+var ending_instance 			  = null
+var is_ending_played 			  = false
 
 var sec                 = 0.0
 var minute              = 0
@@ -56,6 +63,8 @@ func _ready():
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
 	pause_panel.visible = false		# PausePanel 가리기
 	death_panel.visible = false		# DeathPanel 가리기
+	ending_panel.visible = false	# EndingPanel 가리기
+	ending_screen.visible = false	# EndingScreen 가리기
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
 	# player 세팅
 	player = get_parent().get_parent()
@@ -101,8 +110,16 @@ func _process(delta):
 		get_tree().paused   = true
 	elif ending_pause_flag:				# 엔딩 표시
 		pause_panel.visible = false
-		ending.visible = true
-		get_tree().paused   = true
+		ending_survival_time.text = stopwatch.text
+		ending_kill_enemy.text    = str(int(player.kill_count))
+		ending_get_gold.text      = str(int(player.gold_count))
+		# 엔딩 인스턴스 생성
+		if ending_instance == null and not is_ending_played:
+			ending_instance = ending_scene.instantiate()
+			ending_instance.connect("ending_finished", Callable(self, "_on_ending_finished"))
+			add_child(ending_instance)
+			ending_screen.visible = true
+
 	else:
 		pause_panel.visible = false
 		get_tree().paused   = false
@@ -110,6 +127,14 @@ func _process(delta):
 		
 	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag)&&(!respawn_pause_flag):
 		process_stopwatch(delta)
+
+func _on_ending_finished():
+	ending_instance = null    # 인스턴스 변수 비우기
+	is_ending_played = true   # "연출 보여줬음" 표시 -> 다시 생성 안 함
+	# ending_panel을 표시하고 인덱스와 그 자식들 모두 위로
+	ending_panel.visible = true
+	# 인덱스 몇번인지 디버깅
+	print("Ending Panel Index: ", ending_panel.get_index())
 
 # esc 키(=pause)를 눌렀을 때
 func check_pause_pressed():

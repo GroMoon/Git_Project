@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://sxradkvyaick"]
+[gd_scene load_steps=12 format=3 uid="uid://sxradkvyaick"]
 
 [ext_resource type="Script" path="res://dynamic/1_player/UI_Layer/BaseUI/BaseUI.gd" id="1_8bwr7"]
 [ext_resource type="PackedScene" uid="uid://yqejq1wcj6a3" path="res://dynamic/1_player/UI_Layer/BaseUI/level/level.tscn" id="2_3bx10"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI_Layer/BaseUI/death_panel/death_panel.tscn" id="7_4nwpg"]
 [ext_resource type="PackedScene" uid="uid://cdqyecvpdyqhu" path="res://dynamic/1_player/UI_Layer/BaseUI/killcollect/killcount.tscn" id="8_syuyv"]
 [ext_resource type="PackedScene" uid="uid://7hdonowfh837" path="res://dynamic/1_player/UI_Layer/BaseUI/goldcollect/goldcount.tscn" id="9_afo50"]
+[ext_resource type="PackedScene" uid="uid://bpbjnm5q2jgat" path="res://dynamic/4_world/ending/ending.tscn" id="10_5ka15"]
 [ext_resource type="PackedScene" uid="uid://dus3w26m832cx" path="res://dynamic/4_world/ending/ending_panel.tscn" id="10_morgq"]
 
 [node name="BaseUI" type="Control"]
@@ -86,16 +87,27 @@ grow_vertical = 1
 [node name="EndingPanel" parent="." instance=ExtResource("10_morgq")]
 layout_mode = 0
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
 offset_left = 390.0
 offset_top = 60.0
 offset_right = 890.0
 offset_bottom = 660.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Clear" parent="EndingPanel" index="0"]
-layout_mode = 0
+offset_top = 50.0
+offset_bottom = 104.0
 
 [node name="Quit" parent="EndingPanel" index="1"]
-layout_mode = 0
+offset_left = 169.0
+offset_right = 331.0
+
+[node name="Ending" parent="." instance=ExtResource("10_5ka15")]
+visible = false
 
 [connection signal="pressed" from="DeathPanel/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="DeathPanel/Quit" to="." method="_on_quit_pressed"]
