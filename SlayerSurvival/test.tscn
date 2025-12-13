@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://x8kdkwfnwtg4"]
+
+[ext_resource type="Script" path="res://test.gd" id="1_vhu8y"]
+[ext_resource type="PackedScene" uid="uid://wispepgc6lma" path="res://dynamic/4_world/select_map/select_map.tscn" id="2_n4573"]
+[ext_resource type="PackedScene" uid="uid://uii3wm1de8w0" path="res://dynamic/2_enemy/enemy_spawner/enemy_spwaner.tscn" id="4_ad5oa"]
+[ext_resource type="PackedScene" uid="uid://xya4xva0d7vj" path="res://dynamic/1_player/selcet_character/select_character.tscn" id="5_5yiak"]
+[ext_resource type="AudioStream" uid="uid://dj1jc560p324r" path="res://static/audio/bgm/bgm-001.mp3" id="5_tveje"]
+[ext_resource type="AudioStream" uid="uid://bvcsv07rb0ime" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="6_a63fx"]
+[ext_resource type="AudioStream" uid="uid://dchqmddukg46y" path="res://static/audio/bgm/bgm-002.mp3" id="6_kpfxg"]
+[ext_resource type="AudioStream" uid="uid://c1t46f1m1x77n" path="res://static/audio/bgm/bgm-003.mp3" id="7_q3i7n"]
+[ext_resource type="AudioStream" uid="uid://2i7typgt4e0m" path="res://static/audio/bgm/bgm-004.mp3" id="8_pdldq"]
+[ext_resource type="AudioStream" uid="uid://qeuxxvisp0ol" path="res://static/audio/bgm/bgm-005.mp3" id="9_xvf8x"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b23io"]
+streams_count = 5
+stream_0/stream = ExtResource("5_tveje")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("6_kpfxg")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("7_q3i7n")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("8_pdldq")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("9_xvf8x")
+stream_4/weight = 1.0
+
+[node name="test" type="Node2D"]
+script = ExtResource("1_vhu8y")
+
+[node name="EnemySpwaner" parent="." instance=ExtResource("4_ad5oa")]
+
+[node name="Select_Character_Panel" parent="." instance=ExtResource("5_5yiak")]
+
+[node name="Select_Map_Panel" parent="." instance=ExtResource("2_n4573")]
+
+[node name="details" parent="Select_Map_Panel/MapInfo" index="0"]
+offset_bottom = 384.0
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+
+[node name="cave_label" parent="Select_Map_Panel/MapButton/cave_button" index="0"]
+offset_left = 2.73915
+offset_right = 77.7392
+text = "LaveCave"
+
+[node name="Bgm" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = SubResource("AudioStreamRandomizer_b23io")
+bus = &"BGM"
+
+[node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("6_a63fx")
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/select_warrior" to="." method="_on_select_warrior_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/CharacterButton/select_warrior" to="." method="_on_select_warrior_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/select_king" to="." method="_on_select_king_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/CharacterButton/select_king" to="." method="_on_select_king_pressed"]
+[connection signal="mouse_entered" from="Select_Character_Panel/CharacterButton/wizard" to="." method="_on_wizard_mouse_entered"]
+[connection signal="pressed" from="Select_Character_Panel/CharacterButton/wizard" to="." method="_on_wizard_pressed"]
+[connection signal="pressed" from="Select_Character_Panel/back(char)" to="." method="_on_backchar_pressed"]
+[connection signal="mouse_entered" from="Select_Map_Panel/MapButton/cave_button" to="." method="_on_cave_button_mouse_entered"]
+[connection signal="pressed" from="Select_Map_Panel/MapButton/cave_button" to="." method="_on_cave_button_pressed"]
+[connection signal="mouse_entered" from="Select_Map_Panel/MapButton/dungeon_button" to="." method="_on_dungeon_button_mouse_entered"]
+[connection signal="pressed" from="Select_Map_Panel/MapButton/dungeon_button" to="." method="_on_dungeon_button_pressed"]
+[connection signal="pressed" from="Select_Map_Panel/back(map)" to="." method="_on_backmap_pressed"]
+[connection signal="finished" from="Bgm" to="." method="_on_bgm_finished"]
+
+[editable path="EnemySpwaner"]
+[editable path="Select_Character_Panel"]
+[editable path="Select_Map_Panel"]

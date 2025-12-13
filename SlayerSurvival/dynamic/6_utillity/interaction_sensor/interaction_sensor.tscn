@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dbrnapriu7vw3"]
+
+[node name="interaction_sensor" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

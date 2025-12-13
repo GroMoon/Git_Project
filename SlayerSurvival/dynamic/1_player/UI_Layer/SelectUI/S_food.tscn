@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmcm6hvehvmc1"]
+
+[ext_resource type="Texture2D" uid="uid://bav1cb4if65kc" path="res://dynamic/5_title_screen/store/store_sprites/hp_up.png" id="2_0vmrq"]
+[ext_resource type="FontFile" uid="uid://b6fhugyk21a6r" path="res://static/font/DNFBitBitTTF.ttf" id="2_ka0uq"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/Items/frame/frame.png" id="3_ea37h"]
+
+[node name="Food" type="Button"]
+offset_right = 470.0
+offset_bottom = 136.0
+size_flags_vertical = 3
+
+[node name="name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 200.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("2_ka0uq")
+theme_override_font_sizes/font_size = 26
+text = "음식"
+
+[node name="details" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 32.0
+offset_right = 464.0
+offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("2_ka0uq")
+theme_override_font_sizes/font_size = 20
+text = "현재 체력을 회복합니다."
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Image_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 64)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_0vmrq")
+
+[node name="Frame_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 65)
+scale = Vector2(8.25017, 8.25)
+texture = ExtResource("3_ea37h")

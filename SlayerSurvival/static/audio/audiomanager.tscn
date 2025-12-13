@@ -1,0 +1,30 @@
+[gd_scene load_steps=9 format=3 uid="uid://xx83qmyjg0rp"]
+
+[ext_resource type="AudioStream" uid="uid://bvghei5r6rthq" path="res://static/audio/bgm/bgm-001.mp3" id="1_mub2m"]
+[ext_resource type="AudioStream" uid="uid://sikmg57i6t3v" path="res://static/audio/bgm/bgm-002.mp3" id="2_qousj"]
+[ext_resource type="AudioStream" uid="uid://dca6hwgrboffr" path="res://static/audio/bgm/bgm-003.mp3" id="3_06hsm"]
+[ext_resource type="AudioStream" uid="uid://t51dl55tno4g" path="res://static/audio/bgm/bgm-004.mp3" id="4_ql55t"]
+[ext_resource type="AudioStream" uid="uid://d2ku8npwerjux" path="res://static/audio/bgm/bgm-005.mp3" id="5_f1sot"]
+[ext_resource type="AudioStream" uid="uid://b512bfk8oe3yu" path="res://static/audio/bgm/bgm-006.mp3" id="6_aqc2t"]
+[ext_resource type="Script" path="res://static/audio/audiomanager.gd" id="6_dm58o"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f1m1i"]
+streams_count = 5
+stream_0/stream = ExtResource("1_mub2m")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_qousj")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_06hsm")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_ql55t")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("5_f1sot")
+stream_4/weight = 1.0
+
+[node name="Audiomanager" type="AudioStreamPlayer"]
+bus = &"BGM"
+script = ExtResource("6_dm58o")
+menu_bgm = ExtResource("6_aqc2t")
+ingame_bgm = SubResource("AudioStreamRandomizer_f1m1i")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

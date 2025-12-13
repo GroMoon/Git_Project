@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3 uid="uid://kpyeaei01jcl"]
+
+[ext_resource type="Texture2D" uid="uid://c6pu10gwvil8e" path="res://dynamic/5_title_screen/store/store_sprites/vampire.png" id="1_3ngvt"]
+[ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_vampire.gd" id="1_cwv58"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_7r6rp"]
+[ext_resource type="Texture2D" uid="uid://d4kl4i3p2rh3y" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_berue"]
+[ext_resource type="AudioStream" uid="uid://r1v6u8n6pdv3" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_ekrx4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mb48a"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="StorePanelItemVampire" type="Panel"]
+script = ExtResource("1_cwv58")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 355.0
+offset_bottom = 235.0
+color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
+
+[node name="Item_sprite" type="Sprite2D" parent="."]
+position = Vector2(63.5, 61)
+scale = Vector2(0.065, 0.061)
+texture = ExtResource("1_3ngvt")
+
+[node name="Frame_sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(63.5, 59.5)
+scale = Vector2(7.91667, 7.08333)
+texture = ExtResource("2_7r6rp")
+
+[node name="BuyButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 173.0
+offset_right = 102.0
+offset_bottom = 217.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_mb48a")
+text = "BUY"
+
+[node name="Name_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 17.0
+offset_right = 232.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 25
+text = "VAMPIRE"
+vertical_alignment = 1
+
+[node name="Level_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 57.0
+offset_right = 209.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 20
+text = "Level : 1"
+vertical_alignment = 1
+
+[node name="Description_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 111.0
+offset_right = 308.0
+offset_bottom = 165.0
+theme_override_font_sizes/font_size = 15
+text = "흡혈 능력치가 증가합니다."
+
+[node name="Cost" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 177.0
+offset_right = 312.0
+offset_bottom = 215.0
+
+[node name="Gold_icon" type="TextureRect" parent="Cost"]
+layout_mode = 2
+texture = ExtResource("3_berue")
+
+[node name="Cost_label" type="Label" parent="Cost"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "123"
+
+[node name="Coin_sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(21, 173)
+stream = ExtResource("5_ekrx4")
+
+[connection signal="pressed" from="BuyButton" to="." method="_on_buy_button_pressed"]

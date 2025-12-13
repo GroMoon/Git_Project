@@ -1,0 +1,214 @@
+[gd_scene load_steps=8 format=3 uid="uid://rewebuj5illv"]
+
+[ext_resource type="Script" path="res://dynamic/5_title_screen/option/options.gd" id="1_h31jj"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_qv6n8"]
+[ext_resource type="Texture2D" uid="uid://l7dhohpeh7aw" path="res://static/png/sound/loud_w.png" id="3_fsnpx"]
+[ext_resource type="Texture2D" uid="uid://bsma0cldowjnr" path="res://static/png/sound/mute_w.png" id="4_7wfac"]
+[ext_resource type="AudioStream" uid="uid://bvcsv07rb0ime" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="5_0x4vb"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xivly"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hljy1"]
+texture = SubResource("CanvasTexture_xivly")
+modulate_color = Color(0, 0, 0, 1)
+
+[node name="Options" type="Panel"]
+process_mode = 3
+texture_filter = 1
+offset_left = 390.0
+offset_top = 60.0
+offset_right = 890.0
+offset_bottom = 660.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_hljy1")
+script = ExtResource("1_h31jj")
+
+[node name="option" type="Label" parent="."]
+layout_mode = 0
+offset_top = 37.0
+offset_right = 500.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("1_qv6n8")
+theme_override_font_sizes/font_size = 35
+text = "설 정"
+horizontal_alignment = 1
+
+[node name="back" type="Button" parent="."]
+process_mode = 3
+layout_mode = 0
+offset_left = 448.0
+offset_top = 32.0
+offset_right = 479.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("1_qv6n8")
+text = "X"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 111.0
+offset_right = 472.0
+offset_bottom = 536.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Screen" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="screen_manager" type="Label" parent="ScrollContainer/VBoxContainer/Screen"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "화면 설정"
+
+[node name="resolution" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Screen"]
+layout_mode = 2
+
+[node name="resolution" type="Label" parent="ScrollContainer/VBoxContainer/Screen/resolution"]
+visible = false
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "창 크기
+"
+horizontal_alignment = 1
+
+[node name="resol_option" type="OptionButton" parent="ScrollContainer/VBoxContainer/Screen/resolution"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="screen_mode" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Screen"]
+layout_mode = 2
+
+[node name="screen_mode" type="Label" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "화면 모드"
+horizontal_alignment = 1
+
+[node name="full_screen" type="CheckBox" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "전체화면"
+
+[node name="window_screen" type="CheckBox" parent="ScrollContainer/VBoxContainer/Screen/screen_mode"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "창 모드"
+
+[node name="Volume" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="volume_manager" type="Label" parent="ScrollContainer/VBoxContainer/Volume"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "사운드 설정"
+
+[node name="volume1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Volume"]
+layout_mode = 2
+
+[node name="master_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "전체 볼륨"
+horizontal_alignment = 1
+
+[node name="master_toggle" type="TextureButton" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_fsnpx")
+texture_pressed = ExtResource("4_7wfac")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="master_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 30.0
+
+[node name="volume2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Volume"]
+layout_mode = 2
+
+[node name="bgm_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "BGM"
+horizontal_alignment = 1
+
+[node name="bgm_toggle" type="TextureButton" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_fsnpx")
+texture_pressed = ExtResource("4_7wfac")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="bgm_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 30.0
+
+[node name="volume3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Volume"]
+layout_mode = 2
+
+[node name="effect_vol" type="Label" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "SFX"
+horizontal_alignment = 1
+
+[node name="sfx_toggle" type="TextureButton" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+toggle_mode = true
+texture_normal = ExtResource("3_fsnpx")
+texture_pressed = ExtResource("4_7wfac")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="sfx_slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Volume/volume3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 30.0
+
+[node name="Language" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="language" type="Label" parent="ScrollContainer/VBoxContainer/Language"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "언어 설정"
+
+[node name="language_option" type="OptionButton" parent="ScrollContainer/VBoxContainer/Language"]
+layout_mode = 2
+
+[node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(900, 220)
+stream = ExtResource("5_0x4vb")
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="back" to="." method="_on_back_pressed"]
+[connection signal="item_selected" from="ScrollContainer/VBoxContainer/Screen/resolution/resol_option" to="." method="_on_resol_option_item_selected"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Screen/screen_mode/full_screen" to="." method="_on_full_screen_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Screen/screen_mode/window_screen" to="." method="_on_window_screen_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Volume/volume1/master_toggle" to="." method="_on_master_toggle_toggled"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Volume/volume1/master_slider" to="." method="_on_master_slider_value_changed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Volume/volume2/bgm_toggle" to="." method="_on_bgm_toggle_toggled"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Volume/volume2/bgm_slider" to="." method="_on_bgm_slider_value_changed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/Volume/volume3/sfx_toggle" to="." method="_on_sfx_toggle_toggled"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Volume/volume3/sfx_slider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="item_selected" from="ScrollContainer/VBoxContainer/Language/language_option" to="." method="_on_language_option_item_selected"]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7aan7ggt5axa"]
+
+[ext_resource type="Texture2D" uid="uid://ct4dc7x0603f1" path="res://dynamic/5_title_screen/store/store_sprites/cooltime_Nero_AI_Pixelate_Image_Pixel.jpg" id="1_y1rqj"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_4lkm2"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_4q56b"]
+
+[node name="Cooldown" type="Button"]
+custom_minimum_size = Vector2(480, 136)
+
+[node name="Image_Sprite" type="Sprite2D" parent="."]
+position = Vector2(60, 66.64)
+scale = Vector2(0.065, 0.0715625)
+texture = ExtResource("1_y1rqj")
+
+[node name="Frame_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(60, 65)
+scale = Vector2(8.25017, 8.25)
+texture = ExtResource("2_4q56b")
+
+[node name="name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 251.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("2_4lkm2")
+theme_override_font_sizes/font_size = 26
+text = "쿨타임 감소"
+
+[node name="details" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 32.0
+offset_right = 472.0
+offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("2_4lkm2")
+theme_override_font_sizes/font_size = 20
+text = "플레이어의 공격 쿨타임을 감소시킵니다."
+vertical_alignment = 1
+autowrap_mode = 2

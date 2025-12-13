@@ -1,0 +1,202 @@
+[gd_scene load_steps=11 format=3 uid="uid://wispepgc6lma"]
+
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_e73c6"]
+[ext_resource type="Texture2D" uid="uid://b3krm66jrdpp3" path="res://dynamic/4_world/cave/cave_title_final.png" id="2_5idkw"]
+[ext_resource type="Texture2D" uid="uid://b4ao07ur34p1m" path="res://static/png/ui/assembly_frame_gray.png" id="2_stlme"]
+[ext_resource type="Texture2D" uid="uid://dnyibrfhb0nf6" path="res://dynamic/4_world/dungeon_B1F/dungeon_title.png" id="4_gvsyy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0akgj"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jbi8"]
+bg_color = Color(0.34902, 0.258824, 0.196078, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s4dbt"]
+bg_color = Color(0.34902, 0.258824, 0.196078, 0.47451)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5683"]
+bg_color = Color(0.282353, 0.282353, 0.282353, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_712gv"]
+bg_color = Color(0.380392, 0.380392, 0.380392, 0.666667)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_h8m1t"]
+font_size = 83
+
+[node name="Select_Map_Panel" type="Panel"]
+process_mode = 3
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0akgj")
+
+[node name="MapInfo" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="details" type="Label" parent="MapInfo"]
+layout_mode = 0
+offset_left = 666.0
+offset_top = 177.0
+offset_right = 992.0
+offset_bottom = 321.0
+text = "맵 설명"
+autowrap_mode = 2
+
+[node name="preview_map" type="TextureRect" parent="MapInfo"]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 189.0
+offset_right = 452.0
+offset_bottom = 374.0
+scale = Vector2(1.82843, 1.2402)
+expand_mode = 1
+stretch_mode = 6
+
+[node name="frame" type="Sprite2D" parent="MapInfo"]
+position = Vector2(436.671, 305.183)
+scale = Vector2(3.97232, 2.70452)
+texture = ExtResource("2_stlme")
+
+[node name="MapButton" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 487.0
+offset_right = 1078.0
+offset_bottom = 643.0
+color = Color(0.117647, 0.145098, 0.14902, 1)
+
+[node name="cave_button" type="Button" parent="MapButton"]
+layout_mode = 1
+offset_left = 77.0
+offset_top = 25.083
+offset_right = 158.0
+offset_bottom = 106.083
+scale = Vector2(1.15, 1.15)
+theme_override_styles/normal = SubResource("StyleBoxFlat_8jbi8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s4dbt")
+icon = ExtResource("2_5idkw")
+icon_alignment = 1
+expand_icon = true
+
+[node name="cave_label" type="Label" parent="MapButton/cave_button"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 85.0
+offset_right = 61.0
+offset_bottom = 103.0
+theme_override_fonts/font = ExtResource("1_e73c6")
+text = "Cave"
+
+[node name="dungeon_button" type="Button" parent="MapButton"]
+layout_mode = 1
+offset_left = 269.145
+offset_top = 24.0
+offset_right = 350.145
+offset_bottom = 105.0
+scale = Vector2(1.15, 1.15)
+theme_override_styles/normal = SubResource("StyleBoxFlat_o5683")
+theme_override_styles/hover = SubResource("StyleBoxFlat_712gv")
+icon = ExtResource("4_gvsyy")
+icon_alignment = 1
+expand_icon = true
+
+[node name="dungeon_label" type="Label" parent="MapButton/dungeon_button"]
+layout_mode = 0
+offset_left = 8.69565
+offset_top = 83.4783
+offset_right = 75.6956
+offset_bottom = 106.478
+theme_override_fonts/font = ExtResource("1_e73c6")
+text = "Dungeon"
+horizontal_alignment = 1
+
+[node name="button" type="Button" parent="MapButton"]
+layout_mode = 0
+offset_left = 458.0
+offset_top = 24.0
+offset_right = 539.0
+offset_bottom = 105.0
+scale = Vector2(1.15, 1.15)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_712gv")
+text = "🔒"
+icon_alignment = 1
+expand_icon = true
+
+[node name="label" type="Label" parent="MapButton/button"]
+layout_mode = 0
+offset_left = 8.69565
+offset_top = 83.4783
+offset_right = 75.6956
+offset_bottom = 106.478
+theme_override_fonts/font = ExtResource("1_e73c6")
+text = "???"
+horizontal_alignment = 1
+
+[node name="button2" type="Button" parent="MapButton"]
+layout_mode = 0
+offset_left = 650.0
+offset_top = 24.0
+offset_right = 731.0
+offset_bottom = 105.0
+scale = Vector2(1.15, 1.15)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_712gv")
+text = "🔒"
+icon_alignment = 1
+expand_icon = true
+
+[node name="label" type="Label" parent="MapButton/button2"]
+layout_mode = 0
+offset_left = 8.69565
+offset_top = 83.4783
+offset_right = 75.6956
+offset_bottom = 106.478
+theme_override_fonts/font = ExtResource("1_e73c6")
+text = "???"
+horizontal_alignment = 1
+
+[node name="select_map" type="Label" parent="."]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 40.0
+offset_right = 1233.0
+offset_bottom = 131.0
+theme_override_fonts/font = ExtResource("1_e73c6")
+text = "맵 선택"
+label_settings = SubResource("LabelSettings_h8m1t")
+horizontal_alignment = 1
+
+[node name="back(map)" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1098.0
+offset_top = 55.0
+offset_right = 1148.0
+offset_bottom = 105.0
+theme_override_font_sizes/font_size = 25
+text = "◀️"

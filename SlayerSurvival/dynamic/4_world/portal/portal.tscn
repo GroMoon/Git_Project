@@ -1,0 +1,112 @@
+[gd_scene load_steps=14 format=3 uid="uid://dh3ngher6njpp"]
+
+[ext_resource type="Script" path="res://dynamic/4_world/portal/portal.gd" id="1_2vb4t"]
+[ext_resource type="Texture2D" uid="uid://bd4nxitb32lft" path="res://dynamic/4_world/portal/protal.PNG" id="2_lte2c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5n6b"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(0, 0, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58x2d"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(325, 0, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mulka"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(650, 0, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yoxrq"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(650, 325, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ir6cv"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(325, 325, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ep0sy"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(0, 325, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lymk6"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(0, 650, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfa75"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(325, 650, 325, 325)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmfqn"]
+atlas = ExtResource("2_lte2c")
+region = Rect2(650, 650, 325, 325)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6lyah"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5n6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_58x2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mulka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yoxrq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir6cv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep0sy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lymk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfa75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmfqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfa75")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lymk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep0sy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ir6cv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yoxrq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cdsag"]
+radius = 16.2788
+
+[node name="Portal" type="Area2D"]
+position = Vector2(1, -7)
+script = ExtResource("1_2vb4t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.854902, 0.854902, 0.854902, 1)
+position = Vector2(2, -3.99999)
+scale = Vector2(0.383077, 0.349231)
+sprite_frames = SubResource("SpriteFrames_6lyah")
+animation = &"idle"
+frame_progress = 0.812792
+speed_scale = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -16)
+shape = SubResource("CircleShape2D_cdsag")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

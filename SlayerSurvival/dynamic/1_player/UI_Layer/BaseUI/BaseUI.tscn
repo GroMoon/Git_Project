@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=3 uid="uid://sxradkvyaick"]
+
+[ext_resource type="Script" path="res://dynamic/1_player/UI_Layer/BaseUI/BaseUI.gd" id="1_8bwr7"]
+[ext_resource type="PackedScene" uid="uid://yqejq1wcj6a3" path="res://dynamic/1_player/UI_Layer/BaseUI/level/level.tscn" id="2_3bx10"]
+[ext_resource type="PackedScene" uid="uid://dgg2aqyju7saq" path="res://dynamic/1_player/UI_Layer/BaseUI/fatal_state/fatal_state.tscn" id="2_twlfw"]
+[ext_resource type="PackedScene" uid="uid://cibswvdy26rel" path="res://dynamic/1_player/UI_Layer/BaseUI/stopwatch/stopwatch.tscn" id="3_hws3o"]
+[ext_resource type="PackedScene" uid="uid://cswgkwsq8gfan" path="res://dynamic/1_player/UI_Layer/BaseUI/exp_bar/exp_bar.tscn" id="4_1juvo"]
+[ext_resource type="PackedScene" uid="uid://dtljeado5ue3p" path="res://dynamic/1_player/UI_Layer/BaseUI/pause_panel/pause_panel.tscn" id="6_ldc4x"]
+[ext_resource type="PackedScene" uid="uid://bmljwk5vyd15y" path="res://dynamic/1_player/UI_Layer/BaseUI/death_panel/death_panel.tscn" id="7_4nwpg"]
+[ext_resource type="PackedScene" uid="uid://cdqyecvpdyqhu" path="res://dynamic/1_player/UI_Layer/BaseUI/killcollect/killcount.tscn" id="8_syuyv"]
+[ext_resource type="PackedScene" uid="uid://7hdonowfh837" path="res://dynamic/1_player/UI_Layer/BaseUI/goldcollect/goldcount.tscn" id="9_afo50"]
+[ext_resource type="PackedScene" uid="uid://dus3w26m832cx" path="res://dynamic/4_world/ending/ending_panel.tscn" id="10_morgq"]
+
+[node name="BaseUI" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_8bwr7")
+
+[node name="FatalState" parent="." instance=ExtResource("2_twlfw")]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Level" parent="." instance=ExtResource("2_3bx10")]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 14.0
+offset_right = 35.0
+offset_bottom = 37.0
+
+[node name="Stopwatch" parent="." instance=ExtResource("3_hws3o")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 25.0
+offset_right = 1280.0
+offset_bottom = 64.0
+scale = Vector2(0.991197, 1.04129)
+horizontal_alignment = 1
+
+[node name="Exp_Bar" parent="." instance=ExtResource("4_1juvo")]
+custom_minimum_size = Vector2(1280, 12)
+layout_mode = 0
+offset_left = 0.0
+offset_top = 1.79385
+offset_right = 1199.0
+offset_bottom = 13.7938
+auto_translate = false
+
+[node name="killcollect" type="Node2D" parent="."]
+position = Vector2(1100, 16)
+
+[node name="KillCount" parent="killcollect" instance=ExtResource("8_syuyv")]
+
+[node name="goldcollect" type="Node2D" parent="."]
+
+[node name="GoldCount" parent="goldcollect" instance=ExtResource("9_afo50")]
+offset_left = 1200.0
+offset_top = 16.0
+offset_right = 1238.0
+offset_bottom = 44.0
+scale = Vector2(0.998853, 1)
+
+[node name="PausePanel" parent="." instance=ExtResource("6_ldc4x")]
+process_mode = 3
+layout_mode = 0
+
+[node name="Skill" parent="PausePanel/PlayerInfo" index="6"]
+offset_left = 28.0
+offset_right = 358.0
+
+[node name="DeathPanel" parent="." instance=ExtResource("7_4nwpg")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 390.0
+offset_top = 60.0
+offset_right = 890.0
+offset_bottom = 660.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="EndingPanel" parent="." instance=ExtResource("10_morgq")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 390.0
+offset_top = 60.0
+offset_right = 890.0
+offset_bottom = 660.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Clear" parent="EndingPanel" index="0"]
+offset_top = 50.0
+offset_bottom = 104.0
+
+[node name="Quit" parent="EndingPanel" index="1"]
+offset_left = 169.0
+offset_right = 331.0
+
+[connection signal="pressed" from="DeathPanel/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="DeathPanel/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="EndingPanel/Quit" to="." method="_on_quit_pressed"]
+
+[editable path="PausePanel"]
+[editable path="PausePanel/PlayerInfo"]
+[editable path="DeathPanel"]
+[editable path="EndingPanel"]

@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://v1kjq5qubjvw"]
+
+[node name="FinalResult" type="Control"]
+layout_mode = 3
+anchor_right = 0.391
+anchor_bottom = 0.435
+offset_right = -0.200043
+offset_bottom = 0.249969
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 469.0
+offset_bottom = 283.0
+color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[node name="survival_time" type="Label" parent="."]
+layout_mode = 2
+offset_left = 84.0
+offset_top = 50.0
+offset_right = 211.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 30
+text = "생존 시간"
+
+[node name="survival_time_" type="Label" parent="."]
+layout_mode = 2
+offset_left = 300.0
+offset_top = 50.0
+offset_right = 385.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 30
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="kill_enemy" type="Label" parent="."]
+layout_mode = 2
+offset_left = 84.0
+offset_top = 100.0
+offset_right = 211.0
+offset_bottom = 133.0
+theme_override_font_sizes/font_size = 30
+text = "처치한 적"
+
+[node name="kill_enemy_" type="Label" parent="."]
+layout_mode = 2
+offset_left = 300.0
+offset_top = 100.0
+offset_right = 385.0
+offset_bottom = 133.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+
+[node name="get_gold" type="Label" parent="."]
+layout_mode = 2
+offset_left = 84.0
+offset_top = 150.0
+offset_right = 211.0
+offset_bottom = 183.0
+theme_override_font_sizes/font_size = 30
+text = "획득한 골드"
+
+[node name="get_gold_" type="Label" parent="."]
+layout_mode = 2
+offset_left = 300.0
+offset_top = 150.0
+offset_right = 385.0
+offset_bottom = 183.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1
+
+[node name="total_gold" type="Label" parent="."]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 200.0
+offset_right = 162.0
+offset_bottom = 233.0
+theme_override_font_sizes/font_size = 30
+text = "총 골드"
+
+[node name="total_gold_" type="Label" parent="."]
+layout_mode = 2
+offset_left = 300.0
+offset_top = 200.0
+offset_right = 385.0
+offset_bottom = 233.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+horizontal_alignment = 1

@@ -1,0 +1,143 @@
+[gd_scene load_steps=17 format=3 uid="uid://c1mrkkfrvqn25"]
+
+[ext_resource type="Script" path="res://dynamic/5_title_screen/store/store.gd" id="1_dvmxk"]
+[ext_resource type="Texture2D" uid="uid://c6tkonv6bmdjr" path="res://static/png/start_menu/slayersurvival_background.webp" id="2_gcuk1"]
+[ext_resource type="Texture2D" uid="uid://beur5chq7lr6v" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="3_yby07"]
+[ext_resource type="PackedScene" uid="uid://30do7x8lf7a1" path="res://dynamic/5_title_screen/store/store_panel.tscn" id="4_lb3ej"]
+[ext_resource type="PackedScene" uid="uid://dvpog2451e8ft" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_damage.tscn" id="5_urp71"]
+[ext_resource type="PackedScene" uid="uid://5i6i62ngyen7" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_shield.tscn" id="6_jyfe8"]
+[ext_resource type="PackedScene" uid="uid://bgygee146j0wy" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_speed.tscn" id="7_cwle4"]
+[ext_resource type="PackedScene" uid="uid://cpnyxlgkyhi80" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_cooldown.tscn" id="8_hv1bp"]
+[ext_resource type="PackedScene" uid="uid://br2t0d6mvvy0r" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_gemdrop.tscn" id="9_baiaw"]
+[ext_resource type="PackedScene" uid="uid://cvkhha1oibrnn" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_golddrop.tscn" id="10_rmpc0"]
+[ext_resource type="PackedScene" uid="uid://btd4lq77160bh" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_health.tscn" id="11_dmblr"]
+[ext_resource type="PackedScene" uid="uid://kpyeaei01jcl" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_vampire.tscn" id="12_dihfo"]
+[ext_resource type="PackedScene" uid="uid://b82fhwwnvs4q7" path="res://dynamic/5_title_screen/store/store_panel_items/store_panel_item_respawn.tscn" id="13_bsvky"]
+[ext_resource type="AudioStream" uid="uid://dw01vja6pajod" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="14_hqoac"]
+[ext_resource type="AudioStream" uid="uid://c7ylp46fllpud" path="res://static/audio/sfx/button_sounds/button_sound_1.mp3" id="15_s2ow5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mnub"]
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 0.862745)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Store" type="Node2D"]
+script = ExtResource("1_dvmxk")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_gcuk1")
+expand_mode = 1
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 84.0
+offset_top = 119.0
+offset_right = 1204.0
+offset_bottom = 692.0
+
+[node name="Gold" type="Node2D" parent="."]
+texture_filter = 1
+
+[node name="Gold_icon" type="TextureRect" parent="Gold"]
+offset_left = 106.0
+offset_top = 59.0
+offset_right = 170.0
+offset_bottom = 121.0
+texture = ExtResource("3_yby07")
+
+[node name="Gold_label" type="Label" parent="Gold"]
+offset_left = 180.0
+offset_top = 64.0
+offset_right = 418.0
+offset_bottom = 116.0
+theme_override_font_sizes/font_size = 40
+text = "123"
+vertical_alignment = 1
+
+[node name="StorePanel" parent="." instance=ExtResource("4_lb3ej")]
+
+[node name="ScrollContainer" parent="StorePanel" index="0"]
+offset_left = 86.0
+offset_top = 136.0
+offset_right = 1173.0
+offset_bottom = 657.0
+
+[node name="GridContainer" parent="StorePanel/ScrollContainer/VBoxContainer" index="0"]
+size_flags_vertical = 3
+columns = 3
+
+[node name="StorePanelItemDamage" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="0" instance=ExtResource("5_urp71")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemShield" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="1" instance=ExtResource("6_jyfe8")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemSpeed" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="2" instance=ExtResource("7_cwle4")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemCooldown" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="3" instance=ExtResource("8_hv1bp")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemGemdrop" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="4" instance=ExtResource("9_baiaw")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemGolddrop" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="5" instance=ExtResource("10_rmpc0")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemHealth" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="6" instance=ExtResource("11_dmblr")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemVampire" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="7" instance=ExtResource("12_dihfo")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="StorePanelItemRespawn" parent="StorePanel/ScrollContainer/VBoxContainer/GridContainer" index="8" instance=ExtResource("13_bsvky")]
+custom_minimum_size = Vector2(355, 235)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="."]
+offset_left = 1089.0
+offset_top = 51.0
+offset_right = 1212.0
+offset_bottom = 107.0
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_3mnub")
+text = "BACK"
+
+[node name="ResetButton" type="Button" parent="."]
+offset_left = 957.0
+offset_top = 51.0
+offset_right = 1080.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_3mnub")
+text = "RESET"
+
+[node name="coin_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_hqoac")
+volume_db = 10.0
+bus = &"SFX"
+
+[node name="Button_sound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("15_s2ow5")
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="BackButton" to="." method="_on_back_button_mouse_entered"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="mouse_entered" from="ResetButton" to="." method="_on_reset_button_mouse_entered"]
+[connection signal="pressed" from="ResetButton" to="." method="_on_reset_button_pressed"]
+
+[editable path="StorePanel"]

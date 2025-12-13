@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://yqejq1wcj6a3"]
+
+[ext_resource type="FontFile" uid="uid://cr8el0yjdde3p" path="res://static/font/DNFBitBitTTF.ttf" id="1_11dr2"]
+
+[node name="Level" type="Label"]
+theme_override_fonts/font = ExtResource("1_11dr2")
+theme_override_font_sizes/font_size = 20
+text = "LV"

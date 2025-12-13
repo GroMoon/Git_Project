@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://6uhmdvchlrp4"]
+
+[ext_resource type="PackedScene" uid="uid://sxradkvyaick" path="res://dynamic/1_player/UI_Layer/BaseUI/BaseUI.tscn" id="1_gmbuo"]
+[ext_resource type="PackedScene" uid="uid://c3qtgwa08pvbr" path="res://dynamic/1_player/UI_Layer/SelectUI/SelectUI.tscn" id="2_b6516"]
+
+[node name="UI_Layer" type="CanvasLayer"]
+
+[node name="BaseUI" parent="." instance=ExtResource("1_gmbuo")]
+mouse_filter = 1
+
+[node name="PausePanel" parent="BaseUI" index="6"]
+z_index = 2
+mouse_filter = 1
+
+[node name="SelectUI" parent="." instance=ExtResource("2_b6516")]
+
+[node name="select_panel" parent="SelectUI" index="0"]
+offset_left = 395.0
+offset_top = 120.0
+offset_right = 931.0
+offset_bottom = 632.0
+
+[connection signal="pressed" from="BaseUI/PausePanel/Menu" to="BaseUI" method="_on_menu_pressed"]
+[connection signal="pressed" from="BaseUI/PausePanel/Option" to="BaseUI" method="_on_option_pressed"]
+[connection signal="pressed" from="BaseUI/PausePanel/Resume" to="BaseUI" method="_on_resume_pressed"]
+
+[editable path="BaseUI"]
+[editable path="BaseUI/PausePanel"]
+[editable path="BaseUI/PausePanel/PlayerInfo"]
+[editable path="BaseUI/DeathPanel"]
+[editable path="BaseUI/EndingPanel"]
+[editable path="SelectUI"]
+[editable path="SelectUI/select_panel"]
