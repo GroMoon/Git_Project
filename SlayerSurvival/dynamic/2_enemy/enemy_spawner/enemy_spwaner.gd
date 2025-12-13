@@ -123,7 +123,7 @@ func _process(_delta):
 		$GoblinTimer.set_paused(true)
 
 	# 보스 스폰
-	if (!boss_spawn_flag) && (minute==10):
+	if (!boss_spawn_flag) && (minute==0):
 		if get_parent().instance_map:
 			map_name = get_parent().instance_map.name
 		print(map_name)
