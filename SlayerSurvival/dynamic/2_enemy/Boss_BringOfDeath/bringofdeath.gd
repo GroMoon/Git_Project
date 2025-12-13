@@ -27,7 +27,7 @@ var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
 
 # 적 특성
 var enemy_name    = "BringOfDeath"
-var health        = 10 			# 적 체력
+var health        = 1000 			# 적 체력
 var move_speed    = 90 				# 적 이동 속도
 var damage        = 10  			# 적 데미지
 var attack_damage = 30				# 공격 데미지지

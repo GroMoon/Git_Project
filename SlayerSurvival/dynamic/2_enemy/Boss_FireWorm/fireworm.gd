@@ -23,7 +23,7 @@ var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
 
 # 적 특성
 var enemy_name   = "FireWorm"
-var health       = 10		# 적 체력
+var health       = 1000		# 적 체력
 var move_speed   = 80 		# 적 이동 속도
 var damage       = 10  		# 적 데미지
 var spawn_radius = 200  	# 스폰 범위
