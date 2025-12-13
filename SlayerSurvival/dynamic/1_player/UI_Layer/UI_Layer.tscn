@@ -28,5 +28,6 @@ offset_bottom = 632.0
 [editable path="BaseUI/PausePanel"]
 [editable path="BaseUI/PausePanel/PlayerInfo"]
 [editable path="BaseUI/DeathPanel"]
+[editable path="BaseUI/EndingPanel"]
 [editable path="SelectUI"]
 [editable path="SelectUI/select_panel"]

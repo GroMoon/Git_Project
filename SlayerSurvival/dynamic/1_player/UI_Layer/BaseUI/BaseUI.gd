@@ -43,7 +43,6 @@ extends Control
 @onready var ending_kill_enemy    = $EndingPanel/FinalResult/kill_enemy_
 @onready var ending_get_gold      = $EndingPanel/FinalResult/get_gold_
 @onready var ending_panel 		  = $EndingPanel
-@onready var ending_screen 		  = $Ending
 @onready var ending_scene		  = preload("res://dynamic/4_world/ending/ending.tscn")
 var ending_instance 			  = null
 var is_ending_played 			  = false
@@ -64,7 +63,6 @@ func _ready():
 	pause_panel.visible = false		# PausePanel 가리기
 	death_panel.visible = false		# DeathPanel 가리기
 	ending_panel.visible = false	# EndingPanel 가리기
-	ending_screen.visible = false	# EndingScreen 가리기
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
 	# player 세팅
 	player = get_parent().get_parent()
@@ -118,17 +116,17 @@ func _process(delta):
 			ending_instance = ending_scene.instantiate()
 			ending_instance.connect("ending_finished", Callable(self, "_on_ending_finished"))
 			add_child(ending_instance)
-			ending_screen.visible = true
 
 	else:
 		pause_panel.visible = false
 		get_tree().paused   = false
 		update_info()
 		
-	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag)&&(!respawn_pause_flag):
+	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag)&&(!respawn_pause_flag)&&(!ending_pause_flag):
 		process_stopwatch(delta)
 
 func _on_ending_finished():
+	get_tree().paused   = true
 	ending_instance = null    # 인스턴스 변수 비우기
 	is_ending_played = true   # "연출 보여줬음" 표시 -> 다시 생성 안 함
 	# ending_panel을 표시하고 인덱스와 그 자식들 모두 위로

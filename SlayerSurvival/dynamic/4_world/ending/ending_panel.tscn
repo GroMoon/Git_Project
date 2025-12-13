@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dus3w26m832cx"]
 
-[ext_resource type="FontFile" uid="uid://b6fhugyk21a6r" path="res://static/font/DNFBitBitTTF.ttf" id="1_0ciih"]
+[ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="1_0ciih"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5uisb"]
 bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
