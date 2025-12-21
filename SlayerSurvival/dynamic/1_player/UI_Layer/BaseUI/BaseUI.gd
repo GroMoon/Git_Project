@@ -66,8 +66,6 @@ func _ready():
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
 	# player 세팅
 	player = get_parent().get_parent()
-	# print(player)
-	# print(player.death_flag_for_pause)
 
 func _process(delta):
 	process_fatal_state()
@@ -131,8 +129,6 @@ func _on_ending_finished():
 	is_ending_played = true   # "연출 보여줬음" 표시 -> 다시 생성 안 함
 	# ending_panel을 표시하고 인덱스와 그 자식들 모두 위로
 	ending_panel.visible = true
-	# 인덱스 몇번인지 디버깅
-	print("Ending Panel Index: ", ending_panel.get_index())
 
 # esc 키(=pause)를 눌렀을 때
 func check_pause_pressed():
@@ -218,7 +214,7 @@ func _on_option_pressed():
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():
 	# 게임 오버 로깅
-	log_game_over_data()
+	# log_game_over_data()
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # 게임 오버 후 Restart 버튼 누를 때

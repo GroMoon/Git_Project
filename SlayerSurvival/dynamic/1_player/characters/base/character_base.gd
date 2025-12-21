@@ -209,22 +209,22 @@ func process_collision_enemy(damage):
 		var damage_shielded = damage*(1-shield) # 방어력에 반감된 데미지
 		current_hp -= damage_shielded
 		DamageVisual.show_damage(damage_shielded, self.position)
-		print("max_hp", hp_bar.max_value)					
+		# print("max_hp", hp_bar.max_value)					
 		damage_flag = true
 		damage_timer.start()
-		print(current_hp)
+		# print(current_hp)
 		if current_hp <= 0:
 			if respawn_times != 0:
 				hit_flag = true
 				# 퍼즈 걸기
 				$CollisionShape2D.disabled = true
-				print(respawn_times)
+				# print(respawn_times)
 				respawn_times -= 1
 				animated_sprite.play("death")
 				await animated_sprite.animation_finished
 				await respawn()
 				$CollisionShape2D.disabled = false
-				print("남은 부활 횟수 : ", respawn_times)
+				# print("남은 부활 횟수 : ", respawn_times)
 			else:
 				$CollisionShape2D.disabled = true
 				is_dead = true
@@ -281,7 +281,7 @@ func calculate_exp():
 func level_up():
 	if current_exp >= max_exp:
 		character_level += 1
-		print("레벨 업! : ", character_level)
+		# print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
 		emit_signal("levelup")
 

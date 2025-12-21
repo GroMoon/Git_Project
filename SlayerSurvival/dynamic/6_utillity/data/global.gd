@@ -19,25 +19,27 @@ func load_character_data():
 		# 다시 읽기 재시도
 		character_data_file = FileAccess.open(CHARACTER_DATA_PATH, FileAccess.READ)
 		if not character_data_file:
-			print("Error: cannot read file after creating default. Check path or permission.")
+			# print("Error: cannot read file after creating default. Check path or permission.")
+			pass
 			return
 
 	# 3) 정상적으로 열렸으면 JSON 파싱싱
 	var json = JSON.new()							# 데이터 파싱 or 문자열 변환
 	# 데이터를 파싱 하고 실패하면 오류 구문 출력 		(!)오류인지 확인하는 구문이 아니라 파싱까지 하는 함수
 	if json.parse(character_data_file.get_as_text()) != OK:
-		print("Error: Failed to parse JSON from character_data")
+		# print("Error: Failed to parse JSON from character_data")
 		#json.close()
 		return
 
 	character_data_file.close()
 	character_data = json.get_data()
-	print(character_data)
+	# print(character_data)
 
 func save_character_data():
 	var character_data_file = FileAccess.open(CHARACTER_DATA_PATH, FileAccess.WRITE)
 	if not character_data_file:
-		print("Error: Unable to open character_data_file for writing.")
+		# print("Error: Unable to open character_data_file for writing.")
+		pass
 		return
 	var json_string = JSON.stringify(character_data, "", false)			# 캐릭터 데이터 변수를 JSON 형식의 문자열로 변환 
 	character_data_file.store_string(json_string)						# 데이터 저장

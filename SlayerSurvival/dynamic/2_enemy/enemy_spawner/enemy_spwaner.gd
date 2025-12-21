@@ -57,7 +57,7 @@ func _process(_delta):
 		# 대량 스폰 알고리즘
 		if sec > 30 and not has_spawned_flyingeye_mass:
 			for i in range(10):
-				print("flyingeye 대량 스폰")
+				# print("flyingeye 대량 스폰")
 				spawn_enemy(flyingeye, MONSTER)
 			has_spawned_flyingeye_mass = true
 
@@ -78,7 +78,7 @@ func _process(_delta):
 		# 대량 스폰 알고리즘
 		if minute == 2 and sec > 30 and not has_spawned_skeleton_mass:
 			for i in range(10):
-				print("skeleton 대량 스폰")
+				# print("skeleton 대량 스폰")
 				spawn_enemy(skeleton, MONSTER)
 			has_spawned_skeleton_mass = true
 
@@ -99,7 +99,7 @@ func _process(_delta):
 		# 대량 스폰 알고리즘
 		if minute == 5 and sec > 30 and not has_spawned_mushroom_mass:
 			for i in range(10):
-				print("mushroom 대량 스폰")
+				# print("mushroom 대량 스폰")
 				spawn_enemy(mushroom, MONSTER)
 			has_spawned_mushroom_mass = true
 
@@ -126,7 +126,7 @@ func _process(_delta):
 	if (!boss_spawn_flag) && (minute==10):
 		if get_parent().instance_map:
 			map_name = get_parent().instance_map.name
-		print(map_name)
+		# print(map_name)
 		var boss
 		# 맵에 따른 보스 선택
 		match map_name:
@@ -180,8 +180,8 @@ func spawn_enemy(enemy_tscn, monster_type: int):
 		add_child(enemy_instance)
 	# 씬 로드 실패시 오류
 	else:
-		print("Error: Failed to load enemy scene.")
-
+		# print("Error: Failed to load enemy scene.")
+		pass
 
 # 스폰 위치 충돌 검사 함수
 func is_spawn_position_clear(position: Vector2, enemy_instance: Node2D) -> bool:
@@ -192,7 +192,7 @@ func is_spawn_position_clear(position: Vector2, enemy_instance: Node2D) -> bool:
 	query.transform = Transform2D.IDENTITY.translated(position)			# query의 포지션을 생성된 enemy위치로 이동
 	# 필요한 충돌 레이어만 마스크로 설정
 	query.collision_mask = 1 											# cave의 경우 layer 1번인 (lava), dungeon의 경우 레이어 1번이 없음  
-	#print("충돌검사")
+	# print("충돌검사")
 
 	var space_state = get_world_2d().direct_space_state					# 2D World 받아오며 객체 확인
 	var result = space_state.intersect_shape(query, 1)					# 가져온 Shape2D 리소스와 충돌하는 갯수(인자 1개) 확인 / 0개면 스폰 1이면 재시도

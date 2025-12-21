@@ -39,7 +39,7 @@ func _init_after_parent_ready():
 			"combo3" : [preload("res://dynamic/1_player/UI_Layer/SelectUI/Wizard/S_lightning3.tscn"), 0],
 		}
 	else:
-		print("character_name을 찾을 수 없음")
+		# print("character_name을 찾을 수 없음")
 		pass
 	for key in character_features.keys():			# 특성 append
 		upgrade_preload[key] = character_features[key]
@@ -115,7 +115,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["increase_max_hp"][1] = 10
 				5:
 					upgrade_preload["increase_max_hp"][1] = 0
-					print("체력증가 최대 레벨 도달")
+					# print("체력증가 최대 레벨 도달")
 
 		"increase_damage":
 			player.damage_level += 1
@@ -131,7 +131,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["increase_damage"][1] = 10
 				5:
 					upgrade_preload["increase_damage"][1] = 0
-					print("공격력 증가 최대 레벨 도달")
+					# print("공격력 증가 최대 레벨 도달")
 
 		"increase_moving_speed":
 			player.move_speed_level += 1
@@ -147,7 +147,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["increase_moving_speed"][1] = 10
 				5:
 					upgrade_preload["increase_moving_speed"][1] = 0
-					print("이동속도 증가 최대 레벨 도달")
+					# print("이동속도 증가 최대 레벨 도달")
 
 		"drain_blood":
 			player.drain_level += 1
@@ -163,7 +163,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["drain_blood"][1] = 4
 				5:
 					upgrade_preload["drain_blood"][1] = 0
-					print("흡혈 최대 레벨 도달")
+					#print("흡혈 최대 레벨 도달")
 
 		"increase_magnetic_area":
 			player.magnetic_area_level += 1
@@ -179,7 +179,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 					upgrade_preload["increase_magnetic_area"][1] = 10
 				5:
 					upgrade_preload["increase_magnetic_area"][1] = 0
-					print("자석 범위 증가 최대 레벨 도달")
+					# print("자석 범위 증가 최대 레벨 도달")
 
 		"shadow_partner":
 			player.shadow_partner_level += 1
@@ -236,7 +236,7 @@ func _on_upgrade_button_pressed(upgrade_key):
 		"food":
 			player.current_hp += 10
 		_:
-			print("ERROR -> 아무것도 선택되지 않음")
+			# print("ERROR -> 아무것도 선택되지 않음")
 			pass
 
 	# 업그레이드 버튼 초기화 (count 갯수의 선택 창들을 모두 제거)

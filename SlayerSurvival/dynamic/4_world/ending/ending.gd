@@ -31,12 +31,6 @@ func _ready():
 
 func _on_ending_finished():
 	ending_finished.emit()
-	# 엔딩 씬의 검정 화면 z 인덱스 디버깅
-	print("Ending scene black screen z index: ", white_screen.z_index)
-	# 엔딩 씬의 검정 화면 z 인덱스를 9로 설정
-	# white_screen.z_index = 7
-	print("Ending scene black screen z index: ", white_screen.z_index)
-	# 일단 queue_free()를 하지 않고 
 	queue_free()
 
 
