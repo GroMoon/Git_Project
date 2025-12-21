@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Slayer Survival"
+config/name="Slayers Survival"
 run/main_scene="res://dynamic/5_title_screen/menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/show_image=false

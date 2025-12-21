@@ -922,12 +922,12 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_0o1gf")
 text = "끝 내 기"
 
 [node name="Slayer_Survival" type="Label" parent="."]
-offset_left = 336.0
+offset_left = 315.0
 offset_top = 60.0
-offset_right = 944.0
+offset_right = 965.0
 offset_bottom = 151.0
 theme_override_fonts/font = ExtResource("3_3dttr")
-text = "Slayer Survival"
+text = "Slayers Survival"
 label_settings = SubResource("LabelSettings_b5exc")
 
 [node name="version" type="Label" parent="."]
