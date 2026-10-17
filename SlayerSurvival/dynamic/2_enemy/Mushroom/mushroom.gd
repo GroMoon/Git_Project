@@ -3,7 +3,7 @@ extends EnemyBase
 func _initialize():
 	# 적 특성
 	enemy_name      = "mushroom"
-	health          = 37
+	health          = 22
 	move_speed      = 80
 	damage          = 5
 	spawn_radius    = 500

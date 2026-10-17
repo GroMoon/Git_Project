@@ -3,7 +3,7 @@ extends EnemyBase
 func _initialize():
 	# 적 특성
 	enemy_name      = "goblin_elite"
-	health          = 350
+	health          = 260
 	move_speed      = 100
 	damage          = 24
 	spawn_radius    = 700

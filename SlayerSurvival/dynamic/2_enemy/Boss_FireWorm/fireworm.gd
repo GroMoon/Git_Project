@@ -40,10 +40,14 @@ var knockback_vector   = Vector2.ZERO
 var knockback_time     = 0.0			# 넉백 유지 시간
 var knockback_duration = 0.2			# 넉백 몇 초 동안?
 var knockback_strength = 100.0  		# 넉백 세기
+var last_hit_anim_time = -10.0			# 마지막 피격 모션 시각 (보스 경직 남용 방지)
+const HIT_ANIM_INTERVAL = 1.5			# 피격 모션 최소 간격(초)
 
 func _ready():
 	# player 노드 찾기
 	player = get_parent().get_parent().get_node("player")
+	# 피격 플래시 머티리얼
+	GameFeel.ensure_flash_material(body_animated_sprite)
 	
 func _physics_process(delta):
 	# 사망 상태에서 아무것도 처리 아지 않도록
@@ -120,10 +124,10 @@ func drop_item():
 	get_parent().call_deferred("add_child", new_food)
 
 # 넉백 함수
-func apply_knockback(attacker: Node2D):
+func apply_knockback(attacker: Node2D, strength_mult: float = 1.0):
 	# 방향 : (적의 위치 - 공격자=플레이어 위치)
-	var direction    = (position - attacker.position).normalized()
-	knockback_vector = direction * knockback_strength
+	var direction    = (global_position - attacker.global_position).normalized()
+	knockback_vector = direction * knockback_strength * strength_mult * 0.3
 	knockback_time   = knockback_duration
 
 # 파이어볼 인스턴스
@@ -153,21 +157,35 @@ func _on_interaction_sensor_body_exited(_body:Node2D):
 	
 func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
-		var take_damage = area.get_parent().attack_damage
-		health -= take_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
-		DamageVisual.show_damage(take_damage, self.position, Color.WHITE)
-		if health <= 0:
-			die_enemy()
-			spawn_portal()
-			return
-		else:
-			apply_knockback(area.get_parent())
-			# 데미지 모션 추가
-			hit_flag = true
-			body_animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
-			body_animated_sprite.speed_scale = 2.0
-			body_animated_sprite.play("take_hit")
-			await body_animated_sprite.animation_finished
+		var rolled = player.roll_damage(area.get_parent().attack_damage)
+		take_damage(rolled[0], area.get_parent(), 1.0, rolled[1])
+
+# 데미지 처리 (모든 무기 공통 진입점)
+func take_damage(amount: float, source: Node2D = null, knockback_mult: float = 1.0, is_crit: bool = false):
+	if is_dead:
+		return
+	health -= amount
+	DamageVisual.show_damage(amount, self.position, Color.WHITE, is_crit)
+	GameFeel.hit_flash(body_animated_sprite)
+	if health <= 0:
+		GameFeel.shake(1.0)
+		GameFeel.hitstop(0.25, 0.02)
+		GameFeel.flash_screen(Color(1, 1, 1, 0.6), 0.5)
+		GameFeel.burst(global_position, Color(1.0, 0.5, 0.2), 60, 380.0, 6.0)
+		die_enemy()
+		spawn_portal()
+		return
+	if source != null and knockback_mult > 0.0:
+		apply_knockback(source, knockback_mult)
+	# 데미지 모션 (보스는 일정 간격으로만 경직)
+	var now = Time.get_ticks_msec() / 1000.0
+	if now - last_hit_anim_time >= HIT_ANIM_INTERVAL:
+		last_hit_anim_time = now
+		hit_flag = true
+		body_animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
+		body_animated_sprite.speed_scale = 2.0
+		body_animated_sprite.play("take_hit")
+		await body_animated_sprite.animation_finished
 		hit_flag = false
 
 func _on_attack_timer_timeout():

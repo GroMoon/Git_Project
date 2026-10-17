@@ -32,8 +32,12 @@ var is_elite      = false	# 적 특성 중 엘리트 여부
 # 넉백 관련
 var knockback_vector   = Vector2.ZERO
 var knockback_time     = 0.0			# 넉백 유지 시간
-var knockback_duration = 0.2			# 넉백 몇 초 동안?
-var knockback_strength = 150.0  		# 넉백 세기
+var knockback_duration = 0.15			# 넉백 몇 초 동안?
+var knockback_strength = 230.0  		# 넉백 세기
+var knockback_resist   = 0.0			# 넉백 저항 (0.0 ~ 1.0, 엘리트는 높음)
+# 피격 연출
+var base_sprite_scale  = Vector2.ONE
+var hit_color          = Color(1.0, 0.35, 0.3)	# 사망 파티클 색
 
 
 func _ready():
@@ -46,6 +50,11 @@ func _ready():
 	# 드롭 확률 연결
 	double_gold_drop = player.gold_drop
 	double_gem_drop  = player.gem_drop
+	# 피격 플래시 머티리얼
+	GameFeel.ensure_flash_material(animated_sprite)
+	base_sprite_scale = animated_sprite.scale
+	if is_elite:
+		knockback_resist = 0.7
 
 func _physics_process(delta):
 	# 사망 상태에서 아무것도 처리 아지 않도록
@@ -78,9 +87,16 @@ func _physics_process(delta):
 
 # 사망 처리 함수
 func die_enemy():
+	death_sound.pitch_scale = randf_range(0.85, 1.15)
 	death_sound.play()
 	var pet_chance_randf = randf()						# 몬스터펫 확률 (0.0~1.0 사이로 조절)
 	is_dead = true 										# 사망 상태 활성화
+	remove_from_group("enemy")							# 죽는 중인 적은 공격 대상에서 제외
+	# 사망 연출
+	GameFeel.burst(global_position, hit_color, 14 if !is_elite else 32, 170.0 if !is_elite else 260.0)
+	if is_elite:
+		GameFeel.shake(0.5)
+		GameFeel.hitstop(0.08)
 	drop_item()
 	player.kill_count += 1
 	collision_shape.call_deferred("set_disabled",true)	# CollisionShape2D 비활성화
@@ -151,11 +167,35 @@ func spawn_food():
 	new_food.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
 	get_parent().call_deferred("add_child", new_food)
 # 넉백 함수
-func apply_knockback(attacker: Node2D):
+func apply_knockback(attacker: Node2D, strength_mult: float = 1.0):
 	# 방향 : (적의 위치 - 공격자=플레이어 위치)
-	var direction    = (position - attacker.position).normalized()
-	knockback_vector = direction * knockback_strength
+	var direction    = (global_position - attacker.global_position).normalized()
+	knockback_vector = direction * knockback_strength * strength_mult * (1.0 - knockback_resist)
 	knockback_time   = knockback_duration
+
+# 데미지 처리 (모든 무기 공통 진입점)
+# source: 넉백 기준 노드, knockback_mult: 넉백 배율, is_crit: 치명타 여부
+func take_damage(amount: float, source: Node2D = null, knockback_mult: float = 1.0, is_crit: bool = false):
+	if is_dead:
+		return
+	health -= amount
+	DamageVisual.show_damage(amount, self.position, Color.WHITE, is_crit)
+	GameFeel.hit_flash(animated_sprite)
+	GameFeel.squash(animated_sprite, base_sprite_scale, 0.28 if is_crit else 0.18)
+	if is_crit:
+		GameFeel.shake(0.12)
+	if health <= 0:
+		die_enemy()
+		return
+	if source != null and knockback_mult > 0.0:
+		apply_knockback(source, knockback_mult)
+	# 데미지 모션 추가
+	hit_flag = true
+	animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
+	animated_sprite.speed_scale = 2.0
+	animated_sprite.play("take_hit")
+	await animated_sprite.animation_finished
+	hit_flag = false
 
 # 접촉 상태가 되었을 때
 func _on_interaction_sensor_body_entered(_body:Node2D):
@@ -171,19 +211,7 @@ func _on_interaction_sensor_body_exited(_body:Node2D):
 func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
 		var attacker = area.get_parent()
-		var take_damage = attacker.attack_damage
-		health -= take_damage       # TODO area.damage가 무기 추가 후 각 공격에 맞는 damage가 들어오는지 확인할 필요가 있음
-		DamageVisual.show_damage(take_damage, self.position, Color.WHITE)
-		if area.get_parent().name.begins_with("player"):
+		var rolled = player.roll_damage(attacker.attack_damage)
+		if attacker.name.begins_with("player"):
 			player.apply_health(player)
-		if health <= 0:
-			die_enemy()
-		else:
-			apply_knockback(area.get_parent())
-			# 데미지 모션 추가
-			hit_flag = true
-			animated_sprite.stop()						# 현재 애니메이션(walk)을 중지시킴
-			animated_sprite.speed_scale = 2.0
-			animated_sprite.play("take_hit")
-			await animated_sprite.animation_finished
-		hit_flag = false
+		take_damage(rolled[0], attacker, 1.0, rolled[1])

@@ -3,7 +3,7 @@ extends EnemyBase
 func _initialize():
 	# 적 특성
 	enemy_name      = "flyingeye_elite"
-	health          = 210
+	health          = 120
 	move_speed      = 105
 	damage          = 9
 	spawn_radius    = 500

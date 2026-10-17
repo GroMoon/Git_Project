@@ -139,11 +139,17 @@ func _steer():
 			away += d / dist * (90.0 - dist)
 			crowd += 1
 	var dir: Vector2
+	var preferred = 170.0 if opts["char"] == "wizard" else 60.0
 	if crowd >= 3:
 		dir = (away.normalized() + away.normalized().orthogonal() * 0.8).normalized()
 	elif closest != null and closest_dist < 600.0:
 		var to_enemy = (closest.global_position - player.global_position).normalized()
-		dir = to_enemy if closest_dist > 70.0 else to_enemy.orthogonal()
+		if closest_dist > preferred * 1.3:
+			dir = to_enemy
+		elif closest_dist < preferred * 0.8:
+			dir = (-to_enemy + to_enemy.orthogonal() * 0.5).normalized()
+		else:
+			dir = to_enemy.orthogonal()
 	else:
 		wander_timer -= get_process_delta_time()
 		if wander_timer <= 0.0:
@@ -170,7 +176,7 @@ func _take_shot():
 	var dir_path = String(opts["shot_dir"])
 	DirAccess.make_dir_recursive_absolute(dir_path)
 	var img = get_viewport().get_texture().get_image()
-	var path = "%s/%s_%03d.png" % [dir_path, opts["char"], int(elapsed)]
+	var path = "%s/%s_%07.2f.png" % [dir_path, opts["char"], elapsed]
 	img.save_png(path)
 	print("[autoplay] shot ", path)
 

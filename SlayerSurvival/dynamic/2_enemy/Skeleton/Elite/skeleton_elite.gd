@@ -3,7 +3,7 @@ extends EnemyBase
 func _initialize():
 	# 적 특성
 	enemy_name      = "skeleton_elite"
-	health          = 330
+	health          = 200
 	move_speed      = 75
 	damage          = 15
 	spawn_radius    = 500

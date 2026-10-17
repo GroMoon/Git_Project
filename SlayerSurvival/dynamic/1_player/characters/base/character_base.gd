@@ -21,15 +21,26 @@ signal levelup
 @export var attack_times        = 1					# 캐릭터 공격 콤보
 @export var shadow_attack       = false				# 캐릭터 그림자 분신술
 @export var attack_damage       = 5					# 캐릭터 일반 공격 데미지
-@export var magnetic_area_scale = 100				# 캐릭터 자석 범위
+@export var magnetic_area_scale = 100:				# 캐릭터 자석 범위
+	set(value):
+		magnetic_area_scale = value
+		if magnetic_area:
+			magnetic_area.shape.radius = value
 @export var animation_speed     = 1.0				# 캐릭터 기본 애니메이션 속도
 @export var start_hp            = 100.0				# 캐릭터 시작 체력
 @export var vampire             = 0.0				# 캐릭터 흡혈 퍼센트
 @export var shield              = 0.0               # 캐릭터 방어력
-@export var attack_wait_time    = 4.0  				# 기본 공격 쿨타임
+@export var attack_wait_time    = 1.2  				# 기본 공격 쿨타임(초)
+@export var attack_anim_speed   = 1.0				# 기본 공격 모션 재생 속도(AnimationPlayer)
 @export var cooldown            = 0.0				# 캐릭터 쿨타임 감소값(어택타이머)
 @export var gold_drop           = 0.0				# 캐릭터 골드(2개) 드롭 퍼센트
 @export var gem_drop            = 0.0				# 캐릭터 경험치(2개) 드롭 퍼센트
+@export var crit_chance         = 0.08				# 치명타 확률
+@export var crit_multiplier     = 2.0				# 치명타 배율
+
+const COOLDOWN_REFERENCE = 4.0		# cooldown 값(초) → 비율 환산 기준 (cooldown 0.2 = 5% 감소)
+const MIN_COOLDOWN_MULT  = 0.35		# 쿨타임 최대 감소 한도
+const AUTO_AIM_RANGE     = 260.0	# 근접 공격 자동 조준 범위
 
 
 ## 펫 관련
@@ -131,6 +142,11 @@ func _ready():
 	$DamageTimer.connect("timeout", Callable(self, "_on_damage_timer_timeout"))
 	# 공격 범위 초기화(off)
 	animation_player.play("RESET")
+	animation_player.speed_scale = attack_anim_speed
+	# 공격 타이머는 공격이 끝날 때마다 다시 시작 (콤보 중 중복 발동 방지)
+	attack_timer.one_shot = true
+	attack_timer.wait_time = get_attack_wait_time()
+	attack_timer.start()
 	# 몬스터펫 초기화
 	Dialogic.VAR.mushroom_pet_diag  = false
 	Dialogic.VAR.skeleton_pet_diag  = false
@@ -140,18 +156,15 @@ func _ready():
 func _physics_process(_delta):
 	if is_dead:
 		return
-	# 공격 중에 이동 처리 안 함
-	if is_attacking:
-		return
-		
-	# 키보드 입력
+
+	# 키보드 입력 (공격 중에도 이동 가능)
 	process_keyboard_input()
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
 	# hit_effect (깜빡거림) 추가
 	apply_hit_effect()
-	# 애니메이션 처리
-	if !hit_flag:
+	# 애니메이션 처리 (공격 모션 중에는 AnimationPlayer가 스프라이트를 제어)
+	if !hit_flag and !is_attacking:
 		animated_sprite.speed_scale = animation_speed
 		if velocity.length() > 0:
 			animated_sprite.play("run")
@@ -209,6 +222,9 @@ func process_collision_enemy(damage):
 		var damage_shielded = damage*(1-shield) # 방어력에 반감된 데미지
 		current_hp -= damage_shielded
 		DamageVisual.show_damage(damage_shielded, self.position)
+		# 피격 피드백: 화면 흔들림 + 붉은 화면 플래시
+		GameFeel.shake(0.35)
+		GameFeel.flash_screen(Color(0.8, 0.05, 0.05, 0.25), 0.2)
 		# print("max_hp", hp_bar.max_value)					
 		damage_flag = true
 		damage_timer.start()
@@ -250,7 +266,17 @@ func add_gold(gold_value):
 # 경험치 추가
 func add_exp(_exp_value):
 	current_exp += _exp_value
+	_pulse_exp_bar()
 	calculate_exp()
+
+# 경험치 바 반짝임
+var exp_bar_tween: Tween
+func _pulse_exp_bar():
+	if exp_bar_tween and exp_bar_tween.is_valid():
+		exp_bar_tween.kill()
+	exp_bar.modulate = Color(1.8, 1.8, 2.2)
+	exp_bar_tween = exp_bar.create_tween()
+	exp_bar_tween.tween_property(exp_bar, "modulate", Color.WHITE, 0.2)
 
 # 체력 회복(음식)
 func add_food(health_value):
@@ -283,7 +309,74 @@ func level_up():
 		character_level += 1
 		# print("레벨 업! : ", character_level)
 		current_exp = current_exp - max_exp
+		levelup_shockwave()
 		emit_signal("levelup")
+
+# 레벨업 충격파: 주변 적을 밀어내고 화면 플래시 (선택 창이 닫히면 적들이 날아감)
+func levelup_shockwave():
+	GameFeel.flash_screen(Color(1.0, 0.95, 0.6, 0.45), 0.35)
+	GameFeel.burst(global_position, Color(1.0, 0.9, 0.4), 24, 260.0, 4.0)
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		if global_position.distance_to(enemy.global_position) < 220.0 and enemy.has_method("apply_knockback"):
+			enemy.apply_knockback(self, 3.0)
+
+# ================= 전투 유틸 =================
+# 쿨타임 감소 비율 (1.0 = 감소 없음)
+func get_cooldown_mult() -> float:
+	return clamp(1.0 - cooldown / COOLDOWN_REFERENCE, MIN_COOLDOWN_MULT, 1.0)
+
+# 시그니처 공격 대기 시간
+func get_attack_wait_time() -> float:
+	return max(attack_wait_time * get_cooldown_mult(), 0.1)
+
+# 치명타 판정: [최종 데미지, 치명타 여부]
+func roll_damage(base_damage: float) -> Array:
+	if randf() < crit_chance:
+		return [base_damage * crit_multiplier, true]
+	return [base_damage, false]
+
+# 가장 가까운 적 (범위 밖이면 null)
+func get_nearest_enemy(max_range: float = INF) -> Node2D:
+	var nearest: Node2D = null
+	var best = max_range
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		var d = global_position.distance_to(enemy.global_position)
+		if d < best:
+			best = d
+			nearest = enemy
+	return nearest
+
+# 근접 공격 자동 조준: 범위 내 가장 가까운 적 쪽을 바라봄
+func face_nearest_enemy():
+	var enemy = get_nearest_enemy(AUTO_AIM_RANGE)
+	if enemy:
+		animated_sprite.flip_h = enemy.global_position.x < global_position.x
+
+# 근접 콤보 공격 공통 처리 (전사, 왕)
+# attack_areas: 콤보 단계별 공격 범위, right_offsets: 오른쪽을 볼 때의 x 위치
+func run_melee_combo(attack_areas: Array, right_offsets: Array):
+	if is_dead:
+		return
+	is_attacking = true
+	animated_sprite.speed_scale = animation_speed
+	face_nearest_enemy()
+	var side = -1 if animated_sprite.flip_h else 1
+	for i in attack_areas.size():
+		attack_areas[i].position.x = right_offsets[i] * side
+	for i in clampi(attack_times, 1, attack_areas.size()):
+		# pause 해제 대기
+		if is_dead or not await wait_for_pause_resume():
+			is_attacking = false
+			return
+		animation_player.play("attack_%d" % (i + 1))
+		await animation_player.animation_finished
+	if not await wait_for_pause_resume():
+		is_attacking = false
+		return
+	is_attacking = false
+	# 타이머 재시작
+	attack_timer.wait_time = get_attack_wait_time()
+	attack_timer.start()
 
 # 흡혈 능력
 func apply_health(_source):
@@ -297,8 +390,10 @@ func apply_health(_source):
 func respawn():
 	animated_sprite.material.set_shader_parameter("hit_flag", true)
 	baseui.respawn_pause_flag = true
-	animation_player.play("respawn")
+	animation_player.speed_scale = 1.0
+	animation_player.play("respawn" if animation_player.has_animation("respawn") else "revive")
 	await animation_player.animation_finished
+	animation_player.speed_scale = attack_anim_speed
 	await get_tree().create_timer(invincibility_duration).timeout
 	current_hp = max_hp * 0.5
 	baseui.respawn_pause_flag = false
@@ -311,8 +406,8 @@ func apply_hit_effect():
 		animated_sprite.material.set_shader_parameter("hit_flag", false)
 
 func _on_magnetic_area_area_entered(area:Area2D):
-	if area.is_in_group("Gold") or area.is_in_group("Exp") or area.is_in_group("Food"):
-		area.target = $MagneticArea
+	if area is PickupBase:
+		area.attract($MagneticArea)
 
 func _on_damage_timer_timeout():
 	damage_flag = false
