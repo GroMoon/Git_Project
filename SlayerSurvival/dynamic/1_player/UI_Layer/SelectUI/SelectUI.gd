@@ -342,8 +342,9 @@ func open_chest(count: int):
 	# 모두 공개된 뒤 계속 버튼
 	var reveal_time = 0.25 + rewards.size() * 0.3 + 0.2
 	get_tree().create_timer(reveal_time, true).timeout.connect(func():
-		chest_continue.visible = true
-		chest_continue.grab_focus())
+		if is_instance_valid(chest_continue) and chest_open:
+			chest_continue.visible = true
+			chest_continue.grab_focus())
 	accept_input_at = Time.get_ticks_msec() / 1000.0 + reveal_time
 
 func _build_chest_overlay():

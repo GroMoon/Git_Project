@@ -33,6 +33,9 @@ func _physics_process(_delta):
 	if is_attacking:
 		return
 
+	# 대상이 사라졌거나 이미 죽은(enemy 그룹에서 빠진) 경우 새 대상을 찾도록 비움
+	if target_enemy != null and (not is_instance_valid(target_enemy) or not target_enemy.is_in_group("enemy")):
+		target_enemy = null
 	# 적(target_enemy)이 유효하면 적을 따라 이동, 아니면 플레이어를 따라 이동
 	if target_enemy != null and is_instance_valid(target_enemy):
 		# 목표 적이 있을 때: 적 방향으로 이동

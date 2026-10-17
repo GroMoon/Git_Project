@@ -10,6 +10,7 @@ extends Node
 ##   --shot_dir=스크린샷 저장 경로  --god=1 (무적)    --start_minute=시작 분(디렉터 테스트용)
 ##   --give=fireball,bomb:3 (시작 시 업그레이드 지급, :n = n레벨)  --pick=first|random
 ##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_chest=1 (첫 보물상자 화면 스크린샷)
+##   --pets=goblin,mushroom,skeleton,flyingeye (시작 시 몬스터 펫 지급)
 ##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자)  --die_at=초 (강제 사망)  --shot_death=1 (결과 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
 
 const GAME_SCENE = "res://test.tscn"
@@ -28,6 +29,7 @@ var opts = {
 	"shot_levelup": "0",
 	"shot_pause": "-1",
 	"shot_chest": "0",
+	"pets": "",
 	"chest_at": "-1",
 	"die_at": "-1",
 	"shot_death": "0",
@@ -93,6 +95,8 @@ func _start_game():
 		var count = int(parts[1]) if parts.size() > 1 else 1
 		for i in count:
 			player.add_upgrade(parts[0])
+	for pet in String(opts["pets"]).split(",", false):
+		Dialogic.VAR.set(pet + "_pet_diag", true)
 	print("[autoplay] start char=%s map=%s seconds=%s" % [opts["char"], opts["map"], opts["seconds"]])
 
 func _process(delta):
