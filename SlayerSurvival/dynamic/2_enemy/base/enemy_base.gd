@@ -164,9 +164,29 @@ func drop_item():
 	spawn_gem()
 	if randf() <= double_gem_drop:
 		spawn_gem()
-	# 음식(체력회복)
+	# 엘리트: 음식 + 보물상자
 	if is_elite:
 		spawn_food()
+		var chest = ChestPickup.create()
+		chest.global_position = global_position
+		get_parent().call_deferred("add_child", chest)
+	else:
+		# 드문 필드 픽업 (자석 / 폭탄 / 음식)
+		var r = randf()
+		if r < MAGNET_CHANCE:
+			spawn_field_pickup("magnet")
+		elif r < MAGNET_CHANCE + NUKE_CHANCE:
+			spawn_field_pickup("nuke")
+		elif r < MAGNET_CHANCE + NUKE_CHANCE + FOOD_CHANCE:
+			spawn_food()
+
+const MAGNET_CHANCE = 0.0025
+const NUKE_CHANCE   = 0.0015
+const FOOD_CHANCE   = 0.005
+func spawn_field_pickup(kind: String):
+	var p = FieldPickup.create(kind)
+	p.global_position = global_position
+	get_parent().call_deferred("add_child", p)
 
 func spawn_gold():
 	var new_gold = gold_img.instantiate()

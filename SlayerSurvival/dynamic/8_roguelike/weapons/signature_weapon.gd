@@ -10,6 +10,7 @@ func on_level_changed():
 	player.signature_damage_mult = float(stat("damage", 1.0))
 	player.signature_cd_mult     = float(stat("cooldown", 1.0))
 	player.signature_area_mult   = float(stat("area", 1.0))
+	player.crit_bonus            = 0.15 if evolved else 0.0
 	player.recalc_stats()
 
 func _physics_process(_delta):

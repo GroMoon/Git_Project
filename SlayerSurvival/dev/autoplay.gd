@@ -9,7 +9,8 @@ extends Node
 ##   --log_every=로그 간격(초)     --shots=스크린샷 찍을 게임 시간(초, 쉼표 구분)
 ##   --shot_dir=스크린샷 저장 경로  --god=1 (무적)    --start_minute=시작 분(디렉터 테스트용)
 ##   --give=fireball,bomb:3 (시작 시 업그레이드 지급, :n = n레벨)  --pick=first|random
-##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
+##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_chest=1 (첫 보물상자 화면 스크린샷)
+##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자)  --die_at=초 (강제 사망)  --shot_death=1 (결과 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
 
 const GAME_SCENE = "res://test.tscn"
 
@@ -26,6 +27,10 @@ var opts = {
 	"pick": "random",
 	"shot_levelup": "0",
 	"shot_pause": "-1",
+	"shot_chest": "0",
+	"chest_at": "-1",
+	"die_at": "-1",
+	"shot_death": "0",
 }
 
 var game: Node = null
@@ -40,6 +45,11 @@ var min_fps := 1000.0
 var levelups := 0
 var levelup_wait := 0.0
 var levelup_shot_done := false
+var chest_spawned := false
+var death_wait := 0.0
+var chests := 0
+var chest_wait := 0.0
+var chest_shot_done := false
 var pause_shot_state := 0
 var pause_shot_wait := 0.0
 
@@ -90,6 +100,14 @@ func _process(delta):
 		return
 	var base_ui = player.get_node("UI_Layer/BaseUI")
 
+	# 결과 화면 스크린샷 (사망 후 잠시 대기)
+	if base_ui.death_pause_flag and opts["shot_death"] == "1":
+		death_wait += delta
+		if death_wait > 1.0:
+			_take_shot()
+			_finish("player died")
+		return
+
 	_handle_blocking_ui(base_ui)
 
 	# 일시정지 화면 스크린샷
@@ -112,6 +130,16 @@ func _process(delta):
 	elapsed += delta
 	if opts["god"] == "1":
 		player.current_hp = player.max_hp
+	if float(opts["chest_at"]) >= 0.0 and not chest_spawned and elapsed >= float(opts["chest_at"]):
+		chest_spawned = true
+		var chest = ChestPickup.create()
+		chest.global_position = player.global_position + Vector2(40, 0)
+		game.get_node("EnemySpwaner").add_child(chest)
+	if float(opts["die_at"]) >= 0.0 and elapsed >= float(opts["die_at"]) and not player.is_dead:
+		opts["god"] = "0"
+		player.respawn_times = 0
+		player.damage_flag = false
+		player.process_collision_enemy(99999)
 	_steer()
 
 	var fps = Engine.get_frames_per_second()
@@ -130,7 +158,7 @@ func _process(delta):
 		shots.pop_front()
 		_take_shot()
 
-	if player.is_dead or base_ui.death_pause_flag:
+	if (player.is_dead or base_ui.death_pause_flag) and opts["shot_death"] != "1":
 		_finish("player died")
 	elif elapsed >= float(opts["seconds"]):
 		_finish("time limit")
@@ -139,6 +167,16 @@ func _process(delta):
 func _handle_blocking_ui(base_ui):
 	if base_ui.lvlup_pause_flag:
 		var select_ui = player.get_node("UI_Layer/SelectUI")
+		if "chest_open" in select_ui and select_ui.chest_open:
+			if opts["shot_chest"] == "1" and not chest_shot_done:
+				chest_wait += get_process_delta_time()
+				if chest_wait < 1.6:
+					return
+				chest_shot_done = true
+				_take_shot()
+			chests += 1
+			select_ui.autoclose_chest()
+			return
 		# 첫 레벨업 화면은 잠깐 띄워두고 스크린샷
 		if opts["shot_levelup"] == "1" and not levelup_shot_done:
 			levelup_wait += get_process_delta_time()
@@ -198,7 +236,15 @@ func _steer():
 			crowd += 1
 	var dir: Vector2
 	var preferred = 170.0 if opts["char"] == "wizard" else 60.0
-	if crowd >= 3:
+	# 보물상자가 가까이 있으면 주우러 감
+	var chest: Node2D = null
+	for c in get_tree().get_nodes_in_group("Chest"):
+		if player.global_position.distance_to(c.global_position) < 700.0:
+			chest = c
+			break
+	if chest and crowd < 5:
+		dir = (chest.global_position - player.global_position).normalized()
+	elif crowd >= 3:
 		dir = (away.normalized() + away.normalized().orthogonal() * 0.8).normalized()
 	elif closest != null and closest_dist < 600.0:
 		var to_enemy = (closest.global_position - player.global_position).normalized()
@@ -256,5 +302,7 @@ func _finish(reason: String):
 			build[id] = player.weapons[id].level
 		print("[autoplay] build weapons=", build, " passives=", player.passives)
 		print("[autoplay] damage ", RunStats.damage_by_source)
+		var evolved = player.weapons.keys().filter(func(k): return player.weapons[k].evolved)
+		print("[autoplay] chests=%d evolved=%s" % [chests, evolved])
 	set_process(false)
 	get_tree().quit()

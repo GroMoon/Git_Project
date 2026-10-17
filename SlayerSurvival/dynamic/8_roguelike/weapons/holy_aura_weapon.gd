@@ -14,7 +14,6 @@ func _ready():
 	area_node = Area2D.new()
 	area_node.collision_layer = 0
 	area_node.collision_mask = ENEMY_MASK
-	area_node.monitorable = false
 	var cs = CollisionShape2D.new()
 	shape = CircleShape2D.new()
 	cs.shape = shape
@@ -40,13 +39,20 @@ func _update_radius():
 func fire() -> bool:
 	_update_radius()
 	var hit_any = false
+	var hit_count = 0
 	for body in area_node.get_overlapping_bodies():
 		if body.is_in_group("enemy"):
 			hit(body, get_damage(), 0.55, global_position)
 			hit_any = true
+			hit_count += 1
+	# 진화(피의 성역): 적중한 적 수만큼 체력 회복
+	if evolved and hit_count > 0:
+		player.add_food(min(hit_count * 0.3, 2.0))
 	# 피해 줄 때마다 은은하게 맥동
 	if pulse_tween and pulse_tween.is_valid():
 		pulse_tween.kill()
+	if evolved:
+		visual.modulate = Color(1.0, 0.25, 0.3, visual.modulate.a)
 	visual.modulate.a = 0.4 if hit_any else 0.28
 	pulse_tween = visual.create_tween()
 	pulse_tween.tween_property(visual, "modulate:a", 0.2, 0.35)

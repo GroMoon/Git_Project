@@ -25,6 +25,13 @@ var cards_box: HBoxContainer
 var current_choices: Array = []
 var accept_input_at := 0.0
 var choosing := false
+# 보물상자
+var chest_overlay: Control
+var chest_box: HBoxContainer
+var chest_title: Label
+var chest_continue: Button
+var chest_open := false
+var pending_chests: Array = []
 
 func _init_after_parent_ready():
 	player = get_parent().get_parent()
@@ -195,7 +202,7 @@ func _hover(card: Button, on: bool):
 
 # ================= 선택지 생성 =================
 func create_upgrade_selection():
-	if choosing:
+	if choosing or chest_open:
 		return
 	choosing = true
 	emit_signal("pause", true)						# 퍼즈 신호 BaseUI에 보내기
@@ -259,6 +266,10 @@ func roll_choices(count: int) -> Array:
 
 # ================= 입력 =================
 func _unhandled_input(event):
+	if chest_open and event is InputEventKey and event.pressed and event.keycode in [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]:
+		get_viewport().set_input_as_handled()
+		_close_chest()
+		return
 	if not choosing or not overlay.visible:
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -294,5 +305,134 @@ func _on_upgrade_button_pressed(upgrade_key):
 		child.queue_free()
 	overlay.visible = false
 	emit_signal("pause", false)
-	# 경험치가 남아 있으면 연속 레벨업
-	player.call_deferred("calculate_exp")
+	_after_ui_closed()
+
+# UI가 닫힌 뒤: 대기 중인 상자 → 남은 경험치로 연속 레벨업
+func _after_ui_closed():
+	if not pending_chests.is_empty():
+		open_chest.call_deferred(pending_chests.pop_front())
+	else:
+		player.call_deferred("calculate_exp")
+
+# ================= 보물상자 =================
+func open_chest(count: int):
+	if choosing or chest_open:
+		pending_chests.append(count)
+		return
+	if chest_overlay == null:
+		_build_chest_overlay()
+	chest_open = true
+	emit_signal("pause", true)
+	var rewards = player.roll_chest_rewards(count)
+	for child in chest_box.get_children():
+		child.queue_free()
+	var ko = TranslationServer.get_locale().begins_with("ko")
+	var has_evo = rewards.any(func(r): return r["kind"] == "evolve")
+	chest_title.text = ("진화!" if ko else "EVOLUTION!") if has_evo else ("보물상자!" if ko else "TREASURE!")
+	chest_overlay.visible = true
+	chest_continue.visible = false
+	for i in rewards.size():
+		var slot = _make_reward_slot(rewards[i], ko)
+		chest_box.add_child(slot)
+		slot.modulate.a = 0.0
+		slot.scale = Vector2(0.4, 0.4)
+		var t = slot.create_tween().set_parallel(true)
+		t.tween_property(slot, "modulate:a", 1.0, 0.15).set_delay(0.25 + i * 0.3)
+		t.tween_property(slot, "scale", Vector2.ONE, 0.3).set_delay(0.25 + i * 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# 모두 공개된 뒤 계속 버튼
+	var reveal_time = 0.25 + rewards.size() * 0.3 + 0.2
+	get_tree().create_timer(reveal_time, true).timeout.connect(func():
+		chest_continue.visible = true
+		chest_continue.grab_focus())
+	accept_input_at = Time.get_ticks_msec() / 1000.0 + reveal_time
+
+func _build_chest_overlay():
+	chest_overlay = Control.new()
+	chest_overlay.process_mode = Node.PROCESS_MODE_ALWAYS
+	chest_overlay.size = Vector2(1280, 720)
+	chest_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	chest_overlay.visible = false
+	chest_overlay.z_index = 2
+	add_child(chest_overlay)
+	var dim = ColorRect.new()
+	dim.color = Color(0.05, 0.03, 0.0, 0.7)
+	dim.size = chest_overlay.size
+	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	chest_overlay.add_child(dim)
+	chest_title = _label("", 50, COLOR_NEW)
+	chest_title.add_theme_color_override("font_outline_color", Color(0.3, 0.12, 0.0))
+	chest_title.add_theme_constant_override("outline_size", 10)
+	chest_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	chest_title.size = Vector2(1280, 70)
+	chest_title.position = Vector2(0, 110)
+	chest_overlay.add_child(chest_title)
+	chest_box = HBoxContainer.new()
+	chest_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	chest_box.add_theme_constant_override("separation", 20)
+	chest_box.size = Vector2(1280, 260)
+	chest_box.position = Vector2(0, 220)
+	chest_overlay.add_child(chest_box)
+	chest_continue = Button.new()
+	var ko = TranslationServer.get_locale().begins_with("ko")
+	chest_continue.text = "계속 (Enter)" if ko else "Continue (Enter)"
+	chest_continue.add_theme_font_size_override("font_size", 24)
+	chest_continue.add_theme_stylebox_override("normal", _card_style(COLOR_WEAPON, false))
+	chest_continue.add_theme_stylebox_override("hover", _card_style(COLOR_WEAPON, true))
+	chest_continue.add_theme_stylebox_override("focus", _card_style(COLOR_WEAPON, true))
+	chest_continue.size = Vector2(260, 56)
+	chest_continue.position = Vector2(510, 540)
+	chest_continue.pressed.connect(_close_chest)
+	chest_overlay.add_child(chest_continue)
+
+func _make_reward_slot(reward: Dictionary, ko: bool) -> Control:
+	var id = reward["id"]
+	var evolve = reward["kind"] == "evolve"
+	var accent = Color(1.0, 0.35, 0.35) if evolve else COLOR_WEAPON
+	var panel = PanelContainer.new()
+	panel.custom_minimum_size = Vector2(190, 240)
+	panel.pivot_offset = Vector2(95, 120)
+	panel.add_theme_stylebox_override("panel", _card_style(accent, evolve))
+	var box = VBoxContainer.new()
+	box.alignment = BoxContainer.ALIGNMENT_CENTER
+	box.add_theme_constant_override("separation", 8)
+	panel.add_child(box)
+	var icon = TextureRect.new()
+	icon.texture = UpgradeDB.icon(id, player.character_name)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.custom_minimum_size = Vector2(88, 88)
+	box.add_child(icon)
+	var name_text = UpgradeDB.evolved_name(id, player.character_name) if evolve else UpgradeDB.display_name(id, player.character_name)
+	var name_label = _label(name_text, 20, Color.WHITE)
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	name_label.custom_minimum_size = Vector2(170, 0)
+	box.add_child(name_label)
+	var info = ""
+	if evolve:
+		info = UpgradeDB.evolved_desc(id)
+	elif reward["kind"] == "gold":
+		info = "+30"
+	else:
+		info = "Lv %d" % reward["level"]
+	var info_label = _label(info, 15, accent)
+	info_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	info_label.custom_minimum_size = Vector2(170, 0)
+	box.add_child(info_label)
+	return panel
+
+func _close_chest():
+	if not chest_open or Time.get_ticks_msec() / 1000.0 < accept_input_at:
+		return
+	chest_open = false
+	chest_overlay.visible = false
+	emit_signal("pause", false)
+	_after_ui_closed()
+
+# 자동 플레이 테스트용: 상자 닫기
+func autoclose_chest():
+	if chest_open:
+		accept_input_at = 0.0
+		_close_chest()

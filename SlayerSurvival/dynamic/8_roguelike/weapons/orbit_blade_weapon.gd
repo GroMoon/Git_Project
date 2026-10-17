@@ -16,7 +16,7 @@ func _ready():
 	frames = WeaponFx.frames(SHEET, Vector2i(92, 102), {"spin": [0, 3, 14, true]})
 
 func on_level_changed():
-	_rebuild_blades()
+	_rebuild_blades.call_deferred()
 
 func _rebuild_blades():
 	for b in blades:
@@ -26,7 +26,6 @@ func _rebuild_blades():
 		var blade = Area2D.new()
 		blade.collision_layer = 0
 		blade.collision_mask = ENEMY_MASK
-		blade.monitorable = false
 		var shape = CollisionShape2D.new()
 		var circle = CircleShape2D.new()
 		circle.radius = BLADE_RADIUS

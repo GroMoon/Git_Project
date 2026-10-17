@@ -47,13 +47,34 @@ static func weapon_ids() -> Array:
 static func passive_ids() -> Array:
 	return data().keys().filter(func(k): return is_passive(k))
 
-# 레벨별 스탯 (level은 1부터)
-static func stat(id: String, level: int, key: String, default_value = 0.0):
+# 레벨별 스탯 (level은 1부터), evolved 이면 진화 보정 적용
+static func stat(id: String, level: int, key: String, default_value = 0.0, evolved: bool = false):
 	var stats = get_entry(id).get("stats", {})
-	if not stats.has(key):
-		return default_value
-	var arr: Array = stats[key]
-	return arr[clampi(level - 1, 0, arr.size() - 1)]
+	var value = default_value
+	if stats.has(key):
+		var arr: Array = stats[key]
+		value = arr[clampi(level - 1, 0, arr.size() - 1)]
+	if evolved:
+		var mod = get_entry(id).get("evolve", {}).get("mods", {}).get(key)
+		if mod:
+			value = value * mod[1] if mod[0] == "mul" else value + mod[1]
+	return value
+
+# 진화 정보
+static func can_evolve(id: String) -> bool:
+	return get_entry(id).has("evolve")
+
+static func evolve_partner(id: String) -> String:
+	return get_entry(id).get("evolve", {}).get("with", "")
+
+static func evolved_name(id: String, character_name: String = "") -> String:
+	var evo = get_entry(id).get("evolve", {})
+	if evo.has("names_by_character") and evo["names_by_character"].has(character_name):
+		return text(evo["names_by_character"][character_name])
+	return text(evo.get("name", id))
+
+static func evolved_desc(id: String) -> String:
+	return text(get_entry(id).get("evolve", {}).get("desc", ""))
 
 # 현재 언어에 맞는 텍스트
 static func text(t) -> String:
@@ -114,6 +135,16 @@ static func _build() -> Dictionary:
 		# ---------- 무기 ----------
 		"signature": {
 			"type": "weapon", "max_level": 6, "script": "res://dynamic/8_roguelike/weapons/signature_weapon.gd",
+			"evolve": {
+				"with": "might",
+				"names_by_character": {
+					"fantasy_warrior": {"ko": "검성의 일격", "en": "Blade Saint"},
+					"medieval_king":   {"ko": "왕의 심판", "en": "Royal Judgment"},
+					"wizard":          {"ko": "뇌신의 분노", "en": "Wrath of Thunder"},
+				},
+				"desc": {"ko": "피해 +50%, 범위 +40%, 쿨타임 -25%, 치명타 +15%", "en": "Damage +50%, area +40%, cooldown -25%, crit +15%"},
+				"mods": {"damage": ["mul", 1.5], "area": ["mul", 1.4], "cooldown": ["mul", 0.75]},
+			},
 			"name": {"ko": "고유 무기", "en": "Signature"},
 			"names_by_character": {
 				"fantasy_warrior": {"ko": "전사의 검", "en": "Warrior's Blade"},
@@ -150,6 +181,12 @@ static func _build() -> Dictionary:
 		},
 		"fireball": {
 			"type": "weapon", "max_level": 6, "script": "res://dynamic/8_roguelike/weapons/fireball_weapon.gd",
+			"evolve": {
+				"with": "area",
+				"name": {"ko": "메테오", "en": "Meteor"},
+				"desc": {"ko": "화염구 +2, 피해 +60%, 폭발 범위 +50%", "en": "+2 fireballs, damage +60%, blast area +50%"},
+				"mods": {"amount": ["add", 2], "damage": ["mul", 1.6], "area": ["mul", 1.5]},
+			},
 			"name": {"ko": "화염구", "en": "Fireball"},
 			"icon": {"path": "res://dynamic/2_enemy/Boss_FireWorm/Sprites/Fire Ball/Move.png", "region": Rect2(4, 8, 32, 32)},
 			"desc": [
@@ -169,6 +206,12 @@ static func _build() -> Dictionary:
 		},
 		"bomb": {
 			"type": "weapon", "max_level": 6, "script": "res://dynamic/8_roguelike/weapons/bomb_weapon.gd",
+			"evolve": {
+				"with": "cooldown",
+				"name": {"ko": "융단 폭격", "en": "Carpet Bomb"},
+				"desc": {"ko": "폭탄 +3, 쿨타임 -30%", "en": "+3 bombs, cooldown -30%"},
+				"mods": {"amount": ["add", 3], "cooldown": ["mul", 0.7]},
+			},
 			"name": {"ko": "고블린 폭탄", "en": "Goblin Bomb"},
 			"icon": Vector2i(2, 9),
 			"desc": [
@@ -188,6 +231,12 @@ static func _build() -> Dictionary:
 		},
 		"blade": {
 			"type": "weapon", "max_level": 6, "script": "res://dynamic/8_roguelike/weapons/orbit_blade_weapon.gd",
+			"evolve": {
+				"with": "speed",
+				"name": {"ko": "칼날 폭풍", "en": "Blade Storm"},
+				"desc": {"ko": "칼날 +3, 피해 +50%, 회전 속도 +50%", "en": "+3 blades, damage +50%, spin speed +50%"},
+				"mods": {"amount": ["add", 3], "damage": ["mul", 1.5], "speed": ["mul", 1.5], "area": ["mul", 1.15]},
+			},
 			"name": {"ko": "회전 칼날", "en": "Orbit Blades"},
 			"icon": {"path": "res://dynamic/2_enemy/Skeleton/Sprites/Sword_sprite.png", "region": Rect2(30, 34, 36, 36)},
 			"desc": [
@@ -207,6 +256,12 @@ static func _build() -> Dictionary:
 		},
 		"aura": {
 			"type": "weapon", "max_level": 6, "script": "res://dynamic/8_roguelike/weapons/holy_aura_weapon.gd",
+			"evolve": {
+				"with": "vampire",
+				"name": {"ko": "피의 성역", "en": "Blood Sanctum"},
+				"desc": {"ko": "피해 +80%, 범위 +30%, 적중한 적마다 체력 회복", "en": "Damage +80%, area +30%, heals per enemy hit"},
+				"mods": {"damage": ["mul", 1.8], "area": ["mul", 1.3]},
+			},
 			"name": {"ko": "성스러운 오라", "en": "Holy Aura"},
 			"icon": Vector2i(3, 9),
 			"desc": [
@@ -225,6 +280,12 @@ static func _build() -> Dictionary:
 		},
 		"eyebolt": {
 			"type": "weapon", "max_level": 6, "script": "res://dynamic/8_roguelike/weapons/eye_bolt_weapon.gd",
+			"evolve": {
+				"with": "amount",
+				"name": {"ko": "시선 폭풍", "en": "Gaze Barrage"},
+				"desc": {"ko": "탄환 +4, 관통 +5, 쿨타임 -40%", "en": "+4 bolts, +5 pierce, cooldown -40%"},
+				"mods": {"amount": ["add", 4], "pierce": ["add", 5], "cooldown": ["mul", 0.6]},
+			},
 			"name": {"ko": "눈알 탄환", "en": "Eye Bolt"},
 			"icon": {"path": "res://dynamic/2_enemy/FlyingEye/Sprites/projectile_sprite.png", "region": Rect2(8, 8, 32, 32)},
 			"desc": [
@@ -244,6 +305,12 @@ static func _build() -> Dictionary:
 		},
 		"spore": {
 			"type": "weapon", "max_level": 6, "script": "res://dynamic/8_roguelike/weapons/spore_weapon.gd",
+			"evolve": {
+				"with": "magnet",
+				"name": {"ko": "역병 포자", "en": "Plague Spores"},
+				"desc": {"ko": "포자 +2, 튕김 +4, 피해 +50%", "en": "+2 spores, +4 bounces, damage +50%"},
+				"mods": {"amount": ["add", 2], "bounce": ["add", 4], "damage": ["mul", 1.5]},
+			},
 			"name": {"ko": "버섯 포자", "en": "Spore Chain"},
 			"icon": {"path": "res://dynamic/2_enemy/Mushroom/Sprites/Projectile_sprite.png", "region": Rect2(13, 13, 24, 24)},
 			"desc": [

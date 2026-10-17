@@ -37,6 +37,7 @@ signal levelup
 @export var gem_drop            = 0.0				# 캐릭터 경험치(2개) 드롭 퍼센트
 @export var crit_chance         = 0.08				# 치명타 확률
 @export var crit_multiplier     = 2.0				# 치명타 배율
+var crit_bonus = 0.0								# 진화 등으로 얻는 추가 치명타 확률
 
 const COOLDOWN_REFERENCE = 4.0		# cooldown 값(초) → 비율 환산 기준 (cooldown 0.2 = 5% 감소)
 const MIN_COOLDOWN_MULT  = 0.35		# 쿨타임 최대 감소 한도
@@ -383,6 +384,43 @@ func add_upgrade(id: String):
 			elif id == "gold":
 				add_gold(25)
 
+# ================= 보물상자 / 진화 =================
+# 진화 가능한 무기 (최대 레벨 + 짝 패시브 보유 + 미진화)
+func find_evolvable() -> String:
+	for id in weapons.keys():
+		var w: WeaponBase = weapons[id]
+		if w.evolved or not UpgradeDB.can_evolve(id):
+			continue
+		if w.level >= UpgradeDB.max_level(id) and passives.has(UpgradeDB.evolve_partner(id)):
+			return id
+	return ""
+
+# 보물상자 보상 결정 + 적용. 반환: [{id, kind("evolve"/"upgrade"/"gold"), level}]
+func roll_chest_rewards(count: int) -> Array:
+	var rewards = []
+	for i in count:
+		var evo = find_evolvable()
+		if evo != "":
+			weapons[evo].evolve()
+			rewards.append({"id": evo, "kind": "evolve", "level": weapons[evo].level})
+			continue
+		# 보유 중이고 최대 레벨이 아닌 무기/패시브 중 하나
+		var candidates = []
+		for id in weapons.keys():
+			if weapons[id].level < UpgradeDB.max_level(id):
+				candidates.append(id)
+		for id in passives.keys():
+			if passives[id] < UpgradeDB.max_level(id):
+				candidates.append(id)
+		if candidates.is_empty():
+			add_gold(30)
+			rewards.append({"id": "gold", "kind": "gold", "level": 0})
+		else:
+			var id = candidates.pick_random()
+			add_upgrade(id)
+			rewards.append({"id": id, "kind": "upgrade", "level": get_upgrade_level(id)})
+	return rewards
+
 # 패시브/고유 무기 레벨을 스탯에 반영
 func recalc_stats():
 	var lv = func(id): return passives.get(id, 0)
@@ -421,7 +459,7 @@ func get_attack_wait_time() -> float:
 
 # 치명타 판정: [최종 데미지, 치명타 여부]
 func roll_damage(base_damage: float) -> Array:
-	if randf() < crit_chance:
+	if randf() < crit_chance + crit_bonus:
 		return [base_damage * crit_multiplier, true]
 	return [base_damage, false]
 

@@ -90,6 +90,7 @@ func _process(delta):
 		pause_panel.visible = false
 		# select_ui.visible = false
 		death_panel.visible = true
+		show_damage_report()
 		get_tree().paused   = true
 		# 게임 오버
 		survival_time.text = stopwatch.text
@@ -129,6 +130,7 @@ func _on_ending_finished():
 	is_ending_played = true   # "연출 보여줬음" 표시 -> 다시 생성 안 함
 	# ending_panel을 표시하고 인덱스와 그 자식들 모두 위로
 	ending_panel.visible = true
+	show_damage_report()
 
 # esc 키(=pause)를 눌렀을 때
 func check_pause_pressed():
@@ -191,6 +193,90 @@ func update_info():
 	shadow_level.text       = ": " + str(player.shadow_partner_level)
 	update_build_rows()
 
+# ================= 결과 화면: 무기별 누적 피해 =================
+var damage_report: Panel
+func show_damage_report():
+	if damage_report != null or player == null or not ("weapons" in player):
+		return
+	var ko = TranslationServer.get_locale().begins_with("ko")
+	damage_report = Panel.new()
+	damage_report.position = Vector2(898, 60)
+	damage_report.size = Vector2(285, 600)
+	damage_report.z_index = 5
+	add_child(damage_report)
+	var title = Label.new()
+	title.text = "무기별 피해" if ko else "Damage Dealt"
+	title.add_theme_font_size_override("font_size", 26)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.position = Vector2(0, 16)
+	title.size = Vector2(285, 36)
+	damage_report.add_child(title)
+	var rows = VBoxContainer.new()
+	rows.position = Vector2(14, 66)
+	rows.size = Vector2(257, 520)
+	rows.add_theme_constant_override("separation", 8)
+	damage_report.add_child(rows)
+	var data: Dictionary = RunStats.damage_by_source
+	var total = 0.0
+	for k in data:
+		total += data[k]
+	var keys = data.keys()
+	keys.sort_custom(func(a, b): return data[a] > data[b])
+	for id in keys.slice(0, 10):
+		rows.add_child(_damage_row(id, data[id], total, ko))
+
+func _damage_row(id: String, amount: float, total: float, ko: bool) -> Control:
+	var row = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	var icon = TextureRect.new()
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.custom_minimum_size = Vector2(36, 36)
+	var name_text = id
+	var level_text = ""
+	if UpgradeDB.has(id):
+		icon.texture = UpgradeDB.icon(id, player.character_name)
+		name_text = UpgradeDB.display_name(id, player.character_name)
+		if player.weapons.has(id):
+			var w = player.weapons[id]
+			if w.evolved:
+				name_text = UpgradeDB.evolved_name(id, player.character_name)
+				level_text = "EVO"
+			else:
+				level_text = "Lv %d" % w.level
+	elif id == "pet":
+		icon.texture = UpgradeDB.sheet_icon(4, 9)
+		name_text = "펫" if ko else "Pets"
+	elif id == "nuke":
+		icon.texture = UpgradeDB.sheet_icon(2, 10)
+		name_text = "폭탄 픽업" if ko else "Nuke"
+	row.add_child(icon)
+	var col = VBoxContainer.new()
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_theme_constant_override("separation", 2)
+	row.add_child(col)
+	var top = HBoxContainer.new()
+	col.add_child(top)
+	var name_label = Label.new()
+	name_label.text = name_text + ("  " + level_text if level_text != "" else "")
+	name_label.add_theme_font_size_override("font_size", 15)
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.clip_text = true
+	top.add_child(name_label)
+	var dmg_label = Label.new()
+	dmg_label.text = str(int(amount))
+	dmg_label.add_theme_font_size_override("font_size", 15)
+	dmg_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.4))
+	top.add_child(dmg_label)
+	var bar = ProgressBar.new()
+	bar.show_percentage = false
+	bar.custom_minimum_size = Vector2(0, 6)
+	bar.max_value = 1.0
+	bar.value = amount / max(total, 1.0)
+	col.add_child(bar)
+	return row
+
 # 보유 무기 / 패시브 아이콘 + 레벨 (일시정지 패널 하단)
 var build_rows: VBoxContainer
 var build_rows_key := ""
@@ -200,7 +286,7 @@ func update_build_rows():
 	# 변경이 있을 때만 다시 그림 (update_info 는 매 프레임 호출됨)
 	var key = str(player.passives)
 	for id in player.weapons.keys():
-		key += id + str(player.weapons[id].level)
+		key += id + str(player.weapons[id].level) + str(player.weapons[id].evolved)
 	if key == build_rows_key:
 		return
 	build_rows_key = key
@@ -218,7 +304,11 @@ func update_build_rows():
 	build_rows.add_child(weapon_row)
 	build_rows.add_child(passive_row)
 	for id in player.weapons.keys():
-		weapon_row.add_child(_build_slot(id, player.weapons[id].level))
+		var slot = _build_slot(id, player.weapons[id].level)
+		if player.weapons[id].evolved:
+			slot.get_child(1).text = "EVO"
+			slot.get_child(1).add_theme_color_override("font_color", Color(1.0, 0.4, 0.4))
+		weapon_row.add_child(slot)
 	for id in player.passives.keys():
 		passive_row.add_child(_build_slot(id, player.passives[id]))
 

@@ -11,6 +11,7 @@ const ENEMY_MASK = 4		# 적 CharacterBody2D 레이어 (enemy)
 
 var id := ""
 var level := 1
+var evolved := false				# 진화 여부 (최대 레벨 + 짝 패시브 → 보물상자)
 var player: CharacterBase
 var cooldown_left := 0.3
 
@@ -47,7 +48,12 @@ func _physics_process(delta):
 
 # ================= 스탯 =================
 func stat(key: String, default_value = 0.0):
-	return UpgradeDB.stat(id, level, key, default_value)
+	return UpgradeDB.stat(id, level, key, default_value, evolved)
+
+# 진화
+func evolve():
+	evolved = true
+	on_level_changed()
 
 func get_cooldown() -> float:
 	return max(float(stat("cooldown", 1.0)) * player.get_cooldown_mult(), 0.1)

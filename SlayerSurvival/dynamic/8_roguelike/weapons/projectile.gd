@@ -19,7 +19,6 @@ static func create(sprite_frames: SpriteFrames, anim: String, radius: float, spr
 	var p = Projectile.new()
 	p.collision_layer = 0
 	p.collision_mask = WeaponBase.ENEMY_MASK
-	p.monitorable = false
 	var shape = CollisionShape2D.new()
 	var circle = CircleShape2D.new()
 	circle.radius = radius
