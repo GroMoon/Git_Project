@@ -58,10 +58,12 @@ var ending_pause_flag   = false
 
 var player = null
 var boss_bar: BossBar
+var pause_menu: PauseMenu			# 새 일시정지 메뉴 (기존 PausePanel 대체)
+var result_screen: ResultScreen		# 새 결과 화면 (기존 DeathPanel / EndingPanel 대체)
 
 func _ready():
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
-	pause_panel.visible = false		# PausePanel 가리기
+	pause_panel.visible = false		# 기존 PausePanel 은 사용하지 않음 (PauseMenu 로 대체)
 	death_panel.visible = false		# DeathPanel 가리기
 	ending_panel.visible = false	# EndingPanel 가리기
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
@@ -71,6 +73,85 @@ func _ready():
 	boss_bar = BossBar.new()
 	add_child(boss_bar)
 	move_child(boss_bar, 1)		# 일시정지/결과 패널보다 아래에 그림
+	# 일시정지 메뉴 / 결과 화면
+	pause_menu = PauseMenu.new()
+	pause_menu.setup(player, self)
+	add_child(pause_menu)
+	pause_menu.resume_requested.connect(_on_resume_pressed)
+	pause_menu.settings_requested.connect(_on_option_pressed)
+	pause_menu.menu_requested.connect(_on_menu_pressed)
+	result_screen = ResultScreen.new()
+	result_screen.setup(player, self)
+	add_child(result_screen)
+	result_screen.retry_requested.connect(_on_restart_pressed)
+	result_screen.menu_requested.connect(_on_quit_pressed)
+	_style_hud()
+
+# ================= HUD 꾸미기 =================
+# 경험치 바(금테 + 파란 채움), 레벨 표시, 타이머/처치/골드 명판, 보유 장비 아이콘
+const BAR_FRAME = preload("res://static/ui/bar_frame.png")
+var hud_slots: HudSlots
+func _style_hud():
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var exp_bar = $Exp_Bar
+	exp_bar.position = Vector2(4, 4)
+	exp_bar.custom_minimum_size = Vector2(1272, 20)
+	exp_bar.size = Vector2(1272, 20)
+	var bg = StyleBoxTexture.new()
+	bg.texture = BAR_FRAME
+	bg.set_texture_margin_all(6)
+	exp_bar.add_theme_stylebox_override("background", bg)
+	var fill = StyleBoxFlat.new()
+	fill.bg_color = Color(0.32, 0.62, 1.0)
+	fill.border_color = Color(0.6, 0.85, 1.0)
+	fill.border_width_top = 2
+	fill.set_expand_margin_all(-4)
+	exp_bar.add_theme_stylebox_override("fill", fill)
+	# 레벨: 경험치 바 오른쪽 끝
+	var level = $Level
+	level.position = Vector2(1180, 3)
+	level.size = Vector2(90, 22)
+	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	level.add_theme_font_size_override("font_size", 16)
+	level.add_theme_color_override("font_color", GameUI.GOLD_LIGHT)
+	_outline(level, 5)
+	move_child(level, exp_bar.get_index())		# 경험치 바 위에 그리기
+	# 타이머 명판
+	var plate = _plate(Vector2(560, 28), Vector2(160, 48))
+	move_child(plate, stopwatch.get_index())
+	stopwatch.position = Vector2(560, 31)
+	stopwatch.size = Vector2(160, 40)
+	stopwatch.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	stopwatch.add_theme_font_size_override("font_size", 30)
+	_outline(stopwatch, 6)
+	# 처치 / 골드 명판 (오른쪽 위)
+	var stats_plate = _plate(Vector2(1056, 28), Vector2(218, 40))
+	move_child(stats_plate, $killcollect.get_index())
+	$killcollect.position = Vector2(1092, 33)
+	$goldcollect/GoldCount.position = Vector2(1196, 33)
+	_outline($killcollect/KillCount, 5)
+	_outline($goldcollect/GoldCount, 5)
+	# 보유 장비 (왼쪽 위)
+	hud_slots = HudSlots.new()
+	hud_slots.setup(player)
+	hud_slots.position = Vector2(6, 30)
+	add_child(hud_slots)
+	move_child(hud_slots, $Level.get_index())
+	# 보스 체력바는 타이머 아래로
+	boss_bar.position.y = 84
+
+func _plate(pos: Vector2, plate_size: Vector2) -> PanelContainer:
+	var p = GameUI.panel("PlatePanel")
+	p.position = pos
+	p.size = plate_size
+	p.custom_minimum_size = plate_size
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(p)
+	return p
+
+func _outline(label: Label, size: int):
+	label.add_theme_color_override("font_outline_color", Color(0.05, 0.03, 0.05))
+	label.add_theme_constant_override("outline_size", size)
 
 func _process(delta):
 	process_fatal_state()
@@ -80,22 +161,20 @@ func _process(delta):
 	diag_pause_flag  = Dialogic.VAR.diag_pause_flag
 
 	if globl_pause_flag && lvlup_pause_flag:	# 레벨업 중 esc 키 눌렀을 때
-		pause_panel.visible = true
+		_show_pause(true)
 		select_ui.visible = false
 		get_tree().paused   = true
 	elif globl_pause_flag:				# esc 키 눌렀을 때
-		pause_panel.visible = true
+		_show_pause(true)
 		# select_ui.visible = false
 		get_tree().paused   = true
 	elif lvlup_pause_flag: 				# 레벨 업 때
-		pause_panel.visible = false
+		_show_pause(false)
 		select_ui.visible = true
 		get_tree().paused   = true
 	elif death_pause_flag:				# 플레이서 사망 시
-		pause_panel.visible = false
-		# select_ui.visible = false
-		death_panel.visible = true
-		show_damage_report()
+		_show_pause(false)
+		result_screen.open("defeat")		# 결과 화면 (게임 오버)
 		get_tree().paused   = true
 		# 게임 오버
 		survival_time.text = stopwatch.text
@@ -106,12 +185,12 @@ func _process(delta):
 		
 		
 	elif diag_pause_flag:				# diag 창 뜰 시
-		pause_panel.visible = false
+		_show_pause(false)
 		get_tree().paused   = true
 	elif respawn_pause_flag:				# 부활 퍼즈
 		get_tree().paused   = true
 	elif ending_pause_flag:				# 엔딩 표시
-		pause_panel.visible = false
+		_show_pause(false)
 		ending_survival_time.text = stopwatch.text
 		ending_kill_enemy.text    = str(int(player.kill_count))
 		ending_get_gold.text      = str(int(player.gold_count))
@@ -122,34 +201,53 @@ func _process(delta):
 			add_child(ending_instance)
 
 	else:
-		pause_panel.visible = false
+		_show_pause(false)
 		get_tree().paused   = false
 		update_info()
 		
 	if (!lvlup_pause_flag)&&(!death_pause_flag)&&(!globl_pause_flag)&&(!diag_pause_flag)&&(!respawn_pause_flag)&&(!ending_pause_flag):
 		process_stopwatch(delta)
 
+# 새 일시정지 메뉴 열기/닫기
+func _show_pause(on: bool):
+	if pause_menu == null:
+		return
+	if on and not pause_menu.is_open():
+		pause_menu.open()
+	elif not on and pause_menu.is_open():
+		pause_menu.close()
+
 func _on_ending_finished():
 	get_tree().paused   = true
 	ending_instance = null    # 인스턴스 변수 비우기
 	is_ending_played = true   # "연출 보여줬음" 표시 -> 다시 생성 안 함
-	# ending_panel을 표시하고 인덱스와 그 자식들 모두 위로
-	ending_panel.visible = true
-	show_damage_report()
+	# 결과 화면 (승리)
+	result_screen.open("victory")
 
 # esc 키(=pause)를 눌렀을 때
 func check_pause_pressed():
 	if Input.is_action_just_pressed("pause") : 
 		# 설정 창이 열려 있으면 설정 창만 닫음 (일시정지 화면으로 돌아감)
 		if is_instance_valid(options_window):
-			options_window.queue_free()
+			options_window.close()
 			options_window = null
+			return
+		# 메인 메뉴 확인 창이 열려 있으면 확인 창만 닫음
+		if pause_menu and pause_menu.has_confirm():
+			pause_menu._close_confirm()
+			return
+		# 결과 화면 / 엔딩 중에는 일시정지하지 않음
+		if death_pause_flag or ending_pause_flag or (result_screen and result_screen.shown):
 			return
 		globl_pause_flag = !globl_pause_flag
 		update_info()
 
 # fatal_state 효과 (빨간빛)
 func process_fatal_state():
+	# 결과 화면에서는 붉은 저체력 효과를 끔
+	if result_screen and result_screen.shown:
+		fatal_state.material.set_shader_parameter("fatal_flag", false)
+		return
 	var health_ratio = float (player.current_hp) / player.max_hp
 	if health_ratio < 0.3:  # 체력이 30% 미만일 때 효과 적용
 		var intensity = health_ratio
@@ -344,9 +442,9 @@ func _build_slot(id: String, lv: int) -> Control:
 
 # resume(돌아가기) 버튼 누를 때
 func _on_resume_pressed():
-	globl_pause_flag   = !globl_pause_flag
+	globl_pause_flag   = false
 	get_tree().paused   = false
-	pause_panel.visible = false
+	_show_pause(false)
 
 # menu(메인메뉴) 버튼 누를 때
 func _on_menu_pressed():
@@ -359,11 +457,13 @@ var options_window: Node = null
 func _on_option_pressed():
 	if is_instance_valid(options_window):
 		return		# 이미 열려 있음
-	var ingame_options = preload("res://dynamic/5_title_screen/option/ingame_options.tscn")
-	var ingame_options_instance = ingame_options.instantiate()
-	ingame_options_instance.z_index = 3
-	add_child(ingame_options_instance)
-	options_window = ingame_options_instance
+	# ESC 는 BaseUI 가 처리하므로 창 자체의 ESC 처리는 끔
+	var window = SettingsWindow.create(false)
+	add_child(window)
+	options_window = window
+	window.closed.connect(func():
+		if pause_menu and pause_menu.is_open() and pause_menu.buttons.size() > 1:
+			pause_menu.buttons[1].grab_focus.call_deferred())
 
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():

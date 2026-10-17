@@ -23,9 +23,10 @@ var bar: Control
 var hide_timer := 0.0
 
 func _ready():
-	position = Vector2((1280 - BAR_SIZE.x) / 2.0, 70)
+	position = Vector2((1280 - BAR_SIZE.x) / 2.0, 84)
 	size = Vector2(BAR_SIZE.x, 46)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	modulate.a = 0.0
 	name_label = _label(16, HORIZONTAL_ALIGNMENT_LEFT)
 	name_label.position = Vector2(0, 0)
@@ -100,9 +101,14 @@ func _per_line() -> float:
 	var lines = BOSS_LINES if _is_boss(target) else ELITE_LINES
 	return _max_hp() / lines
 
+var frame_style: StyleBoxTexture
 func _draw_bar():
 	var r = Rect2(Vector2.ZERO, BAR_SIZE)
-	bar.draw_rect(r.grow(2), Color(0, 0, 0, 0.8))
+	if frame_style == null:
+		frame_style = StyleBoxTexture.new()
+		frame_style.texture = load("res://static/ui/bar_frame.png")
+		frame_style.set_texture_margin_all(6)
+	bar.draw_style_box(frame_style, r.grow(4))
 	if target == null or not is_instance_valid(target):
 		return
 	var per_line = _per_line()

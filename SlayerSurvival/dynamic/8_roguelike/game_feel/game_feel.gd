@@ -21,6 +21,7 @@ var flash_rect: ColorRect
 const SFX_VOICES = 12
 const MIX_RATE   = 22050
 const COIN_SOUND = preload("res://static/audio/sfx/button_sounds/store(coin_sound).wav")
+const UI_HOVER_SOUND = preload("res://static/audio/sfx/button_sounds/button_sound_1.mp3")
 
 var sfx_streams := {}
 var sfx_players: Array = []
@@ -49,6 +50,8 @@ func _process(delta):
 # ================= 화면 흔들림 =================
 # amount: 0.0 ~ 1.0 (0.2 약함, 0.5 강함, 1.0 최대)
 func shake(amount: float):
+	if not OptionsManager.screen_shake:
+		return
 	trauma = min(trauma + amount, 1.0)
 
 func _process_shake(delta):
@@ -176,6 +179,9 @@ func _init_sfx():
 	sfx_streams["levelup"]   = _make_wav(_arpeggio([523.0, 659.0, 784.0, 1046.0], 0.075, 0.25))
 	sfx_streams["chest"]     = _make_wav(_arpeggio([784.0, 988.0, 1175.0, 1568.0, 1976.0, 2349.0], 0.06, 0.2))
 	sfx_streams["coin"]      = COIN_SOUND
+	sfx_streams["ui_hover"]  = UI_HOVER_SOUND
+	sfx_streams["ui_click"]  = _make_wav(_tone(900.0, 620.0, 0.05, 0.3, 0.5))
+	sfx_streams["ui_open"]   = _make_wav(_noise(0.18, 0.18, 0.08))
 
 # 같은 이름의 효과음은 min_interval 초 안에 한 번만 (호드 상황 보호)
 func allow_sfx(sfx_name: String, min_interval: float) -> bool:

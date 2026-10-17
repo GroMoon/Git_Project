@@ -11,9 +11,50 @@ var master_volume = 0.3
 var bgm_volume    = 0.3
 var sfx_volume    = 0.3
 
+# 게임플레이 표시 옵션
+var screen_shake   = true		# 화면 흔들림
+var damage_numbers = true		# 데미지 숫자
+
+const SETTINGS_PATH = "user://settings.cfg"
+
 
 func _ready():
+	load_settings()
 	apply_volume()
+
+# ================= 저장 / 불러오기 =================
+func save_settings():
+	var cfg = ConfigFile.new()
+	cfg.set_value("screen", "fullscreen", is_fullscreen)
+	cfg.set_value("sound", "master", master_volume)
+	cfg.set_value("sound", "bgm", bgm_volume)
+	cfg.set_value("sound", "sfx", sfx_volume)
+	cfg.set_value("sound", "master_muted", is_master_muted)
+	cfg.set_value("sound", "bgm_muted", is_bgm_muted)
+	cfg.set_value("sound", "sfx_muted", is_sfx_muted)
+	cfg.set_value("game", "locale", TranslationServer.get_locale())
+	cfg.set_value("game", "screen_shake", screen_shake)
+	cfg.set_value("game", "damage_numbers", damage_numbers)
+	cfg.save(SETTINGS_PATH)
+
+func load_settings():
+	var cfg = ConfigFile.new()
+	if cfg.load(SETTINGS_PATH) != OK:
+		return
+	master_volume   = cfg.get_value("sound", "master", master_volume)
+	bgm_volume      = cfg.get_value("sound", "bgm", bgm_volume)
+	sfx_volume      = cfg.get_value("sound", "sfx", sfx_volume)
+	is_master_muted = cfg.get_value("sound", "master_muted", is_master_muted)
+	is_bgm_muted    = cfg.get_value("sound", "bgm_muted", is_bgm_muted)
+	is_sfx_muted    = cfg.get_value("sound", "sfx_muted", is_sfx_muted)
+	screen_shake    = cfg.get_value("game", "screen_shake", screen_shake)
+	damage_numbers  = cfg.get_value("game", "damage_numbers", damage_numbers)
+	var locale = cfg.get_value("game", "locale", "")
+	if locale != "":
+		TranslationServer.set_locale(locale)
+	var fullscreen = cfg.get_value("screen", "fullscreen", is_fullscreen)
+	if fullscreen != is_fullscreen and DisplayServer.get_name() != "headless":
+		apply_screen_mode.call_deferred(fullscreen)
 
 
 func _process(_delta):

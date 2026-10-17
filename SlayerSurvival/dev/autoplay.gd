@@ -9,6 +9,7 @@ extends Node
 ##   --log_every=로그 간격(초)     --shots=스크린샷 찍을 게임 시간(초, 쉼표 구분)
 ##   --shot_dir=스크린샷 저장 경로  --god=1 (무적)    --start_minute=시작 분(디렉터 테스트용)
 ##   --give=fireball,bomb:3 (시작 시 업그레이드 지급, :n = n레벨)  --pick=first|random
+##   --pause_options=1 (--shot_pause 시 설정 창까지 열기)
 ##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_chest=1 (첫 보물상자 화면 스크린샷)
 ##   --pets=goblin,mushroom,skeleton,flyingeye (시작 시 몬스터 펫 지급)
 ##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자, --chest_count=5 면 보상 5개 상자를 바로 열기)
@@ -29,6 +30,7 @@ var opts = {
 	"pick": "random",
 	"shot_levelup": "0",
 	"shot_pause": "-1",
+	"pause_options": "0",
 	"shot_chest": "0",
 	"pets": "",
 	"chest_at": "-1",
@@ -131,10 +133,14 @@ func _process(delta):
 		pause_shot_state = 1
 		base_ui.globl_pause_flag = true
 		base_ui.update_info()
+		if opts["pause_options"] == "1":
+			base_ui._on_option_pressed()
 	elif pause_shot_state == 1:
 		pause_shot_wait += delta
 		if pause_shot_wait > 0.5:
 			_take_shot()
+			if is_instance_valid(base_ui.options_window):
+				base_ui.options_window.close()
 			base_ui.globl_pause_flag = false
 			pause_shot_state = 2
 		return

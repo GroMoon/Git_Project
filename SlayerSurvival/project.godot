@@ -100,6 +100,7 @@ import/blender/enabled=false
 
 [gui]
 
+theme/custom="res://static/ui/game_theme.tres"
 theme/custom_font="res://static/font/DNFBitBitTTF.ttf"
 
 [input]

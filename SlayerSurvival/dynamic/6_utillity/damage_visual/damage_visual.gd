@@ -13,7 +13,7 @@ func _ready():
 # 데미지 숫자 표시: 튀어오르며(팝) 위로 떠오른 뒤 사라짐
 func show_damage(damage: float, position: Vector2, color : Color = Color.RED, is_crit: bool = false):
 	var scene = get_tree().current_scene
-	if scene == null:
+	if scene == null or not OptionsManager.damage_numbers:
 		return
 	# 너무 많으면 일반 데미지는 생략 (치명타는 항상 표시)
 	if active_labels >= MAX_LABELS and not is_crit:
