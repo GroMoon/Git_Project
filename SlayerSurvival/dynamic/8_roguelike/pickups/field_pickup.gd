@@ -45,6 +45,7 @@ func on_collect():
 			GameFeel.flash_screen(Color(1, 1, 1, 0.85), 0.5)
 			GameFeel.shake(0.8)
 			GameFeel.hitstop(0.12, 0.03)
+			GameFeel.play_sfx("explosion", 0.6, 2.0, 0.1)
 			for enemy in get_tree().get_nodes_in_group("enemy"):
 				if enemy.global_position.distance_to(player.global_position) > NUKE_RANGE:
 					continue

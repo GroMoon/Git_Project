@@ -2,6 +2,7 @@ extends Node
 
 ## 손맛(게임 필) 담당 오토로드
 ## - 화면 흔들림(trauma 방식), 히트스톱, 파티클 버스트, 화면 플래시, 피격 플래시 셰이더
+## - 효과음: 코드로 합성한 짧은 효과음 + 동시 재생 제한 (호드 상황에서 소리 폭주 방지)
 
 const MAX_SHAKE_OFFSET = 14.0		# 최대 흔들림(px)
 const SHAKE_DECAY      = 2.2		# 초당 trauma 감소량
@@ -16,8 +17,20 @@ var hitstop_ready_at := 0.0		# 다음 히트스톱 가능 시각(실시간 ms)
 var flash_layer: CanvasLayer
 var flash_rect: ColorRect
 
+const SFX_VOICES = 12
+const MIX_RATE   = 22050
+const COIN_SOUND = preload("res://static/audio/sfx/button_sounds/store(coin_sound).wav")
+
+var sfx_streams := {}
+var sfx_players: Array = []
+var sfx_next_voice := 0
+var sfx_last_play := {}			# 이름 -> 마지막 재생 시각(ms)
+var pickup_chain := 0			# 연속 획득 시 음이 올라감
+var pickup_last_msec := 0
+
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_init_sfx()
 	# 화면 플래시용 오버레이
 	flash_layer = CanvasLayer.new()
 	flash_layer.layer = 90
@@ -144,3 +157,87 @@ func squash(item: Node2D, base_scale: Vector2, amount: float = 0.25, duration: f
 	item.scale = base_scale * Vector2(1.0 + amount, 1.0 - amount)
 	var tween = item.create_tween()
 	tween.tween_property(item, "scale", base_scale, duration).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+# ================= 효과음 =================
+func _init_sfx():
+	for i in SFX_VOICES:
+		var p = AudioStreamPlayer.new()
+		p.bus = &"SFX"
+		add_child(p)
+		sfx_players.append(p)
+	sfx_streams["pickup"]    = _make_wav(_tone(1250.0, 1900.0, 0.07, 0.22, 0.6))
+	sfx_streams["hit"]       = _make_wav(_noise(0.035, 0.18, 0.55))
+	sfx_streams["explosion"] = _make_wav(_noise(0.4, 0.55, 0.12))
+	sfx_streams["levelup"]   = _make_wav(_arpeggio([523.0, 659.0, 784.0, 1046.0], 0.075, 0.25))
+	sfx_streams["chest"]     = _make_wav(_arpeggio([784.0, 988.0, 1175.0, 1568.0, 1976.0, 2349.0], 0.06, 0.2))
+	sfx_streams["coin"]      = COIN_SOUND
+
+# 같은 이름의 효과음은 min_interval 초 안에 한 번만 (호드 상황 보호)
+func allow_sfx(sfx_name: String, min_interval: float) -> bool:
+	var now = Time.get_ticks_msec()
+	if now - sfx_last_play.get(sfx_name, -100000) < int(min_interval * 1000.0):
+		return false
+	sfx_last_play[sfx_name] = now
+	return true
+
+func play_sfx(sfx_name: String, pitch: float = 1.0, volume_db: float = 0.0, min_interval: float = 0.04):
+	if not sfx_streams.has(sfx_name) or not allow_sfx(sfx_name, min_interval):
+		return
+	var p: AudioStreamPlayer = sfx_players[sfx_next_voice]
+	sfx_next_voice = (sfx_next_voice + 1) % sfx_players.size()
+	p.stream = sfx_streams[sfx_name]
+	p.pitch_scale = pitch
+	p.volume_db = volume_db
+	p.play()
+
+# 경험치 획득음: 연달아 먹으면 음이 점점 올라감
+func play_pickup():
+	var now = Time.get_ticks_msec()
+	pickup_chain = mini(pickup_chain + 1, 16) if now - pickup_last_msec < 350 else 0
+	pickup_last_msec = now
+	play_sfx("pickup", pow(2.0, pickup_chain / 24.0), -6.0, 0.03)
+
+func _make_wav(samples: PackedFloat32Array) -> AudioStreamWAV:
+	var data = PackedByteArray()
+	data.resize(samples.size() * 2)
+	for i in samples.size():
+		data.encode_s16(i * 2, int(clamp(samples[i], -1.0, 1.0) * 32767.0))
+	var w = AudioStreamWAV.new()
+	w.format = AudioStreamWAV.FORMAT_16_BITS
+	w.mix_rate = MIX_RATE
+	w.data = data
+	return w
+
+# 주파수가 미끄러지는 사각파+사인파 (square_mix: 사각파 비율)
+func _tone(f_from: float, f_to: float, duration: float, volume: float, square_mix: float) -> PackedFloat32Array:
+	var n = int(duration * MIX_RATE)
+	var out = PackedFloat32Array()
+	out.resize(n)
+	var phase = 0.0
+	for i in n:
+		var t = float(i) / n
+		phase += lerp(f_from, f_to, t) / MIX_RATE
+		var sine = sin(phase * TAU)
+		var square = 1.0 if fmod(phase, 1.0) < 0.5 else -1.0
+		var env = (1.0 - t) * (1.0 - t)
+		out[i] = (sine * (1.0 - square_mix) + square * square_mix) * env * volume
+	return out
+
+# 감쇠하는 노이즈 (smooth: 0~1, 낮을수록 묵직한 소리)
+func _noise(duration: float, volume: float, smooth: float) -> PackedFloat32Array:
+	var n = int(duration * MIX_RATE)
+	var out = PackedFloat32Array()
+	out.resize(n)
+	var y = 0.0
+	for i in n:
+		var t = float(i) / n
+		y += smooth * (randf_range(-1.0, 1.0) - y)
+		out[i] = clamp(y * 2.5, -1.0, 1.0) * pow(1.0 - t, 2.5) * volume
+	return out
+
+func _arpeggio(freqs: Array, note_time: float, volume: float) -> PackedFloat32Array:
+	var out = PackedFloat32Array()
+	for f in freqs:
+		out.append_array(_tone(f, f * 1.01, note_time, volume, 0.5))
+	out.append_array(_tone(freqs[-1], freqs[-1], note_time * 3.0, volume * 0.8, 0.35))
+	return out

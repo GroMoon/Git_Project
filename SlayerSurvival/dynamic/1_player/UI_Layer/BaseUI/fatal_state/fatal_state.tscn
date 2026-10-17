@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dgg2aqyju7saq"]
 
-[ext_resource type="Shader" path="res://static/shader/fatal_state.gdshader" id="1_44ajo"]
+[ext_resource type="Shader" path="res://static/shader/Fatal_state.gdshader" id="1_44ajo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2xh8t"]
 shader = ExtResource("1_44ajo")

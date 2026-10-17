@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://btd4lq77160bh"]
 
-[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/items/frame/frame.png" id="1_cty3b"]
+[ext_resource type="Texture2D" uid="uid://duq8dxwyquc80" path="res://dynamic/6_utillity/Items/frame/frame.png" id="1_cty3b"]
 [ext_resource type="Texture2D" uid="uid://dwsb7720v4f4x" path="res://dynamic/5_title_screen/store/store_sprites/health.png" id="1_mlbc5"]
 [ext_resource type="Script" path="res://dynamic/5_title_screen/store/store_panel_items/scripts/store_panel_item_health.gd" id="1_sk7q1"]
-[ext_resource type="Texture2D" uid="uid://d4kl4i3p2rh3y" path="res://dynamic/6_utillity/items/gold/coin_05d.png" id="2_wnhh4"]
+[ext_resource type="Texture2D" uid="uid://d4kl4i3p2rh3y" path="res://dynamic/6_utillity/Items/gold/coin_05d.png" id="2_wnhh4"]
 [ext_resource type="AudioStream" uid="uid://r1v6u8n6pdv3" path="res://static/audio/sfx/button_sounds/store(coin_sound).wav" id="5_3w155"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ua2ys"]

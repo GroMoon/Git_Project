@@ -8,9 +8,9 @@ class_name EnemyBase
 @onready var death_sound        = $death_sound
 
 # 아이템
-var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
-var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
-var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
+var gold_img = preload("res://dynamic/6_utillity/Items/gold/gold.tscn")
+var exp_img  = preload("res://dynamic/6_utillity/Items/exp/exp.tscn")
+var food_img = preload("res://dynamic/6_utillity/Items/food/food.tscn")
 var double_gold_drop
 var double_gem_drop
 
@@ -99,8 +99,10 @@ func apply_scaling(hp_mult: float, damage_mult: float):
 
 # 사망 처리 함수
 func die_enemy():
-	death_sound.pitch_scale = randf_range(0.85, 1.15)
-	death_sound.play()
+	# 사망음은 동시에 너무 많이 나지 않게
+	if GameFeel.allow_sfx("enemy_death", 0.07):
+		death_sound.pitch_scale = randf_range(0.85, 1.15)
+		death_sound.play()
 	var pet_chance_randf = randf()						# 몬스터펫 확률 (0.0~1.0 사이로 조절)
 	is_dead = true 										# 사망 상태 활성화
 	remove_from_group("enemy")							# 죽는 중인 적은 공격 대상에서 제외
@@ -233,6 +235,7 @@ func take_damage(amount: float, source = null, knockback_mult: float = 1.0, is_c
 	DamageVisual.show_damage(amount, self.position, Color.WHITE, is_crit)
 	GameFeel.hit_flash(animated_sprite)
 	GameFeel.squash(animated_sprite, base_sprite_scale, 0.28 if is_crit else 0.18)
+	GameFeel.play_sfx("hit", randf_range(0.85, 1.25), -12.0 if not is_crit else -6.0, 0.045)
 	if is_crit:
 		GameFeel.shake(0.12)
 	if health <= 0:

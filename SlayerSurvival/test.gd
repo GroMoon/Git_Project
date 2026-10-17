@@ -100,15 +100,22 @@ func _process(_delta):
 			move_child(flyingeye_pet_instance, player.get_index() - 1)
 			player.is_flyingeye_pet = true
 
+# 맵 타일이 플레이어 조명(light_mask 2번 비트)을 받도록 (TileMap 내부 레이어 포함)
+func _enable_player_light_on(node: Node):
+	if node is CanvasItem:
+		node.light_mask = node.light_mask | 2
+	for child in node.get_children(true):
+		_enable_player_light_on(child)
+
 # Cave
 func _on_cave_button_pressed():
-	map_load = preload("res://dynamic/4_world/Cave/cave.tscn")
+	map_load = preload("res://dynamic/4_world/cave/cave.tscn")
 	select_map.queue_free()
 	select_character.visible = true
 
 # Dungeon_B1F
 func _on_dungeon_button_pressed():
-	map_load = preload("res://dynamic/4_world/Dungeon_B1F/dungeon_B1F.tscn")
+	map_load = preload("res://dynamic/4_world/dungeon_B1F/dungeon_B1F.tscn")
 	select_map.queue_free()
 	select_character.visible = true
 
@@ -125,6 +132,7 @@ func _on_select_warrior_pressed():
 	if map_load:
 		instance_map = map_load.instantiate()
 		instance_map.name = map_load.resource_path.get_file().get_basename()
+		_enable_player_light_on(instance_map)		# 플레이어 조명 영향 받기
 		add_child(instance_map)
 		move_child(instance_map, 0)
 	add_child(instance_character)
@@ -144,6 +152,7 @@ func _on_select_king_pressed():
 	if map_load:
 		instance_map = map_load.instantiate()
 		instance_map.name = map_load.resource_path.get_file().get_basename()
+		_enable_player_light_on(instance_map)		# 플레이어 조명 영향 받기
 		add_child(instance_map)
 		move_child(instance_map, 0)
 	add_child(instance_character)
@@ -163,6 +172,7 @@ func _on_wizard_pressed():
 	if map_load:
 		instance_map = map_load.instantiate()
 		instance_map.name = map_load.resource_path.get_file().get_basename()
+		_enable_player_light_on(instance_map)		# 플레이어 조명 영향 받기
 		add_child(instance_map)
 		move_child(instance_map, 0)
 	add_child(instance_character)

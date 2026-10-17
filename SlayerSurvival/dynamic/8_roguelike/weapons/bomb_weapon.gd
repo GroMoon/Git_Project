@@ -65,4 +65,5 @@ func _explode(bomb: AnimatedSprite2D):
 	if is_instance_valid(self) and player != null:
 		hit_radius(pos, BLAST_RADIUS * area, get_damage(), 2.6)
 	GameFeel.shake(0.22)
+	GameFeel.play_sfx("explosion", randf_range(0.8, 1.0), -4.0, 0.07)
 	GameFeel.burst(pos, Color(1.0, 0.55, 0.15), 16, 220.0, 3.5)

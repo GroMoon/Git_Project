@@ -8,6 +8,7 @@ func _ready():
 
 func on_collect():
 	player.add_exp(exp_value)
+	GameFeel.play_pickup()
 
 # 젬 합치기 (값이 클수록 색이 바뀌고 커짐)
 func add_value(value):

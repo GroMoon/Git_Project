@@ -55,6 +55,7 @@ func _on_body_entered(body):
 		return
 	opened = true
 	sprite.frame = 1
+	GameFeel.play_sfx("chest", 1.0, -3.0, 0.2)
 	GameFeel.flash_screen(Color(1.0, 0.9, 0.5, 0.5), 0.3)
 	GameFeel.burst(global_position, Color(1.0, 0.85, 0.3), 30, 260.0, 4.0)
 	var r = randf()

@@ -16,9 +16,9 @@ var fireball_tscn = preload("res://dynamic/2_enemy/Boss_FireWorm/fire_ball/fire_
 # 포털
 var portal = preload("res://dynamic/4_world/portal/portal.tscn")
 # 아이템
-var gold_img = preload("res://dynamic/6_utillity/items/gold/gold.tscn")
-var exp_img  = preload("res://dynamic/6_utillity/items/exp/exp.tscn")
-var food_img = preload("res://dynamic/6_utillity/items/food/food.tscn")
+var gold_img = preload("res://dynamic/6_utillity/Items/gold/gold.tscn")
+var exp_img  = preload("res://dynamic/6_utillity/Items/exp/exp.tscn")
+var food_img = preload("res://dynamic/6_utillity/Items/food/food.tscn")
 #var golds = 25
 
 # 적 특성

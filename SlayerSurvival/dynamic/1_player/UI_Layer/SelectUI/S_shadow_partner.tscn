@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_mvg2h"]
 [ext_resource type="Texture2D" uid="uid://jh5a4vellrnt" path="res://dynamic/5_title_screen/store/store_sprites/shadow_partner.png" id="2_yjwea"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_6dfyg"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/Items/frame/frame.png" id="3_6dfyg"]
 
 [node name="ShadowPartner" type="Button"]
 offset_right = 480.0

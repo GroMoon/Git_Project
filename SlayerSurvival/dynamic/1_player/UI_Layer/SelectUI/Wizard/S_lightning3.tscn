@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_8vaex"]
 [ext_resource type="Texture2D" uid="uid://hdpcsp6ckqdr" path="res://dynamic/5_title_screen/store/store_sprites/double_lightening.png" id="2_rv302"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_srsba"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/Items/frame/frame.png" id="3_srsba"]
 
 [node name="Lightning3" type="Button"]
 offset_left = 40.0

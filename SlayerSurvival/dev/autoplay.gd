@@ -100,6 +100,14 @@ func _process(delta):
 		return
 	var base_ui = player.get_node("UI_Layer/BaseUI")
 
+	# 보스 처치 → 엔딩 연출이 시작되면 잠시 후 종료
+	if base_ui.ending_pause_flag:
+		death_wait += delta
+		if death_wait > 3.0:
+			_take_shot()
+			_finish("ending")
+		return
+
 	# 결과 화면 스크린샷 (사망 후 잠시 대기)
 	if base_ui.death_pause_flag and opts["shot_death"] == "1":
 		death_wait += delta
@@ -285,8 +293,9 @@ func _take_shot():
 	print("[autoplay] shot ", path)
 
 func _finish(reason: String):
-	print("[autoplay] END reason=%s t=%.1f lv=%d kills=%d levelups=%d max_enemies=%d min_fps=%d" % [
-		reason, elapsed, player.character_level, player.kill_count, levelups, max_enemies, min_fps])
+	print("[autoplay] END reason=%s t=%.1f lv=%d kills=%d levelups=%d max_enemies=%d min_fps=%d ending=%s" % [
+		reason, elapsed, player.character_level, player.kill_count, levelups, max_enemies, min_fps,
+		player.get_node("UI_Layer/BaseUI").ending_pause_flag])
 	# 노드 누수 확인용: 게임 루트 자식 종류별 개수
 	var counts = {}
 	for child in game.get_children():

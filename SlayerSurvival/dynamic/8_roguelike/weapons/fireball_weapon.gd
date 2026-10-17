@@ -44,3 +44,4 @@ func _explode(pos: Vector2):
 	WeaponFx.play_once(world(), blast_frames, "boom", pos, 1.6 * area)
 	hit_radius(pos, BLAST_RADIUS * area, get_damage(), 1.2)
 	GameFeel.shake(0.06)
+	GameFeel.play_sfx("explosion", randf_range(1.2, 1.5), -9.0, 0.07)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d1vjvv3awar1q" path="res://dynamic/5_title_screen/store/store_sprites/double_slash.png" id="2_5jxmy"]
 [ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_45qvt"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="3_b7efe"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/Items/frame/frame.png" id="3_b7efe"]
 
 [node name="Combo3" type="Button"]
 offset_right = 470.0

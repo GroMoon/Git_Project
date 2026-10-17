@@ -153,6 +153,7 @@ func _ready():
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
 	$Camera2D.zoom = Vector2(CAMERA_ZOOM, CAMERA_ZOOM)
+	_add_player_light()
 	# 캐릭터 특성 설정 + 빌드 초기화 (고유 무기 장착)
 	init_build()
 	current_hp = max_hp
@@ -329,11 +330,24 @@ func level_up():
 
 # 레벨업 충격파: 주변 적을 밀어내고 화면 플래시 (선택 창이 닫히면 적들이 날아감)
 func levelup_shockwave():
+	GameFeel.play_sfx("levelup", 1.0, -4.0, 0.2)
 	GameFeel.flash_screen(Color(1.0, 0.95, 0.6, 0.45), 0.35)
 	GameFeel.burst(global_position, Color(1.0, 0.9, 0.4), 24, 260.0, 4.0)
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if global_position.distance_to(enemy.global_position) < 220.0 and enemy.has_method("apply_knockback"):
 			enemy.apply_knockback(self, 3.0)
+
+# 어두운 맵에서 주변이 보이도록 은은한 조명 (맵 타일만 밝힘: light_mask 2)
+const PLAYER_LIGHT_TEXTURE = preload("res://static/textures/light/circle.png")
+func _add_player_light():
+	var light = PointLight2D.new()
+	light.name = "PlayerLight"
+	light.texture = PLAYER_LIGHT_TEXTURE
+	light.texture_scale = 0.75 / scale.x
+	light.energy = 1.2
+	light.color = Color(1.0, 0.85, 0.65)
+	light.range_item_cull_mask = 2
+	add_child(light)
 
 # ================= 빌드 (무기 / 패시브) =================
 func init_build():

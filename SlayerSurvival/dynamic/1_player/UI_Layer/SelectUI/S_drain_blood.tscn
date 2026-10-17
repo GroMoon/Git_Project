@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://db8f0asqkh1eb" path="res://dynamic/5_title_screen/store/store_sprites/vampire.png" id="1_cqac0"]
 [ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_d1muf"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_phenm"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/Items/frame/frame.png" id="2_phenm"]
 
 [node name="DrainBlood" type="Button"]
 offset_right = 470.0

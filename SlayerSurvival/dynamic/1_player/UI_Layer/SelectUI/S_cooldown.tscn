@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ct4dc7x0603f1" path="res://dynamic/5_title_screen/store/store_sprites/cooltime_Nero_AI_Pixelate_Image_Pixel.jpg" id="1_y1rqj"]
 [ext_resource type="FontFile" uid="uid://c2kybs4vtvpee" path="res://static/font/DNFBitBitTTF.ttf" id="2_4lkm2"]
-[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/items/frame/frame.png" id="2_4q56b"]
+[ext_resource type="Texture2D" uid="uid://ec7ivygpquuj" path="res://dynamic/6_utillity/Items/frame/frame.png" id="2_4q56b"]
 
 [node name="Cooldown" type="Button"]
 custom_minimum_size = Vector2(480, 136)
