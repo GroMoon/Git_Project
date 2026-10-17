@@ -20,6 +20,11 @@ const MARGIN      := 240.0		# 화면 흔들림 대비 여유 영역
 
 var room_width := 2600.0
 var show_exit  := true
+var hazards : Array = []		# (지하묘지는 위험 지대 없음, cave_backdrop.gd 와 인터페이스 통일)
+
+## stage가 room_width 를 바꾼 뒤 호출
+func rebuild():
+	queue_redraw()
 
 func _ready():
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

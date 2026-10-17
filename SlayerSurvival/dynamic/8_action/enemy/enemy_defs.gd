@@ -17,9 +17,9 @@ const SFX_DIR   := "res://static/audio/sfx/enemy/"
 
 const NAMES := {
 	"goblin": "고블린", "skeleton": "스켈레톤", "mushroom": "머쉬룸", "flyingeye": "플라잉 아이",
-	"bringer": "브링어 오브 데스",
+	"bringer": "브링어 오브 데스", "fireworm": "파이어 웜",
 }
-const GOLD := {"goblin": 15, "skeleton": 25, "mushroom": 20, "flyingeye": 15, "bringer": 500}
+const GOLD := {"goblin": 15, "skeleton": 25, "mushroom": 20, "flyingeye": 15, "bringer": 500, "fireworm": 550}
 
 ## elite = true 이면 엘리트 강화 (크기, 체력, 공격력, 슈퍼아머)
 static func get_def(kind: String, elite := false) -> Dictionary:
@@ -144,8 +144,63 @@ static func _base_def(kind: String) -> Dictionary:
 			}
 		"bringer":
 			return _bringer_def()
+		"fireworm":
+			return _fireworm_def()
 	push_error("unknown enemy kind: " + kind)
 	return {}
+
+## 보스 : 파이어 웜 (90x90 시트, 발 y=58, 몸 중심 x≈43, 원본이 오른쪽을 봄)
+##   패턴 : 화염구(2페이즈 3갈래) / 물어뜯기(바닥 예고) / 용암 분출(발밑 예고 원 3~5곳)
+static func _fireworm_def() -> Dictionary:
+	var worm := ENEMY_DIR + "Boss_FireWorm/Sprites/Worm/"
+	var ball := ENEMY_DIR + "Boss_FireWorm/Sprites/Fire Ball/"
+	var sheet := func(file: String, fps: float, loop: bool) -> Dictionary:
+		return {"path": worm + file, "frame_width": 90, "fps": fps, "loop": loop}
+	var spit_times := []
+	for i in 16:
+		spit_times.append(0.06 if i < 10 else 0.07)
+	return {
+		"hp": 380000.0, "power": 2000.0, "speed": Vector2(80, 60),
+		"cooldown": 1.5, "scale": 4.0, "offset": Vector2(2, -13),
+		"body_height": 170.0, "body_radius": 48.0, "bar_lines": 19,
+		"armor": 25.0, "launch_scale": 0.45, "boss": true,
+		"death_sound": SFX_DIR + "firewarm/worm_death.mp3",
+		"attack_sound": SFX_DIR + "firewarm/fire_ball.mp3",
+		"sheets": {
+			"idle"   : sheet.call("Idle.png", 9.0, true),
+			"run"    : sheet.call("Walk.png", 10.0, true),
+			"attack" : sheet.call("Attack.png", 14.0, false),
+			"hit"    : sheet.call("Get Hit.png", 10.0, false),
+			"death"  : sheet.call("Death.png", 8.0, false),
+		},
+		"patterns": {
+			# 화염구 : 입에서 직선으로 날아가는 불덩이 (맞으면 넘어짐)
+			"spit": {"anim": "attack", "sound_frame": 11, "fireball_frame": 11, "frame_times": spit_times},
+			# 물어뜯기 : 긴 예고 후 앞으로 돌진하며 넓게 물기
+			"bite": {"anim": "attack", "telegraph": true, "frames": [6, 7, 8, 9, 10, 11, 12, 13],
+				"frame_times": [0.09, 0.09, 0.09, 0.12, 0.05, 0.06, 0.08, 0.12],
+				"steps": [{"frame": 4, "speed": 420.0, "time": 0.12}],
+				"hits": [{"from": 4, "to": 6, "attack": Combat.attack({
+					"reach": 230.0, "back": 10.0, "depth": 60.0, "z_max": 220.0,
+					"knockdown": true, "knockback": 300.0, "hitstop": 0.1, "shake": 8.0, "spark": "heavy"})}]},
+			# 용암 분출 : 몸을 일으켜 포효 → 플레이어 주변 바닥에서 차례로 폭발
+			"eruption": {"anim": "attack", "eruption_frame": 4, "frames": [0, 1, 2, 3, 4, 5, 5, 5],
+				"frame_times": [0.08, 0.08, 0.08, 0.08, 0.1, 0.12, 0.12, 0.12]},
+		},
+		"fireball": {"speed": 520.0, "z": 120.0, "muzzle": 150.0, "max_distance": 1000.0,
+			"sheet": {"path": ball + "Move.png", "frame_width": 46, "fly_count": 6,
+				"burst_path": ball + "Explosion.png", "burst_frame_width": 46, "burst_count": 7,
+				"scale": 3.0, "burst_sound": SFX_DIR + "firewarm/explosion.wav"},
+			"attack": Combat.attack({
+				"reach": 34.0, "back": 34.0, "depth": 38.0, "z_min": -140.0, "z_max": 50.0,
+				"knockdown": true, "knockback": 220.0, "hitstop": 0.07, "shake": 5.0, "spark": "heavy"})},
+		"eruption": {"sheet": {"path": ball + "Explosion.png", "frame_width": 46, "fps": 14.0, "loop": false},
+			"sound": SFX_DIR + "firewarm/explosion.wav",
+			"attack": Combat.attack({
+				"reach": 70.0, "back": 70.0, "depth": 42.0, "z_min": -20.0, "z_max": 220.0,
+				"launch": 560.0, "knockback": 60.0, "hitstop": 0.08, "shake": 6.0, "spark": "heavy"})},
+		"attacks": [],
+	}
 
 ## 보스 : 브링어 오브 데스 (140x93 격자 시트, 8열, 원본이 왼쪽을 봄)
 static func _bringer_def() -> Dictionary:

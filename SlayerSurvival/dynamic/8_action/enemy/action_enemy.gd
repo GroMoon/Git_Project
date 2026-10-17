@@ -177,8 +177,10 @@ func receive_hit(atk: Dictionary, attacker: Node2D, damage: int):
 			fx.spawn_text("GUARD BREAK", hit_pos + Vector2(0, -70), Color(1.0, 0.45, 0.3), 26)
 			damage = int(damage * 1.2)
 
-	# 카운터 / 백어택 보너스
-	if state == State.ATTACK and _attack_frame < _first_hit_frame():
+	# 카운터 / 백어택 보너스 (용암 등 환경 피해는 제외)
+	if atk.get("environment", false):
+		pass
+	elif state == State.ATTACK and _attack_frame < _first_hit_frame():
 		damage = int(damage * COUNTER_BONUS)
 		if fx:
 			fx.spawn_text("COUNTER!", hit_pos + Vector2(0, -72), Color(1.0, 0.55, 0.15), 26)
@@ -478,7 +480,7 @@ func _state_attack(delta: float):
 		return
 	if frame != _attack_frame:
 		_attack_frame = frame
-		show_frame(_attack.anim, frame)
+		show_frame(_attack.anim, _attack.frames[frame] if _attack.has("frames") else frame)
 		_on_attack_frame(frame)
 
 	if _step_time > 0.0:
@@ -515,7 +517,7 @@ func _on_attack_frame(frame: int):
 	if _attack.has("projectile") and _attack.projectile.frame == frame:
 		_fire_projectile(_attack.projectile)
 
-func _fire_projectile(data: Dictionary):
+func _fire_projectile(data: Dictionary, depth_offset := 0.0):
 	var shot := Projectile.new()
 	shot.attack = data.attack
 	shot.power = power
@@ -524,7 +526,8 @@ func _fire_projectile(data: Dictionary):
 	shot.z = z + data.z
 	shot.sheet = data.sheet
 	shot.stage = stage
-	shot.position = position + Vector2(facing * 40.0, 0.0)
+	shot.max_distance = data.get("max_distance", 620.0)
+	shot.position = stage.clamp_to_floor(position + Vector2(facing * data.get("muzzle", 40.0), depth_offset))
 	stage.actors.add_child(shot)
 
 func _release_token():

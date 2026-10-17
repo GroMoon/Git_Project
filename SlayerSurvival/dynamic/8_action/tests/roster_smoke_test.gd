@@ -231,6 +231,11 @@ func _run_step():
 				check("right arrow selects next", _data.select.selected == 1, "selected %d" % _data.select.selected)
 				_data.select._start()
 				check("start sets character", ActionStage.selected_character == "king", ActionStage.selected_character)
+				check("then shows dungeon step", _data.select.step == "dungeon" and _data.select._cards.size() == 2)
+				_data.select._select(1)
+				_data.select._start()
+				check("dungeon step sets cave", ActionStage.selected_dungeon == "cave", ActionStage.selected_dungeon)
+				ActionStage.selected_dungeon = "crypt"
 				_data.select.queue_free()
 			if _frame == 8:
 				var failed := results.filter(func(r): return not r[1]).size()

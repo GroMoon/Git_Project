@@ -1,6 +1,8 @@
 extends Node2D
 ## 적 투사체 : 일정 높이로 가로 직진, 플레이어와 겹치면 타격 후 터짐
-## 시트 앞쪽 4프레임 = 비행, 뒤쪽 4프레임 = 터짐
+## 기본 : 시트 앞쪽 4프레임 = 비행, 뒤쪽 4프레임 = 터짐
+## sheet 옵션 : "fly_count", "burst_path"(폭발 시트가 따로 있을 때), "burst_frame_width", "burst_count",
+##              "scale", "burst_sound"
 
 const Combat      = preload("res://dynamic/8_action/core/combat.gd")
 const SpriteSheet = preload("res://dynamic/8_action/core/sprite_sheet.gd")
@@ -23,12 +25,16 @@ var _sprite : AnimatedSprite2D
 func _ready():
 	_sprite = AnimatedSprite2D.new()
 	var frame_w: int = sheet.frame_width
+	var separate_burst: bool = sheet.has("burst_path")
+	var burst := {"path": sheet.get("burst_path", sheet.path), "frame_width": sheet.get("burst_frame_width", frame_w),
+		"start": 0 if separate_burst else 4, "count": sheet.get("burst_count", 4), "fps": 16.0, "loop": false}
 	_sprite.sprite_frames = SpriteSheet.build("projectile_" + sheet.path, {
-		"fly"  : {"path": sheet.path, "frame_width": frame_w, "count": 4, "fps": 12.0, "loop": true},
-		"burst": {"path": sheet.path, "frame_width": frame_w, "start": 4, "count": 4, "fps": 16.0, "loop": false},
+		"fly"  : {"path": sheet.path, "frame_width": frame_w, "count": sheet.get("fly_count", 4), "fps": 12.0, "loop": true},
+		"burst": burst,
 	})
+	var sprite_scale: float = sheet.get("scale", 2.2)
 	_sprite.position = Vector2(0, -z)
-	_sprite.scale = Vector2(2.2 * facing, 2.2)
+	_sprite.scale = Vector2(sprite_scale * facing, sprite_scale)
 	_sprite.play("fly")
 	_sprite.animation_finished.connect(queue_free)
 	add_child(_sprite)
@@ -57,3 +63,5 @@ func _physics_process(delta):
 func _burst():
 	_bursting = true
 	_sprite.play("burst")
+	if sheet.has("burst_sound") and stage and stage.fx:
+		stage.fx.play_sound(load(sheet.burst_sound), 0.1, -6.0)

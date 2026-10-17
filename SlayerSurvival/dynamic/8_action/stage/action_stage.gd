@@ -6,6 +6,7 @@ const ActionInput = preload("res://dynamic/8_action/core/action_input.gd")
 const CombatFX    = preload("res://dynamic/8_action/core/combat_fx.gd")
 const SpriteSheet = preload("res://dynamic/8_action/core/sprite_sheet.gd")
 const Backdrop    = preload("res://dynamic/8_action/stage/dungeon_backdrop.gd")
+const CaveBackdrop = preload("res://dynamic/8_action/stage/cave_backdrop.gd")
 const DungeonData = preload("res://dynamic/8_action/stage/dungeon_data.gd")
 const ExitPortal  = preload("res://dynamic/8_action/stage/exit_portal.gd")
 const ActionHUD   = preload("res://dynamic/8_action/ui/action_hud.gd")
@@ -15,6 +16,8 @@ const Wizard      = preload("res://dynamic/8_action/player/wizard_action.gd")
 const CHARACTERS  := {"warrior": Warrior, "king": King, "wizard": Wizard}
 const Enemy       = preload("res://dynamic/8_action/enemy/action_enemy.gd")
 const BossEnemy   = preload("res://dynamic/8_action/enemy/boss_enemy.gd")
+const FireWormBoss = preload("res://dynamic/8_action/enemy/fireworm_boss.gd")
+const BOSSES      := {"bringer": BossEnemy, "fireworm": FireWormBoss}
 const AllyMonster = preload("res://dynamic/8_action/enemy/ally_monster.gd")
 const Boons       = preload("res://dynamic/8_action/stage/boons.gd")
 const BoonSelect  = preload("res://dynamic/8_action/ui/boon_select.gd")
@@ -33,6 +36,21 @@ const MAX_PARTY     := 4		# 동료 최대 수 (종류별 1마리)
 
 ## 캐릭터 선택 화면에서 지정 (씬이 바뀌어도 유지되는 정적 변수)
 static var selected_character := "warrior"
+static var selected_dungeon   := "crypt"		# DungeonData.DUNGEONS 의 키
+
+## 용암 화상 : 지면에 있는 액터가 웅덩이에 들어오면 일정 간격으로 피해 + 밖으로 튕겨냄
+const LAVA_TICK := 0.6
+const LAVA_ATTACK := {
+	"damage": 1.0, "reach": 0.0, "back": 0.0, "depth": 0.0, "z_min": 0.0, "z_max": 0.0,
+	"hitstun": 0.3, "knockback": 240.0, "launch": 320.0, "juggle": 200.0, "pull": -1.0, "vacuum": -1.0,
+	"align": 0.0, "knockdown": false, "hitstop": 0.03, "shake": 2.0, "spark": "blunt", "sound": "",
+	"environment": true,
+}
+
+## 피격 함수에 넘길 "공격자" 역할 (위치/방향만 필요)
+class HazardSource extends Node2D:
+	var facing := 1
+	var z := 0.0
 
 ## 테스트에서 false로 두면 결과 골드를 세이브 파일에 저장하지 않음
 var save_rewards := true
@@ -40,6 +58,8 @@ var save_rewards := true
 var recruit_chance := 0.12
 var elite_recruit_chance := 0.4
 
+var dungeon : Dictionary = {}
+var rooms   : Array = []
 var player : Node2D
 var actors : Node2D
 var fx     : Node2D
@@ -60,6 +80,8 @@ var boon_panel : CanvasLayer = null		# 강화 선택 창 (열려 있는 동안 �
 var pause_menu : CanvasLayer = null		# ESC 일시정지 메뉴
 
 var _attack_tokens: Array = []
+var _hazard_source : Node2D
+var _lava_cooldowns := {}		# 액터 instance_id → 다음 화상까지 남은 시간
 var _enemy_count := 0
 var _next_wave_timer := -1.0
 var _room_cleared := false
@@ -73,7 +95,9 @@ func _ready():
 	Engine.time_scale = 1.0
 	Audiomanager.play_music_for_scene("ingame")
 
-	backdrop = Backdrop.new()
+	dungeon = DungeonData.get_dungeon(selected_dungeon)
+	rooms = dungeon.rooms
+	backdrop = CaveBackdrop.new() if dungeon.theme == "cave" else Backdrop.new()
 	backdrop.z_index = -10
 	add_child(backdrop)
 
@@ -105,7 +129,9 @@ func _ready():
 	hud = ActionHUD.new()
 	add_child(hud)
 	hud.bind(player, fx)
-	hud.setup_minimap(DungeonData.ROOMS)
+	hud.setup_minimap(rooms)
+	_hazard_source = HazardSource.new()
+	add_child(_hazard_source)
 
 	load_room(0, false)
 
@@ -128,7 +154,7 @@ func _unhandled_input(event: InputEvent):
 	elif event.is_action_pressed("act_respawn"):		# 디버그 : 현재 웨이브 다시 소환
 		start_wave(wave_index)
 	elif event.is_action_pressed("act_debug_skip") and not _transitioning:	# 디버그 : 다음 방
-		load_room(mini(room_index + 1, DungeonData.ROOMS.size() - 1))
+		load_room(mini(room_index + 1, rooms.size() - 1))
 
 func open_pause_menu():
 	if pause_menu != null:
@@ -143,6 +169,7 @@ func open_pause_menu():
 
 func _process(delta):
 	_follow_camera(delta)
+	_update_hazards(delta)
 	if not _game_over and not _dungeon_clear:
 		elapsed += delta
 	if _next_wave_timer > 0.0:
@@ -159,6 +186,37 @@ func _follow_camera(delta: float):
 	var target_x := clampf(player.position.x + player.facing * 90.0, half_w, maxf(half_w, room_width - half_w))
 	camera.position.x = lerpf(camera.position.x, target_x, 1.0 - exp(-5.0 * delta))
 
+## 용암 웅덩이 : 바닥에 서 있는 플레이어/적이 들어오면 화상 (보스·동료·공중은 제외)
+func _update_hazards(delta: float):
+	var hazards: Array = backdrop.hazards
+	if hazards.is_empty():
+		return
+	for id in _lava_cooldowns.keys():
+		_lava_cooldowns[id] -= delta
+	var victims: Array = get_tree().get_nodes_in_group("action_enemy").filter(func(e): return not BOSSES.has(e.kind))
+	if not _game_over:
+		victims.append(player)
+	for actor in victims:
+		if actor.z > 4.0 or not actor.can_be_hit() or _lava_cooldowns.get(actor.get_instance_id(), 0.0) > 0.0:
+			continue
+		for rect in hazards:
+			if not rect.has_point(actor.position):
+				continue
+			_lava_cooldowns[actor.get_instance_id()] = LAVA_TICK
+			# 가까운 가장자리 쪽으로, 체공 시간 동안 웅덩이 밖까지 날아가도록 넉백 계산
+			var push := 1 if actor.position.x >= rect.get_center().x else -1
+			var edge: float = rect.end.x if push > 0 else rect.position.x
+			var distance := absf(edge - actor.position.x) + 50.0
+			var air_time: float = 2.0 * LAVA_ATTACK.launch / actor.GRAVITY
+			var atk := LAVA_ATTACK.duplicate()
+			atk["knockback"] = distance / air_time
+			_hazard_source.facing = push
+			_hazard_source.position = actor.position - Vector2(push * 40.0, 0.0)
+			var damage := int(actor.max_hp * (0.04 if actor == player else 0.05))
+			actor.receive_hit(atk, _hazard_source, damage)
+			fx.spawn_text("화상!", actor.position + Vector2(0, -actor.body_height - 50.0), Color(1.0, 0.5, 0.15), 22)
+			break
+
 ## 바닥 영역 안으로 위치 제한
 func clamp_to_floor(pos: Vector2) -> Vector2:
 	return Vector2(
@@ -172,10 +230,12 @@ func load_room(index: int, with_fade := true):
 	if with_fade:
 		await hud.fade(1.0, 0.3)
 	room_index = index
-	var room: Dictionary = DungeonData.ROOMS[index]
+	var room: Dictionary = rooms[index]
 	room_width = room.width
 	backdrop.room_width = room_width
-	backdrop.queue_redraw()
+	backdrop.hazards = room.get("hazards", [])
+	backdrop.rebuild()
+	_lava_cooldowns.clear()
 	_clear_room_objects()
 	player.position = PLAYER_ENTRY
 	player.facing = 1
@@ -209,7 +269,7 @@ func _clear_room_objects():
 	boss = null
 
 func start_wave(index: int):
-	var waves: Array = DungeonData.ROOMS[room_index].waves
+	var waves: Array = rooms[room_index].waves
 	wave_index = clampi(index, 0, waves.size() - 1)
 	_next_wave_timer = -1.0
 	for entry in waves[wave_index]:
@@ -222,8 +282,8 @@ func start_wave(index: int):
 		spawn_enemy(entry[0], pos, entry.size() > 3 and entry[3])
 
 func spawn_enemy(kind: String, pos: Vector2, elite := false) -> Node2D:
-	var is_boss := kind == "bringer"
-	var enemy = BossEnemy.new() if is_boss else Enemy.new()
+	var is_boss := BOSSES.has(kind)
+	var enemy = BOSSES[kind].new() if is_boss else Enemy.new()
 	enemy.setup(kind, elite)
 	enemy.stage = self
 	enemy.position = clamp_to_floor(pos)
@@ -248,7 +308,7 @@ func _on_enemy_died(enemy: Node):
 	_try_recruit(enemy)
 	if _enemy_count > 0 or _game_over:
 		return
-	var waves: Array = DungeonData.ROOMS[room_index].waves
+	var waves: Array = rooms[room_index].waves
 	if wave_index + 1 < waves.size():
 		_next_wave_timer = NEXT_WAVE_DELAY
 	else:
@@ -278,7 +338,7 @@ func recruit(kind: String, pos: Vector2) -> Node2D:
 func _on_room_cleared():
 	_room_cleared = true
 	hud.mark_room_cleared(room_index)
-	if room_index + 1 < DungeonData.ROOMS.size():
+	if room_index + 1 < rooms.size():
 		hud.show_banner("ROOM CLEAR")
 		await get_tree().create_timer(0.8).timeout
 		if _game_over or not is_inside_tree():
@@ -320,7 +380,7 @@ func _show_result():
 		Global.save_character_data()
 	fx.play_sound(RESULT_SOUND, 0.0, -2.0)
 	hud.show_result({
-		"dungeon": DungeonData.DUNGEON_NAME, "rank": rank, "time": elapsed,
+		"dungeon": dungeon.name, "rank": rank, "time": elapsed,
 		"max_combo": fx.max_combo, "total_hits": fx.total_hits, "hits_taken": player.hits_taken,
 		"kills": kills, "gold": total_gold,
 	})
