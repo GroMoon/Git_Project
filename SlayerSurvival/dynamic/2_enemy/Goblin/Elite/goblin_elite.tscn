@@ -401,12 +401,12 @@ height = 32.0
 
 [node name="GoblinElite" type="CharacterBody2D" groups=["enemy"]]
 texture_filter = 1
-material = SubResource("ShaderMaterial_fs01w")
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("2_xn6gs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_fs01w")
 sprite_frames = SubResource("SpriteFrames_hm32o")
 animation = &"idle"
 speed_scale = 1.6

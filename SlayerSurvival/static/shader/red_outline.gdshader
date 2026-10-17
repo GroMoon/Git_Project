@@ -12,6 +12,8 @@ uniform int pattern : hint_range(0, 2) = 0;
 uniform bool inside = false;
 // inside가 false일 때만 유효한 옵션, 여백을 추가할지 여부
 uniform bool add_margins = true; 
+// 피격 시 흰색 플래시 (0.0 ~ 1.0, 테두리가 아닌 본체에만 적용)
+uniform float flash : hint_range(0.0, 1.0) = 0.0;
 
 // 정점 쉐이더: 여백이 활성화된 경우, 각 정점의 위치를 아웃라인 두께만큼 이동
 void vertex() {
@@ -80,5 +82,7 @@ void fragment() {
 		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;
 		// 알파값 조정: outline 색상의 알파값에 따라 최종 투명도 결정
 		COLOR.a += (1.0 - COLOR.a) * color.a;
+	} else {
+		COLOR.rgb = mix(COLOR.rgb, vec3(1.0), flash);
 	}
 }

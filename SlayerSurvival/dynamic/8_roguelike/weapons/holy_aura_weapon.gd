@@ -24,6 +24,9 @@ func _ready():
 	add_child(area_node)
 	visual = Node2D.new()
 	visual.draw.connect(_draw_aura)
+	# 바닥(맵 z -10) 바로 위에 그려서 플레이어/적 스프라이트를 덮지 않게
+	visual.z_as_relative = false
+	visual.z_index = -5
 	add_child(visual)
 	_update_radius()
 
@@ -44,13 +47,13 @@ func _process(delta):
 func _colors() -> Array:
 	# [채움, 테두리, 룬]
 	if evolved:
-		return [Color(1.0, 0.2, 0.25, 0.13), Color(1.0, 0.35, 0.35, 0.75), Color(1.0, 0.55, 0.5, 0.6)]
-	return [Color(1.0, 0.9, 0.45, 0.11), Color(1.0, 0.92, 0.55, 0.7), Color(1.0, 0.97, 0.75, 0.55)]
+		return [Color(1.0, 0.2, 0.25, 0.07), Color(1.0, 0.35, 0.35, 0.45), Color(1.0, 0.55, 0.5, 0.32)]
+	return [Color(1.0, 0.9, 0.45, 0.06), Color(1.0, 0.92, 0.55, 0.42), Color(1.0, 0.97, 0.75, 0.3)]
 
 func _draw_aura():
 	var c = _colors()
 	visual.draw_circle(Vector2.ZERO, radius, c[0])
-	visual.draw_arc(Vector2.ZERO, radius, 0.0, TAU, 72, c[1], 2.5, true)
+	visual.draw_arc(Vector2.ZERO, radius, 0.0, TAU, 72, c[1], 2.0, true)
 	visual.draw_arc(Vector2.ZERO, radius - 5.0, 0.0, TAU, 72, Color(c[1].r, c[1].g, c[1].b, c[1].a * 0.35), 1.5, true)
 	# 테두리를 따라 도는 룬 조각
 	var seg = TAU / RUNE_COUNT
@@ -60,7 +63,7 @@ func _draw_aura():
 	# 피해 파동: 안쪽에서 테두리까지 퍼지며 사라짐
 	if pulse < 1.0:
 		var pr = lerp(radius * 0.35, radius, pulse)
-		visual.draw_arc(Vector2.ZERO, pr, 0.0, TAU, 72, Color(c[1].r, c[1].g, c[1].b, (1.0 - pulse) * 0.8), 3.0, true)
+		visual.draw_arc(Vector2.ZERO, pr, 0.0, TAU, 72, Color(c[1].r, c[1].g, c[1].b, (1.0 - pulse) * 0.5), 2.5, true)
 
 func fire() -> bool:
 	_update_radius()

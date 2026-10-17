@@ -133,6 +133,7 @@ func _on_select_warrior_pressed():
 		instance_map = map_load.instantiate()
 		instance_map.name = map_load.resource_path.get_file().get_basename()
 		_enable_player_light_on(instance_map)		# 플레이어 조명 영향 받기
+		instance_map.z_index = -10					# 바닥 효과(오라 등)를 맵 위, 캐릭터 아래에 그리기 위함
 		add_child(instance_map)
 		move_child(instance_map, 0)
 	add_child(instance_character)
@@ -153,6 +154,7 @@ func _on_select_king_pressed():
 		instance_map = map_load.instantiate()
 		instance_map.name = map_load.resource_path.get_file().get_basename()
 		_enable_player_light_on(instance_map)		# 플레이어 조명 영향 받기
+		instance_map.z_index = -10					# 바닥 효과(오라 등)를 맵 위, 캐릭터 아래에 그리기 위함
 		add_child(instance_map)
 		move_child(instance_map, 0)
 	add_child(instance_character)
@@ -173,6 +175,7 @@ func _on_wizard_pressed():
 		instance_map = map_load.instantiate()
 		instance_map.name = map_load.resource_path.get_file().get_basename()
 		_enable_player_light_on(instance_map)		# 플레이어 조명 영향 받기
+		instance_map.z_index = -10					# 바닥 효과(오라 등)를 맵 위, 캐릭터 아래에 그리기 위함
 		add_child(instance_map)
 		move_child(instance_map, 0)
 	add_child(instance_character)

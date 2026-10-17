@@ -9,6 +9,7 @@ const SHAKE_DECAY      = 2.2		# 초당 trauma 감소량
 const HITSTOP_COOLDOWN = 0.12		# 히트스톱 연속 발동 방지(실시간 초)
 
 var flash_shader = preload("res://static/shader/flash.gdshader")
+var outline_shader = preload("res://static/shader/red_outline.gdshader")	# 엘리트 빨간 테두리 (flash 지원)
 
 var trauma := 0.0
 var shake_time := 0.0
@@ -134,6 +135,10 @@ func burst(pos: Vector2, color: Color = Color(1, 0.35, 0.3), count: int = 10, sp
 func ensure_flash_material(item: CanvasItem):
 	if item.material is ShaderMaterial and item.material.shader == flash_shader:
 		return
+	if item.material is ShaderMaterial and item.material.shader == outline_shader:
+		# 엘리트 테두리 머티리얼은 씬 안에서 공유되므로 개체별로 복제 (한 마리만 번쩍이도록)
+		item.material = item.material.duplicate()
+		return
 	if item.material != null:
 		return
 	var mat = ShaderMaterial.new()
@@ -144,7 +149,7 @@ func hit_flash(item: CanvasItem, duration: float = 0.12):
 	if item == null or not (item.material is ShaderMaterial):
 		return
 	var mat: ShaderMaterial = item.material
-	if mat.shader != flash_shader:
+	if mat.shader != flash_shader and mat.shader != outline_shader:
 		return
 	mat.set_shader_parameter("flash", 1.0)
 	var tween = item.create_tween()
