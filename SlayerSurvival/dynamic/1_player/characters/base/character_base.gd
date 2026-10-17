@@ -183,8 +183,11 @@ func _physics_process(_delta):
 	if is_dead:
 		return
 
-	# 키보드 입력 (공격 중에도 이동 가능)
-	process_keyboard_input()
+	# 키보드 입력 (일반 공격 모션 중에는 제자리)
+	if is_attacking:
+		velocity = Vector2.ZERO
+	else:
+		process_keyboard_input()
 	# 캐릭터 이동 및 충돌 감지
 	move_and_slide()
 	# hit_effect (깜빡거림) 추가
@@ -259,16 +262,16 @@ func process_collision_enemy(damage):
 			if respawn_times != 0:
 				hit_flag = true
 				# 퍼즈 걸기
-				$CollisionShape2D.disabled = true
+				$CollisionShape2D.set_deferred("disabled", true)		# 물리 콜백(보스 접촉 등) 중에도 안전하게
 				# print(respawn_times)
 				respawn_times -= 1
 				animated_sprite.play("death")
 				await animated_sprite.animation_finished
 				await respawn()
-				$CollisionShape2D.disabled = false
+				$CollisionShape2D.set_deferred("disabled", false)
 				# print("남은 부활 횟수 : ", respawn_times)
 			else:
-				$CollisionShape2D.disabled = true
+				$CollisionShape2D.set_deferred("disabled", true)		# 물리 콜백(보스 접촉 등) 중에도 안전하게
 				is_dead = true
 				hit_flag = true									# FIXME : 사망 시 필요한 작업(사망 사운드 등) 추가 필요
 				animated_sprite.stop()

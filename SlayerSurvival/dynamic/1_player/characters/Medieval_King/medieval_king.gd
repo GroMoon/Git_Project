@@ -13,7 +13,7 @@ func _initialize():
 	animation_speed     = 1.5
 	start_hp            = 75.0
 	attack_wait_time    = 1.1
-	attack_anim_speed   = 1.2
+	attack_anim_speed   = 1.4
 
 func _ready():
 	_initialize()

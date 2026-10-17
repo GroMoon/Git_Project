@@ -62,6 +62,7 @@ func _on_attack_timer_timeout():
 		return
 	animation_player.play("attack")
 	await animation_player.animation_finished
+	is_attacking = false		# 시전 모션이 끝나면 다시 이동 가능
 	# 번개를 짧은 간격으로 연속 시전
 	for target in targets:
 		if is_dead:

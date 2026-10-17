@@ -81,9 +81,14 @@ func _physics_process(delta):
 
 # 시간에 따른 강화 (디렉터가 스폰 직후 호출) - 보스는 후반 빌드를 버틸 수 있게 크게
 const BOSS_HP_FACTOR = 7.0
+var max_health = 1000.0
 func apply_scaling(hp_mult: float, damage_mult: float):
 	health = health * hp_mult * BOSS_HP_FACTOR
+	max_health = health
 	damage = damage * damage_mult
+
+func display_name() -> String:
+	return "파이어 웜" if TranslationServer.get_locale().begins_with("ko") else "Fire Worm"
 
 # 사망 처리 함수
 func die_enemy():
@@ -173,6 +178,8 @@ func take_damage(amount: float, source = null, knockback_mult: float = 1.0, is_c
 	if is_dead:
 		return
 	health -= amount
+	if player and player.baseui and player.baseui.boss_bar:
+		player.baseui.boss_bar.track(self)
 	DamageVisual.show_damage(amount, self.position, Color.WHITE, is_crit)
 	GameFeel.hit_flash(body_animated_sprite)
 	if health <= 0:

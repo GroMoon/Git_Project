@@ -331,21 +331,105 @@ func open_chest(count: int):
 	chest_title.text = ("진화!" if ko else "EVOLUTION!") if has_evo else ("보물상자!" if ko else "TREASURE!")
 	chest_overlay.visible = true
 	chest_continue.visible = false
+	# 보상이 많을수록 한 개씩 천천히 공개하며 폭죽을 터뜨림 (뱀서식 연출)
+	var step = 0.3 if rewards.size() == 1 else 0.55
+	var first = 0.35
+	var slots = []
 	for i in rewards.size():
 		var slot = _make_reward_slot(rewards[i], ko)
 		chest_box.add_child(slot)
+		slots.append(slot)
 		slot.modulate.a = 0.0
 		slot.scale = Vector2(0.4, 0.4)
 		var t = slot.create_tween().set_parallel(true)
-		t.tween_property(slot, "modulate:a", 1.0, 0.15).set_delay(0.25 + i * 0.3)
-		t.tween_property(slot, "scale", Vector2.ONE, 0.3).set_delay(0.25 + i * 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		t.tween_property(slot, "modulate:a", 1.0, 0.15).set_delay(first + i * step)
+		t.tween_property(slot, "scale", Vector2.ONE, 0.3).set_delay(first + i * step).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_play_chest_fireworks(slots, rewards, first, step)
 	# 모두 공개된 뒤 계속 버튼
-	var reveal_time = 0.25 + rewards.size() * 0.3 + 0.2
+	var reveal_time = first + rewards.size() * step + (0.6 if rewards.size() > 1 else 0.2)
 	get_tree().create_timer(reveal_time, true).timeout.connect(func():
 		if is_instance_valid(chest_continue) and chest_open:
 			chest_continue.visible = true
 			chest_continue.grab_focus())
 	accept_input_at = Time.get_ticks_msec() / 1000.0 + reveal_time
+
+# 보물상자 폭죽: 열 때 한 번, 보상마다 한 번, 여러 개면 마지막에 대형 피날레
+func _play_chest_fireworks(slots: Array, rewards: Array, first: float, step: float):
+	var seq = chest_overlay.create_tween()
+	seq.tween_callback(func():
+		_firework(Vector2(640, 420), Color(1.0, 0.85, 0.3), 1.2)
+		GameFeel.play_sfx("chest", 1.0, -4.0, 0.05))
+	seq.tween_interval(first)
+	for i in slots.size():
+		var slot = slots[i]
+		var evolve = rewards[i]["kind"] == "evolve"
+		seq.tween_callback(func():
+			if not is_instance_valid(slot):
+				return
+			var center = slot.global_position + slot.size * 0.5 - chest_overlay.global_position
+			var hue = fmod(0.08 + i * 0.17, 1.0)
+			_firework(center, Color(1.0, 0.3, 0.3) if evolve else Color.from_hsv(hue, 0.75, 1.0), 1.0 + i * 0.12)
+			# 여러 개일 때는 하늘에도 하나씩 더
+			if slots.size() > 1:
+				_firework(Vector2(randf_range(200, 1080), randf_range(90, 220)), Color.from_hsv(randf(), 0.7, 1.0), 0.8)
+			GameFeel.play_sfx("explosion", 1.7 + i * 0.12, -12.0, 0.02)
+			GameFeel.play_sfx("pickup", 1.0 + i * 0.15, -6.0, 0.02))
+		seq.tween_interval(step)
+	if slots.size() > 1:
+		seq.tween_callback(func():
+			GameFeel.flash_screen(Color(1.0, 0.95, 0.6, 0.35), 0.4)
+			GameFeel.play_sfx("chest", 1.25, -3.0, 0.05))
+		for k in 6:
+			seq.tween_callback(func():
+				_firework(Vector2(randf_range(120, 1160), randf_range(80, 330)), Color.from_hsv(randf(), 0.8, 1.0), 1.4)
+				GameFeel.play_sfx("explosion", randf_range(1.4, 2.0), -10.0, 0.02))
+			seq.tween_interval(0.09)
+
+func _firework(pos: Vector2, color: Color, power: float = 1.0):
+	if chest_overlay == null:
+		return
+	var p = CPUParticles2D.new()
+	p.one_shot = true
+	p.emitting = false
+	p.amount = int(64 * power)
+	p.lifetime = 0.95
+	p.explosiveness = 1.0
+	p.direction = Vector2.UP
+	p.spread = 180.0
+	p.gravity = Vector2(0, 240)
+	p.initial_velocity_min = 180.0 * power
+	p.initial_velocity_max = 380.0 * power
+	p.damping_min = 70.0
+	p.damping_max = 110.0
+	p.scale_amount_min = 5.0
+	p.scale_amount_max = 8.0
+	var ramp = Gradient.new()
+	ramp.set_color(0, Color.WHITE)
+	ramp.add_point(0.2, color)
+	ramp.set_color(ramp.get_point_count() - 1, Color(color.r, color.g, color.b, 0.0))
+	p.color_ramp = ramp
+	p.position = pos
+	chest_overlay.add_child(p)
+	p.emitting = true
+	p.finished.connect(p.queue_free)
+	# 반짝임 (작은 흰 불꽃이 한 번 더)
+	var sparkle = p.duplicate()
+	sparkle.amount = int(18 * power)
+	sparkle.initial_velocity_min = 40.0
+	sparkle.initial_velocity_max = 110.0 * power
+	sparkle.scale_amount_min = 3.0
+	sparkle.scale_amount_max = 4.5
+	var white = Gradient.new()
+	white.set_color(0, Color.WHITE)
+	white.set_color(1, Color(1, 1, 0.8, 0.0))
+	sparkle.color_ramp = white
+	chest_overlay.get_tree().create_timer(0.18, true).timeout.connect(func():
+		if is_instance_valid(chest_overlay):
+			chest_overlay.add_child(sparkle)
+			sparkle.emitting = true
+			sparkle.finished.connect(sparkle.queue_free)
+		else:
+			sparkle.free())
 
 func _build_chest_overlay():
 	chest_overlay = Control.new()

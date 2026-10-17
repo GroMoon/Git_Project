@@ -11,7 +11,8 @@ extends Node
 ##   --give=fireball,bomb:3 (시작 시 업그레이드 지급, :n = n레벨)  --pick=first|random
 ##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_chest=1 (첫 보물상자 화면 스크린샷)
 ##   --pets=goblin,mushroom,skeleton,flyingeye (시작 시 몬스터 펫 지급)
-##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자)  --die_at=초 (강제 사망)  --shot_death=1 (결과 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
+##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자, --chest_count=5 면 보상 5개 상자를 바로 열기)
+##   --shot_chest=0.4,1.0 (상자 연출 중 여러 시점 스크린샷)  --die_at=초 (강제 사망)  --shot_death=1 (결과 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
 
 const GAME_SCENE = "res://test.tscn"
 
@@ -31,6 +32,7 @@ var opts = {
 	"shot_chest": "0",
 	"pets": "",
 	"chest_at": "-1",
+	"chest_count": "0",
 	"die_at": "-1",
 	"shot_death": "0",
 }
@@ -48,6 +50,7 @@ var levelups := 0
 var levelup_wait := 0.0
 var levelup_shot_done := false
 var chest_spawned := false
+var shot_index := 0
 var death_wait := 0.0
 var chests := 0
 var chest_wait := 0.0
@@ -142,6 +145,10 @@ func _process(delta):
 	elapsed += delta
 	if opts["god"] == "1":
 		player.current_hp = player.max_hp
+	if float(opts["chest_at"]) >= 0.0 and not chest_spawned and elapsed >= float(opts["chest_at"]) and int(opts["chest_count"]) > 0:
+		# 보상 개수를 지정해 바로 열기
+		chest_spawned = true
+		player.get_node("UI_Layer/SelectUI").open_chest(int(opts["chest_count"]))
 	if float(opts["chest_at"]) >= 0.0 and not chest_spawned and elapsed >= float(opts["chest_at"]):
 		chest_spawned = true
 		var chest = ChestPickup.create()
@@ -180,12 +187,17 @@ func _handle_blocking_ui(base_ui):
 	if base_ui.lvlup_pause_flag:
 		var select_ui = player.get_node("UI_Layer/SelectUI")
 		if "chest_open" in select_ui and select_ui.chest_open:
-			if opts["shot_chest"] == "1" and not chest_shot_done:
+			if opts["shot_chest"] != "0" and not chest_shot_done:
+				# --shot_chest=1 → 1.6초 뒤 한 장, --shot_chest=0.4,0.9,... → 여러 시점
+				var times = [1.6] if opts["shot_chest"] == "1" else Array(String(opts["shot_chest"]).split(",")).map(func(x): return float(x))
+				var before = chest_wait
 				chest_wait += get_process_delta_time()
-				if chest_wait < 1.6:
+				for t in times:
+					if before < t and chest_wait >= t:
+						_take_shot()
+				if chest_wait < times.max() + 0.1:
 					return
 				chest_shot_done = true
-				_take_shot()
 			chests += 1
 			select_ui.autoclose_chest()
 			return
@@ -292,7 +304,8 @@ func _take_shot():
 	var dir_path = String(opts["shot_dir"])
 	DirAccess.make_dir_recursive_absolute(dir_path)
 	var img = get_viewport().get_texture().get_image()
-	var path = "%s/%s_%07.2f.png" % [dir_path, opts["char"], elapsed]
+	shot_index += 1
+	var path = "%s/%s_%07.2f_%02d.png" % [dir_path, opts["char"], elapsed, shot_index]
 	img.save_png(path)
 	print("[autoplay] shot ", path)
 

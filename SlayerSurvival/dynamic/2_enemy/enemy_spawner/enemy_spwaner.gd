@@ -125,8 +125,10 @@ func _process(delta):
 				boss = bring_of_death
 			_:
 				boss = bring_of_death
-		spawn_enemy(boss, BOSS)
+		var boss_node = spawn_enemy(boss, BOSS)
 		boss_spawn_flag = true
+		if boss_node and base_ui.boss_bar:
+			base_ui.boss_bar.track(boss_node)
 		GameFeel.shake(0.6)
 		GameFeel.flash_screen(Color(0.6, 0.0, 0.0, 0.35), 0.8)
 
@@ -185,7 +187,7 @@ func run_event(kind: String, args: Array):
 		"ring":
 			spawn_ring(scene, count)
 
-# 박쥐 떼: 화면 한쪽에서 반대쪽으로 직선 돌진
+# 박쥐 떼: 화면 한쪽에서 몰려와 플레이어에게 빠르게 달려듦
 func spawn_swarm(scene: PackedScene, count: int):
 	var half = visible_half_extents()
 	var dir = Vector2.RIGHT.rotated(randf() * TAU)
@@ -195,8 +197,7 @@ func spawn_swarm(scene: PackedScene, count: int):
 		var offset = side * randf_range(-160, 160) - dir * randf_range(0, 220)
 		var e = spawn_enemy(scene, MONSTER, clamp_to_map(center + offset), false)
 		if e:
-			e.move_override = dir * e.move_speed * 1.8
-			e.despawn_far = true
+			e.move_speed *= 1.35		# 일반 개체보다 빠르게 덮쳐옴
 
 # 포위 링: 플레이어를 둘러싸고 조여옴
 func spawn_ring(scene: PackedScene, count: int):

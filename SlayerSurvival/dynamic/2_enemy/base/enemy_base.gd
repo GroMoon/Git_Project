@@ -23,6 +23,7 @@ var spawn_radius    = 500  	# 적 스폰 범위
 var animation_speed = 1.0	# 적 기본 애니메이션 속도
 var pet_chance      = 0.1 	# 적 펫이 될 확률
 var exp_reward      = 2		# 처치 시 경험치 (젬 1개에 담김)
+var max_health      = 15	# 최대 체력 (엘리트 체력바 표시용)
 # 전역 변수
 var player 
 var touch_flag    = false
@@ -54,6 +55,7 @@ func _ready():
 	# 드롭 확률 연결
 	double_gold_drop = player.gold_drop
 	double_gem_drop  = player.gem_drop
+	max_health = health
 	# 피격 플래시 머티리얼
 	GameFeel.ensure_flash_material(animated_sprite)
 	base_sprite_scale = animated_sprite.scale
@@ -95,7 +97,24 @@ func _physics_process(delta):
 # 시간에 따른 강화 (디렉터가 스폰 직후 호출)
 func apply_scaling(hp_mult: float, damage_mult: float):
 	health = health * hp_mult
+	max_health = health
 	damage = damage * damage_mult
+
+# 체력바에 표시할 이름
+const DISPLAY_NAMES = {
+	"flyingeye": {"ko": "플라잉 아이", "en": "Flying Eye"},
+	"skeleton":  {"ko": "스켈레톤", "en": "Skeleton"},
+	"mushroom":  {"ko": "머쉬룸", "en": "Mushroom"},
+	"goblin":    {"ko": "고블린", "en": "Goblin"},
+}
+func display_name() -> String:
+	var base = enemy_name.trim_suffix("_elite")
+	var names = DISPLAY_NAMES.get(base, {"ko": base, "en": base})
+	var ko = TranslationServer.get_locale().begins_with("ko")
+	var n = names["ko"] if ko else names["en"]
+	if is_elite:
+		return ("엘리트 " if ko else "Elite ") + n
+	return n
 
 # 사망 처리 함수
 func die_enemy():
@@ -232,6 +251,8 @@ func take_damage(amount: float, source = null, knockback_mult: float = 1.0, is_c
 	if is_dead:
 		return
 	health -= amount
+	if is_elite and player and player.baseui and player.baseui.boss_bar:
+		player.baseui.boss_bar.track(self)
 	DamageVisual.show_damage(amount, self.position, Color.WHITE, is_crit)
 	GameFeel.hit_flash(animated_sprite)
 	GameFeel.squash(animated_sprite, base_sprite_scale, 0.28 if is_crit else 0.18)

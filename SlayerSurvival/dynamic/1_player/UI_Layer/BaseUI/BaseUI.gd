@@ -57,6 +57,7 @@ var respawn_pause_flag  = false
 var ending_pause_flag   = false
 
 var player = null
+var boss_bar: BossBar
 
 func _ready():
 	# esc("pause") 누르면 PausePanel visible 및 모든 노드 중지(PausePanel 제외)
@@ -66,6 +67,10 @@ func _ready():
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
 	# player 세팅
 	player = get_parent().get_parent()
+	# 엘리트/보스 체력바
+	boss_bar = BossBar.new()
+	add_child(boss_bar)
+	move_child(boss_bar, 1)		# 일시정지/결과 패널보다 아래에 그림
 
 func _process(delta):
 	process_fatal_state()
@@ -135,6 +140,11 @@ func _on_ending_finished():
 # esc 키(=pause)를 눌렀을 때
 func check_pause_pressed():
 	if Input.is_action_just_pressed("pause") : 
+		# 설정 창이 열려 있으면 설정 창만 닫음 (일시정지 화면으로 돌아감)
+		if is_instance_valid(options_window):
+			options_window.queue_free()
+			options_window = null
+			return
 		globl_pause_flag = !globl_pause_flag
 		update_info()
 
@@ -345,11 +355,15 @@ func _on_menu_pressed():
 	get_tree().change_scene_to_file("res://dynamic/5_title_screen/menu.tscn")
 
 # Option(설정) 버튼 누를 때
+var options_window: Node = null
 func _on_option_pressed():
+	if is_instance_valid(options_window):
+		return		# 이미 열려 있음
 	var ingame_options = preload("res://dynamic/5_title_screen/option/ingame_options.tscn")
 	var ingame_options_instance = ingame_options.instantiate()
 	ingame_options_instance.z_index = 3
 	add_child(ingame_options_instance)
+	options_window = ingame_options_instance
 
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():

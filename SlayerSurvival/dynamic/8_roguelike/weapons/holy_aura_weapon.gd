@@ -1,14 +1,17 @@
 extends WeaponBase
 
 ## 성스러운 오라: 플레이어 주변 원형 범위에 주기적으로 피해 + 밀쳐냄 (마늘형)
+## 범위가 한눈에 보이도록 반투명 원 + 테두리 + 회전하는 룬 + 피해 줄 때마다 퍼지는 파동
 
 const BASE_RADIUS = 62.0
-const LIGHT_TEX   = preload("res://static/textures/light/circle.png")
+const RUNE_COUNT  = 10
 
 var area_node: Area2D
 var shape: CircleShape2D
-var visual: Sprite2D
-var pulse_tween: Tween
+var visual: Node2D
+var radius := BASE_RADIUS
+var spin := 0.0
+var pulse := 1.0				# 0 → 1 로 진행하는 파동 (1이면 없음)
 
 func _ready():
 	area_node = Area2D.new()
@@ -19,9 +22,8 @@ func _ready():
 	cs.shape = shape
 	area_node.add_child(cs)
 	add_child(area_node)
-	visual = Sprite2D.new()
-	visual.texture = LIGHT_TEX
-	visual.modulate = Color(1.0, 0.85, 0.35, 0.22)
+	visual = Node2D.new()
+	visual.draw.connect(_draw_aura)
 	add_child(visual)
 	_update_radius()
 
@@ -30,30 +32,47 @@ func on_level_changed():
 		_update_radius()
 
 func _update_radius():
-	var radius = BASE_RADIUS * get_area()
+	radius = BASE_RADIUS * get_area()
 	shape.radius = radius
-	# circle.png 는 800px, 가장자리가 부드럽게 빠지므로 살짝 크게
-	var s = radius * 2.3 / LIGHT_TEX.get_width()
-	visual.scale = Vector2(s, s)
+
+func _process(delta):
+	spin += delta * 0.8
+	if pulse < 1.0:
+		pulse = min(pulse + delta / 0.35, 1.0)
+	visual.queue_redraw()
+
+func _colors() -> Array:
+	# [채움, 테두리, 룬]
+	if evolved:
+		return [Color(1.0, 0.2, 0.25, 0.13), Color(1.0, 0.35, 0.35, 0.75), Color(1.0, 0.55, 0.5, 0.6)]
+	return [Color(1.0, 0.9, 0.45, 0.11), Color(1.0, 0.92, 0.55, 0.7), Color(1.0, 0.97, 0.75, 0.55)]
+
+func _draw_aura():
+	var c = _colors()
+	visual.draw_circle(Vector2.ZERO, radius, c[0])
+	visual.draw_arc(Vector2.ZERO, radius, 0.0, TAU, 72, c[1], 2.5, true)
+	visual.draw_arc(Vector2.ZERO, radius - 5.0, 0.0, TAU, 72, Color(c[1].r, c[1].g, c[1].b, c[1].a * 0.35), 1.5, true)
+	# 테두리를 따라 도는 룬 조각
+	var seg = TAU / RUNE_COUNT
+	for i in RUNE_COUNT:
+		var a = spin + i * seg
+		visual.draw_arc(Vector2.ZERO, radius * 0.88, a, a + seg * 0.35, 6, c[2], 2.0, true)
+	# 피해 파동: 안쪽에서 테두리까지 퍼지며 사라짐
+	if pulse < 1.0:
+		var pr = lerp(radius * 0.35, radius, pulse)
+		visual.draw_arc(Vector2.ZERO, pr, 0.0, TAU, 72, Color(c[1].r, c[1].g, c[1].b, (1.0 - pulse) * 0.8), 3.0, true)
 
 func fire() -> bool:
 	_update_radius()
-	var hit_any = false
 	var hit_count = 0
 	for body in area_node.get_overlapping_bodies():
 		if body.is_in_group("enemy"):
 			hit(body, get_damage(), 0.55, global_position)
-			hit_any = true
 			hit_count += 1
 	# 진화(피의 성역): 적중한 적 수만큼 체력 회복
 	if evolved and hit_count > 0:
 		player.add_food(min(hit_count * 0.3, 2.0))
-	# 피해 줄 때마다 은은하게 맥동
-	if pulse_tween and pulse_tween.is_valid():
-		pulse_tween.kill()
-	if evolved:
-		visual.modulate = Color(1.0, 0.25, 0.3, visual.modulate.a)
-	visual.modulate.a = 0.4 if hit_any else 0.28
-	pulse_tween = visual.create_tween()
-	pulse_tween.tween_property(visual, "modulate:a", 0.2, 0.35)
+	# 피해 줄 때마다 파동
+	if hit_count > 0:
+		pulse = 0.0
 	return true
