@@ -16,6 +16,10 @@ const SWING_SOUNDS := {
 	"warrior_1": preload("res://static/audio/sfx/weapon/warrior/warrior_1.mp3"),
 	"warrior_2": preload("res://static/audio/sfx/weapon/warrior/warrior_2.mp3"),
 	"warrior_3": preload("res://static/audio/sfx/weapon/warrior/warrior_3.mp3"),
+	"king_1"   : preload("res://static/audio/sfx/weapon/king/king_1.mp3"),
+	"king_2"   : preload("res://static/audio/sfx/weapon/king/king_2.mp3"),
+	"king_3"   : preload("res://static/audio/sfx/weapon/king/king_3.mp3"),
+	"wizard_1" : preload("res://static/audio/sfx/weapon/wizard/wizard_1.mp3"),
 }
 
 var camera: Camera2D
@@ -31,6 +35,7 @@ var _slowmo_scale := 1.0
 var _shake := 0.0
 var _last_ticks := 0
 var _hit_sounds := {}
+var _whoosh : AudioStreamWAV
 var _players: Array[AudioStreamPlayer] = []
 var _next_player := 0
 var _screen_flash : ColorRect
@@ -47,6 +52,7 @@ func _ready():
 		"heavy" : synth_hit(0.30, 85.0, 0.55, 13.0),
 		"blunt" : synth_hit(0.12, 150.0, 0.45, 28.0),
 	}
+	_whoosh = synth_whoosh(0.24)
 	for i in 10:
 		var player := AudioStreamPlayer.new()
 		player.bus = &"SFX"
@@ -210,6 +216,10 @@ func zoom_punch(amount := 0.12, duration := 0.35):
 	_zoom_tween = create_tween()
 	_zoom_tween.tween_property(camera, "zoom", Vector2.ONE, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
+## 대시/백스텝/스킬 시전 바람 소리
+func play_whoosh(volume_db := -9.0):
+	play_sound(_whoosh, 0.12, volume_db)
+
 func play_swing(key: String):
 	if SWING_SOUNDS.has(key):
 		play_sound(SWING_SOUNDS[key], 0.06, -4.0)
@@ -223,6 +233,25 @@ func play_sound(stream: AudioStream, pitch_jitter := 0.0, volume_db := 0.0):
 	player.volume_db = volume_db
 	player.pitch_scale = 1.0 + randf_range(-pitch_jitter, pitch_jitter)
 	player.play()
+
+## 바람 가르는 소리 합성 : 컷오프가 올라갔다 내려가는 로우패스 노이즈, 사인 엔벨로프
+static func synth_whoosh(duration: float) -> AudioStreamWAV:
+	var rate := 22050
+	var sample_count := int(rate * duration)
+	var data := PackedByteArray()
+	data.resize(sample_count * 2)
+	var low := 0.0
+	for i in sample_count:
+		var p := float(i) / sample_count
+		var cutoff := 0.04 + 0.35 * sin(p * PI)
+		low = lerpf(low, randf_range(-1.0, 1.0), cutoff)
+		var sample := low * sin(p * PI) * 1.4
+		data.encode_s16(i * 2, int(clampf(sample, -1.0, 1.0) * 26000.0))
+	var wav := AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = rate
+	wav.data = data
+	return wav
 
 ## 짧은 타격음 합성 : 저음(피치 하강) + 로우패스 노이즈, 지수 감쇠
 static func synth_hit(duration: float, base_freq: float, noise_amount: float, decay: float) -> AudioStreamWAV:

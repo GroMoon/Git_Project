@@ -37,7 +37,7 @@ class Bolt extends Node2D:
 			_trail.pop_back()
 		var hit: int = caster.deal_hits(self, attack, _log, 99 if pierce else 1)
 		if (hit > 0 and not pierce) or _travelled >= max_distance or position.x != caster.stage.clamp_to_floor(position).x:
-			var fx = get_tree().get_first_node_in_group("combat_fx")
+			var fx = caster.fx
 			if fx:
 				fx.spawn_spark(Vector2(position.x, position.y - z), "blunt", facing, color)
 			queue_free()
@@ -71,7 +71,7 @@ class Vortex extends Node2D:
 			_pulse_t = pulse_interval
 			caster.deal_hits(self, pulse_attack, [])
 		if _t >= life:
-			var fx = get_tree().get_first_node_in_group("combat_fx")
+			var fx = caster.fx
 			if fx:
 				fx.spawn_shockwave(position, radius * 1.1, Color(0.7, 0.45, 1.0))
 				fx.flash_screen(Color(0.7, 0.5, 1.0, 0.35), 0.2)
@@ -113,7 +113,7 @@ class LightningStrike extends Node2D:
 		if not _done and _sprite.frame >= 2:
 			_done = true
 			caster.deal_hits(self, attack, [])
-			var fx = get_tree().get_first_node_in_group("combat_fx")
+			var fx = caster.fx
 			if fx:
 				fx.spawn_shockwave(position, 110.0, Color(0.6, 0.85, 1.0))
 
@@ -130,7 +130,7 @@ class Meteor extends Node2D:
 	func _ready():
 		_start_z = z
 		material = Glow.additive()
-		var fx = get_tree().get_first_node_in_group("combat_fx")
+		var fx = caster.fx
 		if fx:
 			fx.spawn_telegraph(Rect2(position.x - 60.0, position.y - 34.0, 120.0, 68.0), delay + fall_time, true)
 	func _physics_process(delta):
@@ -141,7 +141,7 @@ class Meteor extends Node2D:
 		z = lerpf(_start_z, 0.0, p * p)
 		if p >= 1.0:
 			z = 0.0
-			var fx = get_tree().get_first_node_in_group("combat_fx")
+			var fx = caster.fx
 			if fx:
 				fx.spawn_shockwave(position, 150.0, Color(1.0, 0.55, 0.2))
 				fx.spawn_spark(position + Vector2(0, -30), "heavy", 1, Color(1.0, 0.6, 0.25))

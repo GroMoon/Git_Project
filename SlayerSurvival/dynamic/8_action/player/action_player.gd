@@ -90,6 +90,13 @@ var revives          := 0		# respawn : 사망 시 부활 횟수
 var cooldown_scale   := 1.0		# cooldown : 스킬 쿨타임 배율
 var gold_bonus       := 0.0		# gold_drop : 골드 추가 획득률
 
+## 방 클리어 강화 (stage/boons.gd)
+var boons                := []
+var crit_chance          := 0.0		# 치명타 확률 (1.5배)
+var mp_on_hit            := 0.0		# 적중 시 MP 회복
+var party_power_scale    := 1.0		# 몬스터 동료 공격력 배율
+var party_cooldown_scale := 1.0		# 몬스터 동료 공격 간격 배율
+
 var fx : Node = null
 
 func _setup_character():
@@ -121,7 +128,7 @@ func _ready():
 	add_to_group("action_player")
 	sprite.sprite_frames = SpriteSheet.build(sheet_key, sheets)
 	play_anim("idle")
-	fx = get_tree().get_first_node_in_group("combat_fx")
+	fx = stage.fx if stage else get_tree().get_first_node_in_group("combat_fx")
 	mp = max_mp
 	hp_changed.emit(hp, max_hp)
 	mp_changed.emit(mp, max_mp)
@@ -177,7 +184,10 @@ func _read_input(delta: float):
 		var action := "act_right" if dir == 1 else "act_left"
 		if Input.is_action_just_pressed(action):
 			var now := Time.get_ticks_msec() / 1000.0
+			var was_running := is_running
 			is_running = _last_tap_dir == dir and now - _last_tap_time <= DOUBLE_TAP_TIME
+			if is_running and not was_running and fx:
+				fx.play_whoosh(-11.0)
 			_last_tap_dir = dir
 			_last_tap_time = now
 
@@ -247,6 +257,8 @@ func _show_air_frame():
 		play_anim("fall")
 
 func _start_backstep():
+	if fx:
+		fx.play_whoosh()
 	state = State.BACKSTEP
 	is_running = false
 	z_velocity = 300.0
@@ -275,7 +287,7 @@ func _start_move(move_id: String):
 	attack_buffer = 0.0
 	jump_buffer = 0.0
 	_move_hit_log.clear()
-	for i in move.hits.size():
+	for i in move.get("hits", []).size():
 		_move_hit_log.append([])
 	state = State.ATTACK
 	sprite.speed_scale = 1.0
@@ -331,8 +343,8 @@ func _advance_move(delta: float):
 			return
 
 	# 타격 판정
-	for i in move.hits.size():
-		var hit: Dictionary = move.hits[i]
+	for i in move.get("hits", []).size():
+		var hit: Dictionary = move.get("hits", [])[i]
 		if frame >= hit.from and frame <= hit.to:
 			_check_hits(hit.attack, _move_hit_log[i])
 
@@ -435,6 +447,8 @@ func _try_skill() -> bool:
 	mp_changed.emit(mp, max_mp)
 	cooldowns[move_id] = skill.cooldown * cooldown_scale
 	is_running = false
+	if fx:
+		fx.play_whoosh(-7.0)
 	_start_move(move_id)
 	skill_used.emit(move_id)
 	return true
@@ -463,11 +477,18 @@ func deal_hits(source: Node2D, atk: Dictionary, hit_log: Array, max_targets := 9
 		if Combat.overlaps(source, atk, target):
 			hit_log.append(target)
 			var dealt := Combat.roll_damage(attack_power, atk)
-			target.receive_hit(atk, source, dealt)
+			var hit_atk := atk
+			if crit_chance > 0.0 and randf() < crit_chance:
+				dealt = int(dealt * 1.5)
+				hit_atk = atk.duplicate()
+				hit_atk["crit"] = true
+			target.receive_hit(hit_atk, source, dealt)
 			hit_landed.emit(target)
 			count += 1
 			if lifesteal > 0.0:
 				heal(dealt * lifesteal)
+			if mp_on_hit > 0.0:
+				mp = minf(max_mp, mp + mp_on_hit)
 	if count > 0 and fx:
 		fx.on_attack_landed(atk, count)
 		fx.add_combo(count)

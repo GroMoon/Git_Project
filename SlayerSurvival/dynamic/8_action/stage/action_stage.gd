@@ -10,9 +10,17 @@ const DungeonData = preload("res://dynamic/8_action/stage/dungeon_data.gd")
 const ExitPortal  = preload("res://dynamic/8_action/stage/exit_portal.gd")
 const ActionHUD   = preload("res://dynamic/8_action/ui/action_hud.gd")
 const Warrior     = preload("res://dynamic/8_action/player/warrior_action.gd")
+const King        = preload("res://dynamic/8_action/player/king_action.gd")
+const Wizard      = preload("res://dynamic/8_action/player/wizard_action.gd")
+const CHARACTERS  := {"warrior": Warrior, "king": King, "wizard": Wizard}
 const Enemy       = preload("res://dynamic/8_action/enemy/action_enemy.gd")
 const BossEnemy   = preload("res://dynamic/8_action/enemy/boss_enemy.gd")
 const AllyMonster = preload("res://dynamic/8_action/enemy/ally_monster.gd")
+const Boons       = preload("res://dynamic/8_action/stage/boons.gd")
+const BoonSelect  = preload("res://dynamic/8_action/ui/boon_select.gd")
+const PauseMenu   = preload("res://dynamic/8_action/ui/pause_menu.gd")
+const BOSS_BGM    = preload("res://static/audio/bgm/game_bgm_1(retro).mp3")	# 보스방 전용 BGM (교체 가능)
+const RESULT_SOUND = preload("res://static/audio/sfx/button_sounds/store(coin_sound).wav")
 
 const MENU_SCENE    := "res://dynamic/5_title_screen/menu.tscn"
 const FLOOR_TOP     := 440.0
@@ -22,6 +30,9 @@ const MAX_ATTACKERS := 2		# 동시에 공격할 수 있는 적 수
 const NEXT_WAVE_DELAY := 1.2
 const PLAYER_ENTRY  := Vector2(220, 560)
 const MAX_PARTY     := 4		# 동료 최대 수 (종류별 1마리)
+
+## 캐릭터 선택 화면에서 지정 (씬이 바뀌어도 유지되는 정적 변수)
+static var selected_character := "warrior"
 
 ## 테스트에서 false로 두면 결과 골드를 세이브 파일에 저장하지 않음
 var save_rewards := true
@@ -45,6 +56,8 @@ var gold  := 0
 var elapsed := 0.0
 var boss : Node2D = null
 var party : Array = []		# 몬스터 동료
+var boon_panel : CanvasLayer = null		# 강화 선택 창 (열려 있는 동안 게임 일시정지)
+var pause_menu : CanvasLayer = null		# ESC 일시정지 메뉴
 
 var _attack_tokens: Array = []
 var _enemy_count := 0
@@ -79,7 +92,7 @@ func _ready():
 	camera.make_current()
 	fx.camera = camera
 
-	player = Warrior.new()
+	player = CHARACTERS.get(selected_character, Warrior).new()
 	player.name = "Player"
 	player.stage = self
 	player.position = PLAYER_ENTRY
@@ -98,21 +111,38 @@ func _ready():
 
 func _exit_tree():
 	Engine.time_scale = 1.0
+	get_tree().paused = false
 	SpriteSheet.clear_cache()
+
+## ESC / R / 디버그 키 (이벤트 방식 : 일시정지 메뉴가 먹은 입력은 여기로 오지 않음)
+func _unhandled_input(event: InputEvent):
+	if event.is_echo():
+		return
+	if event.is_action_pressed("act_menu"):
+		if _game_over or _dungeon_clear:
+			get_tree().change_scene_to_file(MENU_SCENE)
+		elif not _transitioning and boon_panel == null:
+			open_pause_menu()
+	elif event.is_action_pressed("act_restart") and (_game_over or _dungeon_clear):
+		get_tree().reload_current_scene()
+	elif event.is_action_pressed("act_respawn"):		# 디버그 : 현재 웨이브 다시 소환
+		start_wave(wave_index)
+	elif event.is_action_pressed("act_debug_skip") and not _transitioning:	# 디버그 : 다음 방
+		load_room(mini(room_index + 1, DungeonData.ROOMS.size() - 1))
+
+func open_pause_menu():
+	if pause_menu != null:
+		return
+	pause_menu = PauseMenu.new()
+	add_child(pause_menu)
+	get_tree().paused = true
+	pause_menu.closed.connect(func():
+		pause_menu = null
+		hud.refresh_key_labels()
+	)
 
 func _process(delta):
 	_follow_camera(delta)
-	if Input.is_action_just_pressed("act_menu"):
-		get_tree().change_scene_to_file(MENU_SCENE)
-		return
-	if (_game_over or _dungeon_clear) and Input.is_action_just_pressed("act_restart"):
-		get_tree().reload_current_scene()
-		return
-	if Input.is_action_just_pressed("act_respawn"):		# 디버그 : 현재 웨이브 다시 소환
-		start_wave(wave_index)
-	elif Input.is_action_just_pressed("act_debug_skip") and not _transitioning:	# 디버그 : 다음 방
-		load_room(mini(room_index + 1, DungeonData.ROOMS.size() - 1))
-
 	if not _game_over and not _dungeon_clear:
 		elapsed += delta
 	if _next_wave_timer > 0.0:
@@ -159,6 +189,10 @@ func load_room(index: int, with_fade := true):
 	portal.set_open(false)
 	hud.set_room(index)
 	hud.show_go_arrow(false)
+	if room.get("boss", false):
+		Audiomanager.stream = BOSS_BGM
+		Audiomanager.play()
+		Audiomanager.current_music_state = "boss"
 	start_wave(0)
 	if with_fade:
 		await hud.fade(0.0, 0.3)
@@ -245,9 +279,28 @@ func _on_room_cleared():
 	_room_cleared = true
 	hud.mark_room_cleared(room_index)
 	if room_index + 1 < DungeonData.ROOMS.size():
-		portal.set_open(true)
 		hud.show_banner("ROOM CLEAR")
+		await get_tree().create_timer(0.8).timeout
+		if _game_over or not is_inside_tree():
+			return
+		await _offer_boons()
+		portal.set_open(true)
 		hud.show_go_arrow(true)
+
+## 강화 3택 1 : 고르는 동안 일시정지
+func _offer_boons():
+	boon_panel = BoonSelect.new()
+	boon_panel.options = Boons.roll(3, party.size())
+	add_child(boon_panel)
+	get_tree().paused = true
+	var id: String = await boon_panel.chosen
+	get_tree().paused = false
+	boon_panel = null
+	Boons.apply(id, player, self)
+	fx.play_sound(RESULT_SOUND, 0.05, -4.0)
+	var boon := Boons.get_boon(id)
+	fx.spawn_text(boon.name + "!", player.position + Vector2(0, -player.body_height - 70.0), Color(1.0, 0.85, 0.35), 28)
+	hud.set_boons(player.boons.map(func(b): return Boons.get_boon(b).name))
 
 func _on_boss_defeated():
 	hud.mark_room_cleared(room_index)
@@ -265,6 +318,7 @@ func _show_result():
 	if save_rewards and Global.character_data.has("GOLD"):
 		Global.character_data["GOLD"]["gold"] += total_gold
 		Global.save_character_data()
+	fx.play_sound(RESULT_SOUND, 0.0, -2.0)
 	hud.show_result({
 		"dungeon": DungeonData.DUNGEON_NAME, "rank": rank, "time": elapsed,
 		"max_combo": fx.max_combo, "total_hits": fx.total_hits, "hits_taken": player.hits_taken,

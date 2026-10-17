@@ -309,10 +309,18 @@ func _run_step():
 				last._attack_cd = 99.0
 				_data.room = stage.room_index
 			tap("act_attack", 5)
-			if _frame == 60:
-				check("room clear opens portal", stage._room_cleared and stage.portal.is_open)
+			if _frame == 90:
+				check("room clear offers boons (paused)", stage.boon_panel != null and paused,
+					"panel %s paused %s" % [stage.boon_panel != null, paused])
+				check("portal stays closed while choosing", not stage.portal.is_open)
+				_data.power = player.attack_power
+				_data.boon = stage.boon_panel.options[0].id
+				stage.boon_panel.choose(0)
+			if _frame == 94:
+				check("boon chosen -> unpause + portal opens", not paused and stage.portal.is_open)
+				check("boon applied to player", player.boons.has(_data.boon), str(player.boons))
 				player.position = stage.portal.position
-			if _frame == 140:
+			if _frame == 175:
 				check("portal moves to next room", stage.room_index == _data.room + 1,
 					"room %d -> %d" % [_data.room, stage.room_index])
 				check("next room spawns enemies", enemies().size() > 0, "enemies %d" % enemies().size())

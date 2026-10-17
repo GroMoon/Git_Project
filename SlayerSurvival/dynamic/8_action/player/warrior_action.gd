@@ -50,7 +50,7 @@ func _setup_character():
 			"swing": {"frame": 2, "sound": "warrior_2"},
 			"steps": [{"frame": 1, "speed": 160.0, "time": 0.06}],
 			"hits": [{"from": 2, "to": 3, "attack": Combat.attack({
-				"damage": 1.15, "reach": 125.0, "back": 140.0, "depth": 62.0,
+				"damage": 1.2, "reach": 130.0, "back": 145.0, "depth": 75.0,
 				"hitstun": 0.45, "knockback": 30.0, "pull": 75.0, "align": 0.75,
 				"hitstop": 0.06, "shake": 3.0, "spark": "slash",
 			})}],
@@ -133,18 +133,18 @@ func _setup_skills():
 	moves["whirlwind"] = {
 		"anim": "attack_2", "frames": [0, 1, 2, 3, 2, 3, 2, 3, 2, 3, 4, 5, 6],
 		"frame_times": [0.04, 0.04, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.07, 0.07, 0.1],
-		"skill": {"name": "회오리 베기", "cooldown": 7.0, "mp": 120.0, "icon": Vector2i(10, 10)},
+		"skill": {"name": "회오리 베기", "cooldown": 6.0, "mp": 120.0, "icon": Vector2i(10, 10)},
 		"super_armor": true, "mobile": true,
 		"events": [{"frame": 1, "type": "whirl", "time": 0.5, "radius": 150.0}],
 		"swings": [{"frame": 2, "sound": "warrior_2"}, {"frame": 4, "sound": "warrior_2"},
 			{"frame": 6, "sound": "warrior_2"}, {"frame": 8, "sound": "warrior_2"}, {"frame": 10, "sound": "warrior_3"}],
 		"hits": [
-			{"from": 2, "to": 2, "attack": _whirl_hit(270.0, 130.0, 30.0)},	# 첫 회전 : 넓게 빨아들이기
+			{"from": 2, "to": 2, "attack": _whirl_hit(330.0, 140.0, 30.0)},	# 첫 회전 : 넓게 빨아들이기
 			{"from": 4, "to": 4, "attack": _whirl_hit(180.0, 85.0, 35.0)},
 			{"from": 6, "to": 6, "attack": _whirl_hit(180.0, 85.0, 35.0)},
 			{"from": 8, "to": 8, "attack": _whirl_hit(180.0, 85.0, 35.0)},
 			{"from": 10, "to": 10, "attack": Combat.attack({
-				"damage": 1.6, "reach": 175.0, "back": 175.0, "depth": 90.0, "z_max": 240.0,
+				"damage": 2.0, "reach": 185.0, "back": 185.0, "depth": 95.0, "z_max": 240.0,
 				"launch": 560.0, "knockback": 30.0, "align": 0.6,
 				"hitstop": 0.09, "shake": 6.0, "spark": "heavy",
 			})},
@@ -203,7 +203,7 @@ func _setup_skills():
 
 func _whirl_hit(radius: float, depth: float, vacuum: float) -> Dictionary:
 	return Combat.attack({
-		"damage": 0.65, "reach": radius, "back": radius, "depth": depth, "z_max": 220.0,
+		"damage": 0.8, "reach": radius, "back": radius, "depth": depth, "z_max": 220.0,
 		"vacuum": vacuum, "align": 0.9, "hitstun": 0.5, "knockback": 0.0, "juggle": 130.0,
 		"hitstop": 0.03, "shake": 2.5, "spark": "slash",
 	})

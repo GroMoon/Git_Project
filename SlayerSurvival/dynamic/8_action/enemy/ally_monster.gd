@@ -56,7 +56,7 @@ func _ready():
 	sprite.sprite_frames = SpriteSheet.build("enemy_" + kind, def.sheets)
 	sprite.self_modulate = Color(0.78, 1.0, 0.82)		# 동료는 살짝 초록빛
 	play_anim("idle")
-	fx = get_tree().get_first_node_in_group("combat_fx")
+	fx = stage.fx if stage else get_tree().get_first_node_in_group("combat_fx")
 	var tag := Label.new()
 	tag.text = "동료"
 	tag.add_theme_font_override("font", preload("res://static/font/DNFBitBitTTF.ttf"))
@@ -152,14 +152,14 @@ func _start_attack(option: Dictionary):
 		atk["knockdown"] = false
 		_ally_hits.append({"from": hit.from, "to": hit.to, "attack": atk})
 		_hit_logs.append([])
-	power = stage.player.attack_power * POWER_RATIO
+	power = stage.player.attack_power * POWER_RATIO * stage.player.party_power_scale
 
 func _state_attack(delta: float):
 	_attack_time += delta
 	var frame: int = ActionPlayer.frame_at(_attack.frame_times, _attack_time)
 	if frame < 0:
 		state = State.FOLLOW
-		_attack_cd = def.cooldown * randf_range(0.6, 0.9)
+		_attack_cd = def.cooldown * randf_range(0.6, 0.9) * stage.player.party_cooldown_scale
 		return
 	if frame != _attack_frame:
 		_attack_frame = frame

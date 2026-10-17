@@ -1,10 +1,10 @@
 extends CanvasLayer
 ## 액션 모드 HUD : HP/MP 바, 스킬 슬롯, 콤보 카운터, 몬스터 HP 바, 미니맵, 화면 전환, 결과창
 
+const ActionInput = preload("res://dynamic/8_action/core/action_input.gd")
 const FONT  = preload("res://static/font/DNFBitBitTTF.ttf")
 const ICONS = preload("res://static/png/icon/spritesheet.png")
 
-const HELP_TEXT := "← → ↑ ↓ 이동    →→ 대시    X 공격(연타 콤보)    C 점프    Z 백스텝    A S D F 스킬    ESC 메뉴"
 
 var _hp_bar   : Control
 var _hp_label : Label
@@ -23,7 +23,9 @@ var _target_lines : Label
 var _hp_ratio := 1.0
 var _hp_ratio_late := 1.0		# 깎인 체력이 천천히 따라오는 잔상 바
 
+var _help_label : Label
 var _party_label : Label
+var _boon_label : Label
 var _minimap : Control
 var _go_arrow : Label
 var _fade_rect : ColorRect
@@ -131,8 +133,9 @@ class SkillSlot extends Control:
 			draw_rect(rect, Color(0.1, 0.2, 0.6, 0.55))
 		if _flash > 0.0:
 			draw_rect(rect, Color(1, 1, 1, 0.6 * _flash))
-		draw_string_outline(font, Vector2(4, 16), slot.key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 5, Color.BLACK)
-		draw_string(font, Vector2(4, 16), slot.key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(1.0, 0.9, 0.5))
+		var key: String = ActionInput.key_name(slot.action)
+		draw_string_outline(font, Vector2(4, 16), key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, 5, Color.BLACK)
+		draw_string(font, Vector2(4, 16), key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, Color(1.0, 0.9, 0.5))
 
 func _ready():
 	layer = 10
@@ -172,12 +175,12 @@ func _ready():
 	_combo_root.add_child(_combo_sub)
 	_combo_root.modulate.a = 0.0
 
-	var help := _make_label(16, Color(1, 1, 1, 0.75))
-	help.text = HELP_TEXT
-	help.position = Vector2(0, 688)
-	help.size = Vector2(1280, 24)
-	help.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(help)
+	_help_label = _make_label(16, Color(1, 1, 1, 0.75))
+	_help_label.position = Vector2(0, 688)
+	_help_label.size = Vector2(1280, 24)
+	_help_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(_help_label)
+	refresh_key_labels()
 
 	# 상단 몬스터 HP 바
 	_target_bar = TargetBar.new()
@@ -205,6 +208,9 @@ func _ready():
 	_party_label = _make_label(16, Color(0.6, 1.0, 0.65))
 	_party_label.position = Vector2(28, 74)
 	add_child(_party_label)
+	_boon_label = _make_label(16, Color(1.0, 0.85, 0.45))
+	_boon_label.position = Vector2(28, 94)
+	add_child(_boon_label)
 
 	_minimap = Minimap.new()
 	_minimap.position = Vector2(1100, 22)
@@ -344,6 +350,17 @@ func _make_label(font_size: int, color: Color) -> Label:
 func setup_minimap(rooms: Array):
 	_minimap.rooms = rooms
 	_minimap.queue_redraw()
+
+## 조작 안내 (키 설정에서 바꾼 키 반영)
+func refresh_key_labels():
+	var k := func(action: String) -> String: return ActionInput.key_name(action)
+	_help_label.text = "%s %s %s %s 이동    %s%s 대시    %s 공격(연타 콤보)    %s 점프    %s 백스텝    %s %s %s %s 스킬    ESC 일시정지" % [
+		k.call("act_left"), k.call("act_right"), k.call("act_up"), k.call("act_down"),
+		k.call("act_right"), k.call("act_right"), k.call("act_attack"), k.call("act_jump"), k.call("act_backstep"),
+		k.call("act_skill_1"), k.call("act_skill_2"), k.call("act_skill_3"), k.call("act_skill_4")]
+
+func set_boons(names: Array):
+	_boon_label.text = "강화 : " + ", ".join(PackedStringArray(names)) if not names.is_empty() else ""
 
 func set_party(names: Array):
 	_party_label.text = "동료 : " + ", ".join(PackedStringArray(names)) if not names.is_empty() else ""

@@ -21,7 +21,7 @@ var _casting := false
 var _hit_done := false
 
 func _ready():
-	var fx = get_tree().get_first_node_in_group("combat_fx")
+	var fx = caster.fx
 	if fx:
 		fx.spawn_telegraph(Rect2(position.x - 55.0, position.y - 30.0, 110.0, 60.0), WARN_TIME, true)
 	_sprite = AnimatedSprite2D.new()

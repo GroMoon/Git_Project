@@ -98,54 +98,58 @@ dynamic/8_action/
 - [x] 스모크 테스트 32/32 PASS
 
 ### Phase 5 — 기존 시스템 연동
-- [ ] 캐릭터 선택: Medieval King, Wizard 이식 (Wizard는 원거리 마법) ← **작업 중 (아래 「다음 세션 할 일」 참고)**
-  - [x] `player/action_player.gd` : `deal_hits(source, atk, log)` 공개 함수 + 기술 `spawns` 훅(`_on_spawn`) 추가
-  - [x] `player/king_action.gd` 작성 완료 (콤보/대시/점프공격 + 스킬 4종, 파싱 확인) — 아직 스테이지에 연결 안 됨
-  - [x] `player/magic.gd` 작성 완료 (Bolt / Vortex / LightningStrike / Meteor, 파싱 확인) — 아직 사용처 없음
-  - [ ] `player/wizard_action.gd` 작성 (아래 설계)
-  - [ ] 캐릭터 선택 화면 + 메뉴 START 연결
+- [x] 캐릭터 3종 + 선택 화면 (메뉴 START → `ui/character_select.tscn` → 던전)
+  - Medieval King (`player/king_action.gd`) : 무거운 대검, 왕의 부름(넓은 범위 빨아들이기), 돌격 찌르기, 성검 심판
+  - Wizard (`player/wizard_action.gd` + `player/magic.gd`) : 마력탄 콤보, 체인 라이트닝, 그라비티 홀(몰이), 블링크, 메테오 스톰
+  - 선택 결과는 `action_stage.gd`의 `static var selected_character`로 전달
+  - 테스트 `tests/roster_smoke_test.gd` 15/15 PASS
 - [x] 상점 업그레이드 연동 (`Global.character_data["CHARACTER_STORE_UPGRADES"]` → `apply_store_upgrades()`)
       health→최대HP(+1000/레벨), damage→공격력(+4%/레벨), speed→이속, cooldown→스킬 쿨타임,
       shield→피해 감소, vampire→흡혈, respawn→부활(REVIVE! 충격파), gold_drop→골드 보너스, gem_drop→MP 회복
 - [x] 노션 컨셉: 몬스터 동료 — 처치한 몬스터가 확률(일반 12%/엘리트 40%)로 동료가 됨 (종류별 1, 최대 4),
       플레이어 뒤를 따라다니며 근처 적 공격(머쉬룸 동료는 포자 발사), 방 이동 시 함께 이동 (`enemy/ally_monster.gd`)
-- [ ] 레벨업/성장 요소
+- [x] 성장 요소 : 방 클리어마다 강화 3택 1 (`stage/boons.gd`, `ui/boon_select.gd`, 고르는 동안 일시정지)
+      공격력/최대HP/쿨타임/MP회복/흡혈/이속/피해감소/치명타/적중 시 MP + 동료 공격력·공격속도(동료 있을 때만)
 
 ### Phase 6 — 폴리싱
-- [ ] 효과음/BGM 정리, 타격음 다양화
-- [ ] 게임패드 지원, 키 설정 옵션
-- [ ] 밸런스 조정, 구 서바이벌 코드 정리 여부 결정
+- [x] 일시정지 메뉴 (ESC / 패드 Start) : 계속하기 / 조작 설정 / 던전 포기 (`ui/pause_menu.gd`)
+- [x] 키 설정 : 공격·점프·백스텝·스킬 1~4·이동 키 변경, 충돌 시 자동 맞바꿈, `user://action_keys.cfg` 저장, 기본값 복원.
+      HUD 조작 안내와 스킬 슬롯 키 표시가 바뀐 키를 따라감
+- [x] 게임패드 전체 매핑 (Xbox 배치) : 왼쪽 스틱/십자키 이동, X 공격, A 점프, B 백스텝, Y·LB·RB·RT 스킬, Start 일시정지, Back 재시작
+- [x] 사운드 : 보스방 전용 BGM(`game_bgm_1(retro).mp3`, `action_stage.gd`의 `BOSS_BGM`에서 교체 가능),
+      대시/백스텝/스킬 시전 합성 효과음(휙), 선택 화면 버튼음, 강화 선택·결과창 코인음
+- [x] 밸런스 : 자동 플레이 봇 측정 도구 `tests/balance_report.gd` 추가 (시나리오별 3회 평균, 캐릭터별 병렬 실행 가능)
+      목표 = 세 캐릭터 모두 보스(40만 HP) 처치 80~100초. 조정 내역 : King 기본 콤보·어퍼 배율↑·3타 넉백↓·왕의 부름 2타↓,
+      Warrior 회전베기/회오리 베기 범위·위력↑·쿨타임 7→6초, Wizard 마력탄 위력↑·2타 관통·위아래 판정 확대·3타 띄우기↓
+
+  | 캐릭터 | 단일 DPS | 보스 처치 예상 | 4마리 무리 DPS | 웨이브 DPS | 웨이브 중 받는 피해/초 |
+  |---|---|---|---|---|---|
+  | Warrior | 4,567 | 약 88초 | 8,587 | 14,999 | 30 |
+  | King | 4,397 | 약 91초 | 19,786 | 22,058 | 58 |
+  | Wizard | 3,351 ~ 5,479 | 약 73 ~ 119초 (측정 편차 큼) | 13,267 ~ 16,133 | 14,343 ~ 16,132 | 196 ~ 273 |
+
+  ⚠️ 봇 기준 수치라 실제 손맛·난이도는 직접 플레이로 확인 필요 (특히 Wizard는 띄운 적 위치에 따라 편차가 큼)
+- [x] 구 서바이벌 코드 정리 여부 : **삭제하지 않고 유지하기로 결정** (메뉴 START는 액션 모드로 연결, 서바이벌은 `test.tscn` 직접 실행으로만 접근).
+      삭제 후보 : `test.tscn/test.gd`, `dynamic/1_player/characters/*`의 스크립트·씬(스프라이트는 액션 모드가 사용),
+      `dynamic/2_enemy/*`의 서바이벌용 스크립트·씬, `enemy_spawner`, `UI_Layer`. 플레이 확인 후 사용자 결정으로 정리
 
 ## 현재 진행 상황
 
 - 브랜치: `feature/action-combat` (기준: `test2`)
-- **Phase 1~4 완료, Phase 5 진행 중 (상점 연동·몬스터 동료 완료 / 캐릭터 추가 작업 중)**
-- 마지막 확인: 스모크 테스트 35/35 PASS (2026-10-17)
+- **Phase 1~6 전체 완료** (2026-10-17)
+- 실행: 타이틀 메뉴 START → 캐릭터 선택 → 던전, 또는 `dynamic/8_action/stage/action_stage.tscn` 직접 실행 (F6)
+- 테스트 (프로젝트 폴더에서) — 마지막 결과 : 전투 38/38, 로스터 22/22 PASS
+  - `Godot_v4.2.1-stable_win64_console.exe --headless --path . --script res://dynamic/8_action/tests/combat_smoke_test.gd`
+  - `Godot_v4.2.1-stable_win64_console.exe --headless --path . --script res://dynamic/8_action/tests/roster_smoke_test.gd`
+  - 밸런스 측정 : `... --script res://dynamic/8_action/tests/balance_report.gd -- warrior` (king / wizard, 약 2분)
+  - 주의: 테스트 스크립트에서 스테이지 스크립트를 `preload` 하면 오토로드보다 먼저 컴파일돼 실패 → `load()` 사용
+  - 헤드리스에서는 입력 이벤트가 뷰포트로 전달되지 않음 → UI 입력은 핸들러 직접 호출로 검증
+- ⚠️ 실제 화면 플레이 확인은 아직 (게임 창 실행 없이 헤드리스 검증만 함)
 
-### 다음 세션 할 일 (순서대로)
-
-1. **`player/wizard_action.gd` 작성** — `warrior_action.gd`/`king_action.gd`와 같은 형식, `_on_spawn(spawn)` 재정의
-   - 시트: `Wizard/Sprites/` 231x190, 발 y=141 · 몸 중심 x≈110 → `sprite_offset (5, -46)`, `sprite_scale 1.3`
-   - 애니: idle(Idle 6) run(Run 8) attack_1(Attack1 8: 지팡이 위 구체 폭발) attack_2(Attack2 8: 전방 발사)
-     jump(Jump 2) fall(Fall 2) take_hit(Hit 4) death(Death 7)
-   - 수치: max_hp 24000, attack_power 1150, max_mp 1400, mp_regen 55
-   - X 콤보: atk1·atk2 = attack_2 프레임 [1..6], move frame 4에서 `Bolt` 발사 / atk3 = attack_1 구체 폭발(back -40, reach 200, launch 600)
-   - 스킬: A 체인 라이트닝(가까운 적 3명에 `LightningStrike`, 아이콘 (4,10)) / S 그라비티 홀(전방 260px `Vortex`, vacuum 10, 아이콘 (8,8)) /
-     D 블링크(steps 2400px/s 0.12s + invuln + afterimage, 도착 지점 폭발, 아이콘 (9,10)) / F 메테오 스톰(`Meteor` 6개, delay 차등, 아이콘 (11,8))
-2. `core/combat_fx.gd`의 `SWING_SOUNDS`에 `king_1~3`(static/audio/sfx/weapon/king/), `wizard_1` 추가
-3. **캐릭터 선택 화면** `ui/character_select.gd` + `stage/character_select.tscn`
-   - 초상화: `dynamic/1_player/selcet_character/character_img/*.webp`, ←→ 선택, X/Enter 시작, ESC 메뉴
-   - `action_stage.gd`에 `static var selected_character := "warrior"` 추가 → `_ready()`에서 Warrior/King/Wizard 중 생성
-   - `menu.gd`의 START → 캐릭터 선택 화면으로
-4. 스모크 테스트에 King/Wizard 항목 추가 (콤보 체인, 그라비티 홀 몰이, 볼트 적중)
-5. 이후 Phase 5 레벨업/성장, Phase 6 폴리싱
-
-### 다음 세션 시작 방법
-- 이 문서 확인 → `git checkout feature/action-combat` → 스모크 테스트 실행으로 상태 확인:
-  `Godot_v4.2.1-stable_win64_console.exe --headless --path . --script res://dynamic/8_action/tests/combat_smoke_test.gd`
-- 변경 사항은 아직 커밋하지 않음 (`docs/`, `dynamic/8_action/`, `dynamic/5_title_screen/menu.gd`)
-- 실행: 타이틀 메뉴 START 또는 `dynamic/8_action/stage/action_stage.tscn` 직접 실행 (F6)
-- 테스트: 헤드리스 테스트 스크립트 예시는 작업 로그 참고 (`--headless --script`로 입력 시뮬레이션)
+### 이후 제안 (로드맵 밖)
+1. 직접 플레이 후 손맛 수치 튜닝 (히트스탑/경직/넉백 — 각 `*_action.gd`의 moves)
+2. 던전 추가 (cave 타일셋 활용), 보스 FireWorm 이식
+3. 구 서바이벌 코드 정리 (위 삭제 후보 참고)
 
 ## 작업 로그
 
@@ -155,3 +159,5 @@ dynamic/8_action/
 - 2026-10-17: Phase 3 완료 — 스킬 4종 + MP/쿨타임 + 스킬 HUD, 연출 이펙트(잔상/회오리/충격파/화면 섬광/줌)
 - 2026-10-17: Phase 4 완료 — 4개 방 던전, 포털/미니맵/페이드, 보스 3패턴+2페이즈, 결과창/랭크/골드 저장
 - 2026-10-17: Phase 5 일부 — 상점 업그레이드 연동, 몬스터 동료, King 데이터·마법 오브젝트 작성 (세션 종료, 사용량 한도)
+- 2026-10-17: Phase 5 완료 — Wizard, 캐릭터 선택 화면, 방 클리어 강화 3택 1
+- 2026-10-17: Phase 6 완료 — 일시정지/키 설정/패드, 사운드, 봇 기반 밸런스 측정·조정, 구 코드 유지 결정

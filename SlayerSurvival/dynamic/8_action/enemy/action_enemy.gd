@@ -105,7 +105,7 @@ func _ready():
 	add_to_group("action_enemy")
 	sprite.sprite_frames = SpriteSheet.build("enemy_" + kind, def.sheets)
 	play_anim("idle")
-	fx = get_tree().get_first_node_in_group("combat_fx")
+	fx = stage.fx if stage else get_tree().get_first_node_in_group("combat_fx")
 	_death_sound = load(def.death_sound)
 	if def.has("attack_sound"):
 		_attack_sound = load(def.attack_sound)
@@ -192,7 +192,8 @@ func receive_hit(atk: Dictionary, attacker: Node2D, damage: int):
 	if fx:
 		fx.spawn_spark(hit_pos, atk.spark, attacker.facing)
 		if damage > 0:
-			fx.spawn_damage(damage, hit_pos + Vector2(0, -34), "critical" if atk.damage >= 1.5 else "normal")
+			var critical: bool = atk.damage >= 1.5 or atk.get("crit", false)
+			fx.spawn_damage(damage, hit_pos + Vector2(0, -34), "critical" if critical else "normal")
 	hit_shake(0.14, 3.0)
 
 	# 슈퍼아머 : 경직 없이 버티다가 내구도가 다 닳으면 ARMOR BREAK

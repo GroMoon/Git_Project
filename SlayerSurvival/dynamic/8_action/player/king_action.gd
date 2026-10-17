@@ -16,7 +16,7 @@ func _setup_character():
 	body_height   = 100.0
 	shadow_size   = Vector2(74, 20)
 	max_hp        = 38000.0
-	attack_power  = 1350.0
+	attack_power  = 1420.0
 	walk_speed    = Vector2(230, 150)
 	run_speed     = Vector2(420, 180)
 	jump_power    = 600.0
@@ -40,7 +40,7 @@ func _setup_character():
 			"swing": {"frame": 2, "sound": "king_1"},
 			"steps": [{"frame": 2, "speed": 300.0, "time": 0.06}],
 			"hits": [{"from": 2, "to": 3, "attack": Combat.attack({
-				"damage": 1.2, "reach": 150.0, "back": 10.0, "depth": 45.0,
+				"damage": 1.55, "reach": 150.0, "back": 10.0, "depth": 45.0, "z_max": 160.0,
 				"hitstun": 0.45, "knockback": 90.0, "align": 0.4,
 				"hitstop": 0.06, "shake": 3.0, "spark": "slash"})}],
 			"cancel": 3, "next": "atk2",
@@ -50,7 +50,7 @@ func _setup_character():
 			"frame_times": [0.06, 0.06, 0.05, 0.07, 0.12],
 			"swing": {"frame": 2, "sound": "king_2"},
 			"hits": [{"from": 2, "to": 3, "attack": Combat.attack({
-				"damage": 1.3, "reach": 165.0, "back": 145.0, "depth": 65.0,
+				"damage": 1.7, "reach": 165.0, "back": 145.0, "depth": 65.0, "z_max": 160.0,
 				"hitstun": 0.5, "knockback": 30.0, "pull": 85.0, "align": 0.75,
 				"hitstop": 0.07, "shake": 4.0, "spark": "slash"})}],
 			"cancel": 3, "next": "atk3",
@@ -62,12 +62,12 @@ func _setup_character():
 			"steps": [{"frame": 4, "speed": 380.0, "time": 0.08}],
 			"hits": [
 				{"from": 2, "to": 3, "attack": Combat.attack({
-					"damage": 1.8, "reach": 165.0, "back": 120.0, "depth": 55.0, "z_max": 280.0,
+					"damage": 2.3, "reach": 165.0, "back": 120.0, "depth": 55.0, "z_max": 280.0,
 					"launch": 700.0, "knockback": 50.0, "align": 0.5,
 					"hitstop": 0.1, "shake": 8.0, "spark": "heavy"})},
 				{"from": 4, "to": 4, "attack": Combat.attack({
-					"damage": 0.9, "reach": 175.0, "back": 0.0, "depth": 40.0, "z_max": 200.0,
-					"juggle": 220.0, "knockback": 200.0, "hitstun": 0.45,
+					"damage": 1.2, "reach": 175.0, "back": 0.0, "depth": 40.0, "z_max": 200.0,
+					"juggle": 220.0, "knockback": 120.0, "hitstun": 0.45,
 					"hitstop": 0.05, "shake": 3.0, "spark": "slash"})},
 			],
 			"cancel": 5, "next": "atk1",
@@ -111,7 +111,7 @@ func _setup_skills():
 		"swing": {"frame": 1, "sound": "king_3"},
 		"events": [{"frame": 1, "type": "shockwave", "radius": 170.0, "offset": 80.0}],
 		"hits": [{"from": 1, "to": 2, "attack": Combat.attack({
-			"damage": 2.4, "reach": 175.0, "back": 80.0, "depth": 60.0, "z_max": 300.0,
+			"damage": 3.0, "reach": 175.0, "back": 80.0, "depth": 60.0, "z_max": 300.0,
 			"launch": 860.0, "knockback": 40.0, "align": 0.6,
 			"hitstop": 0.11, "shake": 7.0, "spark": "heavy"})}],
 		"cancel": 3, "next": "atk1",
@@ -134,7 +134,7 @@ func _setup_skills():
 				"vacuum": 45.0, "align": 1.0, "hitstun": 0.9, "knockback": 0.0, "juggle": 60.0,
 				"hitstop": 0.04, "shake": 3.0, "spark": "blunt"})},
 			{"from": 4, "to": 5, "attack": Combat.attack({
-				"damage": 2.0, "reach": 190.0, "back": 190.0, "depth": 90.0, "z_max": 260.0,
+				"damage": 1.6, "reach": 190.0, "back": 190.0, "depth": 90.0, "z_max": 260.0,
 				"launch": 540.0, "knockback": 40.0, "align": 0.6,
 				"hitstop": 0.09, "shake": 7.0, "spark": "heavy"})},
 		],
