@@ -21,7 +21,7 @@ func show_damage(damage: float, position: Vector2, color : Color = Color.RED, is
 	var label = Label.new()
 	label.text = _format_damage(damage) + ("!" if is_crit else "")
 	label.add_theme_font_override("font", font)
-	label.add_theme_font_size_override("font_size", 22 if is_crit else 15)
+	label.add_theme_font_size_override("font_size", 22 if is_crit else 14)
 	label.add_theme_color_override("font_color", CRIT_COLOR if is_crit else color)
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
 	label.add_theme_constant_override("outline_size", 4 if is_crit else 3)
@@ -48,6 +48,7 @@ func show_damage(damage: float, position: Vector2, color : Color = Color.RED, is
 	tween.chain().tween_callback(label.queue_free)
 
 func _format_damage(damage: float) -> String:
-	if is_equal_approx(damage, round(damage)):
-		return str(int(round(damage)))
-	return str(snappedf(damage, 0.1))
+	# 정수로 표시 (1 미만은 소수 첫째 자리)
+	if damage < 1.0:
+		return str(snappedf(damage, 0.1))
+	return str(int(round(damage)))

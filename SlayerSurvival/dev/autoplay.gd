@@ -147,9 +147,12 @@ func _handle_blocking_ui(base_ui):
 			levelup_shot_done = true
 			_take_shot()
 		if select_ui.has_method("autopick"):
-			if opts["pick"] == "random" and "current_choices" in select_ui and not select_ui.current_choices.is_empty():
+			if opts["pick"] != "first" and "current_choices" in select_ui and not select_ui.current_choices.is_empty():
+				var choice = select_ui.current_choices.pick_random()
+				if opts["pick"] == "smart":
+					choice = _smart_pick(select_ui.current_choices)
 				select_ui.accept_input_at = 0.0
-				select_ui._on_upgrade_button_pressed(select_ui.current_choices.pick_random())
+				select_ui._on_upgrade_button_pressed(choice)
 			else:
 				select_ui.autopick()
 		else:
@@ -162,6 +165,21 @@ func _handle_blocking_ui(base_ui):
 	if Dialogic.current_timeline != null:
 		Dialogic.end_timeline()
 		Dialogic.VAR.diag_pause_flag = false
+
+# 무기 우선(새 무기 > 무기 강화 > 패시브) 선택
+func _smart_pick(choices: Array) -> String:
+	var best = choices[0]
+	var best_score = -1.0
+	for id in choices:
+		var score = randf()
+		if UpgradeDB.is_weapon(id):
+			score += 3.0 if player.get_upgrade_level(id) == 0 else 2.0
+		elif UpgradeDB.is_passive(id):
+			score += 1.5 if id in ["might", "max_hp", "armor", "cooldown", "area"] else 1.0
+		if score > best_score:
+			best_score = score
+			best = id
+	return best
 
 # 간단한 카이팅 봇: 너무 가까운 적 무리는 피하고(접선 이동), 멀면 가장 가까운 적에게 접근
 func _steer():

@@ -7,13 +7,13 @@ var lightning = preload("res://dynamic/1_player/characters/Wizard/Lightning/ligh
 func _initialize():
 	# 캐릭터 특성
 	character_name      = "wizard"
-	move_speed          = 130
+	move_speed          = 150
 	attack_damage       = 16
 	magnetic_area_scale = 100
 	animation_speed     = 1.5
-	start_hp            = 40.0
-	attack_wait_time    = 1.0
-	attack_anim_speed   = 1.4
+	start_hp            = 55.0
+	attack_wait_time    = 0.55
+	attack_anim_speed   = 1.6
 
 func _ready():
 	_initialize()

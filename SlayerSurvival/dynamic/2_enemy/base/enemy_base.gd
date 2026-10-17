@@ -22,6 +22,7 @@ var damage          = 5  	# 적 데미지
 var spawn_radius    = 500  	# 적 스폰 범위
 var animation_speed = 1.0	# 적 기본 애니메이션 속도
 var pet_chance      = 0.1 	# 적 펫이 될 확률
+var exp_reward      = 2		# 처치 시 경험치 (젬 1개에 담김)
 # 전역 변수
 var player 
 var touch_flag    = false
@@ -35,6 +36,9 @@ var knockback_time     = 0.0			# 넉백 유지 시간
 var knockback_duration = 0.15			# 넉백 몇 초 동안?
 var knockback_strength = 230.0  		# 넉백 세기
 var knockback_resist   = 0.0			# 넉백 저항 (0.0 ~ 1.0, 엘리트는 높음)
+# 디렉터 제어
+var move_override      = Vector2.ZERO		# 0이 아니면 플레이어 추적 대신 이 속도로 직진 (박쥐 떼)
+var despawn_far        = false				# 멀어지면 재배치 대신 삭제
 # 피격 연출
 var base_sprite_scale  = Vector2.ONE
 var hit_color          = Color(1.0, 0.35, 0.3)	# 사망 파티클 색
@@ -70,7 +74,10 @@ func _physics_process(delta):
 	else:
 		# 넉백 로직 끝날 시 원래 로직으로 복귀귀
 		# 플레이어가 존재하면 플레이어를 향해 이동
-		if player:
+		if move_override != Vector2.ZERO:
+			velocity = move_override
+			move_and_slide()
+		elif player:
 			var direction = (player.position - position).normalized()
 			velocity = direction * move_speed
 			move_and_slide()
@@ -84,6 +91,11 @@ func _physics_process(delta):
 	if touch_flag:
 		player.process_collision_enemy(damage)
 
+
+# 시간에 따른 강화 (디렉터가 스폰 직후 호출)
+func apply_scaling(hp_mult: float, damage_mult: float):
+	health = health * hp_mult
+	damage = damage * damage_mult
 
 # 사망 처리 함수
 func die_enemy():
@@ -128,26 +140,30 @@ func die_enemy():
 			player.flyingeye_pet = true
 			pet_dialog_path = "res://dynamic/7_dialogic/get_flyingeye_pet.dtl"
 			
+	# 다른 대화가 진행 중이거나 막 시작됐으면 이번 펫 획득은 건너뜀 (동시 실행 시 Dialogic 오류)
+	if is_pet and (Dialogic.current_timeline != null or Time.get_ticks_msec() - last_pet_dialog_msec < 1500):
+		is_pet = false
 	if is_pet:
+		last_pet_dialog_msec = Time.get_ticks_msec()
 		Dialogic.start(pet_dialog_path).process_mode = Node.PROCESS_MODE_ALWAYS
 		Dialogic.process_mode = Node.PROCESS_MODE_ALWAYS
 		
 	queue_free()
 
 # 아이템 드랍 함수
+const GOLD_DROP_CHANCE = 0.06
+static var last_pet_dialog_msec := -100000
 func drop_item():
-	# 골드
+	# 골드 (호드 규모에 맞춰 확률 하향, 엘리트는 확정)
 	var gold_chance = randf()
-	if gold_chance <= 0.5:								# 드랍 확률 조정 (0.0~1.0)
+	if gold_chance <= GOLD_DROP_CHANCE or is_elite:
 		spawn_gold()
 		if randf() <= double_gold_drop:
 			spawn_gold()
-	# 경험치
-	var gem_chance = randf()
-	if gem_chance <= 0.7:								# 드랍 확률 조정 (0.0~1.0)
+	# 경험치 (항상 드롭, 상점 젬 드롭 업그레이드는 두 배 확률)
+	spawn_gem()
+	if randf() <= double_gem_drop:
 		spawn_gem()
-		if randf() <= double_gem_drop:
-			spawn_gem()
 	# 음식(체력회복)
 	if is_elite:
 		spawn_food()
@@ -157,8 +173,22 @@ func spawn_gold():
 	new_gold.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
 	get_parent().call_deferred("add_child", new_gold)
 	
+const GEM_MERGE_THRESHOLD = 120		# 바닥 젬이 이보다 많으면 근처 젬에 합침 (성능)
 func spawn_gem():
+	var gems = get_tree().get_nodes_in_group("Exp")
+	if gems.size() > GEM_MERGE_THRESHOLD:
+		var nearest = null
+		var best = 90.0
+		for g in gems:
+			var d = global_position.distance_to(g.global_position)
+			if d < best and not g.collected:
+				best = d
+				nearest = g
+		if nearest:
+			nearest.add_value(exp_reward)
+			return
 	var new_exp = exp_img.instantiate()
+	new_exp.exp_value = exp_reward
 	new_exp.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
 	get_parent().call_deferred("add_child", new_exp)
 

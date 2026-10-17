@@ -9,6 +9,7 @@ func _initialize():
 	spawn_radius    = 500
 	animation_speed = 2.0
 	pet_chance      = 0.0
+	exp_reward      = 25
 	is_elite        = true
 
 func _ready():

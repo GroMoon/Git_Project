@@ -90,6 +90,12 @@ func _physics_process(delta):
 	if touch_flag:
 		player.process_collision_enemy(damage)
 
+# 시간에 따른 강화 (디렉터가 스폰 직후 호출) - 보스는 후반 빌드를 버틸 수 있게 크게
+const BOSS_HP_FACTOR = 7.0
+func apply_scaling(hp_mult: float, damage_mult: float):
+	health = health * hp_mult * BOSS_HP_FACTOR
+	damage = damage * damage_mult
+
 # 사망 처리 함수
 func die_enemy():
 	is_dead = true

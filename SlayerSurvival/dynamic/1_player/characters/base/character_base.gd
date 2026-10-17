@@ -41,6 +41,7 @@ signal levelup
 const COOLDOWN_REFERENCE = 4.0		# cooldown 값(초) → 비율 환산 기준 (cooldown 0.2 = 5% 감소)
 const MIN_COOLDOWN_MULT  = 0.35		# 쿨타임 최대 감소 한도
 const AUTO_AIM_RANGE     = 260.0	# 근접 공격 자동 조준 범위
+const CAMERA_ZOOM        = 1.2		# 카메라 확대 (캐릭터/전투가 잘 보이도록)
 
 
 ## 펫 관련
@@ -150,6 +151,7 @@ func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
+	$Camera2D.zoom = Vector2(CAMERA_ZOOM, CAMERA_ZOOM)
 	# 캐릭터 특성 설정 + 빌드 초기화 (고유 무기 장착)
 	init_build()
 	current_hp = max_hp
@@ -160,7 +162,8 @@ func _ready():
 	# attack timer 시그널 연결
 	# $AttackTimer.connect("timeout", Callable(self, "_on_attack_timer_timeout"))
 	# damage timer 시그널 연결
-	$DamageTimer.connect("timeout", Callable(self, "_on_damage_timer_timeout"))
+	if not $DamageTimer.is_connected("timeout", Callable(self, "_on_damage_timer_timeout")):
+		$DamageTimer.connect("timeout", Callable(self, "_on_damage_timer_timeout"))
 	# 공격 범위 초기화(off)
 	animation_player.play("RESET")
 	animation_player.speed_scale = attack_anim_speed
@@ -305,23 +308,13 @@ func add_food(health_value):
 
 # 경험치 계산
 func calculate_exp():
-	if character_level >= 30:
-		max_exp = 124 + (character_level - 29) * 10	# 30 이후 완만하게 증가
-	elif character_level < 5:          # 1~4
+	# 레벨업 필요 경험치 (초반은 빠르게, 20 / 40 레벨 이후 완만하게 증가)
+	if character_level < 20:
+		max_exp = 5 + character_level * 10
+	elif character_level < 40:
+		max_exp = character_level * 15
+	else:
 		max_exp = character_level * 20
-	elif character_level < 10:         # 5~9
-		max_exp = character_level * 24
-	elif character_level < 15:         # 10~14
-		max_exp = character_level * 27
-	elif character_level < 19:         # 15~18
-		max_exp = character_level * 30
-	else:                              # 19~29 (고정값)
-		max_exp = 124
-
-	# 총합 정합성 맞추기 위한 미세 조정: Lv5만 -4exp (120 -> 116)
-	if character_level == 5:
-		max_exp -= 4
-
 	level_up()
 
 # 레벨 업

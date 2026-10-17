@@ -9,6 +9,7 @@ func _initialize():
 	spawn_radius    = 500
 	animation_speed = 1.2
 	pet_chance      = 0.05
+	exp_reward      = 3
 
 func _ready():
 	_initialize()
