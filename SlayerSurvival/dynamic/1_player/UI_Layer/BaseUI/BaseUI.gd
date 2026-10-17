@@ -221,6 +221,10 @@ func _on_ending_finished():
 	get_tree().paused   = true
 	ending_instance = null    # 인스턴스 변수 비우기
 	is_ending_played = true   # "연출 보여줬음" 표시 -> 다시 생성 안 함
+	# 승리 시에도 이번 판 골드를 저장 (기존에는 사망 시에만 저장됨)
+	if not result_screen.shown:
+		Global.character_data["GOLD"]["gold"] += int(player.gold_count)
+		Global.save_character_data()
 	# 결과 화면 (승리)
 	result_screen.open("victory")
 

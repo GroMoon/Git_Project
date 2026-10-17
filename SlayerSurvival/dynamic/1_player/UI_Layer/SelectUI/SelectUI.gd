@@ -54,9 +54,7 @@ func _build_overlay():
 	overlay.z_index = 2
 	add_child(overlay)
 
-	var dim = ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.6)
-	dim.size = overlay.size
+	var dim = GameUI.blur_backdrop(0.5)		# 게임 화면을 흐리게 (다른 메뉴와 통일)
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay.add_child(dim)
 
@@ -439,9 +437,7 @@ func _build_chest_overlay():
 	chest_overlay.visible = false
 	chest_overlay.z_index = 2
 	add_child(chest_overlay)
-	var dim = ColorRect.new()
-	dim.color = Color(0.05, 0.03, 0.0, 0.7)
-	dim.size = chest_overlay.size
+	var dim = GameUI.blur_backdrop(0.6)
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	chest_overlay.add_child(dim)
 	chest_title = _label("", 50, COLOR_NEW)

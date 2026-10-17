@@ -55,6 +55,30 @@ func _ready():
 	flyingeye_pet_preload = preload("res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.tscn")
 	# 맵 프리로드 변수 초기화
 	map_load = null
+	_style_select_screens()
+
+# 맵/캐릭터 선택 화면: 어두운 던전 배경, 금테 버튼, 금색 제목
+func _style_select_screens():
+	for panel in [select_map, select_character]:
+		panel.add_theme_stylebox_override("panel", GameUI.dark_backdrop_style())
+		panel.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	GameUI.style_title($Select_Map_Panel/select_map, 64)
+	GameUI.style_title($Select_Character_Panel/select_characater, 64)
+	for bar in [$Select_Map_Panel/MapButton, $Select_Character_Panel/CharacterButton]:
+		bar.color = Color(0.05, 0.04, 0.07, 0.8)
+	for b in [$Select_Map_Panel/MapButton/cave_button, $Select_Map_Panel/MapButton/dungeon_button,
+			$Select_Map_Panel/MapButton/button, $Select_Map_Panel/MapButton/button2,
+			$Select_Character_Panel/CharacterButton/select_warrior, $Select_Character_Panel/CharacterButton/select_king,
+			$Select_Character_Panel/CharacterButton/wizard, $Select_Character_Panel/CharacterButton/ban2,
+			$Select_Character_Panel/CharacterButton/ban3]:
+		GameUI.use_theme_button(b)
+	for back in [$"Select_Map_Panel/back(map)", $"Select_Character_Panel/back(char)"]:
+		GameUI.use_theme_button(back, 18)
+		back.text = GameUI.t("◀ 뒤로", "◀ Back")
+		back.custom_minimum_size = Vector2(110, 44)
+	for l in [map_details, character_details]:
+		l.add_theme_color_override("font_outline_color", Color.BLACK)
+		l.add_theme_constant_override("outline_size", 4)
 
 func _process(_delta):
 	player = get_node("player")

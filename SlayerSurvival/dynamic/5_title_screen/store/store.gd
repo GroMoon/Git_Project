@@ -11,6 +11,30 @@ func _ready():
 	get_tree().paused = false
 	Global.connect("purchase", Callable(self, "update_gold"))
 	update_gold()
+	_style_store()
+
+# 금테 판넬 / 버튼으로 통일
+func _style_store():
+	_style_tree(self)
+	$ResetButton.add_theme_color_override("font_color", GameUI.RED)
+	$ResetButton.add_theme_color_override("font_hover_color", Color(1.0, 0.6, 0.55))
+	gold_label.add_theme_color_override("font_color", GameUI.GOLD_LIGHT)
+	gold_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	gold_label.add_theme_constant_override("outline_size", 6)
+	$BackButton.grab_focus.call_deferred()
+
+func _style_tree(node: Node):
+	for child in node.get_children():
+		if child is Button:
+			GameUI.use_theme_button(child)
+		elif child is Panel:
+			child.remove_theme_stylebox_override("panel")
+			child.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			# 판넬 배경을 덮던 색 사각형은 투명하게 (금테가 보이도록)
+			for c in child.get_children():
+				if c is ColorRect:
+					c.color = Color(0, 0, 0, 0)
+		_style_tree(child)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

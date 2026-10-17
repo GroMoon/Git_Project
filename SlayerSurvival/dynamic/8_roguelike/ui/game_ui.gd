@@ -181,6 +181,39 @@ static func pop_in(c: Control, delay: float = 0.0, from_scale: float = 0.92):
 	tw.tween_property(c, "modulate:a", 1.0, 0.18).set_delay(delay)
 	tw.tween_property(c, "scale", Vector2.ONE, 0.22).set_delay(delay).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
+# 기존 씬 버튼의 개별 스타일을 지워 전역 테마(금테 버튼)를 쓰게 함
+static func use_theme_button(b: Button, font_size: int = -1):
+	for st in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
+		b.remove_theme_stylebox_override(st)
+	if font_size > 0:
+		b.add_theme_font_size_override("font_size", font_size)
+	b.focus_mode = Control.FOCUS_ALL
+
+# 제목 라벨을 금색 + 굵은 외곽선으로 (LabelSettings 를 쓰는 라벨도 처리)
+static func style_title(l: Label, font_size: int = -1):
+	if l.label_settings:
+		var ls: LabelSettings = l.label_settings.duplicate()
+		ls.font_color = GOLD
+		ls.outline_color = Color(0.12, 0.05, 0.02)
+		ls.outline_size = max(ls.outline_size, 10)
+		ls.shadow_color = Color(0, 0, 0, 0.6)
+		ls.shadow_offset = Vector2(4, 5)
+		ls.shadow_size = 1
+		if font_size > 0:
+			ls.font_size = font_size
+		l.label_settings = ls
+	else:
+		l.theme_type_variation = "TitleLabel"
+		if font_size > 0:
+			l.add_theme_font_size_override("font_size", font_size)
+
+# 화면 배경: 타이틀 그림을 어둡게 깐 판넬 스타일
+static func dark_backdrop_style() -> StyleBoxTexture:
+	var sb = StyleBoxTexture.new()
+	sb.texture = load("res://static/png/start_menu/slayersurvival_background.webp")
+	sb.modulate_color = Color(0.32, 0.3, 0.36)
+	return sb
+
 # 초 → "MM:SS"
 static func format_time(seconds: float) -> String:
 	var s = int(seconds)

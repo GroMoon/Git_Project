@@ -10,6 +10,7 @@ extends Node
 ##   --shot_dir=스크린샷 저장 경로  --god=1 (무적)    --start_minute=시작 분(디렉터 테스트용)
 ##   --give=fireball,bomb:3 (시작 시 업그레이드 지급, :n = n레벨)  --pick=first|random
 ##   --pause_options=1 (--shot_pause 시 설정 창까지 열기)
+##   --ui_test=1 (ESC 로 일시정지/설정/확인 창이 올바르게 열리고 닫히는지 검사, 결과 출력 후 종료)
 ##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_chest=1 (첫 보물상자 화면 스크린샷)
 ##   --pets=goblin,mushroom,skeleton,flyingeye (시작 시 몬스터 펫 지급)
 ##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자, --chest_count=5 면 보상 5개 상자를 바로 열기)
@@ -31,6 +32,8 @@ var opts = {
 	"shot_levelup": "0",
 	"shot_pause": "-1",
 	"pause_options": "0",
+	"ui_test": "0",
+	"ending_wait": "3",
 	"shot_chest": "0",
 	"pets": "",
 	"chest_at": "-1",
@@ -103,6 +106,8 @@ func _start_game():
 	for pet in String(opts["pets"]).split(",", false):
 		Dialogic.VAR.set(pet + "_pet_diag", true)
 	print("[autoplay] start char=%s map=%s seconds=%s" % [opts["char"], opts["map"], opts["seconds"]])
+	if opts["ui_test"] == "1":
+		_ui_test.call_deferred()
 
 func _process(delta):
 	if player == null or not is_instance_valid(player):
@@ -112,7 +117,7 @@ func _process(delta):
 	# 보스 처치 → 엔딩 연출이 시작되면 잠시 후 종료
 	if base_ui.ending_pause_flag:
 		death_wait += delta
-		if death_wait > 3.0:
+		if death_wait > float(opts["ending_wait"]):
 			_take_shot()
 			_finish("ending")
 		return
@@ -233,6 +238,45 @@ func _handle_blocking_ui(base_ui):
 	if Dialogic.current_timeline != null:
 		Dialogic.end_timeline()
 		Dialogic.VAR.diag_pause_flag = false
+
+# ================= ESC 흐름 테스트 =================
+func _press_escape():
+	Input.action_press("pause")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	Input.action_release("pause")
+	await get_tree().process_frame
+
+func _check(name: String, ok: bool):
+	print("[ui_test] %s %s" % ["PASS" if ok else "FAIL", name])
+
+func _ui_test():
+	var base_ui = player.get_node("UI_Layer/BaseUI")
+	for i in 30:
+		await get_tree().process_frame
+	await _press_escape()
+	_check("ESC opens pause menu", base_ui.pause_menu.is_open() and get_tree().paused)
+	base_ui.pause_menu.settings_requested.emit()
+	await get_tree().process_frame
+	_check("settings opens", is_instance_valid(base_ui.options_window))
+	await _press_escape()
+	await get_tree().process_frame
+	_check("ESC closes settings only", not is_instance_valid(base_ui.options_window) and base_ui.pause_menu.is_open() and get_tree().paused)
+	base_ui.pause_menu._open_confirm()
+	await get_tree().process_frame
+	_check("confirm opens", base_ui.pause_menu.has_confirm())
+	await _press_escape()
+	await get_tree().process_frame
+	_check("ESC closes confirm only", not base_ui.pause_menu.has_confirm() and base_ui.pause_menu.is_open())
+	await _press_escape()
+	await get_tree().process_frame
+	_check("ESC resumes game", not base_ui.pause_menu.is_open() and not get_tree().paused)
+	await _press_escape()
+	_check("ESC pauses again", base_ui.pause_menu.is_open())
+	base_ui.pause_menu.resume_requested.emit()
+	await get_tree().process_frame
+	_check("resume button", not base_ui.pause_menu.is_open() and not get_tree().paused)
+	get_tree().quit()
 
 # 무기 우선(새 무기 > 무기 강화 > 패시브) 선택
 func _smart_pick(choices: Array) -> String:

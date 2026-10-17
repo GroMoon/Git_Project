@@ -85,6 +85,19 @@
 - 보물상자 보상이 하나씩 공개되며 폭죽, 3개 이상이면 마지막에 피날레
 - 엘리트 고블린 빨간 테두리 표시, 엘리트도 피격 시 흰색 플래시
 
+### UI 디벨롭
+- **공통 테마**: 금테 판넬·버튼·슬롯·슬라이더 등 픽셀아트 UI 키트를 코드로 생성(`dev/gen_ui_art.py`)하고
+  프로젝트 전역 테마(`static/ui/game_theme.tres`, 생성기 `dev/build_theme.gd`)로 등록. 모든 화면이 같은 스타일을 씀
+- **일시정지(ESC)**: 게임 화면을 흐리게 깔고, 왼쪽 메뉴(계속하기/설정/메인 메뉴, 방향키·Enter 이동, ▶ 커서),
+  오른쪽 모험가 정보(초상화, 체력, 능력치 8종, 이번 판 기록, 보유 무기·패시브 슬롯과 툴팁). 메인 메뉴는 확인 창을 거침
+- **설정**: 화면 / 사운드 / 게임 탭. 볼륨 슬라이더와 음소거, 언어, 화면 흔들림·데미지 숫자 켜기/끄기.
+  설정은 `user://settings.cfg` 에 저장되어 다음 실행에도 유지. 타이틀과 게임 중 같은 창 사용
+- **결과 화면**: GAME OVER / VICTORY 제목 연출, 기록이 0부터 올라가는 애니메이션, 무기별 피해 막대, 보유 장비
+- **HUD**: 금테 경험치 바 + 레벨, 타이머·처치·골드 명판, 왼쪽 위 보유 무기/패시브 아이콘(뱀서식), 보스 체력바 금테
+- **타이틀 / 맵·캐릭터 선택 / 상점**: 금테 버튼, 금색 제목(타이틀은 천천히 떠 있음), 어두운 던전 배경, 키보드 선택
+- 레벨업 카드·보물상자도 같은 흐린 배경으로 통일
+- ESC 흐름: 설정 창 → 확인 창 → 일시정지 순서로 하나씩 닫힘 (`--ui_test=1` 로 자동 검사)
+
 ---
 
 ## 고친 기존 버그
@@ -98,6 +111,7 @@
 - 고블린 펫: 공격 모션 중 대상이 죽으면 `previously freed` 오류 + 이후 공격 정지
 - 보스와 접촉해 사망할 때 물리 콜백 중 충돌 설정 변경 오류
 - 엘리트 고블린 테두리 셰이더가 스프라이트가 아닌 몸체에 붙어 있어 안 보이던 문제
+- 보스를 잡고 승리해도 이번 판 골드가 저장되지 않던 문제 (사망 시에만 저장됐음)
 
 ---
 
@@ -113,7 +127,13 @@
 | `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/boss_bar/` | 엘리트/보스 체력바 |
 | `SlayerSurvival/dynamic/6_utillity/Items/pickup_base.gd` | 드롭 아이템 공통 처리 |
 | `SlayerSurvival/static/shader/flash.gdshader` | 피격 플래시 셰이더 |
-| `SlayerSurvival/dev/` | 자동 플레이 테스트 도구 |
+| `SlayerSurvival/dynamic/8_roguelike/ui/game_ui.gd` | UI 공용 헬퍼 (버튼, 슬롯, 구분선, 블러 배경 등) |
+| `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/pause_menu/` | 일시정지 메뉴 |
+| `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/result_screen/` | 게임 오버 / 승리 결과 화면 |
+| `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/hud_slots/` | HUD 보유 장비 아이콘 |
+| `SlayerSurvival/dynamic/5_title_screen/option/settings_window.gd` | 설정 창 (타이틀/게임 공용) |
+| `SlayerSurvival/static/ui/` | UI 이미지 + 전역 테마 |
+| `SlayerSurvival/dev/` | 자동 플레이 테스트, 스크린샷, UI 아트/테마 생성 도구 |
 
 ---
 
@@ -130,6 +150,9 @@ SlayerSurvival/dev/run_autoplay.sh -- --char=warrior --seconds=180 --pick=smart
 - `--give=fireball:3,bomb` 시작 시 무기/패시브 지급, `--pets=goblin,mushroom` 펫 지급
 - `--windowed ... --shots=10,20 --shot_dir=DIR` 창 모드 스크린샷
 - `--chest_at=5 --chest_count=5 --shot_chest=0.5,1.0` 보물상자 연출 확인
+- `--ui_test=1` ESC 흐름 자동 검사, `--shot_pause=10 --pause_options=1` 일시정지/설정 화면 캡처
+- 메뉴 화면 캡처: `Godot --path SlayerSurvival res://dev/scene_shot.tscn -- --scene=res://dynamic/5_title_screen/menu.tscn --out=/tmp/menu.png`
+- UI 이미지/테마를 바꿀 때: `python3 SlayerSurvival/dev/gen_ui_art.py` → 에디터 import → `Godot --headless --path SlayerSurvival -s res://dev/build_theme.gd`
 
 자동 플레이 봇(10분 런) 결과: 세 캐릭터 모두 10분 보스전까지 도달 (Lv 33~40). 봇은 회피를 못 하므로 실제 체감 난이도는 직접 플레이로 확인이 필요하다.
 
