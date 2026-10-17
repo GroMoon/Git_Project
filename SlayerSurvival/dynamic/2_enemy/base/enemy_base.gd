@@ -167,15 +167,16 @@ func spawn_food():
 	new_food.global_position = global_position + Vector2(randf_range(-10, 10), randf_range(-10, 10))
 	get_parent().call_deferred("add_child", new_food)
 # 넉백 함수
-func apply_knockback(attacker: Node2D, strength_mult: float = 1.0):
+func apply_knockback(attacker, strength_mult: float = 1.0):
 	# 방향 : (적의 위치 - 공격자=플레이어 위치)
-	var direction    = (global_position - attacker.global_position).normalized()
+	var from: Vector2 = attacker if attacker is Vector2 else attacker.global_position
+	var direction    = (global_position - from).normalized()
 	knockback_vector = direction * knockback_strength * strength_mult * (1.0 - knockback_resist)
 	knockback_time   = knockback_duration
 
 # 데미지 처리 (모든 무기 공통 진입점)
-# source: 넉백 기준 노드, knockback_mult: 넉백 배율, is_crit: 치명타 여부
-func take_damage(amount: float, source: Node2D = null, knockback_mult: float = 1.0, is_crit: bool = false):
+# source: 넉백 기준 (Node2D 또는 Vector2 위치), knockback_mult: 넉백 배율, is_crit: 치명타 여부
+func take_damage(amount: float, source = null, knockback_mult: float = 1.0, is_crit: bool = false):
 	if is_dead:
 		return
 	health -= amount
@@ -214,4 +215,5 @@ func _on_interaction_sensor_area_entered(area:Area2D):
 		var rolled = player.roll_damage(attacker.attack_damage)
 		if attacker.name.begins_with("player"):
 			player.apply_health(player)
+		RunStats.add_damage(RunStats.source_of(attacker), rolled[0])
 		take_damage(rolled[0], attacker, 1.0, rolled[1])

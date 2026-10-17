@@ -189,6 +189,56 @@ func update_info():
 	magnetic_level.text     = ": " + str(player.magnetic_area_level)
 	cooldown_level.text     = ": " + str(player.cooldown_level)
 	shadow_level.text       = ": " + str(player.shadow_partner_level)
+	update_build_rows()
+
+# 보유 무기 / 패시브 아이콘 + 레벨 (일시정지 패널 하단)
+var build_rows: VBoxContainer
+var build_rows_key := ""
+func update_build_rows():
+	if player == null or not ("weapons" in player):
+		return
+	# 변경이 있을 때만 다시 그림 (update_info 는 매 프레임 호출됨)
+	var key = str(player.passives)
+	for id in player.weapons.keys():
+		key += id + str(player.weapons[id].level)
+	if key == build_rows_key:
+		return
+	build_rows_key = key
+	if build_rows == null:
+		build_rows = VBoxContainer.new()
+		build_rows.position = Vector2(139, 585)
+		build_rows.add_theme_constant_override("separation", 6)
+		pause_panel.add_child(build_rows)
+	for child in build_rows.get_children():
+		child.queue_free()
+	var weapon_row = HBoxContainer.new()
+	var passive_row = HBoxContainer.new()
+	weapon_row.add_theme_constant_override("separation", 10)
+	passive_row.add_theme_constant_override("separation", 10)
+	build_rows.add_child(weapon_row)
+	build_rows.add_child(passive_row)
+	for id in player.weapons.keys():
+		weapon_row.add_child(_build_slot(id, player.weapons[id].level))
+	for id in player.passives.keys():
+		passive_row.add_child(_build_slot(id, player.passives[id]))
+
+func _build_slot(id: String, lv: int) -> Control:
+	var slot = HBoxContainer.new()
+	slot.add_theme_constant_override("separation", 2)
+	var icon = TextureRect.new()
+	icon.texture = UpgradeDB.icon(id, player.character_name)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.custom_minimum_size = Vector2(40, 40)
+	icon.tooltip_text = UpgradeDB.display_name(id, player.character_name)
+	slot.add_child(icon)
+	var label = Label.new()
+	label.text = str(lv) if lv < UpgradeDB.max_level(id) else "MAX"
+	label.add_theme_font_size_override("font_size", 16)
+	label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.4) if lv >= UpgradeDB.max_level(id) else Color.WHITE)
+	slot.add_child(label)
+	return slot
 	
 	
 

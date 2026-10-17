@@ -9,6 +9,6 @@ if [ "$1" == "--" ]; then shift; fi
 LOG=$(mktemp)
 perl -e 'alarm shift; exec @ARGV' ${TIMEOUT:-600} "$GODOT" $HEADLESS --fixed-fps 60 res://dev/autoplay.tscn -- "$@" > "$LOG" 2>&1
 grep -E "^\[autoplay\]|SCRIPT ERROR|^ERROR|^\s+at: .*\.gd|GDScript backtrace|^\s+\[[0-9]+\] " "$LOG" \
-	| grep -vE "invalid UID|Case mismatch|resource_format_text|_start_game \(res://dev/autoplay.gd" \
+	| grep -vE "invalid UID|Case mismatch|resource_format_text|_start_game \(res://dev/autoplay.gd|addons/dialogic/Core|subsystem_styles|custom_samplers|resources still in use|backtrace \(most recent call first\):$" \
 	| awk '!seen[$0]++' | head -${MAX_LINES:-80}
 rm -f "$LOG"

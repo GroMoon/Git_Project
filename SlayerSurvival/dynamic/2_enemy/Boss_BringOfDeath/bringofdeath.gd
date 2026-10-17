@@ -135,9 +135,10 @@ func drop_item():
 	get_parent().call_deferred("add_child", new_food)
 
 # 넉백 함수
-func apply_knockback(attacker: Node2D, strength_mult: float = 1.0):
+func apply_knockback(attacker, strength_mult: float = 1.0):
 	# 방향 : (적의 위치 - 공격자=플레이어 위치)
-	var direction    = (global_position - attacker.global_position).normalized()
+	var from: Vector2 = attacker if attacker is Vector2 else attacker.global_position
+	var direction    = (global_position - from).normalized()
 	knockback_vector = direction * knockback_strength * strength_mult * 0.3
 	knockback_time   = knockback_duration
 
@@ -156,10 +157,11 @@ func _on_interaction_sensor_body_exited(_body:Node2D):
 func _on_interaction_sensor_area_entered(area:Area2D):
 	if area.is_in_group("attack"):
 		var rolled = player.roll_damage(area.get_parent().attack_damage)
+		RunStats.add_damage(RunStats.source_of(area.get_parent()), rolled[0])
 		take_damage(rolled[0], area.get_parent(), 1.0, rolled[1])
 
 # 데미지 처리 (모든 무기 공통 진입점)
-func take_damage(amount: float, source: Node2D = null, knockback_mult: float = 1.0, is_crit: bool = false):
+func take_damage(amount: float, source = null, knockback_mult: float = 1.0, is_crit: bool = false):
 	if is_dead:
 		return
 	health -= amount

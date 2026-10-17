@@ -29,6 +29,7 @@ OptionsManager="*res://dynamic/6_utillity/data/options_manager.gd"
 VampireVisual="*res://dynamic/6_utillity/vampire_visual/vampire_visual.gd"
 Audiomanager="*res://static/audio/audiomanager.tscn"
 GameFeel="*res://dynamic/8_roguelike/game_feel/game_feel.gd"
+RunStats="*res://dynamic/8_roguelike/run_stats.gd"
 
 [dialogic]
 

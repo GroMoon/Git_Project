@@ -83,6 +83,27 @@ var respawn_times        = 0	# 리스폰 횟수
 
 var invincibility_duration = 2.0  # 초 단위 무적 시간
 
+## 빌드 (무기 / 패시브)
+var weapons  := {}					# id -> WeaponBase
+var passives := {}					# id -> 레벨
+var weapons_node: Node2D
+var might        := 1.0				# 모든 피해 배율
+var area_mult    := 1.0				# 공격 범위 배율
+var amount_bonus := 0				# 추가 투사체 수
+var exp_mult     := 1.0				# 경험치 획득 배율
+var signature_damage_mult := 1.0	# 고유 무기 레벨 보정
+var signature_cd_mult     := 1.0
+var signature_area_mult   := 1.0
+# 기본값 (캐릭터 특성 + 상점 보정, 패시브 적용 전)
+var base_attack_damage := 0.0
+var base_move_speed    := 0.0
+var base_max_hp        := 0.0
+var base_shield        := 0.0
+var base_vampire       := 0.0
+var base_cooldown      := 0.0
+var base_magnet        := 0.0
+var store_might        := 1.0
+
 ## 경험치
 @onready var exp_bar = $UI_Layer/BaseUI/Exp_Bar
 var start_exp = 0
@@ -129,9 +150,9 @@ func _ready():
 	# 캐릭터를 뷰포트 중앙으로 이동
 	var viewport_size = get_viewport().get_visible_rect().size
 	global_position = viewport_size / 2
-	# 캐릭터 특성 설정
-	max_hp = start_hp
-	current_hp = start_hp
+	# 캐릭터 특성 설정 + 빌드 초기화 (고유 무기 장착)
+	init_build()
+	current_hp = max_hp
 	current_exp = start_exp
 	# 자석 시그널 연결 및 범위 설정
 	$MagneticArea.connect("area_entered", Callable(self, "_on_magnetic_area_area_entered"))	# 시그널 코드로 연결결
@@ -265,7 +286,7 @@ func add_gold(gold_value):
 
 # 경험치 추가
 func add_exp(_exp_value):
-	current_exp += _exp_value
+	current_exp += _exp_value * exp_mult
 	_pulse_exp_bar()
 	calculate_exp()
 
@@ -285,7 +306,7 @@ func add_food(health_value):
 # 경험치 계산
 func calculate_exp():
 	if character_level >= 30:
-		max_exp = 0  # 30 이상은 레벨업 없음(원하는 정책으로 변경 가능)
+		max_exp = 124 + (character_level - 29) * 10	# 30 이후 완만하게 증가
 	elif character_level < 5:          # 1~4
 		max_exp = character_level * 20
 	elif character_level < 10:         # 5~9
@@ -320,6 +341,82 @@ func levelup_shockwave():
 		if global_position.distance_to(enemy.global_position) < 220.0 and enemy.has_method("apply_knockback"):
 			enemy.apply_knockback(self, 3.0)
 
+# ================= 빌드 (무기 / 패시브) =================
+func init_build():
+	var store = Global.character_data["CHARACTER_STORE_UPGRADES"]
+	base_attack_damage = float(attack_damage)
+	base_move_speed    = float(move_speed)
+	base_max_hp        = start_hp + int(store["health"])
+	base_shield        = float(shield)
+	base_vampire       = float(vampire)
+	base_cooldown      = float(cooldown)
+	base_magnet        = float(magnetic_area_scale)
+	store_might        = 1.0 + float(store["damage"]) * 0.03		# 상점 공격력은 신규 무기에도 소폭 적용
+	weapons_node = Node2D.new()
+	weapons_node.name = "Weapons"
+	weapons_node.show_behind_parent = true		# 오라 등은 캐릭터 뒤에 그림
+	add_child(weapons_node)
+	RunStats.reset()
+	add_upgrade("signature")
+	recalc_stats()
+
+func get_upgrade_level(id: String) -> int:
+	if weapons.has(id):
+		return weapons[id].level
+	return passives.get(id, 0)
+
+# 업그레이드 획득 (레벨업 선택, 보물상자 등)
+func add_upgrade(id: String):
+	var entry = UpgradeDB.get_entry(id)
+	match entry.get("type", ""):
+		"weapon":
+			if weapons.has(id):
+				var w: WeaponBase = weapons[id]
+				w.set_level(mini(w.level + 1, UpgradeDB.max_level(id)))
+			else:
+				var w: WeaponBase = load(entry["script"]).new()
+				w.setup(self, id)
+				weapons_node.add_child(w)
+				weapons[id] = w
+				w.set_level(1)
+		"passive":
+			passives[id] = mini(passives.get(id, 0) + 1, UpgradeDB.max_level(id))
+			recalc_stats()
+			if id == "max_hp":
+				current_hp += 20
+		"consumable":
+			if id == "food":
+				add_food(30)
+			elif id == "gold":
+				add_gold(25)
+
+# 패시브/고유 무기 레벨을 스탯에 반영
+func recalc_stats():
+	var lv = func(id): return passives.get(id, 0)
+	might         = store_might * (1.0 + 0.10 * lv.call("might"))
+	attack_damage = round(base_attack_damage * might * signature_damage_mult)
+	max_hp        = base_max_hp + 20 * lv.call("max_hp")
+	move_speed    = base_move_speed * (1.0 + 0.08 * lv.call("speed"))
+	vampire       = base_vampire + 0.02 * lv.call("vampire")
+	magnetic_area_scale = base_magnet * (1.0 + 0.25 * lv.call("magnet"))
+	shield        = base_shield + 0.05 * lv.call("armor")
+	cooldown      = base_cooldown + 0.32 * lv.call("cooldown")		# 0.32 / 4.0 = 8%
+	area_mult     = 1.0 + 0.10 * lv.call("area")
+	amount_bonus  = lv.call("amount")
+	exp_mult      = 1.0 + 0.10 * lv.call("growth")
+	# 고유 무기 공격 범위
+	var attack_node = get_node_or_null("Attack")
+	if attack_node:
+		attack_node.scale = Vector2.ONE * area_mult * signature_area_mult
+	# 일시정지 패널 표시용 (기존 변수 유지)
+	max_hp_level        = lv.call("max_hp")
+	damage_level        = lv.call("might")
+	move_speed_level    = lv.call("speed")
+	drain_level         = lv.call("vampire")
+	magnetic_area_level = lv.call("magnet")
+	shield_level        = lv.call("armor")
+	cooldown_level      = lv.call("cooldown")
+
 # ================= 전투 유틸 =================
 # 쿨타임 감소 비율 (1.0 = 감소 없음)
 func get_cooldown_mult() -> float:
@@ -327,7 +424,7 @@ func get_cooldown_mult() -> float:
 
 # 시그니처 공격 대기 시간
 func get_attack_wait_time() -> float:
-	return max(attack_wait_time * get_cooldown_mult(), 0.1)
+	return max(attack_wait_time * get_cooldown_mult() * signature_cd_mult, 0.1)
 
 # 치명타 판정: [최종 데미지, 치명타 여부]
 func roll_damage(base_damage: float) -> Array:
@@ -381,7 +478,7 @@ func run_melee_combo(attack_areas: Array, right_offsets: Array):
 # 흡혈 능력
 func apply_health(_source):
 	var heal = vampire * float(attack_damage)
-	if vampire != 0:
+	if vampire > 0:
 		current_hp += heal
 		current_hp = clamp(current_hp, 0, max_hp)
 		VampireVisual.show_vampire(heal, self.position, Color.GREEN)

@@ -8,6 +8,8 @@ extends Node
 ##   --char=warrior|king|wizard   --map=cave|dungeon   --seconds=게임 내 초
 ##   --log_every=로그 간격(초)     --shots=스크린샷 찍을 게임 시간(초, 쉼표 구분)
 ##   --shot_dir=스크린샷 저장 경로  --god=1 (무적)    --start_minute=시작 분(디렉터 테스트용)
+##   --give=fireball,bomb:3 (시작 시 업그레이드 지급, :n = n레벨)  --pick=first|random
+##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
 
 const GAME_SCENE = "res://test.tscn"
 
@@ -20,6 +22,10 @@ var opts = {
 	"shot_dir": "user://autoplay_shots",
 	"god": "0",
 	"start_minute": "0",
+	"give": "",
+	"pick": "random",
+	"shot_levelup": "0",
+	"shot_pause": "-1",
 }
 
 var game: Node = null
@@ -32,6 +38,10 @@ var wander_timer := 0.0
 var max_enemies := 0
 var min_fps := 1000.0
 var levelups := 0
+var levelup_wait := 0.0
+var levelup_shot_done := false
+var pause_shot_state := 0
+var pause_shot_wait := 0.0
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -68,6 +78,11 @@ func _start_game():
 	var start_minute = int(opts["start_minute"])
 	if start_minute > 0:
 		player.get_node("UI_Layer/BaseUI").minute = start_minute
+	for spec in String(opts["give"]).split(",", false):
+		var parts = spec.split(":")
+		var count = int(parts[1]) if parts.size() > 1 else 1
+		for i in count:
+			player.add_upgrade(parts[0])
 	print("[autoplay] start char=%s map=%s seconds=%s" % [opts["char"], opts["map"], opts["seconds"]])
 
 func _process(delta):
@@ -76,6 +91,20 @@ func _process(delta):
 	var base_ui = player.get_node("UI_Layer/BaseUI")
 
 	_handle_blocking_ui(base_ui)
+
+	# 일시정지 화면 스크린샷
+	var pause_at = float(opts["shot_pause"])
+	if pause_at >= 0.0 and pause_shot_state == 0 and elapsed >= pause_at:
+		pause_shot_state = 1
+		base_ui.globl_pause_flag = true
+		base_ui.update_info()
+	elif pause_shot_state == 1:
+		pause_shot_wait += delta
+		if pause_shot_wait > 0.5:
+			_take_shot()
+			base_ui.globl_pause_flag = false
+			pause_shot_state = 2
+		return
 
 	if get_tree().paused:
 		return
@@ -110,8 +139,19 @@ func _process(delta):
 func _handle_blocking_ui(base_ui):
 	if base_ui.lvlup_pause_flag:
 		var select_ui = player.get_node("UI_Layer/SelectUI")
+		# 첫 레벨업 화면은 잠깐 띄워두고 스크린샷
+		if opts["shot_levelup"] == "1" and not levelup_shot_done:
+			levelup_wait += get_process_delta_time()
+			if levelup_wait < 0.6:
+				return
+			levelup_shot_done = true
+			_take_shot()
 		if select_ui.has_method("autopick"):
-			select_ui.autopick()
+			if opts["pick"] == "random" and "current_choices" in select_ui and not select_ui.current_choices.is_empty():
+				select_ui.accept_input_at = 0.0
+				select_ui._on_upgrade_button_pressed(select_ui.current_choices.pick_random())
+			else:
+				select_ui.autopick()
 		else:
 			var container = select_ui.get_node("select_panel/upgrade_container")
 			for child in container.get_children():
@@ -183,5 +223,20 @@ func _take_shot():
 func _finish(reason: String):
 	print("[autoplay] END reason=%s t=%.1f lv=%d kills=%d levelups=%d max_enemies=%d min_fps=%d" % [
 		reason, elapsed, player.character_level, player.kill_count, levelups, max_enemies, min_fps])
+	# 노드 누수 확인용: 게임 루트 자식 종류별 개수
+	var counts = {}
+	for child in game.get_children():
+		var key = child.get_class() + ":" + String(child.name).rstrip("0123456789@")
+		counts[key] = counts.get(key, 0) + 1
+	for child in game.get_node("EnemySpwaner").get_children():
+		var key = "spawner/" + child.get_class() + ":" + String(child.name).rstrip("0123456789@")
+		counts[key] = counts.get(key, 0) + 1
+	print("[autoplay] nodes ", counts)
+	if "weapons" in player:
+		var build = {}
+		for id in player.weapons.keys():
+			build[id] = player.weapons[id].level
+		print("[autoplay] build weapons=", build, " passives=", player.passives)
+		print("[autoplay] damage ", RunStats.damage_by_source)
 	set_process(false)
 	get_tree().quit()
