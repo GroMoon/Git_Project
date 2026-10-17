@@ -16,7 +16,8 @@ func _on_start_button_mouse_entered():
 	$Button_sound.play()
 
 func _on_start_button_pressed():
-	get_tree().change_scene_to_file("res://test.tscn")
+	# 횡스크롤 액션 모드 (기존 서바이벌 모드 : res://test.tscn)
+	get_tree().change_scene_to_file("res://dynamic/8_action/stage/action_stage.tscn")
 
 # ITEM BUTTON
 func _on_item_button_mouse_entered():
