@@ -94,6 +94,8 @@ func _start_game():
 		_:
 			game._on_select_warrior_pressed()
 	await get_tree().process_frame
+	if "run_select" in game and is_instance_valid(game.run_select):
+		game.run_select.queue_free()
 	player = game.get_node_or_null("player")
 	var start_minute = int(opts["start_minute"])
 	if start_minute > 0:
@@ -252,30 +254,29 @@ func _check(name: String, ok: bool):
 
 func _ui_test():
 	var base_ui = player.get_node("UI_Layer/BaseUI")
+	var pm = base_ui.pause_menu
 	for i in 30:
 		await get_tree().process_frame
 	await _press_escape()
-	_check("ESC opens pause menu", base_ui.pause_menu.is_open() and get_tree().paused)
-	base_ui.pause_menu.settings_requested.emit()
+	_check("ESC opens pause menu", pm.is_open() and pm.page == "main" and get_tree().paused)
+	base_ui._on_option_pressed()
 	await get_tree().process_frame
-	_check("settings opens", is_instance_valid(base_ui.options_window))
+	_check("settings page opens", pm.page == "settings")
+	await _press_escape()
+	_check("ESC returns to main page", pm.is_open() and pm.page == "main" and get_tree().paused)
+	pm.show_page("confirm", 1)
+	await get_tree().process_frame
+	_check("confirm page opens", pm.has_confirm())
+	await _press_escape()
+	_check("ESC closes confirm only", not pm.has_confirm() and pm.is_open())
 	await _press_escape()
 	await get_tree().process_frame
-	_check("ESC closes settings only", not is_instance_valid(base_ui.options_window) and base_ui.pause_menu.is_open() and get_tree().paused)
-	base_ui.pause_menu._open_confirm()
-	await get_tree().process_frame
-	_check("confirm opens", base_ui.pause_menu.has_confirm())
+	_check("ESC resumes game", not pm.is_open() and not get_tree().paused)
 	await _press_escape()
+	_check("ESC pauses again", pm.is_open())
+	pm.resume_requested.emit()
 	await get_tree().process_frame
-	_check("ESC closes confirm only", not base_ui.pause_menu.has_confirm() and base_ui.pause_menu.is_open())
-	await _press_escape()
-	await get_tree().process_frame
-	_check("ESC resumes game", not base_ui.pause_menu.is_open() and not get_tree().paused)
-	await _press_escape()
-	_check("ESC pauses again", base_ui.pause_menu.is_open())
-	base_ui.pause_menu.resume_requested.emit()
-	await get_tree().process_frame
-	_check("resume button", not base_ui.pause_menu.is_open() and not get_tree().paused)
+	_check("resume item", not pm.is_open() and not get_tree().paused)
 	get_tree().quit()
 
 # 무기 우선(새 무기 > 무기 강화 > 패시브) 선택

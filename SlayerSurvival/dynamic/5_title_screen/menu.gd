@@ -72,7 +72,13 @@ func _on_setting_button_pressed():
 	layer.layer = 5
 	add_child(layer)
 	layer.add_child(window)
+	# 설정 화면이 떠 있는 동안 뒤의 제목/버튼은 숨김 (글자가 겹쳐 보이지 않게)
+	var behind = [$Slayer_Survival, $ColorRect/Start_Button, $ColorRect/Store_Button, $ColorRect/Setting_Button, $ColorRect/Quit_Button]
+	for n in behind:
+		n.visible = false
 	window.closed.connect(func():
+		for n in behind:
+			n.visible = true
 		layer.queue_free()
 		$ColorRect/Setting_Button.grab_focus())
 

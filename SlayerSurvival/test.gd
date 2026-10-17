@@ -55,74 +55,31 @@ func _ready():
 	flyingeye_pet_preload = preload("res://dynamic/2_enemy/FlyingEye/FlyingEye_Pet/flyingeye_pet.tscn")
 	# 맵 프리로드 변수 초기화
 	map_load = null
-	_style_select_screens()
+	_open_run_select()
 
-# 맵/캐릭터 선택 화면: 어두운 던전 배경, 금테 버튼, 금색 제목
-func _style_select_screens():
-	for panel in [select_map, select_character]:
-		panel.add_theme_stylebox_override("panel", GameUI.dark_backdrop_style())
-		panel.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	GameUI.style_title($Select_Map_Panel/select_map, 64)
-	GameUI.style_title($Select_Character_Panel/select_characater, 64)
-	for bar in [$Select_Map_Panel/MapButton, $Select_Character_Panel/CharacterButton]:
-		bar.color = Color(0.05, 0.04, 0.07, 0.8)
-	for b in [$Select_Map_Panel/MapButton/cave_button, $Select_Map_Panel/MapButton/dungeon_button,
-			$Select_Map_Panel/MapButton/button, $Select_Map_Panel/MapButton/button2,
-			$Select_Character_Panel/CharacterButton/select_warrior, $Select_Character_Panel/CharacterButton/select_king,
-			$Select_Character_Panel/CharacterButton/wizard, $Select_Character_Panel/CharacterButton/ban2,
-			$Select_Character_Panel/CharacterButton/ban3]:
-		GameUI.use_theme_button(b)
-	for back in [$"Select_Map_Panel/back(map)", $"Select_Character_Panel/back(char)"]:
-		GameUI.use_theme_button(back, 18)
-		back.text = GameUI.t("◀ 뒤로", "◀ Back")
-		back.custom_minimum_size = Vector2(110, 44)
-	for l in [map_details, character_details]:
-		l.add_theme_color_override("font_outline_color", Color.BLACK)
-		l.add_theme_constant_override("outline_size", 4)
+# 출발 전 선택 화면 (액션 모드식: 캐릭터 → 맵). 기존 선택 판넬은 숨기고, 고른 결과를 기존 함수로 전달
+var run_select: RunSelect
+func _open_run_select():
+	select_map.visible = false
+	select_character.visible = false
+	run_select = RunSelect.new()
+	add_child(run_select)
+	run_select.finished.connect(_on_run_select_finished)
+	run_select.cancelled.connect(_on_backmap_pressed)
 
-func _process(_delta):
-	player = get_node("player")
-	if player:
-		# 그림자 소환 알고리즘
-		if (player.shadow_attack == true) and (player.is_shadow_on == false):
-			var shadow_instance = shadow_preload.instantiate()
-			shadow_instance.name = "shadow"
-			shadow_instance.global_position = player.global_position
-			add_child(shadow_instance)
-			move_child(shadow_instance, player.get_index() - 1)
-			player.is_shadow_on = true
-		# mushroom 펫 소환 알고리즘
-		if (player.mushroom_pet_on == true) and (player.is_mushroom_pet == false):
-			var mushroom_pet_instance = mushroom_pet_preload.instantiate()
-			mushroom_pet_instance.name = "mushroom_pet"
-			mushroom_pet_instance.global_position = player.global_position
-			add_child(mushroom_pet_instance)
-			move_child(mushroom_pet_instance, player.get_index() - 1)
-			player.is_mushroom_pet = true
-		# skeleton 펫 소환 알고리즘
-		if (player.skeleton_pet_on == true) and (player.is_skeleton_pet == false):
-			var skeleton_pet_instance = skeleton_pet_preload.instantiate()
-			skeleton_pet_instance.name = "skeleton_pet"
-			skeleton_pet_instance.global_position = player.global_position
-			add_child(skeleton_pet_instance)
-			move_child(skeleton_pet_instance, player.get_index() - 1)
-			player.is_skeleton_pet = true
-		# goblin 펫 소환 알고리즘
-		if (player.goblin_pet_on == true) and (player.is_goblin_pet == false):
-			var goblin_pet_instance = goblin_pet_preload.instantiate()
-			goblin_pet_instance.name = "goblin_pet"
-			goblin_pet_instance.global_position = player.global_position
-			add_child(goblin_pet_instance)
-			move_child(goblin_pet_instance, player.get_index() - 1)
-			player.is_goblin_pet = true
-		# flyingeye 펫 소환 알고리즘
-		if (player.flyingeye_pet_on == true) and (player.is_flyingeye_pet == false):
-			var flyingeye_pet_instance = flyingeye_pet_preload.instantiate()
-			flyingeye_pet_instance.name = "flyingeye_pet"
-			flyingeye_pet_instance.global_position = player.global_position
-			add_child(flyingeye_pet_instance)
-			move_child(flyingeye_pet_instance, player.get_index() - 1)
-			player.is_flyingeye_pet = true
+func _on_run_select_finished(character_id: String, map_id: String):
+	if map_id == "cave":
+		_on_cave_button_pressed()
+	else:
+		_on_dungeon_button_pressed()
+	match character_id:
+		"medieval_king":
+			_on_select_king_pressed()
+		"wizard":
+			_on_wizard_pressed()
+		_:
+			_on_select_warrior_pressed()
+	run_select.queue_free()
 
 # 맵 타일이 플레이어 조명(light_mask 2번 비트)을 받도록 (TileMap 내부 레이어 포함)
 func _enable_player_light_on(node: Node):

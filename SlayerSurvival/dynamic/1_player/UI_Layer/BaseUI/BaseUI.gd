@@ -87,73 +87,108 @@ func _ready():
 	result_screen.menu_requested.connect(_on_quit_pressed)
 	_style_hud()
 
-# ================= HUD 꾸미기 =================
-# 경험치 바(금테 + 파란 채움), 레벨 표시, 타이머/처치/골드 명판, 보유 장비 아이콘
-const BAR_FRAME = preload("res://static/ui/bar_frame.png")
+# ================= HUD (액션 모드 HUD 방식) =================
+# 왼쪽 위: 이름 · 레벨 / HP 바 / 경험치 바,  가운데 위: 시간,  오른쪽 위: 처치 · 골드
+# 왼쪽 아래: 보유 무기 · 패시브 아이콘,  맨 아래: 조작 안내
+const HUD_BAR_WIDTH = 280.0
 var hud_slots: HudSlots
+var hud_hp: Control
+var hud_hp_label: Label
+var hp_ratio_late := 1.0		# 깎인 체력이 천천히 따라오는 잔상
+
 func _style_hud():
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var exp_bar = $Exp_Bar
-	exp_bar.position = Vector2(4, 4)
-	exp_bar.custom_minimum_size = Vector2(1272, 20)
-	exp_bar.size = Vector2(1272, 20)
-	var bg = StyleBoxTexture.new()
-	bg.texture = BAR_FRAME
-	bg.set_texture_margin_all(6)
-	exp_bar.add_theme_stylebox_override("background", bg)
-	var fill = StyleBoxFlat.new()
-	fill.bg_color = Color(0.32, 0.62, 1.0)
-	fill.border_color = Color(0.6, 0.85, 1.0)
-	fill.border_width_top = 2
-	fill.set_expand_margin_all(-4)
-	exp_bar.add_theme_stylebox_override("fill", fill)
-	# 레벨: 경험치 바 오른쪽 끝
+	# 이름 + 레벨
+	var name_label = GameUI.label("", "BodyLabel")
+	name_label.add_theme_font_size_override("font_size", 16)
+	name_label.add_theme_color_override("font_color", GameUI.GOLD)
+	name_label.position = Vector2(16, 4)
+	add_child(name_label)
+	# player 의 _ready(캐릭터 이름 설정)가 이 노드보다 늦게 실행되므로 한 프레임 뒤에 이름 표시
+	(func(): name_label.text = GameUI.character_name(player.character_name)).call_deferred()
 	var level = $Level
-	level.position = Vector2(1180, 3)
-	level.size = Vector2(90, 22)
+	level.position = Vector2(16 + HUD_BAR_WIDTH - 90, 4)
+	level.size = Vector2(90, 20)
 	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	level.add_theme_font_size_override("font_size", 16)
-	level.add_theme_color_override("font_color", GameUI.GOLD_LIGHT)
+	level.add_theme_color_override("font_color", Color.WHITE)
 	_outline(level, 5)
-	move_child(level, exp_bar.get_index())		# 경험치 바 위에 그리기
-	# 타이머 명판
-	var plate = _plate(Vector2(560, 28), Vector2(160, 48))
-	move_child(plate, stopwatch.get_index())
-	stopwatch.position = Vector2(560, 31)
-	stopwatch.size = Vector2(160, 40)
+	# HP 바 (붉은 바 + 잔상 + 숫자)
+	hud_hp = Control.new()
+	hud_hp.position = Vector2(16, 26)
+	hud_hp.size = Vector2(HUD_BAR_WIDTH, 18)
+	hud_hp.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud_hp.draw.connect(_draw_hud_hp)
+	add_child(hud_hp)
+	hud_hp_label = GameUI.label("", "BodyLabel")
+	hud_hp_label.add_theme_font_size_override("font_size", 13)
+	hud_hp_label.position = Vector2(6, -1)
+	hud_hp.add_child(hud_hp_label)
+	# 경험치 바 (얇은 파란 바)
+	var exp_bar = $Exp_Bar
+	exp_bar.position = Vector2(16, 48)
+	exp_bar.custom_minimum_size = Vector2(HUD_BAR_WIDTH, 8)
+	exp_bar.size = Vector2(HUD_BAR_WIDTH, 8)
+	var bg = StyleBoxFlat.new()
+	bg.bg_color = Color(0.1, 0.1, 0.15)
+	bg.border_color = Color(0, 0, 0, 0.75)
+	bg.set_border_width_all(2)
+	bg.set_expand_margin_all(2)
+	exp_bar.add_theme_stylebox_override("background", bg)
+	var fill = StyleBoxFlat.new()
+	fill.bg_color = Color(0.3, 0.55, 1.0)
+	exp_bar.add_theme_stylebox_override("fill", fill)
+	# 시간 (가운데 위)
+	stopwatch.position = Vector2(540, 8)
+	stopwatch.size = Vector2(200, 40)
 	stopwatch.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	stopwatch.add_theme_font_size_override("font_size", 30)
+	stopwatch.add_theme_font_size_override("font_size", 28)
+	stopwatch.add_theme_color_override("font_color", Color.WHITE)
 	_outline(stopwatch, 6)
-	# 처치 / 골드 명판 (오른쪽 위)
-	var stats_plate = _plate(Vector2(1056, 28), Vector2(218, 40))
-	move_child(stats_plate, $killcollect.get_index())
-	$killcollect.position = Vector2(1092, 33)
-	$goldcollect/GoldCount.position = Vector2(1196, 33)
+	# 처치 / 골드 (오른쪽 위)
+	$killcollect.position = Vector2(1110, 12)
+	$goldcollect/GoldCount.position = Vector2(1206, 12)
 	_outline($killcollect/KillCount, 5)
 	_outline($goldcollect/GoldCount, 5)
-	# 보유 장비 (왼쪽 위)
+	# 보유 장비 (왼쪽 아래)
 	hud_slots = HudSlots.new()
 	hud_slots.setup(player)
-	hud_slots.position = Vector2(6, 30)
+	hud_slots.position = Vector2(16, 610)
 	add_child(hud_slots)
-	move_child(hud_slots, $Level.get_index())
-	# 보스 체력바는 타이머 아래로
-	boss_bar.position.y = 84
+	move_child(hud_slots, 1)
+	# 조작 안내 (맨 아래)
+	var controls = GameUI.hint(GameUI.t("WASD / 방향키  이동        ESC  일시정지", "WASD / Arrows  Move        ESC  Pause"), 694)
+	controls.add_theme_font_size_override("font_size", 13)
+	controls.modulate.a = 0.55
+	controls.size.y = 22
+	add_child(controls)
+	move_child(controls, 1)
+	# 보스 체력바는 시간 아래로
+	boss_bar.position.y = 62
 
-func _plate(pos: Vector2, plate_size: Vector2) -> PanelContainer:
-	var p = GameUI.panel("PlatePanel")
-	p.position = pos
-	p.size = plate_size
-	p.custom_minimum_size = plate_size
-	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(p)
-	return p
+func _draw_hud_hp():
+	var ratio = clamp(player.current_hp / max(player.max_hp, 1.0), 0.0, 1.0)
+	var rect = Rect2(Vector2.ZERO, hud_hp.size)
+	hud_hp.draw_rect(rect.grow(3.0), Color(0, 0, 0, 0.75))
+	hud_hp.draw_rect(rect, Color(0.18, 0.05, 0.05))
+	hud_hp.draw_rect(Rect2(0, 0, rect.size.x * hp_ratio_late, rect.size.y), Color(1.0, 0.85, 0.5))
+	hud_hp.draw_rect(Rect2(0, 0, rect.size.x * ratio, rect.size.y), Color(0.85, 0.12, 0.1))
+	hud_hp.draw_rect(Rect2(0, 0, rect.size.x * ratio, rect.size.y * 0.35), Color(1, 1, 1, 0.18))
+
+func _update_hud_hp(delta: float):
+	if hud_hp == null or player == null:
+		return
+	var ratio = clamp(player.current_hp / max(player.max_hp, 1.0), 0.0, 1.0)
+	hp_ratio_late = max(ratio, move_toward(hp_ratio_late, ratio, delta * 0.6))
+	hud_hp_label.text = "HP %d / %d" % [int(ceil(max(player.current_hp, 0.0))), int(player.max_hp)]
+	hud_hp.queue_redraw()
 
 func _outline(label: Label, size: int):
 	label.add_theme_color_override("font_outline_color", Color(0.05, 0.03, 0.05))
 	label.add_theme_constant_override("outline_size", size)
 
 func _process(delta):
+	_update_hud_hp(delta)
 	process_fatal_state()
 	check_pause_pressed()
 
@@ -236,9 +271,9 @@ func check_pause_pressed():
 			options_window.close()
 			options_window = null
 			return
-		# 메인 메뉴 확인 창이 열려 있으면 확인 창만 닫음
-		if pause_menu and pause_menu.has_confirm():
-			pause_menu._close_confirm()
+		# 일시정지 메뉴의 하위 페이지(설정/확인)면 메인 페이지로, 메인이면 게임 재개
+		if pause_menu and pause_menu.is_open() and globl_pause_flag:
+			pause_menu.back()
 			return
 		# 결과 화면 / 엔딩 중에는 일시정지하지 않음
 		if death_pause_flag or ending_pause_flag or (result_screen and result_screen.shown):
@@ -459,15 +494,17 @@ func _on_menu_pressed():
 # Option(설정) 버튼 누를 때
 var options_window: Node = null
 func _on_option_pressed():
+	# 게임 중 설정은 일시정지 메뉴 안의 설정 페이지
+	if pause_menu and pause_menu.is_open():
+		pause_menu.show_page("settings")
+		return
 	if is_instance_valid(options_window):
 		return		# 이미 열려 있음
 	# ESC 는 BaseUI 가 처리하므로 창 자체의 ESC 처리는 끔
 	var window = SettingsWindow.create(false)
 	add_child(window)
 	options_window = window
-	window.closed.connect(func():
-		if pause_menu and pause_menu.is_open() and pause_menu.buttons.size() > 1:
-			pause_menu.buttons[1].grab_focus.call_deferred())
+	window.closed.connect(func(): options_window = null)
 
 # 게임오버 후 Quit 버튼 누를 때
 func _on_quit_pressed():

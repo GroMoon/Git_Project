@@ -19,8 +19,9 @@ Godot 4.7 2D survivor game. Project root: `SlayerSurvival/` (open `SlayerSurviva
 - Enemies take damage through `take_damage(amount, source, knockback_mult, is_crit)` (EnemyBase and both bosses).
 - Wave director: `dynamic/2_enemy/enemy_spawner/enemy_spwaner.gd` (curves, events, elites, boss at 10:00).
 - Autoloads added: `GameFeel` (shake/hitstop/particles/flash/synth SFX), `RunStats` (damage per weapon).
-- UI: project theme `static/ui/game_theme.tres` (rebuild: `dev/gen_ui_art.py` then `dev/build_theme.gd`), helpers in `dynamic/8_roguelike/ui/game_ui.gd`.
-  Pause menu / result screen / settings window / HUD slots are built in code; the old PausePanel/DeathPanel/EndingPanel scenes stay hidden.
+- UI follows the action-mode (`feature/action-combat`) style: flat dark panels, gold titles, "▶ item ◀" text menus, bottom hint line. No UI images.
+  Project theme `static/ui/game_theme.tres` (rebuild with `dev/build_theme.gd`), helpers in `dynamic/8_roguelike/ui/` (`GameUI`, `TextMenu`, `RunSelect`).
+  Pause menu / result screen / settings / HUD / run select are built in code; the old PausePanel/DeathPanel/EndingPanel and select_map/select_character scenes stay hidden.
 
 ## Checks
 - Script/import errors: `/Applications/Godot.app/Contents/MacOS/Godot --headless --path SlayerSurvival --editor --quit`

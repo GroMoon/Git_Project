@@ -2,7 +2,7 @@ extends VBoxContainer
 
 class_name HudSlots
 
-## HUD 왼쪽 위: 보유 무기 / 패시브 작은 아이콘 (뱀서식)
+## HUD 왼쪽 아래: 보유 무기 / 패시브 작은 아이콘 (액션 모드 스킬 칸 위치)
 ## 장비가 바뀔 때만 다시 그림
 
 const WEAPON_SIZE  = 34.0
@@ -33,8 +33,8 @@ func _process(delta):
 	key = k
 	for c in get_children():
 		c.queue_free()
-	add_child(_row(player.weapons.keys(), UpgradeDB.WEAPON_SLOTS, WEAPON_SIZE))
 	add_child(_row(player.passives.keys(), UpgradeDB.PASSIVE_SLOTS, PASSIVE_SIZE))
+	add_child(_row(player.weapons.keys(), UpgradeDB.WEAPON_SLOTS, WEAPON_SIZE))
 
 func _row(ids: Array, slots: int, size: float) -> HBoxContainer:
 	var row = HBoxContainer.new()

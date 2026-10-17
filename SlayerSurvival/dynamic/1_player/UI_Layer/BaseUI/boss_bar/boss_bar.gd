@@ -101,14 +101,9 @@ func _per_line() -> float:
 	var lines = BOSS_LINES if _is_boss(target) else ELITE_LINES
 	return _max_hp() / lines
 
-var frame_style: StyleBoxTexture
 func _draw_bar():
 	var r = Rect2(Vector2.ZERO, BAR_SIZE)
-	if frame_style == null:
-		frame_style = StyleBoxTexture.new()
-		frame_style.texture = load("res://static/ui/bar_frame.png")
-		frame_style.set_texture_margin_all(6)
-	bar.draw_style_box(frame_style, r.grow(4))
+	bar.draw_rect(r.grow(3.0), Color(0, 0, 0, 0.75))
 	if target == null or not is_instance_valid(target):
 		return
 	var per_line = _per_line()
