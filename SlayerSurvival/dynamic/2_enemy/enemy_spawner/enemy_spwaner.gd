@@ -99,12 +99,10 @@ func _process(delta):
 			events_done[key] = true
 			run_event(ev[1], ev[2])
 
-	# 엘리트
+	# 엘리트 (1분마다, 사이클이 돌수록 한 번에 나오는 수가 늘어남)
 	if t >= next_elite_time and t < BOSS_MINUTE:
 		next_elite_time += 1.0
-		var elite = elite_cycle[elite_index % elite_cycle.size()]
-		elite_index += 1
-		spawn_enemy(elite, ELITE)
+		spawn_elite_wave()
 
 	# 멀어진 적 재배치 (1초마다)
 	recycle_timer -= delta
@@ -131,6 +129,26 @@ func _process(delta):
 			base_ui.boss_bar.track(boss_node)
 		GameFeel.shake(0.6)
 		GameFeel.flash_screen(Color(0.6, 0.0, 0.0, 0.35), 0.8)
+
+# ================= 엘리트 =================
+# 엘리트 4종(플라잉 아이 → 스켈레톤 → 머쉬룸 → 고블린)이 한 사이클
+# - 1번째 사이클 (0:45 ~ 3:45): 순서대로 1마리씩
+# - 2번째 사이클 (4:45 ~ 7:45): 서로 다른 종류 무작위 2마리 동시
+# - 3번째 사이클 (8:45 ~ 9:45): 서로 다른 종류 무작위 3마리 동시 (10:00 보스 전까지)
+func spawn_elite_wave():
+	var cycle = int(floor(elite_index / float(elite_cycle.size())))
+	var count = mini(cycle + 1, elite_cycle.size())
+	var picks: Array
+	if count == 1:
+		picks = [elite_cycle[elite_index % elite_cycle.size()]]
+	else:
+		picks = elite_cycle.duplicate()
+		picks.shuffle()
+		picks = picks.slice(0, count)
+	elite_index += 1
+	for scene in picks:
+		spawn_enemy(scene, ELITE)		# 위치는 각자 화면 밖 무작위 (여러 방향에서 동시에 옴)
+	return picks
 
 # ================= 난이도 곡선 =================
 # 초당 스폰 수

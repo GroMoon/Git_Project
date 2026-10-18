@@ -293,8 +293,12 @@ func open_chest(count: int):
 	accept_input_at = Time.get_ticks_msec() / 1000.0 + reveal_time
 
 # 보물상자 폭죽: 열 때 한 번, 보상마다 한 번, 여러 개면 마지막에 대형 피날레
+var chest_fx: Tween		# 폭죽 순서 트윈 (상자를 닫으면 멈춤: 삭제된 보상 카드를 참조하지 않게)
 func _play_chest_fireworks(slots: Array, rewards: Array, first: float, step: float):
+	if chest_fx and chest_fx.is_valid():
+		chest_fx.kill()
 	var seq = chest_overlay.create_tween()
+	chest_fx = seq
 	seq.tween_callback(func():
 		_firework(Vector2(640, 420), Color(1.0, 0.85, 0.3), 1.2)
 		GameFeel.play_sfx("chest", 1.0, -4.0, 0.05))
@@ -455,6 +459,8 @@ func _close_chest():
 		return
 	chest_open = false
 	chest_overlay.visible = false
+	if chest_fx and chest_fx.is_valid():
+		chest_fx.kill()
 	emit_signal("pause", false)
 	_after_ui_closed()
 
