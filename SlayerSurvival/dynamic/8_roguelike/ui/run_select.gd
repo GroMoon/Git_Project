@@ -21,7 +21,7 @@ const CHARACTERS := [
 	 "stats": {"공격": 4, "체력": 5, "속도": 2}, "desc_key": "KING_DETAILS",
 	 "skills": ["고유 무기 : 왕의 대검\n넓고 무거운 베기", "Signature: Royal Greatsword\nWide, heavy slashes"]},
 	{"id": "wizard", "role": ["원거리 마법사", "Ranged wizard"],
-	 "stats": {"공격": 5, "체력": 3, "속도": 2}, "desc_key": "WIZARD_DETAILS",
+	 "stats": {"공격": 4, "체력": 3, "속도": 2}, "desc_key": "WIZARD_DETAILS",
 	 "skills": ["고유 무기 : 번개 마법\n가까운 적에게 번개를 여러 번", "Signature: Lightning\nStrikes nearby enemies with bolts"]},
 ]
 const MAPS := [

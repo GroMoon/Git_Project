@@ -27,6 +27,7 @@ static func create(pickup_kind: String) -> FieldPickup:
 	sprite.scale = Vector2(1.6, 1.6)
 	p.add_child(sprite)
 	p.z_index = 3
+	p.add_to_group("FieldPickup")		# 화면 밖 표시(OffscreenIndicators) 대상
 	return p
 
 func _ready():

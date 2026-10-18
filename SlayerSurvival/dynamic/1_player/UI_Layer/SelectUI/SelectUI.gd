@@ -92,11 +92,15 @@ func _make_card(id: String, index: int) -> PanelContainer:
 	var name_label = GameUI.label(UpgradeDB.display_name(id, player.character_name), "HeaderLabel", HORIZONTAL_ALIGNMENT_CENTER)
 	box.add_child(name_label)
 	var kind = _type_text(type)
+	var to_max = (type == "weapon" or type == "passive") and lv > 0 and lv + 1 >= UpgradeDB.max_level(id)
 	if type == "weapon" or type == "passive":
-		kind += "   ·   " + ("NEW!" if lv == 0 else "Lv %d → %d" % [lv, lv + 1])
+		# 마지막 강화는 "Lv 5 → MAX" 로 최고 단계임을 표시
+		kind += "   ·   " + ("NEW!" if lv == 0 else ("Lv %d → MAX" % lv if to_max else "Lv %d → %d" % [lv, lv + 1]))
 	var kind_label = GameUI.label(kind, "RoleLabel", HORIZONTAL_ALIGNMENT_CENTER)
 	if lv == 0 and type != "consumable":
 		kind_label.add_theme_color_override("font_color", COLOR_NEW)
+	elif to_max:
+		kind_label.add_theme_color_override("font_color", GameUI.GOLD)
 	box.add_child(kind_label)
 	var desc = GameUI.label(UpgradeDB.level_desc(id, lv + 1, player.character_name), "BodyLabel", HORIZONTAL_ALIGNMENT_CENTER)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -435,10 +439,12 @@ func _make_reward_slot(reward: Dictionary, _ko: bool) -> Control:
 	elif reward["kind"] == "gold":
 		info = "+30 G"
 	else:
-		info = "Lv %d" % reward["level"]
+		info = "MAX" if reward["level"] >= UpgradeDB.max_level(id) else "Lv %d" % reward["level"]
 	var info_label = GameUI.label(info, "RoleLabel" if not evolve else "BodyLabel", HORIZONTAL_ALIGNMENT_CENTER)
 	if evolve:
 		info_label.add_theme_color_override("font_color", GameUI.RED)
+	elif info == "MAX":
+		info_label.add_theme_color_override("font_color", GameUI.GOLD)
 	info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	info_label.custom_minimum_size = Vector2(170, 0)
 	box.add_child(info_label)

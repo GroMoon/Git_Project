@@ -13,6 +13,7 @@ extends Node
 ##   --ui_test=1 (ESC 로 일시정지/설정/확인 창이 올바르게 열리고 닫히는지 검사, 결과 출력 후 종료)
 ##   --shot_levelup=1 (첫 레벨업 화면 스크린샷)  --shot_chest=1 (첫 보물상자 화면 스크린샷)
 ##   --pets=goblin,mushroom,skeleton,flyingeye (시작 시 몬스터 펫 지급)
+##   --no_levelup=1 (경험치 0 → 레벨업 없음. --give 와 함께 무기 하나의 피해량 비교용)
 ##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자, --chest_count=5 면 보상 5개 상자를 바로 열기)
 ##   --shot_chest=0.4,1.0 (상자 연출 중 여러 시점 스크린샷)  --die_at=초 (강제 사망)  --shot_death=1 (결과 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
 
@@ -36,6 +37,7 @@ var opts = {
 	"ending_wait": "3",
 	"shot_chest": "0",
 	"pets": "",
+	"no_levelup": "0",
 	"chest_at": "-1",
 	"chest_count": "0",
 	"die_at": "-1",
@@ -114,6 +116,8 @@ func _start_game():
 func _process(delta):
 	if player == null or not is_instance_valid(player):
 		return
+	if opts["no_levelup"] == "1":
+		player.exp_mult = 0.0
 	var base_ui = player.get_node("UI_Layer/BaseUI")
 
 	# 보스 처치 → 엔딩 연출이 시작되면 잠시 후 종료

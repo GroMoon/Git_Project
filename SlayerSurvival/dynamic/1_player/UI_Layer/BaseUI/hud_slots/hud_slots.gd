@@ -3,7 +3,7 @@ extends VBoxContainer
 class_name HudSlots
 
 ## HUD 왼쪽 아래: 보유 무기 / 패시브 작은 아이콘 (액션 모드 스킬 칸 위치)
-## 장비가 바뀔 때만 다시 그림
+## 장비가 바뀔 때만 다시 그림. 아이콘에 마우스를 올리면 정보 창 (InfoSlot)
 
 const WEAPON_SIZE  = 34.0
 const PASSIVE_SIZE = 28.0
@@ -42,8 +42,8 @@ func _row(ids: Array, slots: int, size: float) -> HBoxContainer:
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for i in slots:
 		var s = GameUI.upgrade_slot(player, ids[i] if i < ids.size() else "", size)
-		s.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		if i >= ids.size():
+			s.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			s.modulate.a = 0.3
 		row.add_child(s)
 	return row

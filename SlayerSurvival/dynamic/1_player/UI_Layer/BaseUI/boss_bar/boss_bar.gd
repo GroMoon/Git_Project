@@ -6,6 +6,7 @@ class_name BossBar
 ## - 마지막으로 공격한 엘리트 또는 보스를 표시 (보스가 살아 있으면 보스 우선)
 ## - 체력을 여러 줄로 나눠 줄마다 색이 바뀌고, 남은 줄 수 "x12" 표시
 ## - 깎인 체력은 흰색 잔상으로 천천히 줄어듦
+## - 대상이 죽으면 잠깐 뒤 사라짐. 레벨업/보물상자/대화로 게임이 멈춰 있어도 사라지도록 항상 처리
 
 const BAR_SIZE    = Vector2(560, 18)
 const ELITE_LINES = 3
@@ -16,13 +17,17 @@ const LINE_COLORS = [
 ]
 
 var target: Node = null
+var tracking := false		# 대상이 삭제되면 target 이 null 로 보이므로 표시 중인지는 따로 기록
 var shown_hp := 0.0			# 잔상(흰색) 체력
 var name_label: Label
 var lines_label: Label
 var bar: Control
 var hide_timer := 0.0
+var fade_tween: Tween
+const HIDE_DELAY = 0.6		# 처치 후 빈 체력바를 보여주는 시간
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS		# 일시정지 중에도 처치된 대상의 체력바를 치움
 	position = Vector2((1280 - BAR_SIZE.x) / 2.0, 84)
 	size = Vector2(BAR_SIZE.x, 46)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -60,11 +65,19 @@ func track(enemy: Node):
 	if _alive(target) and _is_boss(target) and not _is_boss(enemy):
 		return
 	target = enemy
+	tracking = true
 	shown_hp = enemy.health
 	hide_timer = 0.0
 	name_label.text = enemy.display_name() if enemy.has_method("display_name") else String(enemy.name)
 	name_label.add_theme_color_override("font_color", Color(1.0, 0.45, 0.4) if _is_boss(enemy) else Color(1.0, 0.85, 0.4))
-	create_tween().tween_property(self, "modulate:a", 1.0, 0.2)
+	_fade(1.0, 0.2)
+
+# 나타나기 / 사라지기 (이전 트윈은 멈춰서 서로 덮어쓰지 않게)
+func _fade(alpha: float, duration: float):
+	if fade_tween and fade_tween.is_valid():
+		fade_tween.kill()
+	fade_tween = create_tween()
+	fade_tween.tween_property(self, "modulate:a", alpha, duration)
 
 func _alive(enemy) -> bool:
 	return enemy != null and is_instance_valid(enemy) and not enemy.is_dead
@@ -73,16 +86,20 @@ func _is_boss(enemy) -> bool:
 	return enemy != null and is_instance_valid(enemy) and not ("is_elite" in enemy)
 
 func _process(delta):
-	if target == null:
+	if not tracking:
 		return
 	if not _alive(target):
 		# 처치: 잠깐 보여준 뒤 사라짐
 		hide_timer += delta
 		shown_hp = move_toward(shown_hp, 0.0, _max_hp() * delta * 2.0)
-		if hide_timer > 1.0:
-			create_tween().tween_property(self, "modulate:a", 0.0, 0.3)
+		if hide_timer > HIDE_DELAY:
+			_fade(0.0, 0.25)
 			target = null
+			tracking = false
 		bar.queue_redraw()
+		return
+	# 게임이 멈춰 있는 동안(일시정지 메뉴 등)은 체력 변화가 없으므로 잔상 갱신 생략
+	if get_tree().paused:
 		return
 	# 잔상은 실제 체력을 천천히 따라감
 	var hp = max(target.health, 0.0)

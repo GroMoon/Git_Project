@@ -1,6 +1,6 @@
 extends CharacterBase
 
-const LIGHTNING_RANGE = 450.0		# 번개 대상 탐색 범위
+const LIGHTNING_RANGE = 380.0		# 번개 대상 탐색 범위 (밸런스: 450 → 380)
 
 var lightning = preload("res://dynamic/1_player/characters/Wizard/Lightning/lightning.tscn")
 
@@ -8,11 +8,11 @@ func _initialize():
 	# 캐릭터 특성
 	character_name      = "wizard"
 	move_speed          = 150
-	attack_damage       = 16
+	attack_damage       = 12		# 밸런스: 16 → 12 (원거리 자동 조준 + 범위 피해라 근접보다 낮게)
 	magnetic_area_scale = 100
 	animation_speed     = 1.5
 	start_hp            = 55.0
-	attack_wait_time    = 0.55
+	attack_wait_time    = 0.95		# 밸런스: 0.55 → 0.95 (번개가 너무 자주 나가던 문제)
 	attack_anim_speed   = 1.6
 
 func _ready():

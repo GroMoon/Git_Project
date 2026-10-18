@@ -67,6 +67,7 @@ func _ready():
 	death_panel.visible = false		# DeathPanel 가리기
 	ending_panel.visible = false	# EndingPanel 가리기
 	select_ui.connect("pause", Callable(self, "check_level_up_pause_flag"))
+	fatal_state.mouse_filter = Control.MOUSE_FILTER_IGNORE	# 화면 전체를 덮는 붉은 효과가 HUD 아이콘 마우스 오버를 막지 않게
 	# player 세팅
 	player = get_parent().get_parent()
 	# 엘리트/보스 체력바
@@ -92,6 +93,7 @@ func _ready():
 # 왼쪽 아래: 보유 무기 · 패시브 아이콘,  맨 아래: 조작 안내
 const HUD_BAR_WIDTH = 280.0
 var hud_slots: HudSlots
+var offscreen: OffscreenIndicators
 var hud_hp: Control
 var hud_hp_label: Label
 var hp_ratio_late := 1.0		# 깎인 체력이 천천히 따라오는 잔상
@@ -156,6 +158,11 @@ func _style_hud():
 	hud_slots.position = Vector2(16, 610)
 	add_child(hud_slots)
 	move_child(hud_slots, 1)
+	# 화면 밖 보물상자 / 아이템 화살표
+	offscreen = OffscreenIndicators.new()
+	offscreen.setup(player)
+	add_child(offscreen)
+	move_child(offscreen, 1)
 	# 조작 안내 (맨 아래)
 	var controls = GameUI.hint(GameUI.t("WASD / 방향키  이동        ESC  일시정지", "WASD / Arrows  Move        ESC  Pause"), 694)
 	controls.add_theme_font_size_override("font_size", 13)

@@ -106,6 +106,15 @@
 
 ---
 
+### 플레이 피드백 반영 (2차)
+- 엘리트를 잡은 뒤 상단 체력바가 사라지지 않던 문제 수정 (대상이 삭제되면 체력바 갱신이 멈췄음). 레벨업·보물상자로 멈춰 있어도 사라짐
+- HUD 왼쪽 아래 무기/패시브 아이콘에 마우스를 올리면 정보 창: 이름·레벨, 설명, 현재 스탯(피해/개수/쿨타임), 다음 레벨 효과, 진화 조건.
+  일시정지 화면의 보유 장비 아이콘도 같은 창
+- 마법사 밸런스: 번개 피해 16 → 12, 공격 간격 0.55 → 0.95초, 탐색 범위 450 → 380, 6레벨 번개 4발 → 3발(대신 범위 +30%).
+  1레벨 단일 대상 기준 초당 피해가 전사와 비슷해지고(약 7~8), 6레벨은 이전의 절반 정도. 원거리·범위 피해는 그대로 장점
+- 화면 밖 보물상자 / 자석 / 폭탄 / 음식을 화면 가장자리 화살표(아이템 아이콘 + 방향)로 표시
+- 마지막 강화 카드는 "Lv 5 → MAX" 로 표시 (보물상자 보상도 MAX)
+
 ## 고친 기존 버그
 
 - Godot 4.7에서 Dialogic 이름 라벨 파싱 오류 → 펫 획득 대화창이 깨지던 문제
@@ -139,6 +148,8 @@
 | `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/pause_menu/` | 일시정지 메뉴 |
 | `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/result_screen/` | 게임 오버 / 승리 결과 화면 |
 | `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/hud_slots/` | HUD 보유 장비 아이콘 |
+| `SlayerSurvival/dynamic/1_player/UI_Layer/BaseUI/offscreen_indicators/` | 화면 밖 상자/아이템 화살표 |
+| `SlayerSurvival/dynamic/8_roguelike/ui/info_slot.gd` | 마우스를 올리면 정보 창을 띄우는 장비 슬롯 |
 | `SlayerSurvival/dynamic/5_title_screen/option/settings_window.gd` | 설정 창 (타이틀/게임 공용) |
 | `SlayerSurvival/static/ui/` | 전역 테마 |
 | `SlayerSurvival/dev/` | 자동 플레이 테스트, 스크린샷, 테마 생성 도구 |
@@ -158,6 +169,7 @@ SlayerSurvival/dev/run_autoplay.sh -- --char=warrior --seconds=180 --pick=smart
 - `--give=fireball:3,bomb` 시작 시 무기/패시브 지급, `--pets=goblin,mushroom` 펫 지급
 - `--windowed ... --shots=10,20 --shot_dir=DIR` 창 모드 스크린샷
 - `--chest_at=5 --chest_count=5 --shot_chest=0.5,1.0` 보물상자 연출 확인
+- `--no_levelup=1 --give=signature:5` 레벨업 없이 무기 하나의 피해량 비교
 - `--ui_test=1` ESC 흐름 자동 검사, `--shot_pause=10 --pause_options=1` 일시정지/설정 화면 캡처
 - 메뉴 화면 캡처: `Godot --path SlayerSurvival res://dev/scene_shot.tscn -- --scene=res://dynamic/5_title_screen/menu.tscn --out=/tmp/menu.png`
 - 테마를 바꿀 때: `dev/build_theme.gd` 수정 후 `Godot --headless --path SlayerSurvival -s res://dev/build_theme.gd`

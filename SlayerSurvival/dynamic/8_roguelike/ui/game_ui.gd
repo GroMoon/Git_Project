@@ -127,8 +127,12 @@ static func set_card_active(card: PanelContainer, active: bool, grow: float = 1.
 	tw.tween_property(card, "scale", Vector2.ONE * (grow if active else 0.97), 0.12)
 
 # 아이콘 슬롯 (badge: 오른쪽 아래 작은 글자, style: SlotPanel / SlotGold / SlotRed)
-static func slot(icon: Texture2D, badge: String = "", style: String = "SlotPanel", size: float = 52.0) -> PanelContainer:
-	var p = panel(style)
+# p: 이미 만든 판넬에 채울 때 (InfoSlot 등)
+static func slot(icon: Texture2D, badge: String = "", style: String = "SlotPanel", size: float = 52.0, p: PanelContainer = null) -> PanelContainer:
+	if p == null:
+		p = panel(style)
+	else:
+		p.theme_type_variation = style
 	p.custom_minimum_size = Vector2(size, size)
 	p.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var holder = Control.new()
@@ -167,12 +171,81 @@ static func upgrade_slot(player, id: String, size: float = 52.0) -> PanelContain
 	var evolved = player.weapons.has(id) and player.weapons[id].evolved
 	var badge = "EVO" if evolved else ("MAX" if lv >= max_lv else str(lv))
 	var style = "SlotRed" if evolved else ("SlotGold" if lv >= max_lv else "SlotPanel")
-	var s = slot(UpgradeDB.icon(id, player.character_name), badge, style, size)
-	var title = UpgradeDB.evolved_name(id, player.character_name) if evolved else UpgradeDB.display_name(id, player.character_name)
-	var desc = UpgradeDB.evolved_desc(id) if evolved else UpgradeDB.level_desc(id, 1, player.character_name)
-	s.tooltip_text = "%s  (%s)\n%s" % [title, badge if badge != str(lv) else "Lv " + str(lv), desc]
-	s.mouse_filter = Control.MOUSE_FILTER_PASS
+	var s = InfoSlot.new()
+	s.player = player
+	s.upgrade_id = id
+	slot(UpgradeDB.icon(id, player.character_name), badge, style, size, s)
+	s.tooltip_text = UpgradeDB.display_name(id, player.character_name)		# 비어 있으면 툴팁이 뜨지 않음 (실제 내용은 InfoSlot 이 그림)
+	s.mouse_filter = Control.MOUSE_FILTER_STOP
 	return s
+
+# 레벨 표시: "Lv 3", 최대 레벨이면 "MAX", 진화했으면 "EVO"
+static func level_text(lv: int, max_lv: int, evolved: bool = false) -> String:
+	if evolved:
+		return "EVO"
+	return "MAX" if lv >= max_lv else "Lv %d" % lv
+
+# 무기/패시브 정보 창 내용 (InfoSlot 툴팁)
+static func upgrade_info(player, id: String) -> Control:
+	var ch = player.character_name
+	var lv = player.get_upgrade_level(id)
+	var max_lv = UpgradeDB.max_level(id)
+	var weapon = player.weapons.get(id)
+	var evolved = weapon != null and weapon.evolved
+	var box = vbox(4)
+	box.custom_minimum_size = Vector2(270, 0)
+	var add = func(text: String, variation: String, color = null) -> Label:
+		var l = label(text, variation)
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.custom_minimum_size = Vector2(270, 0)
+		if color != null:
+			l.add_theme_color_override("font_color", color)
+		box.add_child(l)
+		return l
+	# 이름 + 레벨
+	var title = UpgradeDB.evolved_name(id, ch) if evolved else UpgradeDB.display_name(id, ch)
+	var head = add.call("%s   %s" % [title, level_text(lv, max_lv, evolved) if evolved or lv >= max_lv else "Lv %d / %d" % [lv, max_lv]], "HeaderLabel", RED if evolved else GOLD)
+	head.add_theme_font_size_override("font_size", 19)
+	add.call(t("무기", "Weapon") if UpgradeDB.is_weapon(id) else t("패시브", "Passive"), "RoleLabel")
+	# 설명 (패시브는 레벨당 효과)
+	var base_desc = UpgradeDB.level_desc(id, 1, ch)
+	if UpgradeDB.is_passive(id):
+		base_desc = t("레벨당 ", "Per level: ") + base_desc
+	add.call(base_desc, "BodyLabel").add_theme_font_size_override("font_size", 15)
+	# 무기 스탯 (현재 보너스 포함)
+	if weapon != null:
+		var parts = []
+		if id == "signature":
+			parts.append(t("피해 %d", "DMG %d") % int(player.attack_damage))
+			parts.append(t("%d회 공격", "%d hits") % int(player.attack_times))
+			parts.append(t("쿨타임 %.1f초", "CD %.1fs") % player.get_attack_wait_time())
+		else:
+			parts.append(t("피해 %d", "DMG %d") % int(round(weapon.get_damage())))
+			if UpgradeDB.get_entry(id).get("stats", {}).has("amount"):
+				parts.append(t("개수 %d", "x%d") % weapon.get_amount())
+			if UpgradeDB.get_entry(id).get("stats", {}).has("cooldown"):
+				parts.append(t("쿨타임 %.1f초", "CD %.1fs") % weapon.get_cooldown())
+		add.call("   ".join(parts), "ValueLabel", Color(1.0, 0.8, 0.45)).add_theme_font_size_override("font_size", 15)
+	# 다음 레벨
+	if lv < max_lv:
+		add.call(t("다음 (Lv %d) : ", "Next (Lv %d): ") % (lv + 1) + UpgradeDB.level_desc(id, lv + 1, ch), "SkillLabel")
+	# 진화
+	var evo_line = ""
+	if evolved:
+		evo_line = t("진화 완료 : ", "Evolved: ") + UpgradeDB.evolved_desc(id)
+	elif UpgradeDB.is_weapon(id) and UpgradeDB.can_evolve(id):
+		var partner = UpgradeDB.evolve_partner(id)
+		var have = player.passives.has(partner)
+		evo_line = t("진화 : 최대 레벨 + %s%s → 보물상자", "Evolve: max level + %s%s → chest") % [
+			UpgradeDB.display_name(partner, ch), t(" (보유)", " (owned)") if have else ""]
+	elif UpgradeDB.is_passive(id):
+		var users = UpgradeDB.weapon_ids().filter(func(w): return UpgradeDB.evolve_partner(w) == id)
+		if not users.is_empty():
+			evo_line = t("진화 재료 : ", "Evolves: ") + ", ".join(users.map(func(w): return UpgradeDB.display_name(w, ch)))
+	if evo_line != "":
+		box.add_child(divider(270))
+		add.call(evo_line, "DimLabel", Color(1.0, 0.6, 0.5)).add_theme_font_size_override("font_size", 14)
+	return box
 
 # 등장 연출: 페이드 인
 static func fade_in(c: CanvasItem, duration: float = 0.2, delay: float = 0.0):
