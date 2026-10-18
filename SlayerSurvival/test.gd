@@ -81,6 +81,50 @@ func _on_run_select_finished(character_id: String, map_id: String):
 			_on_select_warrior_pressed()
 	run_select.queue_free()
 
+func _process(_delta):
+	player = get_node_or_null("player")		# 선택 화면에서는 아직 player 가 없음
+	if player:
+		# 그림자 소환 알고리즘
+		if (player.shadow_attack == true) and (player.is_shadow_on == false):
+			var shadow_instance = shadow_preload.instantiate()
+			shadow_instance.name = "shadow"
+			shadow_instance.global_position = player.global_position
+			add_child(shadow_instance)
+			move_child(shadow_instance, player.get_index() - 1)
+			player.is_shadow_on = true
+		# mushroom 펫 소환 알고리즘
+		if (player.mushroom_pet_on == true) and (player.is_mushroom_pet == false):
+			var mushroom_pet_instance = mushroom_pet_preload.instantiate()
+			mushroom_pet_instance.name = "mushroom_pet"
+			mushroom_pet_instance.global_position = player.global_position
+			add_child(mushroom_pet_instance)
+			move_child(mushroom_pet_instance, player.get_index() - 1)
+			player.is_mushroom_pet = true
+		# skeleton 펫 소환 알고리즘
+		if (player.skeleton_pet_on == true) and (player.is_skeleton_pet == false):
+			var skeleton_pet_instance = skeleton_pet_preload.instantiate()
+			skeleton_pet_instance.name = "skeleton_pet"
+			skeleton_pet_instance.global_position = player.global_position
+			add_child(skeleton_pet_instance)
+			move_child(skeleton_pet_instance, player.get_index() - 1)
+			player.is_skeleton_pet = true
+		# goblin 펫 소환 알고리즘
+		if (player.goblin_pet_on == true) and (player.is_goblin_pet == false):
+			var goblin_pet_instance = goblin_pet_preload.instantiate()
+			goblin_pet_instance.name = "goblin_pet"
+			goblin_pet_instance.global_position = player.global_position
+			add_child(goblin_pet_instance)
+			move_child(goblin_pet_instance, player.get_index() - 1)
+			player.is_goblin_pet = true
+		# flyingeye 펫 소환 알고리즘
+		if (player.flyingeye_pet_on == true) and (player.is_flyingeye_pet == false):
+			var flyingeye_pet_instance = flyingeye_pet_preload.instantiate()
+			flyingeye_pet_instance.name = "flyingeye_pet"
+			flyingeye_pet_instance.global_position = player.global_position
+			add_child(flyingeye_pet_instance)
+			move_child(flyingeye_pet_instance, player.get_index() - 1)
+			player.is_flyingeye_pet = true
+
 # 맵 타일이 플레이어 조명(light_mask 2번 비트)을 받도록 (TileMap 내부 레이어 포함)
 func _enable_player_light_on(node: Node):
 	if node is CanvasItem:
