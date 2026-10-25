@@ -10,6 +10,7 @@ const GLOW  = preload("res://static/textures/light/circle.png")
 
 var sprite: Sprite2D
 var opened := false
+var fixed_count := 0		# 0 이면 확률로, 아니면 보상 개수 고정 (무한 모드 보스 웨이브 보상 = 5)
 var time := 0.0
 
 static func create() -> ChestPickup:
@@ -60,6 +61,8 @@ func _on_body_entered(body):
 	GameFeel.burst(global_position, Color(1.0, 0.85, 0.3), 30, 260.0, 4.0)
 	var r = randf()
 	var count = 5 if r < 0.05 else (3 if r < 0.25 else 1)
+	if fixed_count > 0:
+		count = fixed_count
 	var select_ui = body.get_node("UI_Layer/SelectUI")
 	select_ui.open_chest.call_deferred(count)		# 물리 콜백 중 노드 추가 방지
 	queue_free()

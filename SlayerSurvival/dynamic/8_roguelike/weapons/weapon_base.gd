@@ -59,7 +59,11 @@ func get_cooldown() -> float:
 	return max(float(stat("cooldown", 1.0)) * player.get_cooldown_mult(), 0.1)
 
 func get_damage() -> float:
-	return float(stat("damage", 1.0)) * player.might
+	return float(stat("damage", 1.0)) * player.might * overcap_mult()
+
+# 한계 돌파 피해 배율 (무한 모드: 최대 레벨을 넘은 단계마다 +15%)
+func overcap_mult() -> float:
+	return 1.0 + UpgradeDB.OVERCAP_DAMAGE * max(level - UpgradeDB.max_level(id), 0)
 
 func get_amount() -> int:
 	return int(stat("amount", 1)) + player.amount_bonus

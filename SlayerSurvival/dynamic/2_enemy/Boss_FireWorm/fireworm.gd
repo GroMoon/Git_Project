@@ -106,14 +106,15 @@ func die_enemy():
 	await death_sound.finished
 	queue_free()									# 적 노드 삭제
 
-# 포털 생성
+# 포털 생성 (무한 모드에서는 게임이 계속되므로 포털 없이 처치만 알림)
 func spawn_portal():
-	var new_portal = portal.instantiate()
-	new_portal.global_position = global_position
-	get_parent().call_deferred("add_child", new_portal)
-	# 보스 사망 신호를 BaseUI에 전달
+	if not RunMode.is_endless():
+		var new_portal = portal.instantiate()
+		new_portal.global_position = global_position
+		get_parent().call_deferred("add_child", new_portal)
+	# 보스 사망 신호를 BaseUI에 전달 (클래식: 엔딩 / 무한: 다음 단계)
 	if player and player.baseui:
-		player.baseui.ending_pause_flag = true
+		player.baseui.on_boss_defeated(self)
 
 # 아이템 드랍 함수
 func drop_item():

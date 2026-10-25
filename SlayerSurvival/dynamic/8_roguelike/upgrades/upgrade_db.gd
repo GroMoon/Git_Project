@@ -17,6 +17,22 @@ const WEIGHT_NEW_WEAPON    = 30
 const WEIGHT_OWNED_PASSIVE = 30
 const WEIGHT_NEW_PASSIVE   = 20
 
+# 한계 돌파 (무한 모드, 첫 보스 웨이브 처치 후): 최대 레벨을 넘어 계속 강화
+# - 무기: 한계 돌파 1단계(★)마다 피해 +15%, 사실상 무제한
+# - 패시브: 레벨당 효과 그대로, 너무 강해지는 것만 한도 (OVERCAP_LIMITS = 한계 돌파 후 최대 레벨)
+const OVERCAP_DAMAGE = 0.15
+const WEIGHT_OVERCAP_WEAPON  = 30
+const WEIGHT_OVERCAP_PASSIVE = 20
+const OVERCAP_WEAPON_STARS   = 99
+const OVERCAP_LIMITS = {
+	"might": 99, "max_hp": 99, "growth": 10, "magnet": 10, "vampire": 10, "area": 10,
+	"speed": 8,			# 이동 속도 +64%
+	"armor": 8,			# 받는 피해 -40%
+	"cooldown": 8,		# 쿨타임 감소 한도(MIN_COOLDOWN_MULT)에 맞춤
+	"amount": 4,		# 투사체 +4
+	"shadow": 3,		# 그림자 분신은 한계 돌파 없음
+}
+
 static var _data := {}
 static var _icon_cache := {}
 
@@ -40,6 +56,19 @@ static func is_passive(id: String) -> bool:
 
 static func max_level(id: String) -> int:
 	return get_entry(id).get("max_level", 1)
+
+# 지금 올릴 수 있는 최대 레벨: 평소엔 max_level, 한계 돌파 해금 후엔 확장된 한도
+static func cap_level(id: String) -> int:
+	var max_lv = max_level(id)
+	if not RunMode.overcap_unlocked() or not (is_weapon(id) or is_passive(id)):
+		return max_lv
+	return OVERCAP_LIMITS.get(id, max_lv + OVERCAP_WEAPON_STARS)
+
+# 강화 카드 설명: 무기의 한계 돌파 단계는 공통 문구, 그 외는 레벨별 설명
+static func upgrade_desc(id: String, level: int, character_name: String = "") -> String:
+	if is_weapon(id) and level > max_level(id):
+		return text({"ko": "한계 돌파 : 피해 +%d%%" % int(OVERCAP_DAMAGE * 100), "en": "Limit Break: damage +%d%%" % int(OVERCAP_DAMAGE * 100)})
+	return level_desc(id, level, character_name)
 
 static func weapon_ids() -> Array:
 	return data().keys().filter(func(k): return is_weapon(k))

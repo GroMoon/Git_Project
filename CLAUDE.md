@@ -19,6 +19,9 @@ Godot 4.7 2D survivor game. Project root: `SlayerSurvival/` (open `SlayerSurviva
 - Enemies take damage through `take_damage(amount, source, knockback_mult, is_crit)` (EnemyBase and both bosses).
 - Wave director: `dynamic/2_enemy/enemy_spawner/enemy_spwaner.gd` (curves, events, elites, boss at 10:00).
 - Autoloads added: `GameFeel` (shake/hitstop/particles/flash/synth SFX), `RunStats` (damage per weapon).
+- Game modes: `RunMode` (run_mode.gd, static state, chosen in `RunSelect`). Classic = boss kill ends the run; Endless = bosses route through
+  `BaseUI.on_boss_defeated` → spawner `on_boss_defeated` (next boss wave, n bosses up to 3), and after the first wave "limit break" lets
+  upgrades pass max level (`UpgradeDB.cap_level`, `OVERCAP_LIMITS`, weapons +15% damage per star via `WeaponBase.overcap_mult`).
 - UI follows the action-mode (`feature/action-combat`) style: flat dark panels, gold titles, "▶ item ◀" text menus, bottom hint line. No UI images.
   Project theme `static/ui/game_theme.tres` (rebuild with `dev/build_theme.gd`), helpers in `dynamic/8_roguelike/ui/` (`GameUI`, `TextMenu`, `RunSelect`).
   Pause menu / result screen / settings / HUD / run select are built in code; the old PausePanel/DeathPanel/EndingPanel and select_map/select_character scenes stay hidden.
@@ -26,5 +29,5 @@ Godot 4.7 2D survivor game. Project root: `SlayerSurvival/` (open `SlayerSurviva
 ## Checks
 - Script/import errors: `/Applications/Godot.app/Contents/MacOS/Godot --headless --path SlayerSurvival --editor --quit`
 - Smoke test: `SlayerSurvival/dev/run_autoplay.sh -- --char=warrior --seconds=180 --pick=smart` (add `--god=1` for invincible,
-  `--give=fireball:3,bomb`, `--start_minute=8`; `--windowed ... --shots=10,20 --shot_dir=DIR` for screenshots; see dev/autoplay.gd header).
+  `--give=fireball:3,bomb`, `--start_minute=8`, `--mode=endless --boss_hp=0.05`; `--windowed ... --shots=10,20 --shot_dir=DIR` for screenshots; see dev/autoplay.gd header).
   Headless `fps` in the log is simulation speed (>60 means faster than real time).

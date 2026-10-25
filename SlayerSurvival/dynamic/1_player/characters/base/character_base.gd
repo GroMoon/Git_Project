@@ -368,6 +368,7 @@ func init_build():
 	weapons_node.show_behind_parent = true		# 오라 등은 캐릭터 뒤에 그림
 	add_child(weapons_node)
 	RunStats.reset()
+	RunMode.reset_run()		# 무한 모드 단계 / 처치한 보스 수 초기화 (모드 자체는 유지)
 	add_upgrade("signature")
 	recalc_stats()
 
@@ -383,7 +384,7 @@ func add_upgrade(id: String):
 		"weapon":
 			if weapons.has(id):
 				var w: WeaponBase = weapons[id]
-				w.set_level(mini(w.level + 1, UpgradeDB.max_level(id)))
+				w.set_level(mini(w.level + 1, UpgradeDB.cap_level(id)))		# 한계 돌파 해금 시 최대 레벨 이상
 			else:
 				var w: WeaponBase = load(entry["script"]).new()
 				w.setup(self, id)
@@ -391,7 +392,7 @@ func add_upgrade(id: String):
 				weapons[id] = w
 				w.set_level(1)
 		"passive":
-			passives[id] = mini(passives.get(id, 0) + 1, UpgradeDB.max_level(id))
+			passives[id] = mini(passives.get(id, 0) + 1, UpgradeDB.cap_level(id))
 			recalc_stats()
 			if id == "max_hp":
 				current_hp += 20
@@ -421,13 +422,13 @@ func roll_chest_rewards(count: int) -> Array:
 			weapons[evo].evolve()
 			rewards.append({"id": evo, "kind": "evolve", "level": weapons[evo].level})
 			continue
-		# 보유 중이고 최대 레벨이 아닌 무기/패시브 중 하나
+		# 보유 중이고 더 올릴 수 있는 무기/패시브 중 하나 (한계 돌파 해금 후엔 최대 레벨 이상도)
 		var candidates = []
 		for id in weapons.keys():
-			if weapons[id].level < UpgradeDB.max_level(id):
+			if weapons[id].level < UpgradeDB.cap_level(id):
 				candidates.append(id)
 		for id in passives.keys():
-			if passives[id] < UpgradeDB.max_level(id):
+			if passives[id] < UpgradeDB.cap_level(id):
 				candidates.append(id)
 		if candidates.is_empty():
 			add_gold(30)

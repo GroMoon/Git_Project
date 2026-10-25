@@ -13,6 +13,7 @@ const RED        = Color(1.0, 0.45, 0.4)
 const GREEN      = Color(0.6, 1.0, 0.7)
 const BLUE       = Color(0.7, 0.85, 1.0)
 const INACTIVE   = Color(0.55, 0.55, 0.6)
+const STAR       = Color(0.85, 0.6, 1.0)		# 무한 모드 / 한계 돌파 강조색
 const CLICK_SOUND = preload("res://static/audio/sfx/button_sounds/button_sound_1.mp3")
 
 const PORTRAITS = {
@@ -169,7 +170,7 @@ static func upgrade_slot(player, id: String, size: float = 52.0) -> PanelContain
 	var lv = player.get_upgrade_level(id)
 	var max_lv = UpgradeDB.max_level(id)
 	var evolved = player.weapons.has(id) and player.weapons[id].evolved
-	var badge = "EVO" if evolved else ("MAX" if lv >= max_lv else str(lv))
+	var badge = "★%d" % (lv - max_lv) if lv > max_lv else ("EVO" if evolved else ("MAX" if lv >= max_lv else str(lv)))
 	var style = "SlotRed" if evolved else ("SlotGold" if lv >= max_lv else "SlotPanel")
 	var s = InfoSlot.new()
 	s.player = player
@@ -179,8 +180,10 @@ static func upgrade_slot(player, id: String, size: float = 52.0) -> PanelContain
 	s.mouse_filter = Control.MOUSE_FILTER_STOP
 	return s
 
-# 레벨 표시: "Lv 3", 최대 레벨이면 "MAX", 진화했으면 "EVO"
+# 레벨 표시: "Lv 3", 최대 레벨이면 "MAX", 진화했으면 "EVO", 한계 돌파면 "★2"
 static func level_text(lv: int, max_lv: int, evolved: bool = false) -> String:
+	if lv > max_lv:
+		return "★%d" % (lv - max_lv)
 	if evolved:
 		return "EVO"
 	return "MAX" if lv >= max_lv else "Lv %d" % lv
@@ -229,6 +232,8 @@ static func upgrade_info(player, id: String) -> Control:
 	# 다음 레벨
 	if lv < max_lv:
 		add.call(t("다음 (Lv %d) : ", "Next (Lv %d): ") % (lv + 1) + UpgradeDB.level_desc(id, lv + 1, ch), "SkillLabel")
+	elif lv < UpgradeDB.cap_level(id):
+		add.call(t("한계 돌파 (★%d) : ", "Limit Break (★%d): ") % (lv + 1 - max_lv) + UpgradeDB.upgrade_desc(id, lv + 1, ch), "SkillLabel", STAR)
 	# 진화
 	var evo_line = ""
 	if evolved:

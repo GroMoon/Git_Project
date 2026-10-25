@@ -97,6 +97,7 @@ var offscreen: OffscreenIndicators
 var hud_hp: Control
 var hud_hp_label: Label
 var hp_ratio_late := 1.0		# 깎인 체력이 천천히 따라오는 잔상
+var mode_label: Label
 
 func _style_hud():
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -147,6 +148,13 @@ func _style_hud():
 	stopwatch.add_theme_font_size_override("font_size", 28)
 	stopwatch.add_theme_color_override("font_color", Color.WHITE)
 	_outline(stopwatch, 6)
+	# 모드 / 단계 (시간 아래, 무한 모드에서만)
+	mode_label = GameUI.centered("", "BodyLabel", 44, 20)
+	mode_label.add_theme_font_size_override("font_size", 14)
+	mode_label.add_theme_color_override("font_color", GameUI.STAR)
+	_outline(mode_label, 4)
+	add_child(mode_label)
+	move_child(mode_label, 1)
 	# 처치 / 골드 (오른쪽 위)
 	$killcollect.position = Vector2(1110, 12)
 	$goldcollect/GoldCount.position = Vector2(1206, 12)
@@ -170,8 +178,8 @@ func _style_hud():
 	controls.size.y = 22
 	add_child(controls)
 	move_child(controls, 1)
-	# 보스 체력바는 시간 아래로
-	boss_bar.position.y = 62
+	# 보스 체력바는 시간 아래로 (무한 모드는 단계 표시 아래)
+	boss_bar.position.y = 68 if RunMode.is_endless() else 62
 
 func _draw_hud_hp():
 	var ratio = clamp(player.current_hp / max(player.max_hp, 1.0), 0.0, 1.0)
@@ -196,6 +204,7 @@ func _outline(label: Label, size: int):
 
 func _process(delta):
 	_update_hud_hp(delta)
+	_update_mode_label()
 	process_fatal_state()
 	check_pause_pressed()
 
@@ -258,6 +267,59 @@ func _show_pause(on: bool):
 		pause_menu.open()
 	elif not on and pause_menu.is_open():
 		pause_menu.close()
+
+# 보스 처치 (보스 스크립트가 호출). 클래식: 엔딩 / 무한: 웨이브 디렉터가 다음 단계로
+func on_boss_defeated(boss):
+	if not RunMode.is_endless():
+		ending_pause_flag = true
+		return
+	var spawner = player.get_parent().get_node_or_null("EnemySpwaner")
+	if spawner and spawner.has_method("on_boss_defeated"):
+		spawner.on_boss_defeated(boss)
+
+# 화면 가운데 큰 알림 (무한 모드 단계 / 한계 돌파 / 보스 등장)
+func show_banner(title_text: String, sub_text: String = "", color: Color = GameUI.GOLD, duration: float = 3.0):
+	var box = Control.new()
+	box.size = Vector2(1280, 160)
+	box.position = Vector2(0, 180)
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(box)
+	move_child(box, 1)		# 일시정지/결과 화면보다 아래
+	var band = ColorRect.new()
+	band.color = Color(0, 0, 0, 0.55)
+	band.size = box.size
+	band.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	box.add_child(band)
+	var title = GameUI.centered(title_text, "TitleLabel", 18, 64)
+	title.add_theme_font_size_override("font_size", 50)
+	title.add_theme_color_override("font_color", color)
+	box.add_child(title)
+	if sub_text != "":
+		var sub = GameUI.centered(sub_text, "BodyLabel", 86, 64)
+		sub.add_theme_font_size_override("font_size", 20)
+		box.add_child(sub)
+	box.modulate.a = 0.0
+	box.pivot_offset = box.size / 2.0
+	box.scale = Vector2(1.0, 0.2)
+	var tw = box.create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(box, "modulate:a", 1.0, 0.2)
+	tw.tween_property(box, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.chain().tween_interval(duration)
+	tw.chain().tween_property(box, "modulate:a", 0.0, 0.5)
+	tw.chain().tween_callback(box.queue_free)
+
+# 무한 모드 단계 표시 (시간 아래)
+func _update_mode_label():
+	if mode_label == null:
+		return
+	var text = ""
+	if RunMode.is_endless():
+		text = GameUI.t("무한 모드  ·  %d단계", "ENDLESS  ·  Stage %d") % RunMode.stage()
+		if RunMode.overcap_unlocked():
+			text += GameUI.t("  ·  한계 돌파", "  ·  Limit Break")
+	if mode_label.text != text:
+		mode_label.text = text
 
 func _on_ending_finished():
 	get_tree().paused   = true

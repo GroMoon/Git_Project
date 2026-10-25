@@ -92,17 +92,24 @@ func _make_card(id: String, index: int) -> PanelContainer:
 	var name_label = GameUI.label(UpgradeDB.display_name(id, player.character_name), "HeaderLabel", HORIZONTAL_ALIGNMENT_CENTER)
 	box.add_child(name_label)
 	var kind = _type_text(type)
-	var to_max = (type == "weapon" or type == "passive") and lv > 0 and lv + 1 >= UpgradeDB.max_level(id)
-	if type == "weapon" or type == "passive":
+	var max_lv = UpgradeDB.max_level(id)
+	var to_max = (type == "weapon" or type == "passive") and lv > 0 and lv + 1 >= max_lv
+	var star = (type == "weapon" or type == "passive") and lv >= max_lv		# 한계 돌파 강화
+	if star:
+		# "MAX → ★1", "★1 → ★2"
+		kind = GameUI.t("한계 돌파", "Limit Break") + "   ·   %s → ★%d" % ["MAX" if lv == max_lv else "★%d" % (lv - max_lv), lv + 1 - max_lv]
+	elif type == "weapon" or type == "passive":
 		# 마지막 강화는 "Lv 5 → MAX" 로 최고 단계임을 표시
 		kind += "   ·   " + ("NEW!" if lv == 0 else ("Lv %d → MAX" % lv if to_max else "Lv %d → %d" % [lv, lv + 1]))
 	var kind_label = GameUI.label(kind, "RoleLabel", HORIZONTAL_ALIGNMENT_CENTER)
-	if lv == 0 and type != "consumable":
+	if star:
+		kind_label.add_theme_color_override("font_color", GameUI.STAR)
+	elif lv == 0 and type != "consumable":
 		kind_label.add_theme_color_override("font_color", COLOR_NEW)
 	elif to_max:
 		kind_label.add_theme_color_override("font_color", GameUI.GOLD)
 	box.add_child(kind_label)
-	var desc = GameUI.label(UpgradeDB.level_desc(id, lv + 1, player.character_name), "BodyLabel", HORIZONTAL_ALIGNMENT_CENTER)
+	var desc = GameUI.label(UpgradeDB.upgrade_desc(id, lv + 1, player.character_name), "BodyLabel", HORIZONTAL_ALIGNMENT_CENTER)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.custom_minimum_size = Vector2(CARD_SIZE.x - 40, 60)
 	box.add_child(desc)
@@ -162,18 +169,19 @@ func roll_choices(count: int) -> Array:
 	var pool = []
 	var weapon_count = player.weapons.size()
 	var passive_count = player.passives.size()
+	# 보유 중이면 cap_level 까지 (한계 돌파 해금 후엔 최대 레벨 이상도 후보, 가중치는 조금 낮게)
 	for id in UpgradeDB.weapon_ids():
 		var lv = player.get_upgrade_level(id)
 		if lv > 0:
-			if lv < UpgradeDB.max_level(id):
-				pool.append([id, UpgradeDB.WEIGHT_OWNED_WEAPON])
+			if lv < UpgradeDB.cap_level(id):
+				pool.append([id, UpgradeDB.WEIGHT_OWNED_WEAPON if lv < UpgradeDB.max_level(id) else UpgradeDB.WEIGHT_OVERCAP_WEAPON])
 		elif weapon_count < UpgradeDB.WEAPON_SLOTS:
 			pool.append([id, UpgradeDB.WEIGHT_NEW_WEAPON])
 	for id in UpgradeDB.passive_ids():
 		var lv = player.get_upgrade_level(id)
 		if lv > 0:
-			if lv < UpgradeDB.max_level(id):
-				pool.append([id, UpgradeDB.WEIGHT_OWNED_PASSIVE])
+			if lv < UpgradeDB.cap_level(id):
+				pool.append([id, UpgradeDB.WEIGHT_OWNED_PASSIVE if lv < UpgradeDB.max_level(id) else UpgradeDB.WEIGHT_OVERCAP_PASSIVE])
 		elif passive_count < UpgradeDB.PASSIVE_SLOTS:
 			pool.append([id, UpgradeDB.WEIGHT_NEW_PASSIVE])
 
@@ -443,12 +451,14 @@ func _make_reward_slot(reward: Dictionary, _ko: bool) -> Control:
 	elif reward["kind"] == "gold":
 		info = "+30 G"
 	else:
-		info = "MAX" if reward["level"] >= UpgradeDB.max_level(id) else "Lv %d" % reward["level"]
+		info = GameUI.level_text(reward["level"], UpgradeDB.max_level(id))
 	var info_label = GameUI.label(info, "RoleLabel" if not evolve else "BodyLabel", HORIZONTAL_ALIGNMENT_CENTER)
 	if evolve:
 		info_label.add_theme_color_override("font_color", GameUI.RED)
 	elif info == "MAX":
 		info_label.add_theme_color_override("font_color", GameUI.GOLD)
+	elif info.begins_with("★"):
+		info_label.add_theme_color_override("font_color", GameUI.STAR)
 	info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	info_label.custom_minimum_size = Vector2(170, 0)
 	box.add_child(info_label)

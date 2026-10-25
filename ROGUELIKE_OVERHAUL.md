@@ -118,6 +118,29 @@
 - 마지막 강화 카드는 "Lv 5 → MAX" 로 표시 (보물상자 보상도 MAX)
 - 엘리트 난이도 상승: 두 번째 사이클부터 엘리트가 2마리, 세 번째 사이클은 3마리씩 동시에 등장 (각자 화면 밖 다른 방향에서)
 
+### 무한 모드
+출발 화면이 **모드 → 캐릭터 → 맵** 3단계가 됨. 다시 도전하면 이전에 고른 모드가 기본 선택.
+
+| | 클래식 | 무한 |
+|---|---|---|
+| 첫 보스(10:00)까지 | 동일 | 동일 |
+| 보스 처치 | 엔딩 | 게임 계속 + "★ 한계 돌파" + 보상 5개 보물상자 |
+| 강화 | 최대 레벨까지 | 첫 보스 처치 후 최대 레벨을 넘어 계속 강화 (★1, ★2 ...) |
+| 보스 | 10:00 한 번 | 이전 웨이브를 잡은 뒤 10분마다 (20:00, 30:00 ...), n번째 웨이브는 n마리 (최대 3) |
+| 끝 | 보스 처치 | 쓰러질 때까지 |
+
+- **한계 돌파**: 무기는 ★마다 피해 +15% (제한 없음). 패시브는 레벨당 효과 그대로 계속 오르되, 너무 강해지는 것만 한도
+  (힘·활력 무제한, 신속·갑옷·가속 8레벨, 분열 4레벨, 그 외 10레벨). 그림자 분신은 한계 돌파 없음.
+  레벨업 카드에 "한계 돌파 · MAX → ★1"(보라색), 장비 슬롯 배지에 ★n, 정보 창에 다음 ★ 효과
+- **난이도 상승**: 보스 웨이브마다 보스 수 증가(두 번째 보스는 다른 맵의 보스, 여러 마리면 한 마리당 체력 70% / 60%),
+  10분 이후에도 이벤트 웨이브가 10분 주기로 반복(회차마다 규모 +50%), 엘리트가 계속 등장(최대 4마리 동시),
+  10분 이후 1분마다 적 체력 +6% (기존 시간 곡선에 추가, 제한 없음), 스폰 +5% (최대 2배), 이동 속도 +2% (최대 +40%).
+  적 공격력은 기존 시간 곡선대로 계속 상승. 보스전 중에는 엘리트가 쉼
+- HUD 시간 아래 "무한 모드 · n단계 · 한계 돌파", 보스 웨이브 / 단계 돌파 배너 (다음 보스 시각과 마릿수 안내)
+- 결과 화면에 모드, 도달 단계 · 처치한 보스 수. 랭크: 보스 웨이브 2번 이상 S, 1번 A, 첫 보스 전에는 시간 기준(최대 B)
+- 코드: `dynamic/8_roguelike/run_mode.gd` (`RunMode`), 보스 처치 → `BaseUI.on_boss_defeated` → `enemy_spwaner.gd` `on_boss_defeated`,
+  `UpgradeDB.cap_level` / `OVERCAP_LIMITS`, `WeaponBase.overcap_mult`
+
 ## 고친 기존 버그
 
 - Godot 4.7에서 Dialogic 이름 라벨 파싱 오류 → 펫 획득 대화창이 깨지던 문제
@@ -173,6 +196,7 @@ SlayerSurvival/dev/run_autoplay.sh -- --char=warrior --seconds=180 --pick=smart
 - `--windowed ... --shots=10,20 --shot_dir=DIR` 창 모드 스크린샷
 - `--chest_at=5 --chest_count=5 --shot_chest=0.5,1.0` 보물상자 연출 확인
 - `--no_levelup=1 --give=signature:5` 레벨업 없이 무기 하나의 피해량 비교
+- `--mode=endless --boss_hp=0.05 --start_minute=9 --god=1` 무한 모드 보스 웨이브 흐름 확인, `--shot_overcap=1` 한계 돌파 카드 캡처
 - `--ui_test=1` ESC 흐름 자동 검사, `--shot_pause=10 --pause_options=1` 일시정지/설정 화면 캡처
 - 메뉴 화면 캡처: `Godot --path SlayerSurvival res://dev/scene_shot.tscn -- --scene=res://dynamic/5_title_screen/menu.tscn --out=/tmp/menu.png`
 - 테마를 바꿀 때: `dev/build_theme.gd` 수정 후 `Godot --headless --path SlayerSurvival -s res://dev/build_theme.gd`

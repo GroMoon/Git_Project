@@ -7,7 +7,7 @@ func on_level_changed():
 	var times_key = "times_wizard" if player.character_name == "wizard" else "times"
 	player.attack_times          = int(stat(times_key, 1))
 	player.attack_times_level    = level - 1
-	player.signature_damage_mult = float(stat("damage", 1.0))
+	player.signature_damage_mult = float(stat("damage", 1.0)) * overcap_mult()
 	player.signature_cd_mult     = float(stat("cooldown", 1.0))
 	player.signature_area_mult   = float(stat("area", 1.0))
 	player.crit_bonus            = 0.15 if evolved else 0.0

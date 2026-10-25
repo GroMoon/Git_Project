@@ -15,6 +15,8 @@ extends Node
 ##   --pets=goblin,mushroom,skeleton,flyingeye (시작 시 몬스터 펫 지급)
 ##   --no_levelup=1 (경험치 0 → 레벨업 없음. --give 와 함께 무기 하나의 피해량 비교용)
 ##   --chest_at=초 (해당 시각에 플레이어 위치에 보물상자, --chest_count=5 면 보상 5개 상자를 바로 열기)
+##   --mode=classic|endless (게임 모드)  --boss_hp=0.1 (보스 체력 배율, 무한 모드 흐름 확인용)
+##   --shot_overcap=1 (한계 돌파 카드가 처음 나온 레벨업 화면 스크린샷)
 ##   --shot_chest=0.4,1.0 (상자 연출 중 여러 시점 스크린샷)  --die_at=초 (강제 사망)  --shot_death=1 (결과 화면 스크린샷)  --shot_pause=초 (해당 시각에 일시정지 화면 스크린샷)
 
 const GAME_SCENE = "res://test.tscn"
@@ -42,6 +44,9 @@ var opts = {
 	"chest_count": "0",
 	"die_at": "-1",
 	"shot_death": "0",
+	"mode": "classic",
+	"boss_hp": "1",
+	"shot_overcap": "0",
 }
 
 var game: Node = null
@@ -64,6 +69,7 @@ var chest_wait := 0.0
 var chest_shot_done := false
 var pause_shot_state := 0
 var pause_shot_wait := 0.0
+var overcap_shot_wait := -1.0
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -79,6 +85,7 @@ func _ready():
 	call_deferred("_start_game")
 
 func _start_game():
+	RunMode.mode = RunMode.ENDLESS if opts["mode"] == "endless" else RunMode.CLASSIC
 	game = load(GAME_SCENE).instantiate()
 	get_tree().root.add_child(game)
 	get_tree().current_scene = game
@@ -109,7 +116,7 @@ func _start_game():
 			player.add_upgrade(parts[0])
 	for pet in String(opts["pets"]).split(",", false):
 		Dialogic.VAR.set(pet + "_pet_diag", true)
-	print("[autoplay] start char=%s map=%s seconds=%s" % [opts["char"], opts["map"], opts["seconds"]])
+	print("[autoplay] start char=%s map=%s mode=%s seconds=%s" % [opts["char"], opts["map"], RunMode.mode, opts["seconds"]])
 	if opts["ui_test"] == "1":
 		_ui_test.call_deferred()
 
@@ -162,6 +169,7 @@ func _process(delta):
 	elapsed += delta
 	if opts["god"] == "1":
 		player.current_hp = player.max_hp
+	_scale_bosses()
 	if float(opts["chest_at"]) >= 0.0 and not chest_spawned and elapsed >= float(opts["chest_at"]) and int(opts["chest_count"]) > 0:
 		# 보상 개수를 지정해 바로 열기
 		chest_spawned = true
@@ -186,9 +194,10 @@ func _process(delta):
 
 	if elapsed >= next_log:
 		next_log += float(opts["log_every"])
-		print("[autoplay] t=%5.1f clock=%s fps=%d enemies=%d lv=%d hp=%.0f/%.0f kills=%d nodes=%d" % [
-			elapsed, base_ui.stopwatch.text, fps, enemy_count, player.character_level,
-			player.current_hp, player.max_hp, player.kill_count, get_tree().get_node_count()])
+		print("[autoplay] t=%5.1f clock=%s fps=%d enemies=%d lv=%d exp=%d/%d pos=%s hp=%.0f/%.0f kills=%d nodes=%d stage=%d bosses=%d/%d" % [
+			elapsed, base_ui.stopwatch.text, fps, enemy_count, player.character_level, int(player.current_exp), int(player.max_exp),
+			str(Vector2i(player.global_position)), player.current_hp, player.max_hp, player.kill_count, get_tree().get_node_count(),
+			RunMode.stage(), RunMode.bosses_killed, game.get_node("EnemySpwaner").boss_nodes.size()])
 
 	if shots.size() > 0 and elapsed >= shots[0]:
 		shots.pop_front()
@@ -225,6 +234,15 @@ func _handle_blocking_ui(base_ui):
 				return
 			levelup_shot_done = true
 			_take_shot()
+		# 한계 돌파 카드가 처음 나온 레벨업 화면
+		if opts["shot_overcap"] == "1" and overcap_shot_wait < 1.0 and "current_choices" in select_ui:
+			var has_star = select_ui.current_choices.any(func(id): return (UpgradeDB.is_weapon(id) or UpgradeDB.is_passive(id)) and player.get_upgrade_level(id) >= UpgradeDB.max_level(id))
+			if has_star:
+				overcap_shot_wait = max(overcap_shot_wait, 0.0) + get_process_delta_time()
+				if overcap_shot_wait < 0.6:
+					return
+				overcap_shot_wait = 1.0
+				_take_shot()
 		if select_ui.has_method("autopick"):
 			if opts["pick"] != "first" and "current_choices" in select_ui and not select_ui.current_choices.is_empty():
 				var choice = select_ui.current_choices.pick_random()
@@ -282,6 +300,18 @@ func _ui_test():
 	await get_tree().process_frame
 	_check("resume item", not pm.is_open() and not get_tree().paused)
 	get_tree().quit()
+
+# --boss_hp: 새로 나온 보스 체력 조절 (한 번만)
+func _scale_bosses():
+	var mult = float(opts["boss_hp"])
+	if mult == 1.0:
+		return
+	for boss in game.get_node("EnemySpwaner").boss_nodes:
+		if is_instance_valid(boss) and not boss.has_meta("autoplay_scaled"):
+			boss.set_meta("autoplay_scaled", true)
+			boss.health *= mult
+			boss.max_health = boss.health
+			print("[autoplay] boss %s hp=%d" % [boss.name, int(boss.health)])
 
 # 무기 우선(새 무기 > 무기 강화 > 패시브) 선택
 func _smart_pick(choices: Array) -> String:
@@ -381,7 +411,7 @@ func _finish(reason: String):
 		var build = {}
 		for id in player.weapons.keys():
 			build[id] = player.weapons[id].level
-		print("[autoplay] build weapons=", build, " passives=", player.passives)
+		print("[autoplay] build weapons=", build, " passives=", player.passives, " mode=%s stage=%d bosses_killed=%d overcap=%s" % [RunMode.mode, RunMode.stage(), RunMode.bosses_killed, RunMode.overcap_unlocked()])
 		print("[autoplay] damage ", RunStats.damage_by_source)
 		var evolved = player.weapons.keys().filter(func(k): return player.weapons[k].evolved)
 		print("[autoplay] chests=%d evolved=%s" % [chests, evolved])

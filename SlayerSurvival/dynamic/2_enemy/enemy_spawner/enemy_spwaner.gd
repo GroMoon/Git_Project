@@ -4,6 +4,8 @@ extends Node2D
 ## - 시간(분)에 따라 초당 스폰 수 / 동시 최대 수 / 적 체력이 증가
 ## - 화면 밖 사각 링에서 스폰, 너무 멀어진 적은 화면 밖 가까운 곳으로 재배치
 ## - 이벤트: 대량 스폰, 박쥐 떼 돌진(직선), 포위 링, 엘리트, 10분 보스
+## - 무한 모드 (RunMode): 보스를 잡아도 계속. 이전 웨이브를 잡은 뒤 10분마다 보스 웨이브(n번째 = n마리, 최대 3),
+##   10분 이후 이벤트 반복(규모 증가), 엘리트 계속 등장, 적 이동 속도 증가
 
 const MONSTER = 0
 const ELITE   = 1
@@ -14,6 +16,9 @@ const SPAWN_MARGIN    = 70.0	# 화면 바깥 여유
 const MAX_ENEMIES     = 260		# 동시 최대 적 수 (성능 한도)
 const RECYCLE_FACTOR  = 1.7		# 화면 반대각선 * 이 값보다 멀면 재배치
 const BOSS_MINUTE     = 10
+const MAX_BOSSES      = 3		# 무한 모드 한 웨이브 최대 보스 수
+const BOSS_SPLIT_HP   = [1.0, 0.7, 0.6]	# 보스가 여러 마리일 때 한 마리당 체력 비율
+const MIN_BOSS_GAP    = 2.0		# 무한 모드: 웨이브를 늦게 잡아도 다음 보스까지 최소 2분 쉬는 시간
 
 var player
 var base_ui
@@ -28,6 +33,9 @@ var next_elite_time := 0.75		# 다음 엘리트 등장 시각(분)
 var elite_index := 0
 # 보스 스폰 여부 플래그
 var boss_spawn_flag = false
+var boss_nodes: Array = []				# 살아 있는 보스 (현재 웨이브)
+var boss_wave := 0						# 지금까지 등장한 보스 웨이브 수
+var next_boss_time := float(BOSS_MINUTE)	# 다음 보스 웨이브 시각(분)
 
 # 일반 몬스터
 var skeleton  = preload("res://dynamic/2_enemy/Skeleton/skeleton.tscn")
@@ -83,26 +91,32 @@ func _process(delta):
 	# 일반 스폰 (초당 스폰 수만큼 예산 누적)
 	var alive = get_tree().get_nodes_in_group("enemy").size()
 	var rate = spawn_rate(t)
-	if t >= BOSS_MINUTE:
+	if not boss_nodes.is_empty():
 		rate *= 0.35		# 보스전에는 잡몹을 줄임
-	spawn_budget = min(spawn_budget + rate * delta, 10.0)
+	spawn_budget = min(spawn_budget + rate * delta, 20.0 if RunMode.is_endless() else 10.0)
 	while spawn_budget >= 1.0:
 		spawn_budget -= 1.0
 		if alive < max_alive(t):
 			spawn_enemy(pick_enemy(t), MONSTER)
 			alive += 1
 
-	# 이벤트
-	for ev in events:
-		var key = str(ev[0]) + ev[1]
-		if t >= ev[0] and not events_done.has(key):
-			events_done[key] = true
-			run_event(ev[1], ev[2])
+	# 이벤트 (무한 모드 한계 돌파 이후에는 10분 단위로 반복, 회차마다 규모 +50%)
+	var loops = int(t / BOSS_MINUTE) if RunMode.overcap_unlocked() else 0
+	for loop in range(loops + 1):
+		for ev in events:
+			var ev_time = ev[0] + loop * BOSS_MINUTE
+			var key = str(ev_time) + ev[1]
+			if t >= ev_time and not events_done.has(key):
+				events_done[key] = true
+				# 반복 회차에서 이미 지나간 이벤트(보스를 늦게 잡은 경우)는 한꺼번에 몰리지 않게 건너뜀
+				if loop == 0 or t - ev_time <= 0.5:
+					run_event(ev[1], ev[2], 1.0 + 0.5 * loop)
 
-	# 엘리트 (1분마다, 사이클이 돌수록 한 번에 나오는 수가 늘어남)
-	if t >= next_elite_time and t < BOSS_MINUTE:
+	# 엘리트 (1분마다, 사이클이 돌수록 한 번에 나오는 수가 늘어남). 보스전 중에는 쉼, 무한 모드는 10분 이후에도 계속
+	if t >= next_elite_time:
 		next_elite_time += 1.0
-		spawn_elite_wave()
+		if boss_nodes.is_empty() and (t < BOSS_MINUTE or RunMode.is_endless()):
+			spawn_elite_wave()
 
 	# 멀어진 적 재배치 (1초마다)
 	recycle_timer -= delta
@@ -110,25 +124,63 @@ func _process(delta):
 		recycle_timer = 1.0
 		recycle_far_enemies()
 
-	# 보스 스폰
-	if (!boss_spawn_flag) && (minute >= BOSS_MINUTE):
-		if get_parent().instance_map:
-			map_name = get_parent().instance_map.name
-		var boss
-		# 맵에 따른 보스 선택
-		match map_name:
-			"cave":
-				boss = fire_worm
-			"dungeon_B1F":
-				boss = bring_of_death
-			_:
-				boss = bring_of_death
-		var boss_node = spawn_enemy(boss, BOSS)
-		boss_spawn_flag = true
-		if boss_node and base_ui.boss_bar:
-			base_ui.boss_bar.track(boss_node)
-		GameFeel.shake(0.6)
-		GameFeel.flash_screen(Color(0.6, 0.0, 0.0, 0.35), 0.8)
+	# 보스 스폰 (클래식: 10:00 한 번 / 무한: 이전 웨이브를 잡은 뒤 next_boss_time 마다)
+	if t >= next_boss_time and boss_nodes.is_empty() and (boss_wave == 0 or RunMode.is_endless()):
+		spawn_boss_wave()
+
+# ================= 보스 =================
+# n번째 웨이브는 보스 n마리 (최대 3). 맵 보스부터, 두 번째 마리는 다른 맵의 보스
+func spawn_boss_wave():
+	boss_wave += 1
+	boss_spawn_flag = true
+	next_boss_time = INF
+	if get_parent().instance_map:
+		map_name = get_parent().instance_map.name
+	# 맵에 따른 보스 선택
+	var main_boss = fire_worm if map_name == "cave" else bring_of_death
+	var other_boss = bring_of_death if main_boss == fire_worm else fire_worm
+	var count = mini(boss_wave, MAX_BOSSES)
+	for i in count:
+		var boss_node = spawn_enemy(main_boss if i % 2 == 0 else other_boss, BOSS)
+		if boss_node == null:
+			continue
+		if count > 1:
+			boss_node.health *= BOSS_SPLIT_HP[count - 1]
+			boss_node.max_health = boss_node.health
+		boss_nodes.append(boss_node)
+	if not boss_nodes.is_empty() and base_ui.boss_bar:
+		base_ui.boss_bar.track(boss_nodes[0])
+	GameFeel.shake(0.6)
+	GameFeel.flash_screen(Color(0.6, 0.0, 0.0, 0.35), 0.8)
+	if RunMode.is_endless() and boss_wave > 1:
+		base_ui.show_banner(GameUI.t("보스 웨이브 %d", "BOSS WAVE %d") % boss_wave,
+			GameUI.t("보스 %d마리 출현!", "%d bosses incoming!") % count, GameUI.RED, 2.5)
+
+# 보스 처치 (무한 모드에서만 BaseUI 를 통해 호출). 웨이브의 보스를 모두 잡으면 다음 단계
+func on_boss_defeated(boss):
+	RunMode.bosses_killed += 1
+	boss_nodes.erase(boss)
+	boss_nodes = boss_nodes.filter(func(b): return is_instance_valid(b) and not b.is_dead)
+	if not boss_nodes.is_empty():
+		if base_ui.boss_bar:
+			base_ui.boss_bar.track(boss_nodes[0])		# 남은 보스를 체력바로
+		return
+	var first_clear = RunMode.waves_cleared == 0
+	RunMode.waves_cleared += 1
+	var t = minute + sec / 60.0
+	next_boss_time = max(float(BOSS_MINUTE * (RunMode.waves_cleared + 1)), t + MIN_BOSS_GAP)
+	# 웨이브 보상: 보상 5개 보물상자
+	var chest = ChestPickup.create()
+	chest.fixed_count = 5
+	chest.global_position = clamp_to_map(boss.global_position)
+	call_deferred("add_child", chest)
+	var next_count = mini(boss_wave + 1, MAX_BOSSES)
+	var next_text = GameUI.t("다음 보스 웨이브 %s  ·  보스 %d마리", "Next boss wave %s  ·  %d bosses") % [GameUI.format_time(next_boss_time * 60.0), next_count]
+	if first_clear:
+		base_ui.show_banner(GameUI.t("★ 한계 돌파 ★", "★ LIMIT BREAK ★"),
+			GameUI.t("이제 최대 레벨을 넘어 강화할 수 있습니다", "Upgrades can now go beyond MAX") + "\n" + next_text, GameUI.STAR, 4.0)
+	else:
+		base_ui.show_banner(GameUI.t("%d단계 돌파!", "STAGE %d CLEAR!") % RunMode.waves_cleared, next_text, GameUI.STAR, 3.0)
 
 # ================= 엘리트 =================
 # 엘리트 4종(플라잉 아이 → 스켈레톤 → 머쉬룸 → 고블린)이 한 사이클
@@ -151,21 +203,31 @@ func spawn_elite_wave():
 	return picks
 
 # ================= 난이도 곡선 =================
-# 초당 스폰 수
+# 초당 스폰 수 (무한 모드 10분 이후 1분마다 +5%, 최대 2배: 한계 돌파로 강해진 빌드에 맞춰 화면을 채움)
 func spawn_rate(t: float) -> float:
-	return 0.9 + 0.95 * t
+	return (0.9 + 0.95 * t) * endless_mult(t, 0.05, 2.0)
 
 # 동시 최대 적 수
 func max_alive(t: float) -> int:
 	return mini(int(40 + 22 * t), MAX_ENEMIES)
 
-# 적 체력 배율
+# 적 체력 배율 (무한 모드 10분 이후 1분마다 +6% 추가, 제한 없음)
 func hp_mult(t: float) -> float:
-	return 1.0 + 0.12 * t + 0.025 * t * t
+	return (1.0 + 0.12 * t + 0.025 * t * t) * endless_mult(t, 0.06, INF)
+
+# 무한 모드 10분 이후 추가 배율: 1 + per_minute * (t - 10), 최대 cap. 클래식 / 10분 전은 1
+func endless_mult(t: float, per_minute: float, cap: float) -> float:
+	if not RunMode.is_endless() or t <= BOSS_MINUTE:
+		return 1.0
+	return min(1.0 + per_minute * (t - BOSS_MINUTE), cap)
 
 # 적 공격력 배율
 func damage_mult(t: float) -> float:
 	return 1.0 + 0.06 * t
+
+# 적 이동 속도 배율 (무한 모드 10분 이후 1분마다 +2%, 최대 +40%)
+func speed_mult(t: float) -> float:
+	return endless_mult(t, 0.02, 1.4)
 
 func pick_enemy(t: float) -> PackedScene:
 	var weights = spawn_table[0][1]
@@ -193,9 +255,9 @@ func scene_by_name(enemy_name: String) -> PackedScene:
 	return flyingeye
 
 # ================= 이벤트 =================
-func run_event(kind: String, args: Array):
+func run_event(kind: String, args: Array, count_mult: float = 1.0):
 	var scene = scene_by_name(args[0])
-	var count: int = args[1]
+	var count: int = int(args[1] * count_mult)
 	match kind:
 		"mass":
 			for i in count:
@@ -282,6 +344,8 @@ func spawn_enemy(enemy_tscn, monster_type: int, fixed_pos = null, check_clear :=
 	var t = minute + sec / 60.0 if minute != null else 0.0
 	if enemy_instance.has_method("apply_scaling"):
 		enemy_instance.apply_scaling(hp_mult(t), damage_mult(t))
+	if monster_type != BOSS and "move_speed" in enemy_instance:
+		enemy_instance.move_speed *= speed_mult(t)
 	return enemy_instance
 
 # 너무 멀어진 적은 화면 밖 가까운 곳으로 재배치 (뱀서 방식)

@@ -28,9 +28,18 @@ func _ready():
 	z_index = 5
 
 # 생존 시간/승리 여부로 랭크
+# 무한 모드: 보스 웨이브 2번 이상 S, 1번 A, 첫 보스 전에 쓰러지면 시간 기준(최대 B)
 func _rank(victory: bool, seconds: int) -> String:
 	if victory:
 		return "S"
+	if RunMode.is_endless():
+		if RunMode.waves_cleared >= 2:
+			return "S"
+		if RunMode.waves_cleared == 1:
+			return "A"
+		if seconds >= 360:
+			return "B"
+		return "C" if seconds >= 180 else "D"
 	if seconds >= 540:
 		return "A"
 	if seconds >= 360:
@@ -70,7 +79,7 @@ func open(kind: String):
 	var game = player.get_parent()
 	if game and "instance_map" in game and game.instance_map:
 		map_id = game.instance_map.name
-	root.add_child(GameUI.centered("%s   ·   %s" % [GameUI.map_name(map_id), GameUI.character_name(player.character_name)], "DimLabel", 168, 30))
+	root.add_child(GameUI.centered("%s   ·   %s   ·   %s" % [RunMode.display_name(), GameUI.map_name(map_id), GameUI.character_name(player.character_name)], "DimLabel", 168, 30))
 
 	# ----- 랭크 도장 -----
 	var total_seconds = base_ui.minute * 60 + int(base_ui.sec)
@@ -106,15 +115,18 @@ func open(kind: String):
 		[GameUI.t("획득 골드", "Gold earned"), "%d G" % int(player.gold_count)],
 		[GameUI.t("보유 골드", "Total gold"), "%d G" % int(Global.character_data["GOLD"]["gold"])],
 	]
+	if RunMode.is_endless():
+		lines.insert(1, [GameUI.t("도달 단계", "Stage"), GameUI.t("%d단계  ·  보스 %d", "Stage %d  ·  %d bosses") % [RunMode.stage(), RunMode.bosses_killed]])
+	var row_gap = 38 if lines.size() <= 6 else 34
 	for i in lines.size():
 		var key = GameUI.label(lines[i][0], "BodyLabel")
 		key.add_theme_font_size_override("font_size", 24)
 		key.add_theme_color_override("font_color", Color(0.85, 0.85, 0.9))
-		key.position = Vector2(680, 245 + i * 38)
+		key.position = Vector2(680, 245 + i * row_gap)
 		root.add_child(key)
 		var value = GameUI.label(lines[i][1], "ValueLabel", HORIZONTAL_ALIGNMENT_RIGHT)
 		value.add_theme_font_size_override("font_size", 24)
-		value.position = Vector2(800, 245 + i * 38)
+		value.position = Vector2(800, 245 + i * row_gap)
 		value.size = Vector2(220, 30)
 		root.add_child(value)
 
